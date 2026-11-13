@@ -20,39 +20,17 @@ var (
 	procCoUninitialize  = ole32.NewProc("CoUninitialize")
 	procGetModuleHandle = syscall.NewLazyDLL("kernel32.dll").NewProc("GetModuleHandleW")
 
-	procRegisterClassExW = user32.NewProc("RegisterClassExW")
-	procCreateWindowExW  = user32.NewProc("CreateWindowExW")
-	procDestroyWindow    = user32.NewProc("DestroyWindow")
-	procShowWindow       = user32.NewProc("ShowWindow")
-	procSendMessageW     = user32.NewProc("SendMessageW")
-	procPeekMessageW     = user32.NewProc("PeekMessageW")
-	procDispatchMessageW = user32.NewProc("DispatchMessageW")
-	procDrawIconEx       = user32.NewProc("DrawIconEx")
-
-	procCreateCompatibleDC = gdi32.NewProc("CreateCompatibleDC")
-	procSelectObject       = gdi32.NewProc("SelectObject")
-	procDeleteDC           = gdi32.NewProc("DeleteDC")
+	procSendMessageW = user32.NewProc("SendMessageW")
+	procPeekMessageW = user32.NewProc("PeekMessageW")
+	procDrawIconEx   = user32.NewProc("DrawIconEx")
 )
 
 const (
 	coinitApartmentThreaded = 0x2
-	wsPopup                 = 0x80000000
 	wsExAppWindow           = 0x00040000
-	wsExNoActivate          = 0x08000000
-	swShowNoActivate        = 4
 	pmRemove                = 0x1
 	diNormal                = 0x3
 )
-
-// wndClassEx is WNDCLASSEXW.
-type wndClassEx struct {
-	size, style                        uint32
-	wndProc                            uintptr
-	clsExtra, wndExtra                 int32
-	instance, icon, cursor, background uintptr
-	menuName, className                *uint16
-	iconSm                             uintptr
-}
 
 // message is MSG.
 type message struct {

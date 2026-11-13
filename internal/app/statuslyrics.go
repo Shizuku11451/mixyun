@@ -1,12 +1,16 @@
 package app
 
 // Status bar lyrics: the line of the lyrics sung now, beside the tray icon
-// in macOS's menu bar, or in Options.TaskbarLyrics's window over Windows'
+// in macOS's menu bar, or in a window of internal/taskbar in Windows'
 // taskbar. They show while the setting is on, the main window is open, in
 // the tray too, and a track with timed lyrics plays.
 
 import (
+	"bytes"
 	"context"
+	"errors"
+	"image"
+	"log"
 	"runtime"
 	"sort"
 	"sync"
@@ -15,8 +19,10 @@ import (
 
 	"github.com/egoist/mygo"
 
+	"github.com/fzn0x/mixmusic/internal/artwork"
 	"github.com/fzn0x/mixmusic/internal/media"
 	"github.com/fzn0x/mixmusic/internal/player"
+	"github.com/fzn0x/mixmusic/internal/taskbar"
 	"github.com/fzn0x/mixmusic/lyrics"
 )
 
@@ -32,12 +38,17 @@ type statusLyrics struct {
 	// are nil meanwhile, and for a track without timed lyrics.
 	track string
 	lines []lyrics.Line
-	// shown is the line shown, "" for none.
-	shown string
+	// cover is the track's cover, for the taskbar, once it loaded; nil
+	// meanwhile, and for a track without one.
+	cover image.Image
+	// shown is what shows: Current is "" for nothing.
+	shown taskbar.LyricsView
 	// asked is set while placeStatusLyrics waits for the main thread.
 	asked bool
-	// win is the window over Windows' taskbar, while open. Main thread.
-	win *mygo.Window
+	// bar is the window in Windows' taskbar, while open, and failed is
+	// set once it couldn't open, which is told of once. Main thread.
+	bar    *taskbar.Lyrics
+	failed bool
 }
 
 // followStatusLyrics shows the lyrics in the status bar as the player and
@@ -69,7 +80,7 @@ func (a *App) placeStatusLyrics() {
 func (a *App) StatusLyric() string {
 	a.status.mu.Lock()
 	defer a.status.mu.Unlock()
-	return a.status.shown
+	return a.status.shown.Current
 }
 
 // applyStatusLyrics shows the line sung now, on the main thread.
@@ -81,41 +92,82 @@ func (a *App) applyStatusLyrics() {
 	a.mu.Lock()
 	main, tray := a.main != nil, a.tray
 	a.mu.Unlock()
-	text := ""
+	var v taskbar.LyricsView
 	if p := a.goPlayer.Load(); p != nil && main && a.settings.Get().StatusBarLyrics {
 		st := p.State()
 		if cur, ok := st.Current(); ok && !cur.Track.IsEpisode() {
-			text = a.statusLine(cur.Track, st)
+			v = a.statusView(cur.Track, st)
 		}
 	}
 	s.mu.Lock()
-	changed := text != s.shown
-	s.shown = text
+	changed := v != s.shown
+	s.shown = v
 	s.mu.Unlock()
 	if !changed {
 		return
 	}
 	if runtime.GOOS == "darwin" {
 		if tray != nil {
-			tray.SetTitle(clip(text, menuBarRunes))
+			tray.SetTitle(clip(v.Current, menuBarRunes))
 		}
 		return
 	}
-	a.showTaskbarLyrics(text != "")
+	a.showTaskbarLyrics(v)
 }
 
-// statusLine is the line of t's lyrics sung at st's position, and asks
-// for its lyrics once it is a new track.
-func (a *App) statusLine(t media.Track, st player.State) string {
+// statusView is the lines of t's lyrics sung at st's position, and the one
+// after, with t's cover, and asks for its lyrics and cover once it is a new
+// track. Without lyrics, it shows nothing.
+func (a *App) statusView(t media.Track, st player.State) taskbar.LyricsView {
 	s := &a.status
 	s.mu.Lock()
 	if s.track != t.ID {
-		s.track, s.lines = t.ID, nil
+		s.track, s.lines, s.cover = t.ID, nil, nil
 		go a.loadStatusLyrics(t)
+		if runtime.GOOS == "windows" {
+			go a.loadStatusCover(t)
+		}
 	}
-	lines := s.lines
+	lines, cover := s.lines, s.cover
 	s.mu.Unlock()
-	return lineAt(lines, st.Position+statusLead(st.Speed))
+	cur, next := linesAt(lines, st.Position+statusLead(st.Speed))
+	if cur == "" {
+		return taskbar.LyricsView{}
+	}
+	return taskbar.LyricsView{Current: cur, Next: next, Cover: cover}
+}
+
+// statusCoverSize is how big, in pixels, the taskbar's cover is kept: the
+// taskbar scales it down to its 34 DIPs, which is 68 pixels at 200 %.
+const statusCoverSize = 96
+
+// loadStatusCover loads the cover of t for the taskbar, square.
+func (a *App) loadStatusCover(t media.Track) {
+	u := controlsArtwork(t.Artwork)
+	if u == "" {
+		return
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+	defer cancel()
+	data, err := a.coverBytes(ctx, u)
+	if err != nil || len(data) == 0 {
+		return // the store logs why
+	}
+	square, err := artwork.Square(data, statusCoverSize)
+	if err != nil {
+		return
+	}
+	img, _, err := image.Decode(bytes.NewReader(square))
+	if err != nil {
+		return
+	}
+	s := &a.status
+	s.mu.Lock()
+	if s.track == t.ID {
+		s.cover = img
+	}
+	s.mu.Unlock()
+	a.placeStatusLyrics()
 }
 
 // loadStatusLyrics asks for the lyrics of t, which Catalog.Lyrics keeps.
@@ -136,42 +188,54 @@ func (a *App) loadStatusLyrics(t media.Track) {
 	a.placeStatusLyrics()
 }
 
-// showTaskbarLyrics opens the window over Windows' taskbar, and redraws
-// it, or closes it. Main thread.
-func (a *App) showTaskbarLyrics(on bool) {
+// taskbarLyricsWidth is how wide the lyrics are in Windows' taskbar, in
+// DIPs.
+const taskbarLyricsWidth = 360
+
+// showTaskbarLyrics shows v in Windows' taskbar, opening its window, or
+// closes the window without v.Current. Main thread.
+func (a *App) showTaskbarLyrics(v taskbar.LyricsView) {
 	s := &a.status
-	switch {
-	case on && s.win == nil && a.opts.TaskbarLyrics != nil:
-		win := a.opts.TaskbarLyrics(a)
-		if win == nil {
+	if s.bar != nil && (v.Current == "" || s.bar.Closed()) {
+		// Gone with Explorer as it restarts, it opens again for this line.
+		s.bar.Close()
+		s.bar = nil
+	}
+	if v.Current == "" {
+		return
+	}
+	if s.bar == nil {
+		bar, err := taskbar.OpenLyrics(taskbarLyricsWidth)
+		if err != nil {
+			if !errors.Is(err, taskbar.ErrUnsupported) && !s.failed {
+				log.Printf("mixmusic: the taskbar's lyrics: %v", err)
+			}
+			s.failed = true
 			return
 		}
-		s.win = win
-		win.OnClosed(func() {
-			if s.win == win {
-				s.win = nil
-			}
-		})
-	case !on && s.win != nil:
-		s.win.Close()
-		s.win = nil
+		s.bar, s.failed = bar, false
 	}
-	if s.win != nil {
-		s.win.Invalidate()
-	}
+	s.bar.Show(v)
 }
 
-// lineAt is the line of timed lyrics sung at pos: "♪" before the first,
-// and between lines; "" without lyrics.
-func lineAt(lines []lyrics.Line, pos time.Duration) string {
+// linesAt is the line of timed lyrics sung at pos, and the next line with
+// words: "♪" for the line before the first, and between lines; "" for both
+// without lyrics, and for the next one after the last.
+func linesAt(lines []lyrics.Line, pos time.Duration) (cur, next string) {
 	if len(lines) == 0 {
-		return ""
+		return "", ""
 	}
 	at := sort.Search(len(lines), func(i int) bool { return time.Duration(lines[i].TimeMs)*time.Millisecond > pos }) - 1
-	if at < 0 || lines[at].Text == "" {
-		return "♪"
+	cur = "♪"
+	if at >= 0 && lines[at].Text != "" {
+		cur = lines[at].Text
 	}
-	return lines[at].Text
+	for _, l := range lines[at+1:] {
+		if l.Text != "" {
+			return cur, l.Text
+		}
+	}
+	return cur, ""
 }
 
 // statusLead is how far ahead of the position a line shows, as the

@@ -42,45 +42,68 @@ func Attach(hwnd uintptr, click func(Button)) (*Bar, error) {
 // buttons go with their window.
 func (b *Bar) Show(playing, track bool) { b.b.show(state{playing, track}) }
 
-// Light tells whether the taskbar is light, as Windows' theme of its own
-// parts has it: false elsewhere.
-func Light() bool { return light() }
+// Lyrics is the lyrics sung now at the left end of the primary taskbar,
+// with the track's cover.
+type Lyrics struct{ l *lyricsWin }
 
-// KeepAbove puts the topmost window hwnd back above the taskbar. It does
-// nothing but on Windows.
-func KeepAbove(hwnd uintptr) { keepAbove(hwnd) }
+// OpenLyrics puts a window width DIPs wide in the primary taskbar, as its
+// child, so that it hides and slides with it and nothing comes over it. It
+// shows nothing until Show. It returns ErrUnsupported but on Windows, and
+// an error where the taskbar takes no window, as one at a side.
+func OpenLyrics(width int) (*Lyrics, error) {
+	l, err := openLyrics(width)
+	if err != nil {
+		return nil, err
+	}
+	return &Lyrics{l}, nil
+}
 
-// Embed makes the window hwnd a child of the primary taskbar, as tall as
-// it, width DIPs wide, left of its notification area, or moves it there
-// again: the taskbar carries it, so nothing comes over it, and it hides
-// and slides with it. It returns false, leaving hwnd as it was, where
-// there is no such taskbar, or it stands at a side: always but on Windows.
-func Embed(hwnd uintptr, width int) bool { return embed(hwnd, width) }
+// Show shows v, in the taskbar's ink, or hides the window without
+// v.Current. It returns at once, from any goroutine.
+func (l *Lyrics) Show(v LyricsView) { l.l.show(v) }
+
+// Close closes the window, from any goroutine.
+func (l *Lyrics) Close() { l.l.close() }
+
+// Closed tells whether the window is gone: closed, or gone with the
+// taskbar, as Explorer restarts. Another OpenLyrics puts it back.
+func (l *Lyrics) Closed() bool { return l.l.isClosed() }
+
+// inkPixels turns what GDI drew white on black, in the BGRA pixels px, into
+// the premultiplied pixels of ink that UpdateLayeredWindow takes: the grey
+// of a pixel is its alpha.
+func inkPixels(px []uint32, ink [3]uint8) {
+	for i, p := range px {
+		a := max(p&0xFF, p>>8&0xFF, p>>16&0xFF)
+		if a == 0 {
+			px[i] = 0
+			continue
+		}
+		r, g, b := uint32(ink[0])*a/255, uint32(ink[1])*a/255, uint32(ink[2])*a/255
+		px[i] = a<<24 | r<<16 | g<<8 | b
+	}
+}
 
 // rect is a window's bounds, as RECT has them.
 type rect struct{ left, top, right, bottom int32 }
 
-// embedPlace is where Embed puts a window width DIPs wide in the taskbar
-// bar, whose notification area is tray, at dpi: x in the taskbar, its
-// width and height, in pixels. ok is false for a taskbar at a side, or
-// too short for the window.
-// shortcut: only the notification area is measured, not the taskbar's
-// buttons, which a full taskbar puts under the lyrics; read them through UI
-// Automation, as TaskbarLyrics does, if that bothers.
-func embedPlace(bar, tray rect, width int, dpi uint32) (x, w, h int32, ok bool) {
+// embedPlace is where embed puts a window width DIPs wide in the taskbar
+// bar at dpi: at its left end, where a taskbar with its buttons centred, as
+// Windows 11 has it, leaves room. It returns x in the taskbar, the width
+// and the height, in pixels; ok is false for a taskbar at a side, or too
+// short for the window.
+// shortcut: the taskbar's buttons aren't measured, which a taskbar with
+// its buttons at the left, or the widgets button, puts under the lyrics;
+// read them through UI Automation, as TaskbarLyrics does, if that bothers.
+func embedPlace(bar rect, width int, dpi uint32) (x, w, h int32, ok bool) {
 	if bar.bottom-bar.top >= bar.right-bar.left {
 		return 0, 0, 0, false
 	}
 	if dpi == 0 {
 		dpi = 96
 	}
-	right := bar.right
-	if tray.right > tray.left && tray.left > bar.left && tray.left <= bar.right {
-		right = tray.left
-	}
 	w = int32(width) * int32(dpi) / 96
-	x = right - bar.left - w
-	return x, w, bar.bottom - bar.top, x >= 0
+	return 0, w, bar.bottom - bar.top, w <= bar.right-bar.left
 }
 
 // state is what the buttons show: whether the player plays, and whether it

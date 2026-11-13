@@ -413,20 +413,9 @@ func newIcon(img *image.NRGBA) uintptr {
 	return icon
 }
 
-// light tells whether the taskbar is light.
-func light() bool { return taskbarLight() }
-
-// keepAbove puts hwnd back above the taskbar, which comes over the other
-// topmost windows as it is clicked: HWND_TOPMOST, without moving, sizing
-// or activating it.
-func keepAbove(hwnd uintptr) {
-	const swpNoSize, swpNoMove, swpNoActivate = 0x1, 0x2, 0x10
-	procSetWindowPos.Call(hwnd, ^uintptr(0), 0, 0, 0, 0, swpNoSize|swpNoMove|swpNoActivate)
-}
-
 // embed makes hwnd a child of Shell_TrayWnd, the primary taskbar, as
-// TaskbarLyrics does, and puts it left of TrayNotifyWnd, the notification
-// area, in front of the taskbar's own children.
+// TaskbarLyrics does, and puts it at its left end (embedPlace), in front
+// of the taskbar's own children.
 // shortcut: Windows 10 takes it over its task list, which TaskbarLyrics
 // squeezes instead; do so if lyrics hide buttons there.
 func embed(hwnd uintptr, width int) bool {
@@ -445,12 +434,11 @@ func embed(hwnd uintptr, width int) bool {
 	if bar == 0 || !ok {
 		return false
 	}
-	tray, _ := windowRect(findWindow(bar, "TrayNotifyWnd"))
 	dpi := uintptr(0)
 	if procGetDpiForWindow.Find() == nil {
 		dpi, _, _ = procGetDpiForWindow.Call(bar)
 	}
-	x, w, h, ok := embedPlace(b, tray, width, uint32(dpi))
+	x, w, h, ok := embedPlace(b, width, uint32(dpi))
 	if !ok {
 		return false
 	}

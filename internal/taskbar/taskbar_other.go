@@ -10,7 +10,9 @@ func attach(uintptr, func(Button)) (*bar, error) { return nil, ErrUnsupported }
 
 func (*bar) show(state) {}
 
-func light() bool       { return false }
-func keepAbove(uintptr) {}
+type lyricsWin struct{}
 
-func embed(uintptr, int) bool { return false }
+func openLyrics(int) (*lyricsWin, error) { return nil, ErrUnsupported }
+func (*lyricsWin) show(LyricsView)       {}
+func (*lyricsWin) close()                {}
+func (*lyricsWin) isClosed() bool        { return true }
