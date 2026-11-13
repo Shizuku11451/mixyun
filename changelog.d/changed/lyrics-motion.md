@@ -1,0 +1,1 @@
+- **Synced lyrics move as Apple Music's do:** they glide to the line sung now rather than jump, lines fade between their colours, the line sung now grows a little, and on the now playing page the lines around it blur the farther they are, until you scroll them.

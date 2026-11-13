@@ -303,6 +303,24 @@ func (s *shell) lyrics(c *ui.Context, large bool) {
 	if large {
 		size, sub = k.size(2), k.bodySize()
 	}
+	// Followed lyrics glide to the line sung now, as Apple Music's do: a
+	// row the list has built glides there, one far off shows at once, as
+	// do a new track's.
+	following := synced && active >= 0 && time.Since(view.userAt) > lyricsPause
+	glideTo := -1
+	if following && active != view.scrolled {
+		first, last := view.list.Visible()
+		if view.scrolled >= 0 && active >= first && active <= last {
+			glideTo = active
+		} else {
+			view.list.ScrollTo(active, ui.Center)
+		}
+		view.scrolled = active
+	}
+	origin := float32(0)
+	if c.Direction() == ui.RightToLeft {
+		origin = 1
+	}
 	n := len(ly.Lines) + 1
 	list := ui.List(c.Key("lyrics-"+where+"-"+t.ID), &view.list, n, func(i int) {
 		if i == len(ly.Lines) {
@@ -328,22 +346,48 @@ func (s *shell) lyrics(c *ui.Context, large bool) {
 		if synced && i == active {
 			words, romanWords = x.words(i, line, text, roman)
 		}
-		var p ui.Element
-		if roman == "" && meaning == "" {
-			p = s.lyricsText(c, text, size, ink, words, 24, 4)
-		} else {
-			// The line, then in Latin letters, then its translation, which
-			// screen readers read in this order too.
-			p = ui.Column(c).Padding(4, 24).Gap(2).Children(func() {
-				s.lyricsText(c, text, size, ink, words, 0, 0)
-				if roman != "" {
-					s.lyricsRoman(c, roman, sub, romanWords)
-				}
-				if meaning != "" {
-					ui.Text(c, meaning).FontSize(sub).TextColor(k.muted)
-				}
-			})
+		// The line, then in Latin letters, then its translation, which
+		// screen readers read in this order too.
+		plain := roman == "" && meaning == ""
+		p := ui.Column(c).Gap(2)
+		if !plain {
+			p.Padding(4, 24)
 		}
+		// Lines fade between their colours, the line sung now grows a
+		// little, and on the now playing page the lines around it blur
+		// the farther they are, while the lyrics follow the song.
+		ink = p.AnimateColor("ink", ink, lyricsFade)
+		if synced {
+			scale := float32(lyricsAside)
+			if i == active {
+				scale = 1
+			}
+			scale = p.AnimateTo("scale", scale, lyricsSpring)
+			p.Scale(scale, scale).TransformOrigin(origin, 0.5)
+			blur := float32(0)
+			if large && following && i != active {
+				blur = lyricsBlur * float32(min(max(i-active, active-i), 4))
+			}
+			if blur = p.AnimateTo("blur", blur, lyricsFade); blur > 0.05 {
+				p.Blur(blur)
+			}
+		}
+		if i == glideTo {
+			p.ScrollIntoView(ui.ScrollIntoViewOptions{Block: ui.ScrollCenter, Animation: &lyricsSpring})
+		}
+		p.Children(func() {
+			if plain {
+				s.lyricsText(c, text, size, ink, words, 24, 4)
+				return
+			}
+			s.lyricsText(c, text, size, ink, words, 0, 0)
+			if roman != "" {
+				s.lyricsRoman(c, roman, sub, romanWords)
+			}
+			if meaning != "" {
+				ui.Text(c, meaning).FontSize(sub).TextColor(k.muted)
+			}
+		})
 		// A line plays the song from there, once it plays: a song that
 		// loads isn't moved. While lines are chosen to share, it is chosen.
 		if s.lyricPick.picking(t.ID) {
@@ -363,11 +407,20 @@ func (s *shell) lyrics(c *ui.Context, large bool) {
 		}
 		return s.scrollsInside(ev)
 	})
-	if synced && active >= 0 && active != view.scrolled && time.Since(view.userAt) > lyricsPause {
-		view.scrolled = active
-		view.list.ScrollTo(active, ui.Center)
-	}
 }
+
+// How the lines of synced lyrics move: the list glides, and a line grows,
+// on a soft spring; colours and blur fade. Lines aside show at
+// lyricsAside of their size, and blur by lyricsBlur DIPs a line away.
+var (
+	lyricsSpring = ui.Animation{Spring: ui.SpringOptions{Duration: 700 * time.Millisecond}}
+	lyricsFade   = ui.Animation{Duration: 400 * time.Millisecond, Ease: ui.EaseInOut, NonMotion: true}
+)
+
+const (
+	lyricsAside = 0.96
+	lyricsBlur  = 0.6
+)
 
 // lyricsLead is how far ahead of the position synced lyrics light up, at
 // the speed the track plays at: the position comes every 250 ms, in which

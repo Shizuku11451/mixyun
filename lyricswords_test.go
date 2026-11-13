@@ -49,6 +49,11 @@ func sungOn(t *testing.T, path, lang string, lines []lyrics.Line, pos time.Durat
 	tt.Frame()
 	// The page slides in.
 	tt.Advance(time.Second)
+	// The line sung by pos fades and grows in, then the song is at pos.
+	s.p.Time(pos-time.Millisecond, 200*time.Second)
+	s.settle(t, func(st player.State) bool { return st.Position == pos-time.Millisecond })
+	tt.Frame()
+	tt.Advance(time.Second)
 	s.p.Time(pos, 200*time.Second)
 	s.settle(t, func(st player.State) bool { return st.Position == pos })
 	tt.Frame()
