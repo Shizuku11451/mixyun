@@ -301,11 +301,12 @@ func (s *shell) lyrics(c *ui.Context, large bool) {
 			}
 		}
 	}
-	size, sub := k.bodySize(), k.smallSize()
+	size, sub, weight := k.bodySize(), k.smallSize(), k.leadWeight()
 	if large {
 		// The page's lyrics grow with the pane, from 2rem to 3rem.
 		size = min(max(k.size(2), s.paneWidth(c)/40), k.size(3))
 		sub = k.bodySize() * size / k.size(2)
+		weight = lyricsPageWeight
 	}
 	// Followed lyrics glide to the line sung now, as Apple Music's do: a
 	// row the list has built glides there, one far off shows at once, as
@@ -381,10 +382,10 @@ func (s *shell) lyrics(c *ui.Context, large bool) {
 		}
 		p.Children(func() {
 			if plain {
-				s.lyricsText(c, text, size, ink, words, 24, 4)
+				s.lyricsText(c, text, size, weight, ink, words, 24, 4)
 				return
 			}
-			s.lyricsText(c, text, size, ink, words, 0, 0)
+			s.lyricsText(c, text, size, weight, ink, words, 0, 0)
 			if roman != "" {
 				s.lyricsRoman(c, roman, sub, romanWords)
 			}

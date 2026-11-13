@@ -21,8 +21,11 @@ func TestLive(t *testing.T) {
 	if _, err := c.Playlist(ctx, "3778678", ""); err != nil { // the hot songs chart
 		t.Fatalf("Playlist: %v", err)
 	}
-	if lrc, _, err := c.Lyrics(ctx, "186016"); err != nil || lrc == "" {
+	if lrc, _, _, err := c.Lyrics(ctx, "186016"); err != nil || lrc == "" {
 		t.Fatalf("Lyrics: %v", err)
+	}
+	if _, yrc, _, err := c.Lyrics(ctx, "1859245776"); err != nil || yrc == "" { // sung word by word
+		t.Fatalf("Lyrics, word by word: %v", err)
 	}
 	if _, err := c.Similar(ctx, "186016"); err != nil {
 		t.Fatalf("Similar: %v", err)

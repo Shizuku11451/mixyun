@@ -456,7 +456,7 @@ func (s *shell) miniLyrics(c *ui.Context) {
 		if at >= 0 && text == lines[at].Text {
 			words = lines[at].Words
 		}
-		s.lyricsText(c, text, k.size(1.25), k.accent, words, 0, 0).MinWidth(0)
+		s.lyricsText(c, text, k.size(1.25), k.leadWeight(), k.accent, words, 0, 0).MinWidth(0)
 		if under := notchUnder(latin, how, at); under != "" {
 			ui.Text(c, under).FontSize(k.smallSize()).TextColor(k.muted).MinWidth(0)
 		}

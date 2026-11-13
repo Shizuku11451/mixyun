@@ -524,21 +524,26 @@ func playlistShelf(title, key string, in []playlist) media.Shelf {
 	return media.Shelf{Title: title, Source: media.SourceNetEase, Items: items, Key: key}
 }
 
-// Lyrics returns a song's lyrics as LRC, and their Chinese translation
-// as LRC when NetEase has one.
-func (c *Client) Lyrics(ctx context.Context, native string) (lrc, translation string, err error) {
+// Lyrics returns a song's lyrics as LRC, synchronized word by word as
+// YRC when NetEase has them so, and their Chinese translation as LRC
+// when it has one.
+func (c *Client) Lyrics(ctx context.Context, native string) (lrc, yrc, translation string, err error) {
 	var r struct {
 		Lrc struct {
 			Lyric string `json:"lyric"`
 		} `json:"lrc"`
+		Yrc struct {
+			Lyric string `json:"lyric"`
+		} `json:"yrc"`
 		Tlyric struct {
 			Lyric string `json:"lyric"`
 		} `json:"tlyric"`
 	}
-	if err := c.call(ctx, "/song/lyric", map[string]any{"id": native, "lv": -1, "tv": -1}, &r); err != nil {
-		return "", "", err
+	params := map[string]any{"id": native, "cp": false, "lv": 0, "tv": 0, "rv": 0, "kv": 0, "yv": 0, "ytv": 0, "yrv": 0}
+	if err := c.call(ctx, "/song/lyric/v1", params, &r); err != nil {
+		return "", "", "", err
 	}
-	return r.Lrc.Lyric, r.Tlyric.Lyric, nil
+	return r.Lrc.Lyric, r.Yrc.Lyric, r.Tlyric.Lyric, nil
 }
 
 // Audio is where a song's audio is.

@@ -656,12 +656,16 @@ func (c *Catalog) neteaseLyrics(ctx context.Context, track media.Track) (lyrics.
 		return lyrics.Lyrics{}, false
 	}
 	_, native, _ := media.ParseID(ne.ID)
-	lrc, _, err := c.a.netease.Lyrics(ctx, native)
+	lrc, yrc, _, err := c.a.netease.Lyrics(ctx, native)
 	if err != nil {
 		log.Printf("mixmusic: the lyrics of %s, on NetEase Cloud Music: %v", track.ID, err)
 		return lyrics.Lyrics{}, false
 	}
-	lines := lyrics.ParseLRC(lrc)
+	// Word by word when NetEase has them so, which light as they're sung.
+	lines := lyrics.ParseYRC(yrc)
+	if len(lines) < 2 {
+		lines = lyrics.ParseLRC(lrc)
+	}
 	if len(lines) < 2 {
 		return lyrics.Lyrics{}, false
 	}

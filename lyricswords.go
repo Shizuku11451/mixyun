@@ -15,9 +15,10 @@ import (
 
 // The line sung now of lyrics synced word by word lights up word by word:
 // each word fills with the accent from its start to its end, from the side
-// its line reads from. Words sung stay lit, and words to come keep the
-// colour of the lines to come. Under Reduce Motion, a word lights whole as
-// it starts.
+// its line reads from, behind a soft edge that fades from the accent to
+// the colour of the words to come. Words sung stay lit, and words to come
+// keep the colour of the lines to come. Under Reduce Motion, a word lights
+// whole as it starts.
 //
 // The line is a text as the others are, which MyGo lays out, sizes and
 // reads to screen readers, but in a clear colour: its Draw paints its
@@ -27,17 +28,22 @@ import (
 // track plays at, so the words fill between the player's reports, every
 // 250 ms, in frames that only paint again: the view isn't built for them.
 
-// lyricsText is the text of a line of lyrics, at size in ink, with padX
-// and padY around it. The words given, those of the line sung now, light
-// up as they are sung.
-func (s *shell) lyricsText(c *ui.Context, text string, size float32, ink ui.Color, words []lyrics.Word, padX, padY float32) ui.Element {
+// lyricsText is the text of a line of lyrics, at size and weight in ink,
+// with padX and padY around it. The words given, those of the line sung
+// now, light up as they are sung.
+func (s *shell) lyricsText(c *ui.Context, text string, size float32, weight int, ink ui.Color, words []lyrics.Word, padX, padY float32) ui.Element {
 	k := &s.lk
-	e := ui.Text(c, text).FontSize(size).FontWeight(k.leadWeight()).TextColor(ink).Padding(padY, padX)
+	e := ui.Text(c, text).FontSize(size).FontWeight(weight).TextColor(ink).Padding(padY, padX)
 	if len(words) == 0 {
 		return e
 	}
-	return s.sungText(c, e, text, ui.Font{Family: k.body, Size: size, Weight: k.leadWeight()}, ink, k.text, words, padX, padY)
+	return s.sungText(c, e, text, ui.Font{Family: k.body, Size: size, Weight: weight}, ink, k.text, words, padX, padY)
 }
+
+// lyricsPageWeight is the weight of the now playing page's lyrics, which
+// are set large: semibold, as a thin face at that size reads faint, the
+// more so in Chinese, Japanese and Korean.
+const lyricsPageWeight = 600
 
 // sungText makes e, the text element of a line of lyrics in font, light
 // its words up as they are sung: the part sung in lit, the rest in dim. A
@@ -255,10 +261,7 @@ func (g *sungLayout) paint(p *ui.Painter, x, y float32, fill []float32, lit, dim
 		}
 		g.stretchesOf(i, fill, reach, buf)
 		for _, st := range buf.out {
-			ink := dim
-			if st.lit {
-				ink = lit
-			}
+			ink := dim.Mix(lit, st.lit)
 			p.Clip(ui.Rect{X: x + st.x0, Y: y + top, W: st.x1 - st.x0, H: bottom - top}, 0, func() { p.TextLayout(g.tl, x, y, ink) })
 		}
 	}
@@ -271,19 +274,28 @@ type stretches struct {
 	on  bool
 }
 
-// stretch is a stretch of a row painted lit or not, from x0 to x1.
+// stretch is a stretch of a row from x0 to x1, painted as lit as lit
+// says: 1 in the colour of the words sung, 0 in that of those to come,
+// and between them on the soft edge of the word being sung.
 type stretch struct {
 	x0, x1 float32
-	lit    bool
+	lit    float32
 }
+
+// The soft edge of the word being sung is sungFeather of the font's size
+// wide, in sungSteps stretches from lit to dim.
+const (
+	sungFeather = 0.5
+	sungSteps   = 6
+)
 
 // add adds the stretch from x0 to x1, which goes on the last when they
 // touch and light alike.
-func (s *stretches) add(x0, x1 float32, lit bool) {
+func (s *stretches) add(x0, x1, lit float32) {
 	if x1 <= x0 {
 		return
 	}
-	s.on = lit
+	s.on = lit > 0.5
 	if n := len(s.out); n > 0 && s.out[n-1].lit == lit && (s.out[n-1].x1 == x0 || s.out[n-1].x0 == x1) {
 		last := &s.out[n-1]
 		last.x0, last.x1 = min(last.x0, x0), max(last.x1, x1)
@@ -295,19 +307,27 @@ func (s *stretches) add(x0, x1 float32, lit bool) {
 // stretchesOf makes s the stretches of row i, as lit as fill says, reaching
 // out past its glyphs by reach: each word's goes from its start to the
 // next word's, so what lies between words lights with the word before,
-// and a row's start with its first word. A row without words is as lit as
-// what came before it, as s.on tells.
+// and a row's start with its first word. The word being sung is lit up to
+// a soft edge, which leads the light by its width, so that it has left
+// the word once the word is sung. A row without words is as lit as what
+// came before it, as s.on tells.
 func (g *sungLayout) stretchesOf(i int, fill []float32, reach float32, s *stretches) {
 	s.out = s.out[:0]
 	row := g.rows[i]
 	left, right := row.box.X-reach, row.box.X+row.box.W+reach
 	if len(row.cells) == 0 {
-		s.add(left, right, s.on)
+		lit := float32(0)
+		if s.on {
+			lit = 1
+		}
+		s.add(left, right, lit)
 		return
 	}
+	edge := g.key.font.Size * sungFeather
 	for k, c := range row.cells {
 		f := fill[c.word]
-		part := min(max(f*g.width[c.word]-c.before, 0), c.x1-c.x0)
+		// How far into the word's part on this row the edge leads.
+		part := f*(g.width[c.word]+edge) - c.before
 		if row.rtl {
 			from, to := c.x1, left
 			if k == 0 {
@@ -316,15 +336,20 @@ func (g *sungLayout) stretchesOf(i int, fill []float32, reach float32, s *stretc
 			if k+1 < len(row.cells) {
 				to = row.cells[k+1].x1
 			}
-			cut := c.x1 - part
+			lead := c.x1 - part
 			switch {
 			case f >= 1:
-				s.add(to, from, true)
+				s.add(to, from, 1)
 			case part <= 0:
-				s.add(to, from, false)
+				s.add(to, from, 0)
 			default:
-				s.add(cut, from, true)
-				s.add(to, cut, false)
+				in := func(x float32) float32 { return min(max(x, to), c.x1) }
+				s.add(in(lead+edge), from, 1)
+				for n := range sungSteps {
+					a, b := lead+edge*float32(sungSteps-n-1)/sungSteps, lead+edge*float32(sungSteps-n)/sungSteps
+					s.add(in(a), in(b), 1-(float32(n)+0.5)/sungSteps)
+				}
+				s.add(to, in(lead), 0)
 			}
 			continue
 		}
@@ -335,15 +360,20 @@ func (g *sungLayout) stretchesOf(i int, fill []float32, reach float32, s *stretc
 		if k+1 < len(row.cells) {
 			to = row.cells[k+1].x0
 		}
-		cut := c.x0 + part
+		lead := c.x0 + part
 		switch {
 		case f >= 1:
-			s.add(from, to, true)
+			s.add(from, to, 1)
 		case part <= 0:
-			s.add(from, to, false)
+			s.add(from, to, 0)
 		default:
-			s.add(from, cut, true)
-			s.add(cut, to, false)
+			in := func(x float32) float32 { return min(max(x, c.x0), to) }
+			s.add(from, in(lead-edge), 1)
+			for n := range sungSteps {
+				a, b := lead-edge*float32(sungSteps-n)/sungSteps, lead-edge*float32(sungSteps-n-1)/sungSteps
+				s.add(in(a), in(b), 1-(float32(n)+0.5)/sungSteps)
+			}
+			s.add(in(lead), to, 0)
 		}
 	}
 }

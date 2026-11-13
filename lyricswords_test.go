@@ -64,18 +64,18 @@ func sungOn(t *testing.T, path, lang string, lines []lyrics.Line, pos time.Durat
 // laid out apart from it: the words given, from the left.
 func wordsAt(t *testing.T, s *shell, tt *ui.Tester, text string, words ...string) []ui.Rect {
 	t.Helper()
-	return wordsOf(t, s, tt, s.lk.bodySize(), text, words...)
+	return wordsOf(t, s, tt, s.lk.bodySize(), s.lk.leadWeight(), text, words...)
 }
 
-// wordsOf is wordsAt of a line of lyrics at size.
-func wordsOf(t *testing.T, s *shell, tt *ui.Tester, size float32, text string, words ...string) []ui.Rect {
+// wordsOf is wordsAt of a line of lyrics at size and weight.
+func wordsOf(t *testing.T, s *shell, tt *ui.Tester, size float32, weight int, text string, words ...string) []ui.Rect {
 	t.Helper()
 	r, ok := tt.Find(text)
 	if !ok {
 		t.Fatalf("%q doesn't show: %q", text, tt.Texts())
 	}
 	k := &s.lk
-	font := ui.Font{Family: k.body, Size: size, Weight: k.leadWeight()}
+	font := ui.Font{Family: k.body, Size: size, Weight: weight}
 	width := func(s string) float32 { w, _ := ui.ShapeText(s, font, 0).Size(); return w }
 	var out []ui.Rect
 	before := ""
@@ -171,7 +171,7 @@ func TestSungWordsLight(t *testing.T) {
 // its size.
 func TestSungWordsOnThePage(t *testing.T) {
 	s, tt := sungOn(t, "/now-playing", "en", lanterns, 2500*time.Millisecond)
-	at := wordsOf(t, s, tt, s.lk.size(2), "Lanterns drifting home", "Lanterns", "drifting", "home")
+	at := wordsOf(t, s, tt, s.lk.size(2), lyricsPageWeight, "Lanterns drifting home", "Lanterns", "drifting", "home")
 	if img := tt.Image(); !lit(t, s, img, at[0], "Lanterns") || lit(t, s, img, at[2], "home") {
 		t.Error("the words don't light as sung on the page")
 	}
@@ -378,7 +378,7 @@ func TestSungStretches(t *testing.T) {
 		g.stretchesOf(row, fill, 0, &s)
 		w := float32(0)
 		for _, st := range s.out {
-			if st.lit {
+			if st.lit >= 1 {
 				w += st.x1 - st.x0
 			}
 		}
