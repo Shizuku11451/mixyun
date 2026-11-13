@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
+	"crypto/md5"
 	"crypto/rand"
 	"encoding/base64"
 	"encoding/hex"
@@ -11,6 +12,7 @@ import (
 	"math/big"
 	"net/url"
 	"slices"
+	"strings"
 )
 
 // The keys of the web player's weapi, which every web client of NetEase
@@ -49,4 +51,23 @@ func weapi(body []byte) (url.Values, error) {
 	// Textbook RSA, no padding, as the web player's own.
 	enc := new(big.Int).Exp(new(big.Int).SetBytes(reversed), big.NewInt(65537), pubMod)
 	return url.Values{"params": {string(params)}, "encSecKey": {fmt.Sprintf("%0256s", hex.EncodeToString(enc.Bytes()))}}, nil
+}
+
+// eapiKey is the key of the desktop app's eapi.
+const eapiKey = "e82ckenh8dichen8"
+
+// eapi seals a request's JSON for the eapi path as the desktop app does:
+// with its digest, in AES-ECB, as the form's params.
+func eapi(path string, body []byte) url.Values {
+	text := string(body)
+	sum := md5.Sum([]byte("nobody" + path + "use" + text + "md5forencrypt"))
+	data := []byte(path + "-36cd479b6b5-" + text + "-36cd479b6b5-" + hex.EncodeToString(sum[:]))
+	pad := aes.BlockSize - len(data)%aes.BlockSize
+	data = append(data, bytes.Repeat([]byte{byte(pad)}, pad)...)
+	block, _ := aes.NewCipher([]byte(eapiKey))
+	out := make([]byte, len(data))
+	for i := 0; i < len(data); i += aes.BlockSize {
+		block.Encrypt(out[i:i+aes.BlockSize], data[i:i+aes.BlockSize])
+	}
+	return url.Values{"params": {strings.ToUpper(hex.EncodeToString(out))}}
 }

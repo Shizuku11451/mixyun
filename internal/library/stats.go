@@ -4,6 +4,7 @@ import (
 	"cmp"
 	"slices"
 	"time"
+	"unicode"
 
 	"github.com/fzn0x/mixmusic/internal/media"
 )
@@ -43,6 +44,7 @@ type Stats struct {
 	// YouTube and Spotify count the plays of each service's tracks.
 	YouTube    int           `json:"youtube"`
 	Spotify    int           `json:"spotify"`
+	NetEase    int           `json:"netease"`
 	TopTracks  []TrackPlays  `json:"topTracks"`
 	TopArtists []ArtistPlays `json:"topArtists"`
 	// Days is the number of days counted; 0 counts the whole history.
@@ -51,6 +53,18 @@ type Stats struct {
 	// without plays too: the last Days days, or the last 90 for the whole
 	// history.
 	Daily []DayPlays `json:"daily"`
+	// Languages and Genres count the plays by language and by genre, the
+	// most first. A track's language is its own (media.Track.Language),
+	// else told by the letters of its title and artists, "" when they
+	// tell none; tracks without a genre aren't in Genres.
+	Languages []LabelPlays `json:"languages"`
+	Genres    []LabelPlays `json:"genres"`
+}
+
+// LabelPlays is a language or a genre and how often its tracks played.
+type LabelPlays struct {
+	Label string `json:"label"`
+	Plays int    `json:"plays"`
 }
 
 // Stats sums up the plays of the last days, or of the whole history when
@@ -63,6 +77,7 @@ func (l *Library) Stats(days int) Stats {
 	}
 	tracks := map[string]*TrackPlays{}
 	artists := map[string]*ArtistPlays{}
+	languages, genres := map[string]int{}, map[string]int{}
 	daily, dayIndex := dailyDays(l.now(), cmp.Or(days, dailyAllTime))
 	dayMs := make([]int, len(daily))
 	ms := 0
@@ -84,6 +99,12 @@ func (l *Library) Stats(days int) Stats {
 			s.YouTube++
 		case media.SourceSpotify:
 			s.Spotify++
+		case media.SourceNetEase:
+			s.NetEase++
+		}
+		languages[cmp.Or(p.Track.Language, languageOf(p.Track))]++
+		if p.Track.Genre != "" {
+			genres[p.Track.Genre]++
 		}
 		if tp := tracks[p.Track.ID]; tp != nil {
 			tp.Plays++
@@ -116,6 +137,7 @@ func (l *Library) Stats(days int) Stats {
 	slices.SortFunc(s.TopArtists, func(a, b ArtistPlays) int {
 		return cmp.Or(b.Plays-a.Plays, cmp.Compare(a.Artist.Name, b.Artist.Name))
 	})
+	s.Languages, s.Genres = ranked(languages), ranked(genres)
 	s.TopTracks = s.TopTracks[:min(len(s.TopTracks), topCount)]
 	s.TopArtists = s.TopArtists[:min(len(s.TopArtists), topCount)]
 	return s
@@ -134,4 +156,61 @@ func dailyDays(now time.Time, n int) ([]DayPlays, map[string]int) {
 		index[date] = i
 	}
 	return days, index
+}
+
+// ranked lists counts the most first.
+func ranked(counts map[string]int) []LabelPlays {
+	out := make([]LabelPlays, 0, len(counts))
+	for label, n := range counts {
+		out = append(out, LabelPlays{label, n})
+	}
+	slices.SortFunc(out, func(a, b LabelPlays) int { return cmp.Or(b.Plays-a.Plays, cmp.Compare(a.Label, b.Label)) })
+	return out
+}
+
+// languageOf tells a track's language by the letters of its title and
+// artists, as NetEase's tags name it: kana are Japanese, hangul Korean,
+// other Chinese characters Chinese, and Latin letters English; "" for
+// none.
+func languageOf(t media.Track) string {
+	var han, latin bool
+	for _, r := range t.Title + t.ArtistNames() {
+		switch {
+		case unicode.In(r, unicode.Hiragana, unicode.Katakana):
+			return "日语"
+		case unicode.Is(unicode.Hangul, r):
+			return "韩语"
+		case unicode.Is(unicode.Han, r):
+			han = true
+		case unicode.Is(unicode.Latin, r):
+			latin = true
+		}
+	}
+	switch {
+	case han:
+		return "华语"
+	case latin:
+		return "英语"
+	}
+	return ""
+}
+
+// Daily returns what the user played on each of the last n days, the
+// oldest first, those without plays too, as far as the history goes.
+func (l *Library) Daily(n int) []DayPlays {
+	days, index := dailyDays(l.now(), n)
+	ms := make([]int, n)
+	for _, p := range l.file.Get().History {
+		if p.Track.IsEpisode() {
+			continue
+		}
+		if i, ok := index[p.PlayedAt.In(l.now().Location()).Format(time.DateOnly)]; ok {
+			days[i].Plays++
+			ms[i] += p.Track.DurationMs
+		}
+	}
+	for i := range days {
+		days[i].Minutes = ms[i] / 60000
+	}
+	return days
 }

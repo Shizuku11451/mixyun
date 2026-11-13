@@ -1,6 +1,7 @@
 package app
 
 import (
+	"cmp"
 	"context"
 	"errors"
 	"fmt"
@@ -248,4 +249,40 @@ func (c *Catalog) Roam(ctx context.Context, tag string) ([]media.Track, error) {
 		tracks = withoutDisliked(tracks, c.a.library.Disliked())
 	}
 	return tracks, nil
+}
+
+// wikiWait is how long a play waits for its song's 音乐百科.
+const wikiWait = 15 * time.Second
+
+// wantsWiki reports whether a play's song is NetEase's, without its genre
+// or language, while signed in, as 音乐百科 answers.
+func (a *App) wantsWiki(t media.Track) bool {
+	return t.Source == media.SourceNetEase && (t.Genre == "" || t.Language == "") && a.netease.SignedIn()
+}
+
+// withWiki fills in the genre and language a NetEase song lacks: from an
+// earlier play of it, else from its 音乐百科. A song NetEase tells nothing
+// of stays as it was.
+func (a *App) withWiki(t media.Track) media.Track {
+	genre, language := "", ""
+	for _, p := range a.library.History(0) {
+		if p.Track.ID == t.ID && (p.Track.Genre != "" || p.Track.Language != "") {
+			genre, language = p.Track.Genre, p.Track.Language
+			break
+		}
+	}
+	if genre == "" && language == "" {
+		if _, native, err := media.ParseID(t.ID); err == nil {
+			ctx, cancel := context.WithTimeout(context.Background(), wikiWait)
+			var err error
+			genre, language, err = a.netease.SongWiki(ctx, native)
+			cancel()
+			if err != nil {
+				log.Printf("mixmusic: reading the 音乐百科 of %s: %v", t.ID, err)
+			}
+		}
+	}
+	t.Genre = cmp.Or(t.Genre, genre)
+	t.Language = cmp.Or(t.Language, language)
+	return t
 }

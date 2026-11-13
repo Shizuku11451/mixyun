@@ -35,4 +35,13 @@ func TestLive(t *testing.T) {
 	}
 	a, err := c.SongAudio(ctx, "1859245776", "exhigh") // a free song
 	t.Logf("audio: %+v %v", a.Type, err)
+	// 音乐百科 answers only a session: MIXMUSIC_NETEASE_U is its MUSIC_U.
+	if u := os.Getenv("MIXMUSIC_NETEASE_U"); u != "" {
+		c.SetSession(u)
+		if genre, language, err := c.SongWiki(ctx, "186016"); err != nil || genre == "" || language == "" {
+			t.Fatalf("SongWiki: %q %q %v", genre, language, err)
+		} else {
+			t.Logf("wiki: %s, %s", genre, language)
+		}
+	}
 }

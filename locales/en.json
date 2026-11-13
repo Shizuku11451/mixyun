@@ -3440,6 +3440,7 @@
     }
   },
   "panelGoToAlbum": "Go to album",
+  "panelExportCover": "Export cover…",
   "panelOpenIn": "Open in {source}",
   "@panelOpenIn": {
     "placeholders": {
@@ -5477,6 +5478,14 @@
       }
     }
   },
+  "statsHeatmap": "Listening activity",
+  "statsHeatmapNote": "Plays each day over the last year.",
+  "statsLess": "Less",
+  "statsMore": "More",
+  "statsByLanguage": "By language",
+  "statsByGenre": "By genre",
+  "statsGenreNote": "NetEase Cloud Music songs, as their wiki tells their genre.",
+  "statsOtherLanguage": "Other",
   "marketplaceThemes": "themes",
   "marketplacePlugins": "plugins",
   "marketplaceTitle": "Marketplace",

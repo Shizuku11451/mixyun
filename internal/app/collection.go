@@ -185,9 +185,17 @@ func (c *Collection) ImportPlaylist(ctx context.Context, id string) (media.Playl
 // RecordPlay adds a track to the history, once it played long enough to
 // count.
 func (c *Collection) RecordPlay(track media.Track) error {
-	err := c.a.library.RecordPlay(c.a.asSong(track))
 	c.a.reportYouTubePlay(track)
-	return err
+	if c.a.wantsWiki(track) {
+		// The play counts once its 音乐百科 came, beside the player.
+		go func() {
+			if err := c.a.library.RecordPlay(c.a.asSong(c.a.withWiki(track))); err != nil {
+				log.Printf("mixmusic: counting a play of %s: %v", track.ID, err)
+			}
+		}()
+		return nil
+	}
+	return c.a.library.RecordPlay(c.a.asSong(track))
 }
 
 // History returns the last plays, the latest first.
@@ -198,6 +206,9 @@ func (c *Collection) ClearHistory() error { return c.a.library.ClearHistory() }
 
 // Stats sums up the plays of the last days, or of all time when days is 0.
 func (c *Collection) Stats(days int) library.Stats { return c.a.library.Stats(days) }
+
+// Daily returns the plays and minutes of each of the last n days.
+func (c *Collection) Daily(n int) []library.DayPlays { return c.a.library.Daily(n) }
 
 // RecapYears lists the years the history has plays in, the latest first.
 func (c *Collection) RecapYears() []int { return c.a.library.RecapYears() }

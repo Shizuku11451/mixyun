@@ -4,7 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"math/rand/v2"
+	"slices"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/fzn0x/mixmusic/internal/media"
@@ -551,5 +553,78 @@ func (c *Client) Roam(ctx context.Context, tag string) ([]media.Track, error) {
 		}
 	}
 	rand.Shuffle(len(ids), func(i, j int) { ids[i], ids[j] = ids[j], ids[i] })
-	return c.songs(ctx, ids[:min(100, len(ids))])
+	tracks, err := c.songs(ctx, ids[:min(100, len(ids))])
+	// The stats count songs by the language and genre they were roamed by.
+	for i := range tracks {
+		switch {
+		case tag == "欧美":
+			tracks[i].Language = "英语" // as 音乐百科 names it
+		case slices.Contains(RoamTags[1], tag):
+			tracks[i].Language = tag
+		case slices.Contains(RoamTags[2], tag):
+			tracks[i].Genre = tag
+		}
+	}
+	return tracks, err
+}
+
+// SongWiki returns a song's genre and language as its 音乐百科 tells
+// them, as 流行 and 华语: the genre without its sub-genre, the language as
+// the tags of RoamTags name it. Either is "" when the page tells none.
+// NetEase answers only a session.
+func (c *Client) SongWiki(ctx context.Context, native string) (genre, language string, err error) {
+	if !c.SignedIn() {
+		return "", "", ErrSignedOut
+	}
+	type element struct {
+		MainTitle *struct {
+			Title string `json:"title"`
+		} `json:"mainTitle"`
+		TextLinks []struct {
+			Text string `json:"text"`
+		} `json:"textLinks"`
+	}
+	var r struct {
+		Data struct {
+			Blocks []struct {
+				Code      string `json:"code"`
+				Creatives []struct {
+					CreativeType string  `json:"creativeType"`
+					UIElement    element `json:"uiElement"`
+					Resources    []struct {
+						UIElement element `json:"uiElement"`
+					} `json:"resources"`
+				} `json:"creatives"`
+			} `json:"blocks"`
+		} `json:"data"`
+	}
+	if err := c.eapiCall(ctx, "/song/play/about/block/page", map[string]any{"songId": native}, &r); err != nil {
+		return "", "", err
+	}
+	for _, b := range r.Data.Blocks {
+		if b.Code != "SONG_PLAY_ABOUT_SONG_BASIC" {
+			continue
+		}
+		for _, cr := range b.Creatives {
+			switch cr.CreativeType {
+			case "songTag":
+				if len(cr.Resources) > 0 && cr.Resources[0].UIElement.MainTitle != nil {
+					genre, _, _ = strings.Cut(cr.Resources[0].UIElement.MainTitle.Title, "-")
+				}
+			case "language":
+				if len(cr.UIElement.TextLinks) > 0 {
+					language = wikiLanguage(cr.UIElement.TextLinks[0].Text)
+				}
+			}
+		}
+	}
+	return genre, language, nil
+}
+
+// wikiLanguage names a language of 音乐百科 as RoamTags do: 国语 is 华语.
+func wikiLanguage(l string) string {
+	if l == "国语" {
+		return "华语"
+	}
+	return l
 }

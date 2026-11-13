@@ -1,6 +1,7 @@
 package library
 
 import (
+	"slices"
 	"testing"
 	"time"
 
@@ -57,5 +58,31 @@ func TestStatsDaily(t *testing.T) {
 	}
 	if all := l.Stats(0); len(all.Daily) != 90 || all.Daily[89].Plays != 1 {
 		t.Errorf("all time covers %d days, last %+v", len(all.Daily), all.Daily[len(all.Daily)-1])
+	}
+}
+
+func TestStatsNetEaseLanguagesGenres(t *testing.T) {
+	l := open(t)
+	jp := tr("ne:1", media.SourceNetEase, "A")
+	jp.Title = "夜に駆ける"
+	rock := tr("ne:2", media.SourceNetEase, "周杰伦")
+	rock.Genre, rock.Language = "摇滚", "粤语"
+	en := tr("sp:3", media.SourceSpotify, "Queen")
+	for _, x := range []media.Track{jp, jp, rock, en} {
+		l.RecordPlay(x)
+	}
+	s := l.Stats(0)
+	if s.NetEase != 3 || s.Spotify != 1 {
+		t.Errorf("netease %d spotify %d", s.NetEase, s.Spotify)
+	}
+	want := []LabelPlays{{"日语", 2}, {"粤语", 1}, {"英语", 1}}
+	if !slices.Equal(s.Languages, want) {
+		t.Errorf("languages = %v", s.Languages)
+	}
+	if !slices.Equal(s.Genres, []LabelPlays{{"摇滚", 1}}) {
+		t.Errorf("genres = %v", s.Genres)
+	}
+	if d := l.Daily(400); len(d) != 400 || d[399].Plays != 4 {
+		t.Errorf("daily = %d days, today %+v", len(d), d[len(d)-1])
 	}
 }

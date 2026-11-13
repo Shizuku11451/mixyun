@@ -1,6 +1,8 @@
 package main
 
 import (
+	"cmp"
+	"context"
 	"fmt"
 	"math"
 	"strconv"
@@ -55,18 +57,30 @@ func (s *shell) statsPage(c *ui.Context) {
 			ui.Span{Text: locales.StatsColon(), Size: size, Weight: 300},
 			ui.Span{Text: locales.StatsFromSpotify(strconv.Itoa(st.Spotify)), Size: size, Weight: 300, Color: k.spotify},
 			ui.Span{Text: locales.StatsAnd(), Size: size, Weight: 300},
-			ui.Span{Text: locales.StatsFromYouTube(strconv.Itoa(st.YouTube)), Size: size, Weight: 300, Color: k.youtube},
+			ui.Span{Text: locales.StatsFromYouTube(strconv.Itoa(st.NetEase)), Size: size, Weight: 300, Color: k.youtube},
 			ui.Span{Text: locales.StatsEnd(), Size: size, Weight: 300},
 		).MaxWidth(760).Margin(0, 0, 48)
 		s.dayChart(c, st.Daily)
+		s.heatmap(c)
 		ui.Row(c).Gap(48).Wrap().AlignItems(ui.Start).Margin(0, 0, 48).Children(func() {
 			ui.Column(c).Width(320).Children(func() {
 				s.sectionTitle(c, locales.StatsTheMix())
-				s.venn(c, st.Spotify, st.YouTube)
+				s.venn(c, st.Spotify, st.NetEase)
 			})
 			ui.Column(c).Grow(1).Basis(320).Children(func() {
 				s.sectionTitle(c, locales.StatsTopArtists())
 				s.artistCircles(c, st.TopArtists)
+			})
+		})
+		ui.Row(c).Gap(48).Wrap().AlignItems(ui.Start).Margin(0, 0, 48).Children(func() {
+			ui.Column(c).Grow(1).Basis(320).Children(func() {
+				s.sectionTitle(c, locales.StatsByLanguage())
+				s.labelBars(c, st.Languages)
+			})
+			ui.Column(c).Grow(1).Basis(320).Children(func() {
+				s.sectionTitle(c, locales.StatsByGenre())
+				ui.Text(c, locales.StatsGenreNote()).FontSize(k.smallSize()).TextColor(k.muted).Margin(0, 0, 12)
+				s.labelBars(c, st.Genres)
 			})
 		})
 		s.sectionTitle(c, locales.StatsTopTracks())
@@ -335,6 +349,15 @@ func (s *shell) artistCircles(c *ui.Context, artists []library.ArtistPlays) {
 	ui.Row(c).Wrap().Gap(8).AlignItems(ui.Center).Children(func() {
 		for i, a := range artists {
 			r := float32(14 + 46*math.Sqrt(float64(a.Plays)/top))
+			// The artist's picture, from their page, which the artist's
+			// page itself shares.
+			var art []media.Image
+			if a.Artist.ID != "" {
+				id := a.Artist.ID
+				if res := fetch(s, "artist:"+id, func(ctx context.Context) (media.Artist, error) { return s.svc.Catalog.Artist(ctx, id) }); res.done {
+					art = res.value.Artwork
+				}
+			}
 			b := s.buttonBase(c.Key("stat-artist-"+count(i))).Size(2*r, 2*r).Radius(r).Background(k.tile(i)).Column().Center().
 				Padding(4).Label(locales.StatsArtistPlays(a.Artist.Name, a.Plays)).Tooltip(a.Artist.Name).
 				Disabled(a.Artist.ID == "")
@@ -344,6 +367,12 @@ func (s *shell) artistCircles(c *ui.Context, artists []library.ArtistPlays) {
 					s.navigate(artistPath(a.Artist.ID))
 				}
 			}
+			if len(art) > 0 {
+				b.Padding(0).Tooltip(locales.StatsArtistPlays(a.Artist.Name, a.Plays)).Children(func() {
+					s.cover(c, "stat-artist-art-"+count(i), art, 2*r, true)
+				})
+				continue
+			}
 			b.Children(func() {
 				if r >= 30 {
 					ui.Text(c, a.Artist.Name).FontSize(k.captionSize()).TextColor(k.tileText).SingleLine().MaxWidth(2*r - 12)
@@ -351,5 +380,96 @@ func (s *shell) artistCircles(c *ui.Context, artists []library.ArtistPlays) {
 				ui.Text(c, fmt.Sprint(a.Plays)).FontSize(k.captionSize()).TextColor(k.tileText).FontFeatures("tnum")
 			})
 		}
+	})
+}
+
+// labelBars shows the plays of each language or genre as bars in the
+// accent, the most first; a language its tracks don't tell is "other".
+func (s *shell) labelBars(c *ui.Context, rows []library.LabelPlays) {
+	k := &s.lk
+	if len(rows) == 0 {
+		ui.Text(c, "—").TextColor(k.muted)
+		return
+	}
+	top := float32(rows[0].Plays)
+	ui.Column(c).Gap(8).FillWidth().Children(func() {
+		for _, r := range rows {
+			label := cmp.Or(r.Label, locales.StatsOtherLanguage())
+			ui.Row(c).Gap(12).AlignItems(ui.Center).Label(locales.StatsArtistPlays(label, r.Plays)).Children(func() {
+				ui.Text(c, label).FontSize(k.smallSize()).Width(72).Shrink(0).SingleLine()
+				frac := float32(r.Plays) / top
+				ui.Box(c).Grow(1).Basis(0).Height(10).Draw(func(p *ui.Painter, rect ui.Rect) {
+					p.Fill(ui.Rect{X: rect.X, Y: rect.Y, W: max(2, rect.W*frac), H: rect.H}, k.accent, 3)
+				})
+				ui.Text(c, strconv.Itoa(r.Plays)).FontSize(k.smallSize()).TextColor(k.muted).FontFeatures("tnum").Width(40).Shrink(0)
+			})
+		}
+	})
+}
+
+// heatmapWeeks is how many weeks the heatmap shows: a year, and this week.
+const heatmapWeeks = 53
+
+// heatmap shows the plays of each day of the last year as GitHub shows
+// contributions: a column of days for each week, Sunday first, the more
+// plays the deeper in the accent; a day tells its minutes and plays as
+// the pointer rests on it.
+func (s *shell) heatmap(c *ui.Context) {
+	k := &s.lk
+	today := time.Now()
+	days := s.svc.Collection.Daily((heatmapWeeks-1)*7 + int(today.Weekday()) + 1)
+	most := 0
+	for _, d := range days {
+		most = max(most, d.Plays)
+	}
+	level := func(plays int) ui.Color {
+		if plays == 0 {
+			return k.surface3
+		}
+		return k.surface3.Mix(k.accent, 0.25+0.75*float32(plays)/float32(max(most, 1)))
+	}
+	const cell, gap, top = 11, 3, 16
+	s.sectionTitle(c, locales.StatsHeatmap())
+	ui.Text(c, locales.StatsHeatmapNote()).FontSize(k.smallSize()).TextColor(k.muted).Margin(0, 0, 12)
+	ui.Column(c).Gap(4).Margin(0, 0, 48).Children(func() {
+		// The weeks share the width, each day a square at most cell wide;
+		// the month shows above the week its first day is in.
+		grid := ui.Box(c).FillWidth().Height(top + 7*(cell+gap)).Draw(func(p *ui.Painter, r ui.Rect) {
+			w := r.W / heatmapWeeks
+			side := min(w, (r.H-top)/7) - gap
+			for i, d := range days {
+				x, y := r.X+float32(i/7)*w, r.Y+top+float32(i%7)*(r.H-top)/7
+				p.Fill(ui.Rect{X: x, Y: y, W: side, H: side}, level(d.Plays), 2)
+				if t, err := time.ParseInLocation(time.DateOnly, d.Date, time.Local); err == nil && t.Day() == 1 {
+					p.Text(x, r.Y, monthName(t, false), k.captionSize(), k.muted)
+				}
+			}
+		})
+		// A box over each day, for the pointer to tell it.
+		grid.Children(func() {
+			ui.Row(c).Absolute().Top(top).Right(0).Bottom(0).Left(0).AlignItems(ui.Stretch).Children(func() {
+				for w := 0; w < heatmapWeeks; w++ {
+					ui.Column(c).Grow(1).Basis(0).MinWidth(0).AlignItems(ui.Stretch).Children(func() {
+						for d := w * 7; d < min(w*7+7, len(days)); d++ {
+							ui.Box(c).Grow(1).Basis(0).Tooltip(describeDay(days[d]))
+						}
+						for range w*7 + 7 - max(len(days), w*7) {
+							ui.Box(c).Grow(1).Basis(0)
+						}
+					})
+				}
+			})
+		})
+		ui.Row(c).Gap(gap).AlignItems(ui.Center).Margin(4, 0, 0).Children(func() {
+			ui.Text(c, locales.StatsLess()).FontSize(k.captionSize()).TextColor(k.muted).Margin(0, 4, 0, 0)
+			for _, f := range []float32{0, 0.25, 0.5, 0.75, 1} {
+				fill := k.surface3
+				if f > 0 {
+					fill = k.surface3.Mix(k.accent, 0.25+0.75*f)
+				}
+				ui.Box(c).Size(cell, cell).Radius(2).Background(fill)
+			}
+			ui.Text(c, locales.StatsMore()).FontSize(k.captionSize()).TextColor(k.muted).Margin(0, 0, 0, 4)
+		})
 	})
 }

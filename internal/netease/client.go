@@ -5,11 +5,14 @@ package netease
 
 import (
 	"context"
+	"crypto/rand"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"strconv"
 	"strings"
 	"sync"
@@ -38,15 +41,24 @@ var (
 // Client asks NetEase Cloud Music, as the user's session when it has one.
 type Client struct {
 	HTTP *http.Client
-	// BaseURL is where the weapi is asked; tests change it.
+	// BaseURL is where the weapi is asked, and eapiURL the eapi; tests
+	// change them.
 	BaseURL string
+	eapiURL string
+	// deviceID names this client to the eapi.
+	deviceID string
 
 	mu     sync.Mutex
 	musicU string
 }
 
 // New returns a client without a session.
-func New() *Client { return &Client{HTTP: &http.Client{Timeout: 20 * time.Second}, BaseURL: origin} }
+func New() *Client {
+	id := make([]byte, 16)
+	rand.Read(id)
+	return &Client{HTTP: &http.Client{Timeout: 20 * time.Second}, BaseURL: origin, eapiURL: "https://interface.music.163.com",
+		deviceID: strings.ToUpper(hex.EncodeToString(id))}
+}
 
 // SetSession signs the client in with the value of a MUSIC_U cookie, or out
 // with "".
@@ -84,14 +96,38 @@ func (c *Client) call(ctx context.Context, path string, params map[string]any, o
 	if err != nil {
 		return err
 	}
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, c.BaseURL+"/weapi"+path, strings.NewReader(form.Encode()))
+	return c.post(ctx, c.BaseURL+"/weapi"+path, path, form, "os=pc; appver=2.10.13", out)
+}
+
+// eapiCookie is the desktop app's cookie, which the eapi's newer pages
+// answer only with.
+const eapiCookie = "os=pc; appver=3.0.18.203152; osver=Microsoft-Windows-10; channel=netease"
+
+// eapiCall posts params to an eapi path as the desktop app does, with the
+// device of the client, and decodes the answer into out.
+func (c *Client) eapiCall(ctx context.Context, path string, params map[string]any, out any) error {
+	header, err := json.Marshal(map[string]string{"os": "pc", "appver": "3.0.18.203152", "osver": "Microsoft-Windows-10", "deviceId": c.deviceID})
+	if err != nil {
+		return err
+	}
+	params["header"] = string(header)
+	body, err := json.Marshal(params)
+	if err != nil {
+		return err
+	}
+	return c.post(ctx, c.eapiURL+"/eapi"+path, path, eapi("/api"+path, body), eapiCookie+"; deviceId="+c.deviceID, out)
+}
+
+// post sends a sealed form, as the session when there is one, and decodes
+// the answer into out.
+func (c *Client) post(ctx context.Context, address, path string, form url.Values, cookie string, out any) error {
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, address, strings.NewReader(form.Encode()))
 	if err != nil {
 		return err
 	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	req.Header.Set("Referer", origin+"/")
 	req.Header.Set("User-Agent", userAgent)
-	cookie := "os=pc; appver=2.10.13"
 	if u := c.Session(); u != "" {
 		cookie += "; " + CookieName + "=" + u
 	}

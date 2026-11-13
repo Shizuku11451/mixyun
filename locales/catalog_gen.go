@@ -12448,6 +12448,16 @@ func (msgs Messages) PanelGoToAlbum() string {
 	return Catalog.Format(msgs.locale, "panelGoToAlbum", nil)
 }
 
+// PanelExportCover says "Export cover…"
+// in the language the app shows.
+func PanelExportCover() string { return In(i18n.Locale()).PanelExportCover() }
+
+// PanelExportCover says "Export cover…"
+// in the language of msgs.
+func (msgs Messages) PanelExportCover() string {
+	return Catalog.Format(msgs.locale, "panelExportCover", nil)
+}
+
 // PanelOpenIn says "Open in {source}"
 // in the language the app shows.
 func PanelOpenIn(source string) string { return In(i18n.Locale()).PanelOpenIn(source) }
@@ -18350,6 +18360,86 @@ func StatsArtistPlays(artist string, plays int) string {
 // in the language of msgs.
 func (msgs Messages) StatsArtistPlays(artist string, plays int) string {
 	return Catalog.Format(msgs.locale, "statsArtistPlays", map[string]any{"artist": artist, "plays": plays})
+}
+
+// StatsHeatmap says "Listening activity"
+// in the language the app shows.
+func StatsHeatmap() string { return In(i18n.Locale()).StatsHeatmap() }
+
+// StatsHeatmap says "Listening activity"
+// in the language of msgs.
+func (msgs Messages) StatsHeatmap() string {
+	return Catalog.Format(msgs.locale, "statsHeatmap", nil)
+}
+
+// StatsHeatmapNote says "Plays each day over the last year."
+// in the language the app shows.
+func StatsHeatmapNote() string { return In(i18n.Locale()).StatsHeatmapNote() }
+
+// StatsHeatmapNote says "Plays each day over the last year."
+// in the language of msgs.
+func (msgs Messages) StatsHeatmapNote() string {
+	return Catalog.Format(msgs.locale, "statsHeatmapNote", nil)
+}
+
+// StatsLess says "Less"
+// in the language the app shows.
+func StatsLess() string { return In(i18n.Locale()).StatsLess() }
+
+// StatsLess says "Less"
+// in the language of msgs.
+func (msgs Messages) StatsLess() string {
+	return Catalog.Format(msgs.locale, "statsLess", nil)
+}
+
+// StatsMore says "More"
+// in the language the app shows.
+func StatsMore() string { return In(i18n.Locale()).StatsMore() }
+
+// StatsMore says "More"
+// in the language of msgs.
+func (msgs Messages) StatsMore() string {
+	return Catalog.Format(msgs.locale, "statsMore", nil)
+}
+
+// StatsByLanguage says "By language"
+// in the language the app shows.
+func StatsByLanguage() string { return In(i18n.Locale()).StatsByLanguage() }
+
+// StatsByLanguage says "By language"
+// in the language of msgs.
+func (msgs Messages) StatsByLanguage() string {
+	return Catalog.Format(msgs.locale, "statsByLanguage", nil)
+}
+
+// StatsByGenre says "By genre"
+// in the language the app shows.
+func StatsByGenre() string { return In(i18n.Locale()).StatsByGenre() }
+
+// StatsByGenre says "By genre"
+// in the language of msgs.
+func (msgs Messages) StatsByGenre() string {
+	return Catalog.Format(msgs.locale, "statsByGenre", nil)
+}
+
+// StatsGenreNote says "NetEase Cloud Music songs, as their wiki tells their genre."
+// in the language the app shows.
+func StatsGenreNote() string { return In(i18n.Locale()).StatsGenreNote() }
+
+// StatsGenreNote says "NetEase Cloud Music songs, as their wiki tells their genre."
+// in the language of msgs.
+func (msgs Messages) StatsGenreNote() string {
+	return Catalog.Format(msgs.locale, "statsGenreNote", nil)
+}
+
+// StatsOtherLanguage says "Other"
+// in the language the app shows.
+func StatsOtherLanguage() string { return In(i18n.Locale()).StatsOtherLanguage() }
+
+// StatsOtherLanguage says "Other"
+// in the language of msgs.
+func (msgs Messages) StatsOtherLanguage() string {
+	return Catalog.Format(msgs.locale, "statsOtherLanguage", nil)
 }
 
 // MarketplaceThemes says "themes"

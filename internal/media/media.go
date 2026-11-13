@@ -109,6 +109,11 @@ type Track struct {
 	// Episode is set for a podcast's episode: what it has besides a
 	// track's.
 	Episode *Episode `json:"episode,omitempty"`
+	// Genre and Language are a NetEase song's, as 流行 and 华语: from its
+	// 音乐百科 once it played, or the tag of Roam it came by. They are
+	// empty for other tracks.
+	Genre    string `json:"genre,omitempty"`
+	Language string `json:"language,omitempty"`
 }
 
 // The kinds of video of YouTube Music that MusicVideo takes, as VideoType
