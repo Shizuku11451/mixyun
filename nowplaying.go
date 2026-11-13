@@ -10,8 +10,8 @@ import (
 )
 
 // nowPlayingPage gives the track playing the whole pane: its sleeve under
-// a visualizer, or the picture of a music video, its credits, the
-// transport, its lyrics, and what relates to it.
+// a visualizer, or the picture of a music video, with its credits under
+// it, its lyrics, and what relates to it.
 func (s *shell) nowPlayingPage(c *ui.Context) {
 	k := &s.lk
 	cur, ok := s.st.Current()
@@ -31,10 +31,11 @@ func (s *shell) nowPlayingPage(c *ui.Context) {
 		if stack {
 			grid.Column()
 		}
+		// The transport is the player bar's: the pane keeps the lyrics room.
 		grid.Children(func() {
-			s.sleeve(c, t, sleeve)
-			ui.Column(c).Grow(1).MinWidth(0).Gap(24).Children(func() {
-				ui.Row(c).Gap(8).Wrap().Children(func() {
+			ui.Column(c).Width(sleeve).Shrink(0).Gap(16).Children(func() {
+				s.sleeve(c, t, sleeve)
+				ui.Row(c).Gap(8).Wrap().AlignItems(ui.Center).Children(func() {
 					s.sourceMark(c, t.Source, false)
 					s.artistLinks(c, "now-artists", t.Artists, k.text)
 					if t.Album != nil && t.Album.Name != "" {
@@ -53,22 +54,10 @@ func (s *shell) nowPlayingPage(c *ui.Context) {
 						ui.Text(c, "·").FontSize(k.smallSize()).TextColor(k.muted)
 						ui.Text(c, k.sentence(locales.NowPlayingWaiting())).FontSize(k.smallSize()).TextColor(k.muted)
 					}
-				})
-				s.progress(c)
-				ui.Row(c).Gap(12).Children(func() {
-					name, label := toggleOf(s.st)
-					if s.roundButton(c, "now-toggle", name, label, true, s.st.Loading).Clicked() {
-						s.p.Toggle()
-					}
-					if s.roundButton(c, "now-next", "next", locales.PlayerNext(), false, false).Clicked() {
-						s.p.Next()
-					}
-					ui.Row(c).Children(func() {
-						s.likeButton(c, "now-like", t, 18)
-						s.dislikeButton(c, "now-dislike", t, 18)
-					})
 					s.videoToggle(c)
 				})
+			})
+			ui.Column(c).Grow(1).MinWidth(0).Gap(24).Children(func() {
 				ui.Column(c).Height(420).Children(func() { s.lyrics(c, true) })
 				s.pluginWidgets(c)
 			})

@@ -66,21 +66,29 @@ func (p *lyricsPick) chosen() []string {
 	return out
 }
 
-// lyricsShareBar is the row above the lyrics of t that starts choosing
-// lines, and, while lines are chosen, saves them or stops.
+// lyricsShareStart is the quiet link, at the end of the switches above the
+// lyrics of t, that starts choosing lines to share.
+func (s *shell) lyricsShareStart(c *ui.Context, t media.Track, where string) {
+	if s.lyricPick.picking(t.ID) {
+		return
+	}
+	if s.link(c, "lyrics-share-start-"+where, locales.LyricsShareLines()) {
+		s.lyricPick = lyricsPick{on: true, track: t.ID}
+	}
+}
+
+// lyricsShareBar is the row above the lyrics of t, while lines of them are
+// being chosen, that saves them or stops.
 func (s *shell) lyricsShareBar(c *ui.Context, t media.Track, ly lyrics.Lyrics, where string) {
 	k := &s.lk
 	pick := &s.lyricPick
 	if pick.on && pick.track != t.ID {
 		*pick = lyricsPick{}
 	}
+	if !pick.picking(t.ID) {
+		return
+	}
 	ui.Row(c.Key("lyrics-share-"+where)).Gap(8).AlignItems(ui.Center).Wrap().Padding(0, 24, 8).Children(func() {
-		if !pick.picking(t.ID) {
-			if s.button(c, "lyrics-share-start-"+where, locales.LyricsShareLines(), false).Clicked() {
-				*pick = lyricsPick{on: true, track: t.ID}
-			}
-			return
-		}
 		n := len(pick.lines)
 		hint := locales.LyricsShareHint()
 		if n > 0 {

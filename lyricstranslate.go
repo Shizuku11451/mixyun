@@ -163,9 +163,7 @@ func (s *shell) lyricsChoices(c *ui.Context, t media.Track, ly lyrics.Lyrics, wh
 	if canRomanize {
 		x.romanize = romanize
 	}
-	if ly.Synced || canTranslate || canRomanize {
-		s.lyricsSwitches(c, ly, lang, where, canTranslate, canRomanize, &x)
-	}
+	s.lyricsSwitches(c, ly, lang, where, canTranslate, canRomanize, &x, func() { s.lyricsShareStart(c, t, where) })
 	if x.ja && x.romanize != "" {
 		x.romaji = s.lyricsRomaji(c, t, ly, where)
 	}
@@ -226,8 +224,9 @@ func translationKey(t media.Track, into string) string {
 // lyricsSwitches shows the choices above lyrics in the language lang:
 // synced or as plain text, when they are synced; translated, when they
 // can be; and in Latin letters, under each line or in its place, when
-// they can be. It changes x as the user chooses.
-func (s *shell) lyricsSwitches(c *ui.Context, ly lyrics.Lyrics, lang, where string, canTranslate, canRomanize bool, x *lyricsExtra) {
+// they can be; and, last, share, which starts sharing lines. It changes x
+// as the user chooses.
+func (s *shell) lyricsSwitches(c *ui.Context, ly lyrics.Lyrics, lang, where string, canTranslate, canRomanize bool, x *lyricsExtra, share func()) {
 	ui.Row(c).Padding(0, 24, 8).GapX(16).GapY(8).Wrap().AlignItems(ui.Center).Shrink(0).Children(func() {
 		if ly.Synced {
 			mode := 0
@@ -250,6 +249,7 @@ func (s *shell) lyricsSwitches(c *ui.Context, ly lyrics.Lyrics, lang, where stri
 				s.save()
 			}
 		}
+		defer share()
 		if !canRomanize {
 			return
 		}
