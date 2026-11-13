@@ -2,6 +2,8 @@ package netease
 
 import (
 	"context"
+	"crypto/md5"
+	"encoding/base64"
 	"encoding/json"
 	"math/rand/v2"
 	"slices"
@@ -25,6 +27,7 @@ type album struct {
 	ID          int64  `json:"id"`
 	Name        string `json:"name"`
 	PicURL      string `json:"picUrl"`
+	PicID       int64  `json:"picId"` // of the albums suggested, which have no picUrl
 	Artist      *ref   `json:"artist"`
 	Artists     []ref  `json:"artists"`
 	Size        int    `json:"size"`
@@ -79,6 +82,19 @@ func artwork(pic string) []media.Image {
 		{URL: pic + "?param=120y120", Width: 120, Height: 120},
 		{URL: pic + "?param=544y544", Width: 544, Height: 544},
 	}
+}
+
+// picURL returns the address of the picture of id, as NetEase makes it
+// of the ID alone: the MD5, in base64, of its digits each XORed with a
+// character of a fixed key.
+func picURL(id int64) string {
+	const key = "3go8&$8*3*3h0k(2)2"
+	digits := []byte(strconv.FormatInt(id, 10))
+	for i := range digits {
+		digits[i] ^= key[i%len(key)]
+	}
+	sum := md5.Sum(digits)
+	return "https://p1.music.126.net/" + base64.URLEncoding.EncodeToString(sum[:]) + "/" + strconv.FormatInt(id, 10) + ".jpg"
 }
 
 func refs(in []ref) []media.Ref {
@@ -138,13 +154,17 @@ func toAlbum(a album) media.Album {
 	if len(artists) == 0 && a.Artist != nil {
 		artists = []ref{*a.Artist}
 	}
+	pic := a.PicURL
+	if pic == "" && a.PicID != 0 {
+		pic = picURL(a.PicID)
+	}
 	out := media.Album{
 		ID:         id(a.ID),
 		Source:     media.SourceNetEase,
 		Title:      a.Name,
 		Artists:    refs(artists),
 		Kind:       media.AlbumKindAlbum,
-		Artwork:    artwork(a.PicURL),
+		Artwork:    artwork(pic),
 		TrackCount: a.Size,
 		Tracks:     []media.Track{},
 		URL:        origin + "/#/album?id=" + strconv.FormatInt(a.ID, 10),

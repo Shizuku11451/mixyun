@@ -27,7 +27,7 @@ func TestSuggestions(t *testing.T) {
 			fmt.Fprint(w, `{"code":200,"result":{"order":["artists","songs","albums"],
 				"songs":[{"id":1,"name":"a"},{"id":2,"name":"b"},{"id":3,"name":"c"}],
 				"artists":[{"id":6452,"name":"周杰伦"}],
-				"albums":[{"id":9,"name":"叶惠美"}],
+				"albums":[{"id":9,"name":"叶惠美","picId":109951169164936450}],
 				"playlists":[{"id":7,"name":"not in the order"}]}}`)
 		case "/weapi/v3/song/detail":
 			fmt.Fprint(w, `{"code":200,"songs":[{"id":1,"name":"a","al":{"id":9,"picUrl":"https://p/x.jpg"}},{"id":2,"name":"b"}]}`)
@@ -54,6 +54,10 @@ func TestSuggestions(t *testing.T) {
 	}
 	if len(got.Items) > 1 && (got.Items[1].Kind != media.ItemTrack || len(got.Items[1].Track.Artwork) == 0) {
 		t.Errorf("the first song came without its cover: %+v", got.Items[1].Track)
+	}
+	// An album comes with the ID of its picture alone, which tells its address.
+	if al := got.Items[3].Album; len(al.Artwork) == 0 || al.Artwork[0].URL != "https://p1.music.126.net/NWv6PtSBkyWZzqbJVzBr7g==/109951169164936450.jpg?param=120y120" {
+		t.Errorf("the album's cover: %+v", al.Artwork)
 	}
 	failItems = true
 	if got, err := c.Suggestions(context.Background(), "周杰"); err != nil || len(got.Searches) != 2 || len(got.Items) != 0 {
