@@ -6,6 +6,41 @@ All notable changes to MixMusic are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-11-13
+
+Status bar lyrics show the line sung now in the menu bar or the taskbar,
+stats gain a heatmap, languages and genres, and synced lyrics glide as
+Apple Music's do.
+
+### Added
+
+- Export cover…, in the menu of a song, saves its cover as a PNG at the
+  largest size its service gives.
+- Stats show a year of listening as a heatmap, a square for each day as
+  GitHub shows contributions, and plays by language and by genre: a
+  NetEase Cloud Music song's as its 音乐百科 tells them, which MixMusic
+  reads once it played, while signed in; other songs' language as the
+  letters of their title tell it.
+- Status bar lyrics: the line sung now shows in the menu bar on macOS, and
+  in the taskbar on Windows, left of the notification area, turned on from
+  the player bar's button.
+
+### Changed
+
+- Settings › About links to this fork, and to the original project it
+  credits; updates and problem reports go to the fork's GitHub.
+- **Synced lyrics move as Apple Music's do:** they glide to the line sung
+  now rather than jump, lines fade between their colours, the line sung now
+  grows a little, and on the now playing page the lines around it blur the
+  farther they are, until you scroll them.
+- The app says NetEase Cloud Music (网易云音乐) where it said YouTube Music:
+  search, the player bar, playback, the equalizer, the library and stats.
+
+### Fixed
+
+- Stats count the plays of NetEase Cloud Music songs, which showed as 0,
+  and top artists show their pictures.
+
 ## [0.6.0] - 2026-11-13
 
 NetEase Cloud Music (网易云音乐) takes YouTube Music's place, and Roam
@@ -1769,7 +1804,8 @@ player, for macOS, Windows and Linux.
 - Apps for macOS 12 and later (Apple silicon and Intel), Windows 10 and 11,
   and Linux, on x64 and Arm64.
 
-[Unreleased]: https://github.com/fzn0x/mixmusic/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/fzn0x/mixmusic/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/fzn0x/mixmusic/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/fzn0x/mixmusic/compare/v0.5.11...v0.6.0
 [0.5.11]: https://github.com/fzn0x/mixmusic/compare/v0.5.10...v0.5.11
 [0.5.10]: https://github.com/fzn0x/mixmusic/compare/v0.5.9...v0.5.10
