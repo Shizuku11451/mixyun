@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"math/rand/v2"
-	"slices"
 	"strconv"
 	"strings"
 	"time"
@@ -553,19 +552,7 @@ func (c *Client) Roam(ctx context.Context, tag string) ([]media.Track, error) {
 		}
 	}
 	rand.Shuffle(len(ids), func(i, j int) { ids[i], ids[j] = ids[j], ids[i] })
-	tracks, err := c.songs(ctx, ids[:min(100, len(ids))])
-	// The stats count songs by the language and genre they were roamed by.
-	for i := range tracks {
-		switch {
-		case tag == "欧美":
-			tracks[i].Language = "英语" // as 音乐百科 names it
-		case slices.Contains(RoamTags[1], tag):
-			tracks[i].Language = tag
-		case slices.Contains(RoamTags[2], tag):
-			tracks[i].Genre = tag
-		}
-	}
-	return tracks, err
+	return c.songs(ctx, ids[:min(100, len(ids))])
 }
 
 // SongWiki returns a song's genre and language as its 音乐百科 tells
