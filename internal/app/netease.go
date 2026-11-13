@@ -248,10 +248,19 @@ func (c *Collection) NetEaseLiked(ctx context.Context) (media.Playlist, error) {
 	return media.Playlist{Source: media.SourceNetEase, Tracks: []media.Track{}}, nil
 }
 
-// Roam returns songs of a tag of netease.RoamTags to play shuffled, but
-// those the settings hide, as a radio leaves them out.
+// Roam returns songs of a tag of netease.RoamTags to play shuffled, or
+// after what the user liked for netease.RoamLiked, but those the settings
+// hide, as a radio leaves them out.
 func (c *Catalog) Roam(ctx context.Context, tag string) ([]media.Track, error) {
-	tracks, err := c.a.netease.Roam(ctx, tag)
+	var tracks []media.Track
+	var err error
+	if tag != netease.RoamLiked {
+		tracks, err = c.a.netease.Roam(ctx, tag)
+	} else if uid := c.a.neteaseUserID(ctx); uid != "" {
+		tracks, err = c.a.netease.RoamLiked(ctx, uid)
+	} else {
+		err = netease.ErrSignedOut
+	}
 	if err != nil {
 		return nil, err
 	}

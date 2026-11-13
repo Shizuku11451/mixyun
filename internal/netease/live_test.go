@@ -46,6 +46,15 @@ func TestLive(t *testing.T) {
 	// 音乐百科 answers only a session: MIXMUSIC_NETEASE_U is its MUSIC_U.
 	if u := os.Getenv("MIXMUSIC_NETEASE_U"); u != "" {
 		c.SetSession(u)
+		me, err := c.Me(ctx)
+		if err != nil {
+			t.Fatalf("Me: %v", err)
+		}
+		if liked, err := c.RoamLiked(ctx, me.ID); err != nil || len(liked) == 0 {
+			t.Fatalf("RoamLiked: %v, %d tracks", err, len(liked))
+		} else {
+			t.Logf("roaming the likes: %d tracks, first %s", len(liked), liked[0].Title)
+		}
 		if genre, language, err := c.SongWiki(ctx, "186016"); err != nil || genre == "" || language == "" {
 			t.Fatalf("SongWiki: %q %q %v", genre, language, err)
 		} else {

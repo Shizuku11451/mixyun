@@ -5076,6 +5076,8 @@
     }
   },
   "roamTitle": "Roam",
+  "roamForYou": "For you",
+  "roamLiked": "Your likes",
   "roamByEra": "By era",
   "roamByLanguage": "By language",
   "roamByGenre": "By genre",

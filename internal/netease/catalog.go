@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"math/rand/v2"
+	"slices"
 	"strconv"
 	"strings"
 	"time"
@@ -617,6 +618,58 @@ func (c *Client) Roam(ctx context.Context, tag string) ([]media.Track, error) {
 		}
 	}
 	rand.Shuffle(len(ids), func(i, j int) { ids[i], ids[j] = ids[j], ids[i] })
+	return c.songs(ctx, ids[:min(100, len(ids))])
+}
+
+// RoamLiked is the tag of Roam that roams after what the user liked,
+// which no tag of NetEase's is named.
+const RoamLiked = "liked"
+
+// RoamLiked returns up to 100 songs after those userID liked, as NetEase's
+// 心动模式 plays them from one of them picked at random: songs they liked,
+// and ones like them. When it has none, the liked songs themselves,
+// shuffled.
+func (c *Client) RoamLiked(ctx context.Context, userID string) ([]media.Track, error) {
+	lists, err := c.UserPlaylists(ctx, userID)
+	if err != nil {
+		return nil, err
+	}
+	// The first playlist they made is their liked songs.
+	i := slices.IndexFunc(lists, func(p media.Playlist) bool { return p.Mine })
+	if i < 0 {
+		return nil, nil
+	}
+	_, liked, err := media.ParseID(lists[i].ID)
+	if err != nil {
+		return nil, err
+	}
+	var r struct {
+		Playlist playlist `json:"playlist"`
+	}
+	if err := c.call(ctx, "/v6/playlist/detail", map[string]any{"id": liked, "n": 0, "s": 0}, &r); err != nil {
+		return nil, err
+	}
+	ids := make([]int64, len(r.Playlist.TrackIDs))
+	for i, t := range r.Playlist.TrackIDs {
+		ids[i] = t.ID
+	}
+	if len(ids) == 0 {
+		return nil, nil
+	}
+	rand.Shuffle(len(ids), func(i, j int) { ids[i], ids[j] = ids[j], ids[i] })
+	var heart struct {
+		Data []struct {
+			SongInfo song `json:"songInfo"`
+		} `json:"data"`
+	}
+	err = c.call(ctx, "/playmode/intelligence/list", map[string]any{"songId": ids[0], "startMusicId": ids[0], "playlistId": liked, "type": "fromPlayOne", "count": 1}, &heart)
+	songs := make([]song, len(heart.Data))
+	for i, d := range heart.Data {
+		songs[i] = d.SongInfo
+	}
+	if tracks := toTracks(songs); err == nil && len(tracks) > 0 {
+		return tracks[:min(100, len(tracks))], nil
+	}
 	return c.songs(ctx, ids[:min(100, len(ids))])
 }
 

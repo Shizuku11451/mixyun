@@ -16922,6 +16922,26 @@ func (msgs Messages) RoamTitle() string {
 	return Catalog.Format(msgs.locale, "roamTitle", nil)
 }
 
+// RoamForYou says "For you"
+// in the language the app shows.
+func RoamForYou() string { return In(i18n.Locale()).RoamForYou() }
+
+// RoamForYou says "For you"
+// in the language of msgs.
+func (msgs Messages) RoamForYou() string {
+	return Catalog.Format(msgs.locale, "roamForYou", nil)
+}
+
+// RoamLiked says "Your likes"
+// in the language the app shows.
+func RoamLiked() string { return In(i18n.Locale()).RoamLiked() }
+
+// RoamLiked says "Your likes"
+// in the language of msgs.
+func (msgs Messages) RoamLiked() string {
+	return Catalog.Format(msgs.locale, "roamLiked", nil)
+}
+
 // RoamByEra says "By era"
 // in the language the app shows.
 func RoamByEra() string { return In(i18n.Locale()).RoamByEra() }
