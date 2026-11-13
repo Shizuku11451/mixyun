@@ -177,6 +177,10 @@ func (c *Catalog) TranslateLyrics(ctx context.Context, track media.Track, l lyri
 	for i, line := range l.Lines {
 		lines[i] = line.Text
 	}
+	// NetEase Cloud Music's own translation of its lyrics comes first.
+	if tr, ok := c.neteaseTranslation(ctx, track, l, to); ok {
+		return tr, nil
+	}
 	key := translationKey(track.ID, to, lines)
 	if tr, ok := c.a.translations.get(key, len(lines)); ok {
 		return tr, nil

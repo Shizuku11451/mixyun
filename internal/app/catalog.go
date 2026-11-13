@@ -1,6 +1,7 @@
 package app
 
 import (
+	"cmp"
 	"context"
 	"errors"
 	"fmt"
@@ -656,20 +657,62 @@ func (c *Catalog) neteaseLyrics(ctx context.Context, track media.Track) (lyrics.
 		return lyrics.Lyrics{}, false
 	}
 	_, native, _ := media.ParseID(ne.ID)
-	lrc, yrc, _, err := c.a.netease.Lyrics(ctx, native)
+	found, err := c.a.netease.Lyrics(ctx, native)
 	if err != nil {
 		log.Printf("mixmusic: the lyrics of %s, on NetEase Cloud Music: %v", track.ID, err)
 		return lyrics.Lyrics{}, false
 	}
 	// Word by word when NetEase has them so, which light as they're sung.
-	lines := lyrics.ParseYRC(yrc)
+	lines := lyrics.ParseYRC(found.YRC)
 	if len(lines) < 2 {
-		lines = lyrics.ParseLRC(lrc)
+		lines = lyrics.ParseLRC(found.LRC)
 	}
 	if len(lines) < 2 {
 		return lyrics.Lyrics{}, false
 	}
-	l := lyrics.Lyrics{Synced: true, Lines: lines, Source: "NetEase Cloud Music"}
+	l := lyrics.Lyrics{Synced: true, Lines: lines, Source: neteaseLyricsSource}
 	l.Language = lyrics.GuessLanguage(l.Lines)
 	return l, true
+}
+
+// neteaseLyricsSource names NetEase Cloud Music as the source of lyrics.
+const neteaseLyricsSource = "NetEase Cloud Music"
+
+// neteaseTranslation returns NetEase Cloud Music's own translation of
+// its lyrics l of a track into Chinese, the one language it has them in,
+// with their words in Latin letters where it has those: its listeners
+// wrote them for the song, line by line. None for lyrics of elsewhere,
+// another language, or a song it has no translation of.
+func (c *Catalog) neteaseTranslation(ctx context.Context, track media.Track, l lyrics.Lyrics, to string) (lyrics.Translation, bool) {
+	if to != "zh" || l.Source != neteaseLyricsSource {
+		return lyrics.Translation{}, false
+	}
+	ne, ok := c.a.matcher.Matched(track)
+	if !ok || ne.Source != media.SourceNetEase {
+		return lyrics.Translation{}, false
+	}
+	_, native, _ := media.ParseID(ne.ID)
+	found, err := c.a.netease.Lyrics(ctx, native)
+	if err != nil {
+		return lyrics.Translation{}, false
+	}
+	// Those timed as the lines shown: as the lyrics word by word, or as
+	// the LRC, which start their lines a little apart.
+	meaning, roman := found.Translation, found.Roman
+	if len(l.Lines) > 0 && l.Lines[0].Words != nil {
+		meaning, roman = cmp.Or(found.YRCTranslation, meaning), cmp.Or(found.YRCRoman, roman)
+	}
+	meanings, romans := lyrics.AlignLRC(l.Lines, meaning), lyrics.AlignLRC(l.Lines, roman)
+	tr := lyrics.Translation{From: l.Language, To: to, Lines: make([]lyrics.TranslatedLine, len(l.Lines))}
+	some := false
+	for i, line := range l.Lines {
+		if meanings[i] != line.Text {
+			tr.Lines[i].Text = meanings[i]
+		}
+		if romans[i] != line.Text {
+			tr.Lines[i].Romanized = romans[i]
+		}
+		some = some || tr.Lines[i].Text != ""
+	}
+	return tr, some
 }

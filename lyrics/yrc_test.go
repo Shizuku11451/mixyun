@@ -1,6 +1,7 @@
 package lyrics
 
 import (
+	"slices"
 	"strings"
 	"testing"
 )
@@ -30,5 +31,18 @@ func TestParseYRC(t *testing.T) {
 			}
 			from += at + len(w.Text)
 		}
+	}
+}
+
+// TestAlignLRC gives each line the translation sung at its time, or the
+// nearest within half a second, and none to a line without one.
+func TestAlignLRC(t *testing.T) {
+	lines := []Line{{TimeMs: 11460}, {TimeMs: 14190}, {TimeMs: 20000}, {TimeMs: 30000}}
+	got := AlignLRC(lines, "[by:someone]\n[00:11.310]one\n[00:13.959]two\n[00:19.400]far\n[00:30.000]four")
+	if want := []string{"one", "two", "", "four"}; !slices.Equal(got, want) {
+		t.Errorf("AlignLRC = %q, want %q", got, want)
+	}
+	if got := AlignLRC(lines, ""); len(got) != 4 || got[0] != "" {
+		t.Errorf("without a translation: %q", got)
 	}
 }

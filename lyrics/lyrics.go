@@ -303,6 +303,31 @@ func ParseLRC(lrc string) []Line {
 	return lines
 }
 
+// AlignLRC returns, for each of lines, the text of the line of lrc sung
+// at its time, or the nearest within half a second, as a translation in
+// LRC has the lines of the lyrics it translates; "" for a line without
+// one.
+func AlignLRC(lines []Line, lrc string) []string {
+	out := make([]string, len(lines))
+	timed := ParseLRC(lrc)
+	for i, line := range lines {
+		// The first at or after the line's time, or the one before it.
+		at, _ := slices.BinarySearchFunc(timed, line.TimeMs, func(l Line, ms int) int { return l.TimeMs - ms })
+		best, gap := -1, 501
+		for _, k := range []int{at - 1, at} {
+			if k >= 0 && k < len(timed) {
+				if d := max(timed[k].TimeMs-line.TimeMs, line.TimeMs-timed[k].TimeMs); d < gap {
+					best, gap = k, d
+				}
+			}
+		}
+		if best >= 0 {
+			out[i] = timed[best].Text
+		}
+	}
+	return out
+}
+
 // tagTime returns the time of a [mm:ss.xx] tag found at loc in s.
 func tagTime(s string, loc []int) int {
 	min, _ := strconv.Atoi(s[loc[2]:loc[3]])

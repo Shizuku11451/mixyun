@@ -524,26 +524,34 @@ func playlistShelf(title, key string, in []playlist) media.Shelf {
 	return media.Shelf{Title: title, Source: media.SourceNetEase, Items: items, Key: key}
 }
 
-// Lyrics returns a song's lyrics as LRC, synchronized word by word as
-// YRC when NetEase has them so, and their Chinese translation as LRC
-// when it has one.
-func (c *Client) Lyrics(ctx context.Context, native string) (lrc, yrc, translation string, err error) {
+// SongLyrics are a song's lyrics as NetEase has them: as LRC, and as YRC,
+// synchronized word by word, when it has them so; their Chinese
+// translation and their words in Latin letters, as LRC timed as each of
+// the two, when it has those. What it lacks is "".
+type SongLyrics struct {
+	LRC, Translation, Roman       string
+	YRC, YRCTranslation, YRCRoman string
+}
+
+// Lyrics returns a song's lyrics.
+func (c *Client) Lyrics(ctx context.Context, native string) (SongLyrics, error) {
+	type text struct {
+		Lyric string `json:"lyric"`
+	}
 	var r struct {
-		Lrc struct {
-			Lyric string `json:"lyric"`
-		} `json:"lrc"`
-		Yrc struct {
-			Lyric string `json:"lyric"`
-		} `json:"yrc"`
-		Tlyric struct {
-			Lyric string `json:"lyric"`
-		} `json:"tlyric"`
+		Lrc      text `json:"lrc"`
+		Tlyric   text `json:"tlyric"`
+		Romalrc  text `json:"romalrc"`
+		Yrc      text `json:"yrc"`
+		Ytlrc    text `json:"ytlrc"`
+		Yromalrc text `json:"yromalrc"`
 	}
 	params := map[string]any{"id": native, "cp": false, "lv": 0, "tv": 0, "rv": 0, "kv": 0, "yv": 0, "ytv": 0, "yrv": 0}
 	if err := c.call(ctx, "/song/lyric/v1", params, &r); err != nil {
-		return "", "", "", err
+		return SongLyrics{}, err
 	}
-	return r.Lrc.Lyric, r.Yrc.Lyric, r.Tlyric.Lyric, nil
+	return SongLyrics{LRC: r.Lrc.Lyric, Translation: r.Tlyric.Lyric, Roman: r.Romalrc.Lyric,
+		YRC: r.Yrc.Lyric, YRCTranslation: r.Ytlrc.Lyric, YRCRoman: r.Yromalrc.Lyric}, nil
 }
 
 // Audio is where a song's audio is.
