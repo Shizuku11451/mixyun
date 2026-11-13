@@ -262,6 +262,14 @@ func TestStreamNames(t *testing.T) {
 			t.Errorf("%s in %s: %s in %s", c.codec, c.mime, got, gotC)
 		}
 	}
+	for mime, want := range map[string]string{"audio/mpeg": "MP3", "audio/flac": "FLAC"} {
+		if s := trackStream(stream.Stream{MimeType: mime}); s.Codec != want || s.Container != want {
+			t.Errorf("NetEase's %s: %s in %s", mime, s.Codec, s.Container)
+		}
+	}
+	if neteaseLevel(stream.QualityBest) != "lossless" || neteaseLevel(stream.QualitySaver) != "standard" {
+		t.Error("NetEase's levels don't follow the quality")
+	}
 	if s := trackStream(stream.Stream{Live: true}); s.Codec != "AAC" || s.Container != "ADTS" {
 		t.Errorf("a live stream: %+v", s)
 	}

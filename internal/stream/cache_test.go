@@ -54,6 +54,9 @@ func TestCacheOffAndUnknownTypes(t *testing.T) {
 	if NewCache(t.TempDir(), 0).Begin("w3XzgjlKFjc", "audio/webm", 5) != nil {
 		t.Error("a cache of size 0 took a stream")
 	}
+	if NewCache(t.TempDir(), 100).Begin("ne186016", "audio/flac", 5) == nil {
+		t.Error("NetEase's FLAC wasn't taken")
+	}
 	if NewCache(t.TempDir(), 100).Begin("w3XzgjlKFjc", "video/x-unknown", 5) != nil {
 		t.Error("a stream of unknown type was taken")
 	}

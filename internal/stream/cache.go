@@ -29,6 +29,7 @@ var extensions = map[string]string{
 	"audio/webm": ".webm",
 	"audio/mp4":  ".m4a",
 	"audio/mpeg": ".mp3",
+	"audio/flac": ".flac",
 }
 
 // NewCache returns a cache in dir of at most limit bytes; 0 caches nothing.

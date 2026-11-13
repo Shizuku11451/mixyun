@@ -6,6 +6,7 @@ package app
 // it, and asks no service.
 
 import (
+	"cmp"
 	"context"
 	"errors"
 	"io/fs"
@@ -302,7 +303,8 @@ func readTrackFile(kind FileKind, path string, withTags bool) *TrackFile {
 // trackStream is what Track info tells of a stream, in the words people
 // know its codec and its file by.
 func trackStream(s stream.Stream) *TrackStream {
-	ts := &TrackStream{Codec: codecName(s.Codec), Container: containerName(s.MimeType), Bitrate: s.Bitrate,
+	// NetEase names no codec: an MP3 or a FLAC file is its own.
+	ts := &TrackStream{Codec: cmp.Or(codecName(s.Codec), containerName(s.MimeType)), Container: containerName(s.MimeType), Bitrate: s.Bitrate,
 		Size: s.Size, Duration: s.Duration, Live: s.Live, Route: s.Route, AsAccount: s.AsAccount, URL: s.URL}
 	if len(s.Args) > 0 {
 		ts.Command = shellLine(append([]string{"yt-dlp"}, stream.ShownArgs(s.Args)...))
@@ -351,6 +353,10 @@ func containerName(mime string) string {
 		return "WebM"
 	case strings.HasPrefix(mime, "audio/mp4"):
 		return "MP4"
+	case strings.HasPrefix(mime, "audio/mpeg"):
+		return "MP3"
+	case strings.HasPrefix(mime, "audio/flac"):
+		return "FLAC"
 	}
 	return ""
 }

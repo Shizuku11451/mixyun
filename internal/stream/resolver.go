@@ -207,8 +207,8 @@ type Resolver struct {
 	// that: nil asks signed out.
 	Session func() []*http.Cookie
 	// NetEase, when set, finds the audio of NetEase Cloud Music songs, by
-	// their song ID.
-	NetEase func(ctx context.Context, songID string) (Stream, error)
+	// their song ID, in quality.
+	NetEase func(ctx context.Context, songID string, quality Quality) (Stream, error)
 
 	mu      sync.Mutex
 	quality Quality
@@ -395,7 +395,7 @@ func (r *Resolver) Forget(videoID string) {
 // the stream's URL, which carries the user's IP address.
 func (r *Resolver) resolve(ctx context.Context, videoID string, quality Quality) (Stream, error) {
 	if song, ok := NetEaseSong(videoID); ok && r.NetEase != nil {
-		return r.NetEase(ctx, song)
+		return r.NetEase(ctx, song, quality)
 	}
 	if s, ok := r.accountStream(ctx, videoID, quality); ok {
 		return s, nil

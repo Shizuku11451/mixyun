@@ -20,10 +20,16 @@ import (
 // system's credential store.
 const neteaseSecret = "netease-session"
 
-// neteaseLevel is the quality NetEase is asked for: 320 kbit/s MP3.
-// shortcut: one quality, whatever Settings › Quality says; map it to
-// "lossless" (FLAC) once members ask for it.
-const neteaseLevel = "exhigh"
+// neteaseLevel is the quality NetEase is asked for, as Settings › Quality
+// says: lossless (FLAC) at best, of which NetEase gives the most the
+// account may have, 320 kbit/s MP3 to one who isn't a member; 128 kbit/s
+// MP3 to save data.
+func neteaseLevel(q stream.Quality) string {
+	if q == stream.QualitySaver {
+		return "standard"
+	}
+	return "lossless"
+}
 
 // NetEaseAccount is the state of the NetEase Cloud Music account.
 type NetEaseAccount struct {
@@ -164,9 +170,16 @@ func (a *App) signOutNetEase() error {
 	return err
 }
 
-// neteaseStream finds the audio of a song, as the resolver asks.
-func (a *App) neteaseStream(ctx context.Context, songID string) (stream.Stream, error) {
-	au, err := a.netease.SongAudio(ctx, songID, neteaseLevel)
+// neteaseStream finds the audio of a song in quality, as the resolver
+// asks.
+func (a *App) neteaseStream(ctx context.Context, songID string, quality stream.Quality) (stream.Stream, error) {
+	level := neteaseLevel(quality)
+	au, err := a.netease.SongAudio(ctx, songID, level)
+	if errors.Is(err, netease.ErrUnavailable) && level == "lossless" {
+		// Unchecked that NetEase gives less to an account that may not
+		// have lossless: what it gave before is asked for then.
+		au, err = a.netease.SongAudio(ctx, songID, "exhigh")
+	}
 	if err != nil {
 		return stream.Stream{}, err
 	}
