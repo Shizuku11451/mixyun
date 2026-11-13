@@ -142,7 +142,7 @@ func TestFollowArtistSignedIn(t *testing.T) {
 		t.Errorf("no toast: %q", tt.Texts())
 	}
 	show(s, tt, "/library/artists")
-	if !showsText(tt.Texts(), "Followed on YouTube Music") || !tt.HasText("Harbour Lights") || showsText(tt.Texts(), "Followed in MixMusic") {
+	if !showsText(tt.Texts(), "Followed on NetEase Cloud Music") || !tt.HasText("Harbour Lights") || showsText(tt.Texts(), "Followed in MixMusic") {
 		t.Errorf("Library › Artists shows %q", tt.Texts())
 	}
 

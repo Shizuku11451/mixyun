@@ -205,7 +205,7 @@ func TestTrackFacts(t *testing.T) {
 			Format: audio.Format{Container: "WebM", Codec: "Opus", SampleRate: 48000, Channels: 2, Duration: 200 * time.Second}}}))
 	for label, want := range map[string]string{
 		"Source":   "Spotify, downloaded",
-		"Plays as": "Teardrop · Massive Attack, on YouTube Music",
+		"Plays as": "Teardrop · Massive Attack, on NetEase Cloud Music",
 		"Format":   "Opus in WebM",
 		"Bitrate":  "About 160 kbit/s, on average",
 		"Download": "/d/a.webm",
@@ -216,7 +216,7 @@ func TestTrackFacts(t *testing.T) {
 		}
 	}
 	// Not found yet.
-	if got := values(trackFacts(spotify, app.TrackInfo{Plays: app.PlaysEngine})); got["Format"] != "Play it to see its format, bitrate and the rest: MixMusic finds its recording on YouTube Music as it plays." {
+	if got := values(trackFacts(spotify, app.TrackInfo{Plays: app.PlaysEngine})); got["Format"] != "Play it to see its format, bitrate and the rest: MixMusic finds its recording on NetEase Cloud Music as it plays." {
 		t.Errorf("a Spotify track not found: %q", got)
 	}
 	if got := values(trackFacts(testTracks[0], app.TrackInfo{Plays: app.PlaysEngine})); got["Format"] != "Play it to see its format, bitrate and the rest: MixMusic finds its stream as it plays." {
@@ -269,7 +269,7 @@ func TestTrackInfoTellsHowAStreamWasFound(t *testing.T) {
 		{"player API", app.TrackStream{Route: stream.RoutePlayerAPI, URL: address},
 			[]string{"through YouTube's player API, with no yt-dlp", "No: asked for signed out"}, []string{"yt-dlp ran"}, ""},
 		{"account", app.TrackStream{Route: stream.RouteAccount, AsAccount: true, Command: "yt-dlp -J", URL: address},
-			[]string{"session of your YouTube Music account", "Yes: asked for as your YouTube Music account"}, []string{"No: asked"}, ""},
+			[]string{"session of your NetEase Cloud Music account", "Yes: asked for as your NetEase Cloud Music account"}, []string{"No: asked"}, ""},
 	} {
 		t.Run(c.name, func(t *testing.T) {
 			s := newTestShell(t)

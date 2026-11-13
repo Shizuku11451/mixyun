@@ -564,7 +564,7 @@ func TestNewYouTubePlaylist(t *testing.T) {
 	if err := tt.RightClick(testTracks[0].Title); err != nil {
 		t.Fatal(err)
 	}
-	if err := tt.ChooseMenuItem("Add to YouTube Music playlist", "New playlist…"); err != nil {
+	if err := tt.ChooseMenuItem("Add to NetEase Cloud Music playlist", "New playlist…"); err != nil {
 		t.Fatalf("%v: the menu holds %q", err, tt.Menu())
 	}
 	tt.Frame()
@@ -599,17 +599,17 @@ func TestAddToYouTubePlaylistListsYours(t *testing.T) {
 		}
 	}
 	open()
-	if err := tt.ChooseMenuItem("Add to YouTube Music playlist", "Chill"); err == nil {
+	if err := tt.ChooseMenuItem("Add to NetEase Cloud Music playlist", "Chill"); err == nil {
 		t.Error("a playlist the user saved takes tracks")
 	}
 	tt.CloseMenu()
 	open()
-	if err := tt.ChooseMenuItem("Add to YouTube Music playlist", "No playlists of yours"); err == nil || !strings.Contains(err.Error(), "no item") {
+	if err := tt.ChooseMenuItem("Add to NetEase Cloud Music playlist", "No playlists of yours"); err == nil || !strings.Contains(err.Error(), "no item") {
 		t.Errorf("the submenu says the user has no playlists: %v", err)
 	}
 	tt.CloseMenu()
 	open()
-	if err := tt.ChooseMenuItem("Add to YouTube Music playlist", "Late night"); err != nil {
+	if err := tt.ChooseMenuItem("Add to NetEase Cloud Music playlist", "Late night"); err != nil {
 		t.Errorf("%v: the menu holds %q", err, tt.Menu())
 	}
 }
@@ -665,7 +665,7 @@ func TestYouTubePlaylistsAhead(t *testing.T) {
 	s.loads["album:al-x"] = &loaded[media.Album]{done: true, value: media.Album{ID: "al-x", Title: "Mezzanine", Tracks: testTracks[:2]}}
 	tt := tester(t, s)
 	show(s, tt, "/album/al-x")
-	if items := menuOf(t, tt, testTracks[0].Title); slices.Contains(items, "Add to YouTube Music playlist") {
+	if items := menuOf(t, tt, testTracks[0].Title); slices.Contains(items, "Add to NetEase Cloud Music playlist") {
 		t.Errorf("signed out, the menu is %q", items)
 	}
 	for range 3 {
@@ -685,10 +685,10 @@ func TestYouTubePlaylistsAhead(t *testing.T) {
 		s.settle(t, func(player.State) bool { return youtubeOwn(s).done })
 	}
 	signIn()
-	if err := trackMenuChoice(t, tt, "Add to YouTube Music playlist", "Loading your playlists…"); err == nil || !strings.Contains(err.Error(), "no item") {
+	if err := trackMenuChoice(t, tt, "Add to NetEase Cloud Music playlist", "Loading your playlists…"); err == nil || !strings.Contains(err.Error(), "no item") {
 		t.Errorf("the first menu says they load: %v", err)
 	}
-	if err := trackMenuChoice(t, tt, "Add to YouTube Music playlist", ownPlaylist.Title); err != nil {
+	if err := trackMenuChoice(t, tt, "Add to NetEase Cloud Music playlist", ownPlaylist.Title); err != nil {
 		t.Errorf("the first menu doesn't list the user's playlist: %v", err)
 	}
 	for range 5 {
@@ -733,15 +733,15 @@ func TestYouTubePlaylistsLate(t *testing.T) {
 	s.loads["album:al-x"] = &loaded[media.Album]{done: true, value: media.Album{ID: "al-x", Title: "Mezzanine", Tracks: testTracks[:2]}}
 	tt := tester(t, s)
 	show(s, tt, "/album/al-x")
-	if err := trackMenuChoice(t, tt, "Add to YouTube Music playlist", "Loading your playlists…"); err == nil || !strings.Contains(err.Error(), "disabled") {
+	if err := trackMenuChoice(t, tt, "Add to NetEase Cloud Music playlist", "Loading your playlists…"); err == nil || !strings.Contains(err.Error(), "disabled") {
 		t.Errorf("before the answer, the menu: %v", err)
 	}
 	answers <- errors.New("YouTube Music is busy")
 	s.settle(t, func(player.State) bool { return youtubeOwn(s).done })
-	if err := trackMenuChoice(t, tt, "Add to YouTube Music playlist", "Couldn't load your playlists"); err == nil || !strings.Contains(err.Error(), "disabled") {
+	if err := trackMenuChoice(t, tt, "Add to NetEase Cloud Music playlist", "Couldn't load your playlists"); err == nil || !strings.Contains(err.Error(), "disabled") {
 		t.Errorf("once YouTube failed, the menu: %v", err)
 	}
-	if err := trackMenuChoice(t, tt, "Add to YouTube Music playlist", "No playlists of yours"); err == nil || !strings.Contains(err.Error(), "no item") {
+	if err := trackMenuChoice(t, tt, "Add to NetEase Cloud Music playlist", "No playlists of yours"); err == nil || !strings.Contains(err.Error(), "no item") {
 		t.Errorf("once YouTube failed, the menu says the user has none: %v", err)
 	}
 	for range 3 {
@@ -752,7 +752,7 @@ func TestYouTubePlaylistsLate(t *testing.T) {
 	if n := asked(); n != 2 {
 		t.Errorf("YouTube was asked %d times, not twice", n)
 	}
-	if err := trackMenuChoice(t, tt, "Add to YouTube Music playlist", ownPlaylist.Title); err != nil {
+	if err := trackMenuChoice(t, tt, "Add to NetEase Cloud Music playlist", ownPlaylist.Title); err != nil {
 		t.Errorf("asked again, the menu: %v", err)
 	}
 }
@@ -1069,7 +1069,7 @@ func TestKeepPlaylist(t *testing.T) {
 	s.loads["album:al-x"] = &loaded[media.Album]{done: true, value: media.Album{ID: "al-x", Title: "Mezzanine", Tracks: testTracks[:2]}}
 	tt := tester(t, s)
 	show(s, tt, "/album/al-x")
-	if err := trackMenuChoice(t, tt, "Add to YouTube Music playlist", made.Title); err != nil {
+	if err := trackMenuChoice(t, tt, "Add to NetEase Cloud Music playlist", made.Title); err != nil {
 		t.Errorf("the menu after it was made: %v", err)
 	}
 }
@@ -1322,7 +1322,7 @@ func TestYTDLPMissing(t *testing.T) {
 		t.Fatalf("no offer: %q", tt.Texts())
 	}
 	show(s, tt, "/settings/playback")
-	if !tt.HasText("Not found. Some YouTube Music tracks play only with it.") {
+	if !tt.HasText("Not found. Some NetEase Cloud Music tracks play only with it.") {
 		t.Errorf("settings say %q", tt.Texts())
 	}
 }
@@ -1441,7 +1441,7 @@ func TestSettingsKeep(t *testing.T) {
 		t.Errorf("showing the settings made Spotify playback %q", got)
 	}
 	click(t, s, tt, "playback")
-	click(t, s, tt, "in mixmusic, from youtube music")
+	click(t, s, tt, "in mixmusic, from netease cloud music")
 	if got := s.svc.Preferences.Get().SpotifyPlayback; got != settings.SpotifyPlaybackMatch {
 		t.Errorf("choosing YouTube Music made Spotify playback %q", got)
 	}

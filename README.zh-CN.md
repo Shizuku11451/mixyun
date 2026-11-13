@@ -371,4 +371,4 @@ MixMusic 基于以下项目构建：
 
 MixMusic 采用双重许可：你可以任选 [MIT 许可证](LICENSE-MIT)或 [GNU General Public License, version 3](LICENSE-GPL) 来使用它。贡献同时以这两种许可证接受。`fonts` 中的字体采用 SIL Open Font License：[Selawik 的许可证](fonts/OFL.txt)、[Quicksand 的许可证](fonts/quicksand-OFL.txt)、[Roboto Flex 的许可证](fonts/robotoflex-OFL.txt)和 [Archivo 的许可证](fonts/archivo-OFL.txt)。Opus 解码器移植自 libopus，采用[它的 BSD 许可证](opus/LICENSE.libopus)；AAC 解码器源自 SharpJaad，采用[它的 MIT 许可证](aac/LICENSE.sharpjaad)；HCT 色彩科学移植自 Material Color Utilities，采用[它的 Apache 许可证](internal/hct/LICENSE.material-color-utilities)。
 
-MixMusic 与 Spotify 和 Google 没有任何关联，也未获得它们的认可或赞助。它通过这些服务自己的接口，播放它们向用户提供的内容；请在它们的条款允许的范围内使用。Spotify 和 YouTube Music 是其各自所有者的商标。
+MixMusic 与 Spotify、Google 和网易没有任何关联，也未获得它们的认可或赞助。它通过这些服务自己的接口，播放它们向用户提供的内容；请在它们的条款允许的范围内使用。Spotify、YouTube Music 和网易云音乐是其各自所有者的商标。

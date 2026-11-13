@@ -83,7 +83,7 @@ func TestAlreadyInYouTubePlaylist(t *testing.T) {
 	f := &fakeAdds{err: app.ErrAlreadyInPlaylist}
 	addsFor(t, f)
 	s, tt := youtubeAlbumPage(t)
-	if err := trackMenuChoice(t, tt, "Add to YouTube Music playlist", "Late night"); err != nil {
+	if err := trackMenuChoice(t, tt, "Add to NetEase Cloud Music playlist", "Late night"); err != nil {
 		t.Fatal(err)
 	}
 	if !toasted(t, s, tt, "Already in Late night") {
@@ -102,7 +102,7 @@ func TestAlreadyInYouTubePlaylist(t *testing.T) {
 	f.mu.Lock()
 	f.err = errors.New("YouTube Music refused: the playlist may be another account's")
 	f.mu.Unlock()
-	if err := trackMenuChoice(t, tt, "Add to YouTube Music playlist", "Late night"); err != nil {
+	if err := trackMenuChoice(t, tt, "Add to NetEase Cloud Music playlist", "Late night"); err != nil {
 		t.Fatal(err)
 	}
 	tt.Advance(time.Minute) // the toasts before go

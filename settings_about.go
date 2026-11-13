@@ -27,14 +27,18 @@ func (s *shell) mixmusicSettings(c *ui.Context) {
 		s.releaseRow(c, u)
 		// Its links go under it, as they are many.
 		about := locales.AboutDescription(info.DataDir)
-		s.found(c, "MixMusic", about+" source code, contribute, report a problem, a bug, open logs folder", func() {
+		s.found(c, "MixMusic", about+" source code, original project, upstream, contribute, report a problem, a bug, open logs folder", func() {
 			ui.Column(c).Gap(4).Padding(14, 0).Children(func() {
 				ui.Text(c, "MixMusic").FontSize(k.bodySize())
 				ui.Text(c, about).FontSize(k.smallSize()).TextColor(k.muted)
 				ui.Row(c).Gap(8).Wrap().Margin(12, 0, 0).Children(func() {
-					const repo = "https://github.com/fzn0x/mixmusic"
+					// This fork's, and the project it forks, which it credits.
+					const repo, upstream = "https://github.com/Shizuku11451/mixmusic", "https://github.com/fzn0x/mixmusic"
 					if s.button(c, "source", locales.AboutSourceCode(), false).Clicked() {
 						go s.svc.System.OpenExternal(repo)
+					}
+					if s.button(c, "upstream", locales.AboutUpstream(), false).Clicked() {
+						go s.svc.System.OpenExternal(upstream)
 					}
 					if s.button(c, "contribute", locales.AboutContribute(), false).Clicked() {
 						go s.svc.System.OpenExternal(repo + "/blob/main/CONTRIBUTING.md")

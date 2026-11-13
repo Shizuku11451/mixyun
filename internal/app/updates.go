@@ -21,7 +21,7 @@ import (
 )
 
 // releasesAPI answers with the newest release of MixMusic.
-const releasesAPI = "https://api.github.com/repos/fzn0x/mixmusic/releases/latest"
+const releasesAPI = "https://api.github.com/repos/Shizuku11451/mixmusic/releases/latest"
 
 const (
 	// firstUpdateCheck is how long after start MixMusic looks for a new

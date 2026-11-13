@@ -156,11 +156,11 @@ func TestDownloadMenu(t *testing.T) {
 	if k := s.kept.State("yt:aaaaaaaaaaa").Kind; k != downloads.None {
 		t.Errorf("canceled, the track is %v", k)
 	}
-	// A Spotify track downloads as its recording on YouTube Music, as the
+	// A Spotify track downloads as its recording on NetEase Cloud Music, as the
 	// toast says.
 	s.download([]media.Track{testTracks[1]})
 	tt.Frame()
-	if !tt.HasText("Downloading Teardrop: its recording on YouTube Music") {
+	if !tt.HasText("Downloading Teardrop: its recording on NetEase Cloud Music") {
 		t.Errorf("the window shows %q", tt.Texts())
 	}
 }

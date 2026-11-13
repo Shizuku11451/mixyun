@@ -587,7 +587,7 @@ derives from SharpJaad, under [its MIT license](aac/LICENSE.sharpjaad), and
 the HCT color science is a port of Material Color Utilities, under
 [its Apache license](internal/hct/LICENSE.material-color-utilities).
 
-MixMusic is not affiliated with, endorsed by or sponsored by Spotify or
-Google. It plays what these services offer their users, through the
-services' own interfaces; use it as their terms allow. Spotify and YouTube
-Music are trademarks of their owners.
+MixMusic is not affiliated with, endorsed by or sponsored by Spotify,
+Google or NetEase. It plays what these services offer their users, through
+the services' own interfaces; use it as their terms allow. Spotify, YouTube
+Music and NetEase Cloud Music (网易云音乐) are trademarks of their owners.

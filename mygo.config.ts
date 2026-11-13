@@ -29,7 +29,7 @@ export default defineConfig({
   // MYGO_UPDATER_PRIVATE_KEY secret of the release workflow).
   updates: {
     publicKey: "y/g7m+MircfXqdGupUFNygznyyR/Y41D1YAOYw41ISU=",
-    github: "fzn0x/mixmusic",
+    github: "Shizuku11451/mixmusic",
   },
   // The release workflow signs with the certificate of its secrets, which
   // it puts in a keychain of its own: `mygo build` signs the app with the

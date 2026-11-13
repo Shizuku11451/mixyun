@@ -101,7 +101,7 @@
   "topbarBack": "Back",
   "topbarForward": "Forward",
   "topbarPalette": "Open the command palette",
-  "topbarSearchPlaceholder": "Search Spotify and YouTube Music",
+  "topbarSearchPlaceholder": "Search Spotify and NetEase Cloud Music",
   "topbarSearch": "Search",
   "topbarKindSong": "Song",
   "topbarKindVideo": "Video",
@@ -114,7 +114,7 @@
   "topbarKindPodcast": "Podcast",
   "playerPickSomething": "Pick something to play",
   "playerOpenNowPlaying": "Open now playing",
-  "playerViaYouTube": "{line} · via YouTube Music",
+  "playerViaYouTube": "{line} · via NetEase Cloud Music",
   "@playerViaYouTube": {
     "placeholders": {
       "line": {
@@ -504,13 +504,13 @@
   "discordCoverDescription": "Discord shows the cover of what plays, where its service has one online: a file on your computer shows none.",
   "discordServiceBadge": "Service badge",
   "discordServiceBadgeLabel": "Show the service's badge on Discord",
-  "discordServiceBadgeDescription": "A small mark of YouTube Music, Spotify or a file on your computer, at the cover's corner, or in its place.",
+  "discordServiceBadgeDescription": "A small mark of NetEase Cloud Music, Spotify or a file on your computer, at the cover's corner, or in its place.",
   "discordTimeLeft": "Time left",
   "discordTimeLeftLabel": "Show the time left on Discord",
   "discordTimeLeftDescription": "How long the track has played, and how long it has left.",
   "discordListenButton": "Listen button",
   "discordListenButtonLabel": "Show a Listen button on Discord",
-  "discordListenButtonDescription": "A button that opens the track on YouTube Music or Spotify, which the others who see your profile can click. A file on your computer has none.",
+  "discordListenButtonDescription": "A button that opens the track on NetEase Cloud Music or Spotify, which the others who see your profile can click. A file on your computer has none.",
   "discordKeepWhilePaused": "Keep while paused",
   "discordKeepWhilePausedLabel": "Keep the Discord status while paused",
   "discordKeepWhilePausedDescription": "A paused track stays, marked as paused, without its time. Off, pausing clears the status.",
@@ -545,13 +545,13 @@
   "playbackFromSpotify": "In MixMusic, from Spotify",
   "playbackOnConnect": "On Spotify Connect",
   "playbackOnConnectDesc": "Your Spotify app, or another Spotify device, plays them, at Spotify's own quality. Needs Spotify Premium and a device with Spotify open.",
-  "playbackFromYouTube": "In MixMusic, from YouTube Music",
-  "playbackFromYouTubeDesc": "MixMusic plays their recording on YouTube Music, with the equalizer, crossfade and visualizer. Works without Premium.",
+  "playbackFromYouTube": "In MixMusic, from NetEase Cloud Music",
+  "playbackFromYouTubeDesc": "MixMusic plays their recording on NetEase Cloud Music, with the equalizer, crossfade and visualizer. Works without Premium.",
   "playbackSignInSpotify": "Sign in to Spotify in accounts to play your Spotify library.",
   "playbackSignInSpotifyLead": "Sign in to Spotify in ",
   "playbackSignInSpotifyTail": " to play your Spotify library.",
   "playbackSignInAgainTitle": "Sign in to Spotify again",
-  "playbackSignInAgainBody": "You signed in before MixMusic played Spotify itself, which your sign-in doesn't allow yet. Until you sign in again, Spotify tracks play from YouTube Music.",
+  "playbackSignInAgainBody": "You signed in before MixMusic played Spotify itself, which your sign-in doesn't allow yet. Until you sign in again, Spotify tracks play from NetEase Cloud Music.",
   "playbackSignInAgain": "sign in again",
   "playbackWaitingBrowser": "waiting for the browser…",
   "playbackFinishSignIn": "Finish signing in in your browser",
@@ -565,13 +565,13 @@
   "playbackLookAgain": "Look for devices again",
   "playbackSound": "Sound",
   "playbackQuality": "Quality",
-  "playbackQualityDesc": "Data saver streams smaller files of YouTube Music.",
+  "playbackQualityDesc": "Data saver streams smaller files of NetEase Cloud Music.",
   "playbackQualityBest": "best",
   "playbackQualitySaver": "data saver",
   "playbackAutoplay": "Autoplay",
   "playbackAutoplayDesc": "When the queue runs out, a radio of what you played carries on.",
   "equalizerTitle": "Equalizer",
-  "equalizerDesc": "Shape the sound of YouTube Music with ten bands and a preamp.",
+  "equalizerDesc": "Shape the sound of NetEase Cloud Music with ten bands and a preamp.",
   "equalizerPreset": "Preset",
   "equalizerCustom": "Custom",
   "equalizerPresetFlat": "Flat",
@@ -594,12 +594,12 @@
       }
     }
   },
-  "equalizerSpotifyNote": "The equalizer works only on YouTube Music, which MixMusic plays itself, Spotify tracks played from it included. For Spotify, use a system-wide equalizer: Spotify notes that its audio settings can't change while another device plays it.",
-  "equalizerSpotifyLead": "The equalizer works only on YouTube Music, which MixMusic plays itself, Spotify tracks played from it included. For Spotify, use a system-wide equalizer: ",
+  "equalizerSpotifyNote": "The equalizer works only on NetEase Cloud Music, which MixMusic plays itself, Spotify tracks played from it included. For Spotify, use a system-wide equalizer: Spotify notes that its audio settings can't change while another device plays it.",
+  "equalizerSpotifyLead": "The equalizer works only on NetEase Cloud Music, which MixMusic plays itself, Spotify tracks played from it included. For Spotify, use a system-wide equalizer: ",
   "equalizerSpotifyNotes": "Spotify notes",
   "equalizerSpotifyTail": " that its audio settings can't change while another device plays it.",
   "speedTitle": "Speed",
-  "speedHint": "Speed changes what MixMusic plays itself: YouTube Music, and Spotify tracks played from it. Tracks and episodes Spotify plays, in MixMusic or on Spotify Connect, keep their own speed. So do live streams, which play as they're broadcast. The speed button by the player changes it too, for the kind of track that plays.",
+  "speedHint": "Speed changes what MixMusic plays itself: NetEase Cloud Music, and Spotify tracks played from it. Tracks and episodes Spotify plays, in MixMusic or on Spotify Connect, keep their own speed. So do live streams, which play as they're broadcast. The speed button by the player changes it too, for the kind of track that plays.",
   "speedOwn": "Their own speed.",
   "speedAt": "{speed}, at their own pitch.",
   "@speedAt": {
@@ -631,8 +631,8 @@
   "loudnessLevelling": "Volume levelling",
   "loudnessLevellingDesc": "Squeezes loud and quiet moments closer together as they play, and lifts quiet recordings.",
   "audioAsAccountTitle": "Play audio as your account",
-  "audioAsAccountDesc": "For YouTube Music Premium's higher bitrate, MixMusic asks for each track's audio as your YouTube Music account. YouTube may flag an account used this way, and tracks may start more slowly. A track it can't get this way plays as before.",
-  "audioAsAccountSignIn": "For YouTube Music Premium's higher bitrate, MixMusic asks for each track's audio as your YouTube Music account. YouTube may flag an account used this way, and tracks may start more slowly. A track it can't get this way plays as before. Sign in to YouTube Music in accounts first.",
+  "audioAsAccountDesc": "For NetEase Cloud Music VIP's higher bitrate, MixMusic asks for each track's audio as your NetEase Cloud Music account. NetEase Cloud Music may flag an account used this way, and tracks may start more slowly. A track it can't get this way plays as before.",
+  "audioAsAccountSignIn": "For NetEase Cloud Music VIP's higher bitrate, MixMusic asks for each track's audio as your NetEase Cloud Music account. NetEase Cloud Music may flag an account used this way, and tracks may start more slowly. A track it can't get this way plays as before. Sign in to NetEase Cloud Music in accounts first.",
   "volumeCurveGroup": "Volume",
   "volumeCurveTitle": "Volume curve",
   "volumeCurveDescription": "Natural gives the volume slider even steps of loudness: each tenth of it is 6 dB. On Linear, the level grows evenly along the slider, so its middle is half the level, 6 dB down. Spotify tracks play on the same curve.",
@@ -640,8 +640,8 @@
   "volumeCurveLinear": "linear",
   "dislikeSkip": "Skip songs you dislike",
   "dislikeSkipDesc": "Songs you dislike don't play when the queue moves on, and radios leave them out.",
-  "dislikeNote": "Signed in to YouTube Music, your dislikes of its songs go there too. Spotify takes no dislikes from apps: those of its tracks stay in MixMusic.",
-  "dislikeNoteSee": "Signed in to YouTube Music, your dislikes of its songs go there too. Spotify takes no dislikes from apps: those of its tracks stay in MixMusic. See the songs you dislike.",
+  "dislikeNote": "Signed in to NetEase Cloud Music, your dislikes of its songs go there too. Spotify takes no dislikes from apps: those of its tracks stay in MixMusic.",
+  "dislikeNoteSee": "Signed in to NetEase Cloud Music, your dislikes of its songs go there too. Spotify takes no dislikes from apps: those of its tracks stay in MixMusic. See the songs you dislike.",
   "dislikeSee": "See the songs you dislike",
   "dislikeSeeEnd": ".",
   "cleanVersionsGroup": "Explicit content",
@@ -679,7 +679,7 @@
     }
   },
   "toolSettingsGroup": "Tools",
-  "toolSettingsNotFound": "Not found. Some YouTube Music tracks play only with it.",
+  "toolSettingsNotFound": "Not found. Some NetEase Cloud Music tracks play only with it.",
   "toolSettingsFound": "yt-dlp {version} at {path}{managed, select, yes {, MixMusic's own, which it keeps up to date} other {}}{bundled, select, yes {, which comes with MixMusic and updates with it} other {}}{outdated, select, yes {. {latest} is out.} other {}}",
   "@toolSettingsFound": {
     "placeholders": {
@@ -862,7 +862,7 @@
     }
   },
   "aboutVersion": "Version",
-  "aboutDescription": "Spotify and YouTube Music in one player, open source under the MIT license or the GNU GPL, version 3. Your data lives in {dir}.",
+  "aboutDescription": "Spotify and NetEase Cloud Music in one player. This is Shizuku11451's fork of MixMusic, which fzn0x and its contributors make, open source under the MIT license or the GNU GPL, version 3. Your data lives in {dir}.",
   "@aboutDescription": {
     "placeholders": {
       "dir": {
@@ -871,6 +871,7 @@
     }
   },
   "aboutSourceCode": "source code",
+  "aboutUpstream": "original project",
   "aboutContribute": "contribute",
   "aboutReport": "report a problem",
   "aboutOpenLogs": "open logs folder",
@@ -1272,14 +1273,14 @@
   "accountSettingsSignedInSpotify": "Signed in to Spotify",
   "accountSettingsSpotifySignOutTitle": "sign out of Spotify",
   "accountSettingsSpotifySignOutBody": "MixMusic forgets your Spotify sign-in.",
-  "accountSettingsYouTubeSignInTitle": "Sign in to YouTube Music",
-  "accountSettingsYouTubeForm": "Sign in to YouTube Music. Log in. Google account. YouTube Music needs no account: search, artists, albums, playlists and radios work signed out. Signed in, MixMusic shows your own home feed and library, and saves what you like and follow to YouTube Music. Tracks play as they do signed out: your session never goes to yt-dlp. You sign in on Google's own page, in a window of MixMusic: MixMusic never sees your password, and keeps the session encrypted on this computer. YouTube Music does not offer this to apps officially, so it may stop working when YouTube changes.",
-  "accountSettingsYouTubeHint": "YouTube Music needs no account: search, artists, albums, playlists and radios work signed out. Signed in, MixMusic shows your own home feed and library, and saves what you like and follow to YouTube Music. Tracks play as they do signed out: your session never goes to yt-dlp.",
-  "accountSettingsYouTubeSession": "You sign in on Google's own page, in a window of MixMusic: MixMusic never sees your password, and keeps the session encrypted on this computer. YouTube Music does not offer this to apps officially, so it may stop working when YouTube changes.",
+  "accountSettingsYouTubeSignInTitle": "Sign in to NetEase Cloud Music",
+  "accountSettingsYouTubeForm": "Sign in to NetEase Cloud Music. Log in. Google account. NetEase Cloud Music needs no account: search, artists, albums, playlists and radios work signed out. Signed in, MixMusic shows your own home feed and library, and saves what you like and follow to NetEase Cloud Music. Tracks play as they do signed out: your session never goes to yt-dlp. You sign in on Google's own page, in a window of MixMusic: MixMusic never sees your password, and keeps the session encrypted on this computer. NetEase Cloud Music does not offer this to apps officially, so it may stop working when YouTube changes.",
+  "accountSettingsYouTubeHint": "NetEase Cloud Music needs no account: search, artists, albums, playlists and radios work signed out. Signed in, MixMusic shows your own home feed and library, and saves what you like and follow to NetEase Cloud Music. Tracks play as they do signed out: your session never goes to yt-dlp.",
+  "accountSettingsYouTubeSession": "You sign in on Google's own page, in a window of MixMusic: MixMusic never sees your password, and keeps the session encrypted on this computer. NetEase Cloud Music does not offer this to apps officially, so it may stop working when YouTube changes.",
   "accountSettingsYouTubeSignInButton": "sign in to youtube music",
   "accountSettingsYouTubeWaitingWindow": "waiting for the sign-in window…",
-  "accountSettingsYouTubeSignedIn": "Signed in to YouTube Music",
-  "accountSettingsYouTubeRefused": "YouTube Music refused the sign-in",
+  "accountSettingsYouTubeSignedIn": "Signed in to NetEase Cloud Music",
+  "accountSettingsYouTubeRefused": "NetEase Cloud Music refused the sign-in",
   "accountSettingsYouTubeRefusedAgain": "{error}. Sign out, then sign in again.",
   "@accountSettingsYouTubeRefusedAgain": {
     "placeholders": {
@@ -1288,15 +1289,15 @@
       }
     }
   },
-  "accountSettingsYouTubeSignedInDesc": "Your home feed, your library, and likes that reach YouTube Music.",
-  "accountSettingsYouTubeSignOutTitle": "sign out of YouTube Music",
-  "accountSettingsYouTubeSignOutBody": "MixMusic forgets your YouTube Music session; your library stays on YouTube Music.",
+  "accountSettingsYouTubeSignedInDesc": "Your home feed, your library, and likes that reach NetEase Cloud Music.",
+  "accountSettingsYouTubeSignOutTitle": "sign out of NetEase Cloud Music",
+  "accountSettingsYouTubeSignOutBody": "MixMusic forgets your NetEase Cloud Music session; your library stays on NetEase Cloud Music.",
   "accountSettingsYouTubeHistoryTitle": "Add what you play to your history",
-  "accountSettingsYouTubeHistoryDesc": "YouTube Music makes its home and its radios of your history. Tracks join it once they played a while, as they do on Last.fm, and episodes keep where you left them, for YouTube Music to go on from there on your other devices.",
-  "accountSettingsYouTubeHistorySwitch": "Add what you play to your YouTube Music history",
-  "accountSettingsYouTubeCookieTitle": "Sign in to YouTube Music with a browser's cookies",
-  "accountSettingsYouTubeCookieForm": "Import from a browser. Sign in with the session of a browser you signed in to YouTube Music with. Browser. Profile. Another profile than the browser's own, by its name or its folder. MixMusic finds those of Zen, Helium and the browsers installed as Flatpaks in their folders. Import. MixMusic reads the browser's cookies with yt-dlp, keeps YouTube's alone, encrypted on this computer, and deletes the rest at once. Close the browser first: while it's open, it may hold its cookies, or not have saved a new sign-in yet. Recent Chrome on Windows seals its cookies against other programs: use Firefox there, or paste a cookie header. Paste a cookie header. In a tab signed in to music.youtube.com, open the developer tools, and copy the Cookie header of a request to music.youtube.com from the Network panel. The text of a cookies.txt file will do too. Sign in with it. Log in. A cookie header is as good as your password: paste it here alone. YouTube may end a session that goes on in the browser; one from a private window you then close lasts longest.",
-  "accountSettingsYouTubeImport": "Sign in with the session of a browser you signed in to YouTube Music with.",
+  "accountSettingsYouTubeHistoryDesc": "NetEase Cloud Music makes its home and its radios of your history. Tracks join it once they played a while, as they do on Last.fm, and episodes keep where you left them, for NetEase Cloud Music to go on from there on your other devices.",
+  "accountSettingsYouTubeHistorySwitch": "Add what you play to your NetEase Cloud Music history",
+  "accountSettingsYouTubeCookieTitle": "Sign in to NetEase Cloud Music with a browser's cookies",
+  "accountSettingsYouTubeCookieForm": "Import from a browser. Sign in with the session of a browser you signed in to NetEase Cloud Music with. Browser. Profile. Another profile than the browser's own, by its name or its folder. MixMusic finds those of Zen, Helium and the browsers installed as Flatpaks in their folders. Import. MixMusic reads the browser's cookies with yt-dlp, keeps YouTube's alone, encrypted on this computer, and deletes the rest at once. Close the browser first: while it's open, it may hold its cookies, or not have saved a new sign-in yet. Recent Chrome on Windows seals its cookies against other programs: use Firefox there, or paste a cookie header. Paste a cookie header. In a tab signed in to music.youtube.com, open the developer tools, and copy the Cookie header of a request to music.youtube.com from the Network panel. The text of a cookies.txt file will do too. Sign in with it. Log in. A cookie header is as good as your password: paste it here alone. YouTube may end a session that goes on in the browser; one from a private window you then close lasts longest.",
+  "accountSettingsYouTubeImport": "Sign in with the session of a browser you signed in to NetEase Cloud Music with.",
   "accountSettingsYouTubeProfile": "Another profile than the browser's own, by its name or its folder. MixMusic finds those of Zen, Helium and the browsers installed as Flatpaks in their folders.",
   "accountSettingsYouTubeImportHint": "MixMusic reads the browser's cookies with yt-dlp, keeps YouTube's alone, encrypted on this computer, and deletes the rest at once. Close the browser first: while it's open, it may hold its cookies, or not have saved a new sign-in yet. Recent Chrome on Windows seals its cookies against other programs: use Firefox there, or paste a cookie header.",
   "accountSettingsYouTubePaste": "In a tab signed in to music.youtube.com, open the developer tools, and copy the Cookie header of a request to music.youtube.com from the Network panel. The text of a cookies.txt file will do too.",
@@ -1311,7 +1312,7 @@
   "accountSettingsCookieHeader": "Cookie header",
   "accountSettingsSignInWithIt": "sign in with it",
   "accountSettingsSigningIn": "signing in…",
-  "accountSettingsYouTubeCookieProblem": "MixMusic didn't sign in to YouTube Music",
+  "accountSettingsYouTubeCookieProblem": "MixMusic didn't sign in to NetEase Cloud Music",
   "accountSettingsChannel": "Channel",
   "accountSettingsChannelAbout": "Brand channels of your account have their own home feed, library and likes.",
   "accountSettingsAccountChannel": "Account and channel",
@@ -1327,7 +1328,7 @@
       }
     }
   },
-  "accountSettingsUsingAs": "Using YouTube Music as {name}",
+  "accountSettingsUsingAs": "Using NetEase Cloud Music as {name}",
   "@accountSettingsUsingAs": {
     "placeholders": {
       "name": {
@@ -1911,7 +1912,7 @@
   },
   "collectionRemoveFromPlaylist": "Remove from this playlist",
   "@collectionRemoveFromPlaylist": {
-    "description": "Track menu item of a playlist on YouTube Music."
+    "description": "Track menu item of a playlist on NetEase Cloud Music."
   },
   "collectionRemovedFrom": "Removed {track} from {playlist}",
   "@collectionRemovedFrom": {
@@ -1940,15 +1941,15 @@
       }
     }
   },
-  "collectionDeleteYouTube": "Delete from YouTube Music…",
+  "collectionDeleteYouTube": "Delete from NetEase Cloud Music…",
   "@collectionDeleteYouTube": {
-    "description": "Menu item that deletes a playlist on YouTube Music."
+    "description": "Menu item that deletes a playlist on NetEase Cloud Music."
   },
   "collectionDeletePlaylist": "delete playlist",
   "@collectionDeletePlaylist": {
-    "description": "Title of the question before a playlist on YouTube Music is deleted. Lowercase."
+    "description": "Title of the question before a playlist on NetEase Cloud Music is deleted. Lowercase."
   },
-  "collectionDeleteYouTubeQuestion": "Delete {title} from YouTube Music? It goes from YouTube too, and you can't undo this. To keep its tracks in MixMusic, copy it into a mix first.",
+  "collectionDeleteYouTubeQuestion": "Delete {title} from NetEase Cloud Music? It goes from NetEase Cloud Music too, and you can't undo this. To keep its tracks in MixMusic, copy it into a mix first.",
   "@collectionDeleteYouTubeQuestion": {
     "placeholders": {
       "title": {
@@ -1967,7 +1968,7 @@
       }
     }
   },
-  "collectionDeletedYouTube": "Deleted {title} from YouTube Music",
+  "collectionDeletedYouTube": "Deleted {title} from NetEase Cloud Music",
   "@collectionDeletedYouTube": {
     "placeholders": {
       "title": {
@@ -1979,9 +1980,9 @@
   "@collectionSaveAsMix": {
     "description": "Menu item that saves the tracks as a new mix."
   },
-  "collectionSaveAsYouTube": "Save as a YouTube Music playlist",
+  "collectionSaveAsYouTube": "Save as a NetEase Cloud Music playlist",
   "@collectionSaveAsYouTube": {
-    "description": "Menu item that saves the tracks as a new playlist on YouTube Music."
+    "description": "Menu item that saves the tracks as a new playlist on NetEase Cloud Music."
   },
   "collectionCopyIntoMix": "Copy into a mix you can extend",
   "@collectionCopyIntoMix": {
@@ -2029,7 +2030,7 @@
     "description": "Heading of the artists an artist's fans also like."
   },
   "computerEmptyTitle": "Nothing on this computer yet",
-  "computerEmptyText": "Add a folder of music, or open files: they play from your computer, beside Spotify and YouTube Music, in your queue and your mixes. Nothing of them is uploaded.",
+  "computerEmptyText": "Add a folder of music, or open files: they play from your computer, beside Spotify and NetEase Cloud Music, in your queue and your mixes. Nothing of them is uploaded.",
   "@computerEmptyText": {
     "description": "Empty state of Library › On this computer, before any music is found."
   },
@@ -2222,9 +2223,9 @@
       }
     }
   },
-  "downloadsStartingTrackSpotify": "Downloading {title}: its recording on YouTube Music",
+  "downloadsStartingTrackSpotify": "Downloading {title}: its recording on NetEase Cloud Music",
   "@downloadsStartingTrackSpotify": {
-    "description": "Notice when a Spotify track starts downloading from its YouTube Music recording.",
+    "description": "Notice when a Spotify track starts downloading from its NetEase Cloud Music recording.",
     "placeholders": {
       "title": {
         "type": "String"
@@ -2704,7 +2705,7 @@
   "@libraryNothingLiked": {
     "description": "Empty state of the liked songs. Lowercase when shown as a word; the heading is set by the interface."
   },
-  "libraryLikedHint": "Tap the heart on any track, from Spotify or YouTube Music: they all gather here, in one list.",
+  "libraryLikedHint": "Tap the heart on any track, from Spotify or NetEase Cloud Music: they all gather here, in one list.",
   "@libraryLikedHint": {
     "description": "Empty state of the liked songs: how to like a track."
   },
@@ -2744,7 +2745,7 @@
   },
   "libraryNewPlaylist": "new playlist",
   "@libraryNewPlaylist": {
-    "description": "Link on the playlists shelf of YouTube Music. Lowercase."
+    "description": "Link on the playlists shelf of NetEase Cloud Music. Lowercase."
   },
   "libraryPlaylists": "Playlists",
   "@libraryPlaylists": {
@@ -2775,28 +2776,28 @@
       }
     }
   },
-  "libraryLikedOnYouTube": "Liked on YouTube Music",
+  "libraryLikedOnYouTube": "Liked on NetEase Cloud Music",
   "@libraryLikedOnYouTube": {
-    "description": "Heading of the liked songs on YouTube Music."
+    "description": "Heading of the liked songs on NetEase Cloud Music."
   },
-  "libraryNoYouTubeLiked": "No liked songs on YouTube Music.",
+  "libraryNoYouTubeLiked": "No liked songs on NetEase Cloud Music.",
   "librarySongsTitle": "Songs in your library",
   "@librarySongsTitle": {
-    "description": "Heading of the songs saved to the library on YouTube Music."
+    "description": "Heading of the songs saved to the library on NetEase Cloud Music."
   },
-  "librarySongsEmpty": "No songs in your library on YouTube Music. A song's Add to library keeps it here without liking it.",
+  "librarySongsEmpty": "No songs in your library on NetEase Cloud Music. A song's Add to library keeps it here without liking it.",
   "@librarySongsEmpty": {
-    "description": "Empty state of the YouTube Music library's songs."
+    "description": "Empty state of the NetEase Cloud Music library's songs."
   },
   "libraryAddToLibrary": "Add to library",
   "@libraryAddToLibrary": {
-    "description": "Song menu item that saves a song to the library on YouTube Music without liking it."
+    "description": "Song menu item that saves a song to the library on NetEase Cloud Music without liking it."
   },
   "libraryRemoveFromLibrary": "Remove from library",
   "@libraryRemoveFromLibrary": {
-    "description": "Menu item that takes a song or playlist out of the library on YouTube Music."
+    "description": "Menu item that takes a song or playlist out of the library on NetEase Cloud Music."
   },
-  "librarySongAdded": "Added {title} to your library on YouTube Music",
+  "librarySongAdded": "Added {title} to your library on NetEase Cloud Music",
   "@librarySongAdded": {
     "placeholders": {
       "title": {
@@ -2804,7 +2805,7 @@
       }
     }
   },
-  "librarySongRemoved": "Removed {title} from your library on YouTube Music",
+  "librarySongRemoved": "Removed {title} from your library on NetEase Cloud Music",
   "@librarySongRemoved": {
     "placeholders": {
       "title": {
@@ -3174,9 +3175,9 @@
       }
     }
   },
-  "libraryNewYouTubePlaylist": "New playlist on YouTube Music",
+  "libraryNewYouTubePlaylist": "New playlist on NetEase Cloud Music",
   "@libraryNewYouTubePlaylist": {
-    "description": "Title of the prompt that names a new playlist on YouTube Music."
+    "description": "Title of the prompt that names a new playlist on NetEase Cloud Music."
   },
   "librarySavedNotice": "{what}: saved",
   "@librarySavedNotice": {
@@ -3449,9 +3450,9 @@
   },
   "panelCopyLink": "Copy link",
   "panelLinkCopied": "Copied the link",
-  "panelFindMatch": "Find another YouTube Music match",
+  "panelFindMatch": "Find another NetEase Cloud Music match",
   "panelMatchForgotten": "The next play looks for its recording again",
-  "panelRadioSources": "Radios start from tracks of Spotify and YouTube Music",
+  "panelRadioSources": "Radios start from tracks of Spotify and NetEase Cloud Music",
   "panelStartingRadio": "Starting a radio of {title}…",
   "@panelStartingRadio": {
     "placeholders": {
@@ -3516,7 +3517,7 @@
     }
   },
   "trackInfoPlaysAs": "Plays as",
-  "trackInfoRecording": "{title} · {artists}, on YouTube Music",
+  "trackInfoRecording": "{title} · {artists}, on NetEase Cloud Music",
   "@trackInfoRecording": {
     "placeholders": {
       "title": {
@@ -3535,7 +3536,7 @@
   "trackInfoLoudnessSpotify": "Spotify plays it at its own loudness.",
   "trackInfoLoudness": "Loudness",
   "trackInfoFormat": "Format",
-  "trackInfoFormatSpotify": "Play it to see its format, bitrate and the rest: MixMusic finds its recording on YouTube Music as it plays.",
+  "trackInfoFormatSpotify": "Play it to see its format, bitrate and the rest: MixMusic finds its recording on NetEase Cloud Music as it plays.",
   "trackInfoFormatStream": "Play it to see its format, bitrate and the rest: MixMusic finds its stream as it plays.",
   "trackInfoCodecIn": "{codec} in {container}",
   "@trackInfoCodecIn": {
@@ -3696,11 +3697,11 @@
   "trackInfoRoutePlayerAPI": "Quickly, through YouTube's player API, with no yt-dlp",
   "trackInfoRouteQuick": "With yt-dlp's quick run, as YouTube's visionOS app alone",
   "trackInfoRouteFull": "With yt-dlp's full run, with its default clients and a JavaScript runtime",
-  "trackInfoRouteAccount": "With yt-dlp's full run, with the session of your YouTube Music account",
+  "trackInfoRouteAccount": "With yt-dlp's full run, with the session of your NetEase Cloud Music account",
   "trackInfoYtDlpRan": "yt-dlp ran",
   "trackInfoSignedIn": "Signed in",
   "trackInfoSignedOut": "No: asked for signed out, as no one's account.",
-  "trackInfoSignedInYes": "Yes: asked for as your YouTube Music account.",
+  "trackInfoSignedInYes": "Yes: asked for as your NetEase Cloud Music account.",
   "trackInfoStreamNote": "It stops working after a few hours, and is tied to this network: it may carry your IP address, so share it with care.",
   "trackInfoCopyURL": "copy stream URL",
   "trackInfoCopied": "Copied the stream's address: it stops working after a few hours",
@@ -4093,14 +4094,14 @@
       }
     }
   },
-  "accountsBrowserAbout": "MixMusic opens the browser with a new, empty profile of its own, at YouTube Music's sign-in. Sign in there as in any browser: MixMusic then takes the session, closes the browser and deletes the profile. Your own profiles stay as they are.",
+  "accountsBrowserAbout": "MixMusic opens the browser with a new, empty profile of its own, at NetEase Cloud Music's sign-in. Sign in there as in any browser: MixMusic then takes the session, closes the browser and deletes the profile. Your own profiles stay as they are.",
   "accountsBrowserCancel": "cancel",
   "accountsBrowserChoose": "Browser to sign in with",
-  "accountsBrowserDone": "Signed in to YouTube Music",
-  "accountsBrowserFailed": "MixMusic didn't sign in to YouTube Music",
+  "accountsBrowserDone": "Signed in to NetEase Cloud Music",
+  "accountsBrowserFailed": "MixMusic didn't sign in to NetEase Cloud Music",
   "accountsBrowserHint": "Closing the browser, or cancel, ends the sign-in, as do 10 minutes without one. MixMusic reads the new profile alone, never yours, and keeps the session encrypted on this computer.",
   "accountsBrowserNone": "MixMusic signs in through Firefox or Zen, and found neither. Google refuses a sign-in in Chrome, Edge and the others made from Chromium when MixMusic opens them.",
-  "accountsBrowserOpened": "Sign in to YouTube Music in {browser}",
+  "accountsBrowserOpened": "Sign in to NetEase Cloud Music in {browser}",
   "@accountsBrowserOpened": {
     "placeholders": {
       "browser": {
@@ -4182,11 +4183,11 @@
   },
   "audioAccount2Change": "You can change this in Settings › Playback › Sound.",
   "audioAccount2NotNow": "not now",
-  "audioAccount2Offer": "Your YouTube Music account has Premium, whose audio has a higher bitrate. MixMusic can ask for each track's audio as your account to play it. YouTube may flag an account used this way, and tracks may start more slowly. A track it can't get this way plays as before.",
+  "audioAccount2Offer": "Your NetEase Cloud Music account has Premium, whose audio has a higher bitrate. MixMusic can ask for each track's audio as your account to play it. NetEase Cloud Music may flag an account used this way, and tracks may start more slowly. A track it can't get this way plays as before.",
   "audioAccount2Title": "play audio as your account",
   "audioAccount2TurnOn": "turn on",
   "collabAddToSpotify": "Add to Spotify playlist",
-  "collabFinding": "Finding the tracks on YouTube Music…",
+  "collabFinding": "Finding the tracks on NetEase Cloud Music…",
   "collabInviteBody": "Collaborators can't open a private playlist. Inviting them makes {title} unlisted: anyone with its link can open it, and it shows on none of your pages.",
   "@collabInviteBody": {
     "placeholders": {
@@ -4250,7 +4251,7 @@
   "collabMakeItem": "Make collaborative",
   "collabNameLabel": "Name",
   "collabNoneToAdd": "No playlists you can add to",
-  "collabShareAsTitle": "Share as a YouTube Music playlist",
+  "collabShareAsTitle": "Share as a NetEase Cloud Music playlist",
   "collabShareButton": "share",
   "collabShareFailed": "Couldn't share {title}: {error}",
   "@collabShareFailed": {
@@ -4263,8 +4264,8 @@
       }
     }
   },
-  "collabShareItem": "As a YouTube Music playlist…",
-  "collabShared": "Made {title} on YouTube Music: copied its link, which anyone can open",
+  "collabShareItem": "As a NetEase Cloud Music playlist…",
+  "collabShared": "Made {title} on NetEase Cloud Music: copied its link, which anyone can open",
   "@collabShared": {
     "placeholders": {
       "title": {
@@ -4320,7 +4321,7 @@
       }
     }
   },
-  "collabUnlisting": "Making {title} unlisted: YouTube Music takes up to half a minute before it lets collaborators in",
+  "collabUnlisting": "Making {title} unlisted: NetEase Cloud Music takes up to half a minute before it lets collaborators in",
   "@collabUnlisting": {
     "placeholders": {
       "title": {
@@ -4512,7 +4513,7 @@
   "followUnfollow": "Unfollow",
   "followedInMixMusic": "Followed in MixMusic",
   "followedOnSpotify": "Followed on Spotify",
-  "followedOnYouTube": "Followed on YouTube Music",
+  "followedOnYouTube": "Followed on NetEase Cloud Music",
   "mixCoverCancel": "cancel",
   "mixCoverChange": "Change cover…",
   "mixCoverChanged": "Changed the cover of {title}",
@@ -5020,7 +5021,7 @@
   "podcastsKeepListening": "Keep listening",
   "podcastsFollowingTitle": "Following",
   "podcastsNothingFollowed": "Nothing followed yet",
-  "podcastsFollowHint": "Follow a podcast from its page, from Spotify or YouTube Music, and it waits here.",
+  "podcastsFollowHint": "Follow a podcast from its page, from Spotify or NetEase Cloud Music, and it waits here.",
   "podcastsSavedOn": "Saved on {source}",
   "@podcastsSavedOn": {
     "placeholders": {
@@ -5063,7 +5064,7 @@
   "exploreTabCharts": "Charts",
   "exploreTabMoods": "Moods & genres",
   "exploreTitle": "Explore",
-  "exploreNothingHere": "YouTube Music shows nothing here right now.",
+  "exploreNothingHere": "NetEase Cloud Music shows nothing here right now.",
   "exploreMoodPlaylists": "Playlists for {title}",
   "@exploreMoodPlaylists": {
     "placeholders": {
@@ -5094,14 +5095,14 @@
   },
   "exploreMood": "Mood",
   "exploreAddToMix": "Add to mix",
-  "exploreAddToYouTube": "Add to YouTube Music playlist",
+  "exploreAddToYouTube": "Add to NetEase Cloud Music playlist",
   "exploreNewPlaylist": "New playlist…",
-  "exploreNewYouTubePlaylist": "New playlist on YouTube Music",
+  "exploreNewYouTubePlaylist": "New playlist on NetEase Cloud Music",
   "exploreLoadingPlaylists": "Loading your playlists…",
   "exploreLoadPlaylistsFailed": "Couldn't load your playlists",
   "exploreNoPlaylists": "No playlists of yours",
   "exploreNewMixItem": "New mix…",
-  "exploreFinding": "Finding the tracks on YouTube Music…",
+  "exploreFinding": "Finding the tracks on NetEase Cloud Music…",
   "exploreCouldntCreate": "Couldn't create {title}: {error}",
   "@exploreCouldntCreate": {
     "placeholders": {
@@ -5113,7 +5114,7 @@
       }
     }
   },
-  "exploreCreatedOnYouTube": "Created {title} on YouTube Music",
+  "exploreCreatedOnYouTube": "Created {title} on NetEase Cloud Music",
   "@exploreCreatedOnYouTube": {
     "placeholders": {
       "title": {
@@ -5339,7 +5340,7 @@
   "homeEditLoadFailed": "Couldn't load your playlists",
   "homeEditNoPlaylists": "No playlists yet",
   "homeEditSpotifyHidden": "Spotify shows apps the tracks of your own and shared playlists only",
-  "homeEditYouTubePlaylist": "A YouTube Music playlist",
+  "homeEditYouTubePlaylist": "A NetEase Cloud Music playlist",
   "homeEditSpotifyPlaylist": "A Spotify playlist",
   "homeEditOneMix": "One of your mixes",
   "homeEditNoMixes": "No mixes yet",
@@ -5419,7 +5420,7 @@
     }
   },
   "statsAnd": " and ",
-  "statsFromYouTube": "{count} from YouTube Music",
+  "statsFromYouTube": "{count} from NetEase Cloud Music",
   "@statsFromYouTube": {
     "placeholders": {
       "count": {
@@ -5454,7 +5455,7 @@
       }
     }
   },
-  "statsVennLabel": "{spotify} plays from Spotify, {youtube} from YouTube Music",
+  "statsVennLabel": "{spotify} plays from Spotify, {youtube} from NetEase Cloud Music",
   "@statsVennLabel": {
     "placeholders": {
       "spotify": {

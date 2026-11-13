@@ -260,7 +260,7 @@ func TestInviteCollaborators(t *testing.T) {
 	asks.hold()
 	click(t, s, tt, "invite")
 	tt.Frame()
-	if !textHolds(tt, "Making Lantern songs unlisted: YouTube Music takes up to half a minute") {
+	if !textHolds(tt, "Making Lantern songs unlisted: NetEase Cloud Music takes up to half a minute") {
 		t.Errorf("no toast tells the invite waits for the unlisting: %q", tt.Texts())
 	}
 	asks.release()
@@ -558,7 +558,7 @@ func TestShareMixOnYouTube(t *testing.T) {
 	if err := tt.Click("More"); err != nil {
 		t.Fatal(err)
 	}
-	if err := tt.ChooseMenuItem("Share", "As a YouTube Music playlist…"); err != nil {
+	if err := tt.ChooseMenuItem("Share", "As a NetEase Cloud Music playlist…"); err != nil {
 		t.Fatal(err)
 	}
 	tt.Frame()
@@ -568,7 +568,7 @@ func TestShareMixOnYouTube(t *testing.T) {
 	asks.hold()
 	click(t, s, tt, "share")
 	asks.release()
-	const shared = "Made Night walk on YouTube Music: copied its link, which anyone can open"
+	const shared = "Made Night walk on NetEase Cloud Music: copied its link, which anyone can open"
 	heard(t, s, shared, false)
 	if got := asks.asked(); !slices.Equal(got, []string{"share Night walk 2"}) {
 		t.Errorf("YouTube was asked %q", got)
@@ -593,7 +593,7 @@ func TestShareMixOnYouTube(t *testing.T) {
 		t.Fatal(err)
 	}
 	defer tt.CloseMenu()
-	if err := tt.ChooseMenuItem("Share", "As a YouTube Music playlist…"); err == nil {
+	if err := tt.ChooseMenuItem("Share", "As a NetEase Cloud Music playlist…"); err == nil {
 		t.Error("signed out, Share offers YouTube Music")
 	}
 }
@@ -652,7 +652,7 @@ func TestYouTubeCollaboration(t *testing.T) {
 	addsFor(t, f)
 	s.loads["album:al-x"] = &loaded[media.Album]{done: true, value: media.Album{ID: "al-x", Title: "Mezzanine", Tracks: testTracks[:2]}}
 	show(s, tt, "/album/al-x")
-	if err := trackMenuChoice(t, tt, "Add to YouTube Music playlist", "Tide songs · Ana Testwood"); err != nil {
+	if err := trackMenuChoice(t, tt, "Add to NetEase Cloud Music playlist", "Tide songs · Ana Testwood"); err != nil {
 		t.Fatal(err)
 	}
 	if !toasted(t, s, tt, "Added "+testTracks[0].Title+" to Tide songs") {
@@ -661,7 +661,7 @@ func TestYouTubeCollaboration(t *testing.T) {
 	if adds, _ := f.made(); !slices.Equal(adds, []string{"yt:PLtide " + testTracks[0].ID}) {
 		t.Errorf("added %q", adds)
 	}
-	if err := trackMenuChoice(t, tt, "Add to YouTube Music playlist", lanternList.Title); err != nil {
+	if err := trackMenuChoice(t, tt, "Add to NetEase Cloud Music playlist", lanternList.Title); err != nil {
 		t.Errorf("the user's own playlist isn't listed by its title alone: %v", err)
 	}
 }

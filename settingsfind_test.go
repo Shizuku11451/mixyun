@@ -373,8 +373,8 @@ func TestSettingsFindSpellings(t *testing.T) {
 	tt := testerOf(t, s, 1280, 6000)
 	for _, c := range []struct{ word, finds string }{
 		{"colour", "Accent colour"}, {"color", "Accent colour"},
-		{"equaliser", "Shape the sound of YouTube Music with ten bands and a preamp."},
-		{"equalizer", "Shape the sound of YouTube Music with ten bands and a preamp."},
+		{"equaliser", "Shape the sound of NetEase Cloud Music with ten bands and a preamp."},
+		{"equalizer", "Shape the sound of NetEase Cloud Music with ten bands and a preamp."},
 		{"leveling", "Volume levelling"}, {"levelling", "Volume levelling"},
 		{"licence", "libopus, which decodes Opus audio"},
 		{"normalise", "Volume levelling"},

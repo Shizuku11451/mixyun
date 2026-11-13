@@ -17,7 +17,7 @@ func TestAudioAsAccountRow(t *testing.T) {
 	s := newTestShell(t)
 	tt := testerOf(t, s, 1280, 3200)
 	show(s, tt, "/settings/playback")
-	signedOut := audioAsAccountDescription() + " Sign in to YouTube Music in accounts first."
+	signedOut := audioAsAccountDescription() + " Sign in to NetEase Cloud Music in accounts first."
 	if !tt.HasText(signedOut) {
 		t.Errorf("signed out, the row doesn't say what it risks and asks to sign in: %q", tt.Texts())
 	}

@@ -12,7 +12,7 @@ import (
 )
 
 // issuesURL is where problems are reported.
-const issuesURL = "https://github.com/fzn0x/mixmusic/issues/new"
+const issuesURL = "https://github.com/Shizuku11451/mixmusic/issues/new"
 
 // LogsFolder returns the folder of MixMusic's log and of its crash
 // reports.
