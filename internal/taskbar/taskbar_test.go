@@ -45,3 +45,27 @@ func TestGlyphs(t *testing.T) {
 		}
 	}
 }
+
+// TestEmbedPlace puts the window left of the notification area, scaled by
+// the DPI, and nowhere on a taskbar at a side or too short for it.
+func TestEmbedPlace(t *testing.T) {
+	bar := rect{0, 1032, 1920, 1080}
+	for name, c := range map[string]struct {
+		bar, tray rect
+		dpi       uint32
+		x, w, h   int32
+		ok        bool
+	}{
+		"tray":      {bar, rect{1600, 1032, 1920, 1080}, 96, 1240, 360, 48, true},
+		"hidpi":     {bar, rect{1600, 1032, 1920, 1080}, 144, 1060, 540, 48, true},
+		"no tray":   {bar, rect{}, 0, 1560, 360, 48, true},
+		"top":       {rect{0, 0, 1920, 48}, rect{1700, 0, 1920, 48}, 96, 1340, 360, 48, true},
+		"side":      {rect{0, 0, 48, 1080}, rect{}, 96, 0, 0, 0, false},
+		"too short": {rect{0, 1032, 500, 1080}, rect{300, 1032, 500, 1080}, 96, -60, 360, 48, false},
+	} {
+		x, w, h, ok := embedPlace(c.bar, c.tray, 360, c.dpi)
+		if ok != c.ok || ok && (x != c.x || w != c.w || h != c.h) {
+			t.Errorf("%s: %d %d %d %v, want %d %d %d %v", name, x, w, h, ok, c.x, c.w, c.h, c.ok)
+		}
+	}
+}

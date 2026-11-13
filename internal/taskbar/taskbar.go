@@ -42,6 +42,47 @@ func Attach(hwnd uintptr, click func(Button)) (*Bar, error) {
 // buttons go with their window.
 func (b *Bar) Show(playing, track bool) { b.b.show(state{playing, track}) }
 
+// Light tells whether the taskbar is light, as Windows' theme of its own
+// parts has it: false elsewhere.
+func Light() bool { return light() }
+
+// KeepAbove puts the topmost window hwnd back above the taskbar. It does
+// nothing but on Windows.
+func KeepAbove(hwnd uintptr) { keepAbove(hwnd) }
+
+// Embed makes the window hwnd a child of the primary taskbar, as tall as
+// it, width DIPs wide, left of its notification area, or moves it there
+// again: the taskbar carries it, so nothing comes over it, and it hides
+// and slides with it. It returns false, leaving hwnd as it was, where
+// there is no such taskbar, or it stands at a side: always but on Windows.
+func Embed(hwnd uintptr, width int) bool { return embed(hwnd, width) }
+
+// rect is a window's bounds, as RECT has them.
+type rect struct{ left, top, right, bottom int32 }
+
+// embedPlace is where Embed puts a window width DIPs wide in the taskbar
+// bar, whose notification area is tray, at dpi: x in the taskbar, its
+// width and height, in pixels. ok is false for a taskbar at a side, or
+// too short for the window.
+// shortcut: only the notification area is measured, not the taskbar's
+// buttons, which a full taskbar puts under the lyrics; read them through UI
+// Automation, as TaskbarLyrics does, if that bothers.
+func embedPlace(bar, tray rect, width int, dpi uint32) (x, w, h int32, ok bool) {
+	if bar.bottom-bar.top >= bar.right-bar.left {
+		return 0, 0, 0, false
+	}
+	if dpi == 0 {
+		dpi = 96
+	}
+	right := bar.right
+	if tray.right > tray.left && tray.left > bar.left && tray.left <= bar.right {
+		right = tray.left
+	}
+	w = int32(width) * int32(dpi) / 96
+	x = right - bar.left - w
+	return x, w, bar.bottom - bar.top, x >= 0
+}
+
 // state is what the buttons show: whether the player plays, and whether it
 // has a track, without which they're off.
 type state struct{ playing, track bool }

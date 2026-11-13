@@ -87,6 +87,7 @@
   "discordListenButton": false,
   "discordKeepWhilePaused": false,
   "notchPlayer": true,
+  "statusBarLyrics": false,
   "overlayServer": false,
   "overlayPort": 8284,
   "ytdlpPath": "",

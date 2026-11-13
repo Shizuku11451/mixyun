@@ -73,9 +73,14 @@ var (
 	procRegisterWindowMessageW = user32.NewProc("RegisterWindowMessageW")
 	procCreateIconIndirect     = user32.NewProc("CreateIconIndirect")
 	procDestroyIcon            = user32.NewProc("DestroyIcon")
+	procSetWindowPos           = user32.NewProc("SetWindowPos")
 	procGetDpiForWindow        = user32.NewProc("GetDpiForWindow")
 	procGetSystemMetricsForDpi = user32.NewProc("GetSystemMetricsForDpi")
 	procGetSystemMetrics       = user32.NewProc("GetSystemMetrics")
+	procFindWindowExW          = user32.NewProc("FindWindowExW")
+	procGetWindowRect          = user32.NewProc("GetWindowRect")
+	procSetParent              = user32.NewProc("SetParent")
+	procGetAncestor            = user32.NewProc("GetAncestor")
 
 	procChangeWindowMessageFilterEx = user32.NewProc("ChangeWindowMessageFilterEx")
 
@@ -406,4 +411,80 @@ func newIcon(img *image.NRGBA) uintptr {
 	ii := iconInfo{icon: 1, mask: mask, color: colour}
 	icon, _, _ := syscall.SyscallN(procCreateIconIndirect.Addr(), uintptr(unsafe.Pointer(&ii)))
 	return icon
+}
+
+// light tells whether the taskbar is light.
+func light() bool { return taskbarLight() }
+
+// keepAbove puts hwnd back above the taskbar, which comes over the other
+// topmost windows as it is clicked: HWND_TOPMOST, without moving, sizing
+// or activating it.
+func keepAbove(hwnd uintptr) {
+	const swpNoSize, swpNoMove, swpNoActivate = 0x1, 0x2, 0x10
+	procSetWindowPos.Call(hwnd, ^uintptr(0), 0, 0, 0, 0, swpNoSize|swpNoMove|swpNoActivate)
+}
+
+// embed makes hwnd a child of Shell_TrayWnd, the primary taskbar, as
+// TaskbarLyrics does, and puts it left of TrayNotifyWnd, the notification
+// area, in front of the taskbar's own children.
+// shortcut: Windows 10 takes it over its task list, which TaskbarLyrics
+// squeezes instead; do so if lyrics hide buttons there.
+func embed(hwnd uintptr, width int) bool {
+	const (
+		gaParent      = 1
+		wsChild       = 0x40000000
+		wsPopup       = 0x80000000
+		swpNoSize     = 0x1
+		swpNoMove     = 0x2
+		swpNoActivate = 0x10
+		hwndTop       = 0
+	)
+	gwlStyle, hwndNoTopmost := ^uintptr(15), ^uintptr(1) // -16, -2
+	bar := findWindow(0, "Shell_TrayWnd")
+	b, ok := windowRect(bar)
+	if bar == 0 || !ok {
+		return false
+	}
+	tray, _ := windowRect(findWindow(bar, "TrayNotifyWnd"))
+	dpi := uintptr(0)
+	if procGetDpiForWindow.Find() == nil {
+		dpi, _, _ = procGetDpiForWindow.Call(bar)
+	}
+	x, w, h, ok := embedPlace(b, tray, width, uint32(dpi))
+	if !ok {
+		return false
+	}
+	if p, _, _ := procGetAncestor.Call(hwnd, gaParent); p != bar {
+		// A child is never topmost; it would stay so, apart from the bar.
+		procSetWindowPos.Call(hwnd, hwndNoTopmost, 0, 0, 0, 0, swpNoSize|swpNoMove|swpNoActivate)
+		style, _, _ := procGetWindowLongPtrW.Call(hwnd, gwlStyle)
+		procSetWindowLongPtrW.Call(hwnd, gwlStyle, style&^wsPopup|wsChild)
+		procSetParent.Call(hwnd, bar)
+		if p, _, _ := procGetAncestor.Call(hwnd, gaParent); p != bar {
+			procSetWindowLongPtrW.Call(hwnd, gwlStyle, style)
+			return false
+		}
+	} else if r, ok := windowRect(hwnd); ok && r == (rect{b.left + x, b.top, b.left + x + w, b.top + h}) {
+		return true
+	}
+	procSetWindowPos.Call(hwnd, hwndTop, uintptr(x), 0, uintptr(w), uintptr(h), swpNoActivate)
+	return true
+}
+
+// findWindow is the first child window of parent, or top-level window for
+// 0, of class, or 0.
+func findWindow(parent uintptr, class string) uintptr {
+	p, _ := syscall.UTF16PtrFromString(class)
+	h, _, _ := procFindWindowExW.Call(parent, 0, uintptr(unsafe.Pointer(p)), 0)
+	return h
+}
+
+// windowRect is the bounds of the window h on the screen.
+func windowRect(h uintptr) (rect, bool) {
+	var r rect
+	if h == 0 {
+		return r, false
+	}
+	ok, _, _ := procGetWindowRect.Call(h, uintptr(unsafe.Pointer(&r)))
+	return r, ok != 0
 }

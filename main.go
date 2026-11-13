@@ -86,17 +86,18 @@ func main() {
 	}
 	home, _ := os.UserHomeDir()
 	a, err := app.New(app.Options{
-		DataDir:      dataDir,
-		CacheDir:     cacheDir,
-		DownloadsDir: defaultDownloadsDir(runtime.GOOS, portable, dataDir, cacheDir, home, os.Getenv("XDG_DATA_HOME")),
-		Builtin:      builtin.FS,
-		TrayIcon:     trayIcon,
-		Version:      version,
-		LogsDir:      logsDir,
-		LastCrash:    lastCrash,
-		Interface:    Open,
-		Mini:         OpenMini,
-		Notch:        OpenNotch,
+		DataDir:       dataDir,
+		CacheDir:      cacheDir,
+		DownloadsDir:  defaultDownloadsDir(runtime.GOOS, portable, dataDir, cacheDir, home, os.Getenv("XDG_DATA_HOME")),
+		Builtin:       builtin.FS,
+		TrayIcon:      trayIcon,
+		Version:       version,
+		LogsDir:       logsDir,
+		LastCrash:     lastCrash,
+		Interface:     Open,
+		Mini:          OpenMini,
+		Notch:         OpenNotch,
+		TaskbarLyrics: OpenTaskbarLyrics,
 	})
 	if err != nil {
 		log.Fatal(err)

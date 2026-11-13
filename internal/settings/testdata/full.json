@@ -113,6 +113,7 @@
   "discordListenButton": true,
   "discordKeepWhilePaused": true,
   "notchPlayer": false,
+  "statusBarLyrics": true,
   "overlayServer": true,
   "overlayPort": 9000,
   "ytdlpPath": "/usr/local/bin/yt-dlp",

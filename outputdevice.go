@@ -170,16 +170,29 @@ func (s *shell) outputRoom(c *ui.Context) *outputSlot {
 type outputSlot struct {
 	free  float32
 	shown bool
+	// lyrics is whether the status bar lyrics button showed, which takes
+	// the room the device button leaves.
+	lyrics bool
 }
 
-// fits reports whether the device button fits beside the others: once
-// there is room for it and a little more, and while it showed, until none
-// is left, so that it doesn't come and go as it takes the room.
-func (o *outputSlot) fits() bool {
+// place chooses whether the device button shows, where there is a choice
+// to make, and then whether the status bar lyrics button does, where it
+// is wanted, from the room the frame before left with both out: as fits
+// says, each in turn.
+func (o *outputSlot) place(choice, lyrics bool) {
+	free := o.free
 	if o.shown {
-		return o.free >= 1
+		free += roomOutput
 	}
-	return o.free >= roomOutput+4
+	if o.lyrics {
+		free += roomOutput
+	}
+	fit := func(shown bool) bool { return free >= roomOutput+pick(shown, float32(1), 4) }
+	o.shown = choice && fit(o.shown)
+	if o.shown {
+		free -= roomOutput
+	}
+	o.lyrics = lyrics && fit(o.lyrics)
 }
 
 // outputChoice reports whether there is a choice of output device to make,
@@ -200,8 +213,6 @@ func (s *shell) outputChoice() bool {
 // accent while a device is chosen. Its slot is there without it, so that
 // the controls after it keep what they hold as it comes and goes.
 func (s *shell) outputButton(c *ui.Context, room *outputSlot) {
-	choice := s.outputChoice()
-	room.shown = choice && room.fits()
 	slot := ui.Row(c.Key("output-slot")).Shrink(0)
 	if !room.shown {
 		// Without the gap before it.

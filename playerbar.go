@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"runtime"
 	"time"
 
 	"github.com/egoist/mygo/ui"
@@ -317,6 +318,24 @@ func (s *shell) playerSide(c *ui.Context) {
 	room := s.outputRoom(c)
 	if hasSurround(s.st) {
 		s.surroundButton(c)
+	}
+	// The menu bar's on macOS, the taskbar's on Windows; an episode has
+	// no lyrics. It leaves the room to the device button first.
+	cur, _ := s.st.Current()
+	here := (runtime.GOOS == "darwin" || runtime.GOOS == "windows") && !cur.Track.IsEpisode()
+	room.place(s.outputChoice(), here)
+	// Always there, as the device button's slot is, so that the controls
+	// after it keep what they hold as it comes and goes.
+	slot := ui.Row(c.Key("statuslyrics-slot")).Shrink(0)
+	if !room.lyrics {
+		slot.Margin(0, -4, 0, 0)
+	} else {
+		slot.Children(func() {
+			if s.iconButton(c, "statuslyrics", "statuslyrics", locales.PlayerStatusBarLyrics(), s.set.StatusBarLyrics, 18).Clicked() {
+				s.set.StatusBarLyrics = !s.set.StatusBarLyrics
+				s.save()
+			}
+		})
 	}
 	if s.iconButton(c, "lyrics", s.lyricsIcon(), s.lyricsTitle(), s.panel == "lyrics", 18).Clicked() {
 		s.togglePanel("lyrics")

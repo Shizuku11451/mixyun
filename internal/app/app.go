@@ -80,6 +80,9 @@ type Options struct {
 	// Notch opens the player around the notch of a MacBook's screen, or
 	// returns nil where no screen has a camera housing (#46).
 	Notch func(a *App) *mygo.Window
+	// TaskbarLyrics opens the window over Windows' taskbar that shows the
+	// line of the lyrics sung now, or returns nil where it can't show.
+	TaskbarLyrics func(a *App) *mygo.Window
 	// Hotkeys registers the user's global shortcuts: mygo.GlobalShortcut
 	// when nil, once the app is ready.
 	Hotkeys Hotkeys
@@ -211,6 +214,8 @@ type App struct {
 	miniOpen atomic.Bool
 	// notch is the player around the notch, while it shows.
 	notch notchPlayer
+	// status is the lyrics shown in the menu bar or over the taskbar.
+	status statusLyrics
 	// onNavigate shows the pages of the main window.
 	onNavigate *func(target string)
 	// updates keeps the user's choices of updates.

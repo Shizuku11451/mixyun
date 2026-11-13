@@ -846,6 +846,16 @@ func (msgs Messages) PlayerMiniPlayer() string {
 	return Catalog.Format(msgs.locale, "playerMiniPlayer", nil)
 }
 
+// PlayerStatusBarLyrics says "Status bar lyrics"
+// in the language the app shows.
+func PlayerStatusBarLyrics() string { return In(i18n.Locale()).PlayerStatusBarLyrics() }
+
+// PlayerStatusBarLyrics says "Status bar lyrics"
+// in the language of msgs.
+func (msgs Messages) PlayerStatusBarLyrics() string {
+	return Catalog.Format(msgs.locale, "playerStatusBarLyrics", nil)
+}
+
 // PlayerSurroundOff says "5.1 surround: off"
 // in the language the app shows.
 func PlayerSurroundOff() string { return In(i18n.Locale()).PlayerSurroundOff() }

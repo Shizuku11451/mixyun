@@ -71,6 +71,9 @@ type Desktop struct {
 	// MacBook's screen, and opens a player there (#46). It is on at
 	// first, and does nothing on other screens and systems.
 	NotchPlayer bool `json:"notchPlayer"`
+	// StatusBarLyrics shows the line of the lyrics sung now in the menu
+	// bar on macOS, and over the taskbar on Windows. It is off at first.
+	StatusBarLyrics bool `json:"statusBarLyrics"`
 }
 
 // defaultDesktop is how a new install fits in the desktop.
