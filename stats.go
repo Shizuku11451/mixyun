@@ -314,7 +314,9 @@ func disclosure(c *ui.Context, deg float32, ink ui.Color) {
 }
 
 // venn draws the plays of each service as rings whose areas match,
-// overlapping as the icon's.
+// overlapping as the icon's, over a key that names each ring and its
+// count: counts in the rings would collide, and the overlap alone would
+// read as plays the two share.
 func (s *shell) venn(c *ui.Context, spotify, youtube int) {
 	k := &s.lk
 	most := float64(max(spotify, youtube, 1))
@@ -329,14 +331,19 @@ func (s *shell) venn(c *ui.Context, spotify, youtube int) {
 			b.Circle(yx, cy, ry)
 			p.StrokePath(&a, 2, k.spotify)
 			p.StrokePath(&b, 2, k.youtube)
-			label := func(x float32, n int) {
-				t := fmt.Sprint(n)
-				w, h := p.MeasureText(0, ui.Span{Text: t, Size: k.subtitleSize(), Weight: 300})
-				p.Text(x-w/2, cy-h/2, t, k.subtitleSize(), k.text)
-			}
-			label(sx, spotify)
-			label(yx, youtube)
 		})
+	ui.Row(c).Gap(24).Wrap().Justify(ui.Center).Width(300).Children(func() {
+		for _, e := range []struct {
+			source media.Source
+			n      int
+		}{{media.SourceSpotify, spotify}, {media.SourceNetEase, youtube}} {
+			ui.Row(c).Gap(8).AlignItems(ui.Center).Children(func() {
+				s.sourceMark(c, e.source, false)
+				ui.Text(c, sourceName(e.source)).FontSize(k.smallSize()).TextColor(k.muted)
+				ui.Text(c, strconv.Itoa(e.n)).FontSize(k.bodySize())
+			})
+		}
+	})
 }
 
 // artistCircles ranks the top artists as circles whose areas grow with
