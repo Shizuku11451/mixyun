@@ -320,7 +320,7 @@ func (s *shell) playerSide(c *ui.Context) {
 		s.surroundButton(c)
 	}
 	// The menu bar's on macOS, the taskbar's on Windows; an episode has
-	// no lyrics. It leaves the room to the device button first.
+	// no lyrics. It shows whatever the room, before the device button.
 	cur, _ := s.st.Current()
 	here := (runtime.GOOS == "darwin" || runtime.GOOS == "windows") && !cur.Track.IsEpisode()
 	room.place(s.outputChoice(), here)

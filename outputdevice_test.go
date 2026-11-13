@@ -170,7 +170,7 @@ func TestOutputButton(t *testing.T) {
 		defer mu.Unlock()
 		return slices.Clone(devices)
 	})
-	tt := tester(t, s)
+	tt := testerOf(t, s, 1400, 820)
 	settleOutput(t, s, tt)
 	button, ok := tt.Find("Output device: System default")
 	if !ok {
@@ -243,10 +243,10 @@ func TestOutputButtonHidden(t *testing.T) {
 		}
 	}
 	// Widened, the window has room for it.
-	tt.SetSize(1280, 820)
+	tt.SetSize(1400, 820)
 	settleOutput(t, two, tt)
 	if _, ok := tt.Find("Output device: System default"); !ok {
-		t.Errorf("no device button at 1280: %q", tt.Texts())
+		t.Errorf("no device button at 1400: %q", tt.Texts())
 	}
 }
 
@@ -269,14 +269,14 @@ func TestOutputButtonNarrowed(t *testing.T) {
 	devices = append(devices, app.OutputDevice{ID: "hp", Name: "Headphones"})
 	mu.Unlock()
 	s.refetch(outputDevicesKey)
-	tt.SetSize(1280, 820)
+	tt.SetSize(1400, 820)
 	tt.Frame()
 	tt.SetSize(1150, 820)
 	settleOutput(t, s, tt)
 	if _, ok := tt.Find("Output device: System default"); ok {
 		t.Error("a device button where the player bar has no room for it")
 	}
-	tt.SetSize(1280, 820)
+	tt.SetSize(1400, 820)
 	outputFrames(s, tt)
 	if _, ok := tt.Find("Output device: System default"); !ok {
 		t.Errorf("no device button in a window wide again: %q", tt.Texts())
@@ -296,7 +296,8 @@ func TestOutputButtonKeepsTheVolume(t *testing.T) {
 	s.p.PlayTracks(testTracks, 0)
 	s.p.SetVolume(0.5)
 	s.settle(t, func(st player.State) bool { return st.Playing && st.Volume == 0.5 })
-	tt := tester(t, s)
+	// Wide enough for the device button beside the status bar lyrics one.
+	tt := testerOf(t, s, 1400, 820)
 	settleOutput(t, s, tt)
 	r, ok := tt.Find("Volume")
 	if !ok {

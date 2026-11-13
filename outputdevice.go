@@ -170,15 +170,15 @@ func (s *shell) outputRoom(c *ui.Context) *outputSlot {
 type outputSlot struct {
 	free  float32
 	shown bool
-	// lyrics is whether the status bar lyrics button showed, which takes
-	// the room the device button leaves.
+	// lyrics is whether the status bar lyrics button showed, which the
+	// device button makes room for.
 	lyrics bool
 }
 
-// place chooses whether the device button shows, where there is a choice
-// to make, and then whether the status bar lyrics button does, where it
-// is wanted, from the room the frame before left with both out: as fits
-// says, each in turn.
+// place has the status bar lyrics button show wherever it is wanted, as
+// it is their only switch, and then chooses whether the device button
+// shows, where there is a choice to make, from the room the frame before
+// left with both out.
 func (o *outputSlot) place(choice, lyrics bool) {
 	free := o.free
 	if o.shown {
@@ -187,12 +187,11 @@ func (o *outputSlot) place(choice, lyrics bool) {
 	if o.lyrics {
 		free += roomOutput
 	}
-	fit := func(shown bool) bool { return free >= roomOutput+pick(shown, float32(1), 4) }
-	o.shown = choice && fit(o.shown)
-	if o.shown {
+	o.lyrics = lyrics
+	if o.lyrics {
 		free -= roomOutput
 	}
-	o.lyrics = lyrics && fit(o.lyrics)
+	o.shown = choice && free >= roomOutput+pick(o.shown, float32(1), 4)
 }
 
 // outputChoice reports whether there is a choice of output device to make,
