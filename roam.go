@@ -61,7 +61,8 @@ func (s *shell) roam(tag, name string) {
 			case len(tracks) == 0:
 				s.notes = append(s.notes, notice(locales.RoamNothing(name)))
 			default:
-				s.p.PlayTracks(tracks, 0)
+				// More of the tag follow where the queue runs out.
+				s.p.PlayEndless(tracks, func(ctx context.Context) ([]media.Track, error) { return s.svc.Catalog.Roam(ctx, tag) })
 			}
 		})
 	}()

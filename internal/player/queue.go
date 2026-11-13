@@ -21,6 +21,21 @@ func (p *Player) PlayTracks(tracks []media.Track, start int) {
 	p.do(func() { p.playTracks(tracks, start) })
 }
 
+// PlayEndless plays tracks as PlayTracks does, from the first, and has
+// more find what follows them where the queue runs out, in the radio's
+// place, with autoplay on: a queue that goes on as it started, as Roam's.
+// It does while the queue holds the last entry more gave it, so the
+// queue cleared or replaced, the radio follows as ever; as it does once
+// MixMusic started again, which keeps the queue alone.
+func (p *Player) PlayEndless(tracks []media.Track, more func(context.Context) ([]media.Track, error)) {
+	tracks = slices.Clone(tracks)
+	p.do(func() {
+		if p.playTracks(tracks, 0) {
+			p.more, p.moreOf = more, p.s.Queue[len(p.s.Queue)-1].UID
+		}
+	})
+}
+
 // PlayWithRadio replaces the queue with t, which the user chose, and plays
 // it at once. With autoplay on, t's radio follows it in the queue as soon
 // as it is found, rather than once t ends; a queue replaced meanwhile gets
@@ -217,18 +232,19 @@ func (p *Player) chosenItems(tracks []media.Track) []Item {
 	return items
 }
 
-func (p *Player) playTracks(tracks []media.Track, start int) {
+func (p *Player) playTracks(tracks []media.Track, start int) bool {
 	if len(tracks) == 0 {
-		return
+		return false
 	}
 	items := p.items(tracks)
 	first := min(max(start, 0), len(items)-1)
 	// The queue stays as it was when the settings hide the track chosen.
 	if p.refuses(items[first].Track) {
-		return
+		return false
 	}
 	items[first].Chosen, items[first].Skip = true, ""
 	p.playItems(items, first, false)
+	return true
 }
 
 // playItems replaces the queue with items, and plays the one at first, or,
@@ -356,15 +372,25 @@ func (p *Player) radioSeed() (Item, bool) {
 	return Item{}, false
 }
 
-// extendWithRadio adds tracks like seed's to the queue, and then tells
-// whether it added any, or why it couldn't find them.
+// extendWithRadio adds tracks like seed's to the queue, or more of an
+// endless queue's (PlayEndless), and then tells whether it added any, or
+// why it couldn't find them.
 func (p *Player) extendWithRadio(seed Item, then func(added bool, err error)) {
-	await(p, func(ctx context.Context) ([]media.Track, error) { return p.svc.Radio(ctx, seed.Track) }, func(found []media.Track, err error) {
+	find := func(ctx context.Context) ([]media.Track, error) { return p.svc.Radio(ctx, seed.Track) }
+	endless := p.more != nil && indexIn(p.s.Queue, p.moreOf) >= 0
+	if endless {
+		find = p.more
+	}
+	await(p, find, func(found []media.Track, err error) {
 		if err != nil {
 			then(false, err)
 			return
 		}
-		then(p.addRadio(found))
+		added, err := p.addRadio(found)
+		if added && endless {
+			p.moreOf = p.s.Queue[len(p.s.Queue)-1].UID
+		}
+		then(added, err)
 	})
 }
 

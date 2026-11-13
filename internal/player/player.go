@@ -467,6 +467,10 @@ type Player struct {
 	// them.
 	unshuffled []Item
 	played     map[string]bool
+	// more finds what follows an endless queue, in the radio's place, while
+	// the queue holds the entry moreOf, the last it gave (PlayEndless).
+	more   func(context.Context) ([]media.Track, error)
+	moreOf string
 	// loaded is set while the stream engine has the current track, and
 	// atEnd when the queue ran out at its end, which the engine ended.
 	loaded bool
