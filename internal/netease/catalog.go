@@ -210,6 +210,8 @@ type searchResult struct {
 		Albums    []album    `json:"albums"`
 		Artists   []artist   `json:"artists"`
 		Playlists []playlist `json:"playlists"`
+		// Order is the kinds as NetEase suggests them, of its suggestions.
+		Order []string `json:"order"`
 	} `json:"result"`
 }
 
@@ -255,6 +257,69 @@ func (c *Client) Search(ctx context.Context, query string) (media.SearchResults,
 		}
 	}
 	return res, nil
+}
+
+// Suggestions returns what NetEase suggests for input: the searches it
+// completes it to, and the first songs, artists, albums and playlists it
+// finds, in the order it gives the kinds, two of each at most so that
+// the few shown aren't all songs. A page that fails is left out; both
+// failing is the error.
+func (c *Client) Suggestions(ctx context.Context, input string) (media.Suggestions, error) {
+	out := media.Suggestions{Searches: []string{}}
+	var kw struct {
+		Result struct {
+			AllMatch []struct {
+				Keyword string `json:"keyword"`
+			} `json:"allMatch"`
+		} `json:"result"`
+	}
+	kerr := c.call(ctx, "/search/suggest/keyword", map[string]any{"s": input}, &kw)
+	for _, m := range kw.Result.AllMatch {
+		out.Searches = append(out.Searches, m.Keyword)
+	}
+	var r searchResult
+	if err := c.call(ctx, "/search/suggest/web", map[string]any{"s": input}, &r); err != nil {
+		if kerr != nil {
+			return out, err
+		}
+		return out, nil
+	}
+	found := r.Result
+	songs := found.Songs[:min(len(found.Songs), 2)]
+	tracks := toTracks(songs)
+	// These songs come without their covers: read again whole, as the
+	// older search's.
+	ids := make([]int64, len(songs))
+	for i, s := range songs {
+		ids[i] = s.ID
+	}
+	if full, err := c.songs(ctx, ids); err == nil {
+		tracks = full
+	}
+	for _, kind := range found.Order {
+		switch kind {
+		case "songs":
+			for i := range tracks {
+				out.Items = append(out.Items, media.Item{Kind: media.ItemTrack, Track: &tracks[i]})
+			}
+		case "artists":
+			for _, a := range found.Artists[:min(len(found.Artists), 2)] {
+				v := toArtist(a)
+				out.Items = append(out.Items, media.Item{Kind: media.ItemArtist, Artist: &v})
+			}
+		case "albums":
+			for _, a := range found.Albums[:min(len(found.Albums), 2)] {
+				v := toAlbum(a)
+				out.Items = append(out.Items, media.Item{Kind: media.ItemAlbum, Album: &v})
+			}
+		case "playlists":
+			for _, p := range found.Playlists[:min(len(found.Playlists), 2)] {
+				v := toPlaylist(p, "")
+				out.Items = append(out.Items, media.Item{Kind: media.ItemPlaylist, Playlist: &v})
+			}
+		}
+	}
+	return out, nil
 }
 
 // SearchSongs finds songs alone, as matching a track of another service

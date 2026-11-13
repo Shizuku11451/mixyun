@@ -33,8 +33,16 @@ func TestLive(t *testing.T) {
 	if roam, err := c.Roam(ctx, RoamTags[0][1]); err != nil || len(roam) == 0 {
 		t.Fatalf("Roam: %v, %d tracks", err, len(roam))
 	}
-	a, err := c.SongAudio(ctx, "1859245776", "exhigh") // a free song
-	t.Logf("audio: %+v %v", a.Type, err)
+	if sug, err := c.Suggestions(ctx, "周杰"); err != nil || len(sug.Searches) == 0 || len(sug.Items) == 0 {
+		t.Fatalf("Suggestions: %v, %d searches %d items", err, len(sug.Searches), len(sug.Items))
+	} else {
+		t.Logf("suggestions: %v, %d items", sug.Searches, len(sug.Items))
+	}
+	// A free song: signed out, NetEase gives the most it may of each level.
+	for _, level := range []string{"standard", "exhigh", "lossless"} {
+		a, err := c.SongAudio(ctx, "1859245776", level)
+		t.Logf("audio at %s: %s, %d bytes, %v", level, a.Type, a.Size, err)
+	}
 	// 音乐百科 answers only a session: MIXMUSIC_NETEASE_U is its MUSIC_U.
 	if u := os.Getenv("MIXMUSIC_NETEASE_U"); u != "" {
 		c.SetSession(u)

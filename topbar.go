@@ -54,9 +54,9 @@ const suggestPause = 180 * time.Millisecond
 // searchField is the 36px outlined box that searches both services, or,
 // with tonal controls, a filled one, outlined in the accent while focused. It
 // suggests searches below it: what was typed, which Enter searches, then
-// YouTube Music's suggestions for it, or the recent searches while it is
+// NetEase Cloud Music's suggestions for it, or the recent searches while it is
 // empty. Below the searches come the songs, albums, artists and playlists
-// YouTube Music suggests: a song plays at once, with its radio after it,
+// NetEase Cloud Music suggests: a song plays at once, with its radio after it,
 // and the others open their page.
 func (s *shell) searchField(c *ui.Context) {
 	k := &s.lk
@@ -153,7 +153,7 @@ func (s *shell) searchField(c *ui.Context) {
 }
 
 // suggestions are what the box suggests: the searches, what was typed,
-// then up to seven of YouTube Music's suggestions for it, and up to five
+// then up to seven of NetEase Cloud Music's suggestions for it, and up to five
 // of its songs, albums, artists and playlists, asked once the typing
 // pauses; or the recent searches while nothing is typed.
 func (s *shell) suggestions(c *ui.Context) (searches []string, items []media.Item) {

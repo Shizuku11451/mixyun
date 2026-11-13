@@ -82,13 +82,14 @@ func (c *Catalog) search(ctx context.Context, query string) (SearchResponse, err
 	return res, nil
 }
 
-// Suggestions returns what to suggest for what the user typed: YouTube
-// Music's searches, songs, albums, artists and playlists, or the recent
+// Suggestions returns what to suggest for what the user typed: NetEase
+// Cloud Music's searches, songs, albums, artists and playlists, or the recent
 // searches while nothing is typed.
 func (c *Catalog) Suggestions(ctx context.Context, input string) (media.Suggestions, error) {
-	// shortcut: the recent searches alone, as NetEase has no suggestions
-	// read yet; ask its /search/suggest/web once missed.
-	return media.Suggestions{Searches: c.a.library.Searches()}, nil
+	if strings.TrimSpace(input) == "" {
+		return media.Suggestions{Searches: c.a.library.Searches()}, nil
+	}
+	return c.a.netease.Suggestions(ctx, input)
 }
 
 // SpotifyHome returns Spotify's shelves of the home page, made of the
