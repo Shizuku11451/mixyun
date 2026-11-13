@@ -95,7 +95,8 @@ func (s Stream) query() url.Values {
 }
 
 // Container is the stream's container, as its type tells: "webm" or
-// "mp4", the audio the engine plays, or "".
+// "mp4", or "mp3" or "flac" as NetEase Cloud Music's songs come, the
+// audio the engine plays, or "".
 func (s Stream) Container() string {
 	base, _, _ := mime.ParseMediaType(s.MimeType)
 	switch base {
@@ -103,6 +104,10 @@ func (s Stream) Container() string {
 		return "webm"
 	case "audio/mp4":
 		return "mp4"
+	case "audio/mpeg":
+		return "mp3"
+	case "audio/flac":
+		return "flac"
 	}
 	return ""
 }

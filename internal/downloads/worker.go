@@ -11,8 +11,8 @@ import (
 	"path/filepath"
 	"time"
 
+	engine "github.com/fzn0x/mixmusic/internal/audio"
 	"github.com/fzn0x/mixmusic/internal/match"
-	"github.com/fzn0x/mixmusic/internal/media"
 	"github.com/fzn0x/mixmusic/internal/stream"
 	"github.com/fzn0x/mixmusic/internal/tools"
 	"github.com/fzn0x/mixmusic/mp4"
@@ -25,8 +25,9 @@ var (
 	errBusy = errors.New("downloads: another download fetches this audio")
 	// errBadAudio is returned for audio that came whole, and doesn't play.
 	errBadAudio = errors.New("the audio that came can't play")
-	// errNotYouTube is returned for a track of no video.
-	errNotYouTube = errors.New("only tracks of YouTube Music, and Spotify tracks through their recording there, download")
+	// errNotYouTube is returned for a track of no video, nor song of
+	// NetEase Cloud Music.
+	errNotYouTube = errors.New("only songs of NetEase Cloud Music, and Spotify tracks through their recording there, download")
 	// errNoMatcher is returned for a Spotify track where nothing finds its
 	// recording.
 	errNoMatcher = errors.New("nothing here finds the recordings of Spotify tracks")
@@ -150,7 +151,7 @@ func (m *Manager) setPhase(j *job, phase string) {
 // cache, or downloads it.
 func (m *Manager) fetch(j *job) error {
 	rec := j.recording
-	if rec == nil && j.track.Source == media.SourceYouTube {
+	if rec == nil && videoOf(j.track) != "" {
 		t := j.track
 		rec = &t
 	}
@@ -158,7 +159,7 @@ func (m *Manager) fetch(j *job) error {
 		if m.opts.Matcher == nil {
 			return errNoMatcher
 		}
-		m.setPhase(j, "finding its recording on YouTube Music")
+		m.setPhase(j, "finding its recording on NetEase Cloud Music")
 		found, err := m.opts.Matcher.Match(j.ctx, j.track)
 		if err != nil {
 			return err
@@ -172,8 +173,8 @@ func (m *Manager) fetch(j *job) error {
 		m.mu.Unlock()
 		m.setPhase(j, "")
 	}
-	_, video, err := media.ParseID(rec.ID)
-	if err != nil || rec.Source != media.SourceYouTube || !stream.ValidVideoID(video) {
+	video := videoOf(*rec)
+	if !stream.ValidVideoID(video) {
 		return errNotYouTube
 	}
 	m.mu.Lock()
@@ -484,7 +485,8 @@ type audio struct {
 var ebml = []byte{0x1a, 0x45, 0xdf, 0xa3}
 
 // inspect checks that the file at path is audio the engine plays, of size
-// bytes unless size is below 0: Opus in WebM, or AAC-LC in MP4.
+// bytes unless size is below 0: Opus in WebM, AAC-LC in MP4, or an MP3 or
+// a FLAC file, as NetEase Cloud Music's songs are.
 func inspect(path string, size int64) (audio, error) {
 	f, err := os.Open(path)
 	if err != nil {
@@ -527,7 +529,19 @@ func inspect(path string, size int64) (audio, error) {
 		}
 		a.format, a.codec, length = "mp4", "mp4a.40.2", r.Duration()
 	default:
-		return a, errors.New("neither WebM nor MP4")
+		f, err := engine.Inspect(f)
+		if err != nil {
+			return a, err
+		}
+		switch f.Container {
+		case "MP3":
+			a.format, a.codec = "mp3", "mp3"
+		case "FLAC":
+			a.format, a.codec = "flac", "flac"
+		default:
+			return a, fmt.Errorf("%s, neither WebM, MP4, MP3 nor FLAC", f.Container)
+		}
+		length = f.Duration
 	}
 	if length > 0 {
 		a.bitrate = int(float64(a.bytes) * 8 / length.Seconds() / 1000)
@@ -545,10 +559,12 @@ func mp4Box(name string) bool {
 	return false
 }
 
+// extensions are those of the files of each container, and types the
+// content types they are served as.
+var (
+	extensions = map[string]string{"webm": ".webm", "mp4": ".m4a", "mp3": ".mp3", "flac": ".flac"}
+	types      = map[string]string{".webm": "audio/webm", ".m4a": "audio/mp4", ".mp3": "audio/mpeg", ".flac": "audio/flac"}
+)
+
 // extension is the extension of the files of a container.
-func extension(format string) string {
-	if format == "mp4" {
-		return ".m4a"
-	}
-	return ".webm"
-}
+func extension(format string) string { return extensions[format] }

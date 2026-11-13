@@ -52,7 +52,7 @@ type Job struct {
 	Track media.Track
 	State TrackState
 	// Phase tells what a download under way does, when it isn't fetching
-	// the audio: "finding its recording on YouTube Music".
+	// the audio: "finding its recording on NetEase Cloud Music".
 	Phase string
 }
 

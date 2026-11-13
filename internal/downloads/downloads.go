@@ -883,11 +883,7 @@ func (m *Manager) Serve(w http.ResponseWriter, r *http.Request, videoID string) 
 		return false
 	}
 	defer f.Close()
-	mime := "audio/webm"
-	if strings.HasSuffix(path, ".m4a") {
-		mime = "audio/mp4"
-	}
-	w.Header().Set("Content-Type", mime)
+	w.Header().Set("Content-Type", types[filepath.Ext(path)])
 	w.Header().Set("Cache-Control", "no-store")
 	http.ServeContent(w, r, "", time.Time{}, f)
 	return true

@@ -174,7 +174,8 @@ func (a *App) playsOffline(t media.Track) bool {
 	if !ok {
 		return false
 	}
-	_, video, err := media.ParseID(yt.ID)
+	// By the key its audio is kept under, a NetEase song's being its own.
+	video, err := streamKey(yt)
 	if err != nil {
 		return false
 	}

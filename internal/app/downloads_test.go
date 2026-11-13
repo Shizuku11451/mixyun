@@ -189,6 +189,10 @@ func TestPlaysOffline(t *testing.T) {
 	if err := os.WriteFile(filepath.Join(n.dir, "audio", "aaaaaaaaaaa.webm"), []byte("audio"), 0o644); err != nil {
 		t.Fatal(err)
 	}
+	// A song of NetEase Cloud Music the cache holds, under its song's key.
+	if err := os.WriteFile(filepath.Join(n.dir, "audio", "ne186016.mp3"), []byte("audio"), 0o644); err != nil {
+		t.Fatal(err)
+	}
 	for _, c := range []struct {
 		track media.Track
 		plays bool
@@ -197,6 +201,8 @@ func TestPlaysOffline(t *testing.T) {
 		{ytTrack("aaaaaaaaaaa"), true},
 		{media.Track{ID: "sp:known", Source: media.SourceSpotify}, true}, // matched to aaaaaaaaaaa, cached
 		{ytTrack("iiiiiiiiiii"), false},
+		{media.Track{ID: "ne:186016", Source: media.SourceNetEase}, true},
+		{media.Track{ID: "ne:1", Source: media.SourceNetEase}, false},
 		{media.Track{ID: "sp:unknown", Source: media.SourceSpotify}, false},
 	} {
 		if got := a.playsOffline(c.track); got != c.plays {

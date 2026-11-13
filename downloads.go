@@ -30,11 +30,12 @@ const (
 	bigDownloadBytes = 1 << 30
 )
 
-// downloadable reports whether t downloads: a track of YouTube Music, or a
-// Spotify track, as its recording there, but a live stream, which has no
-// file to keep, once playback or a download found it live.
+// downloadable reports whether t downloads: a song of NetEase Cloud Music
+// or a track of YouTube Music, or a Spotify track, as its recording
+// there, but a live stream, which has no file to keep, once playback or a
+// download found it live.
 func (s *shell) downloadable(t media.Track) bool {
-	return (t.Source == media.SourceYouTube || t.Source == media.SourceSpotify) && !s.kept.Live(t.ID)
+	return (t.Source == media.SourceNetEase || t.Source == media.SourceYouTube || t.Source == media.SourceSpotify) && !s.kept.Live(t.ID)
 }
 
 // anyDownloadable reports whether a track of tracks downloads, at the cost

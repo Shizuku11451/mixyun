@@ -168,14 +168,14 @@ func TestDownloadConnectsAgain(t *testing.T) {
 func TestDownloadRefusesOtherAudio(t *testing.T) {
 	r := NewResolver(nil, "")
 	r.Run = func(context.Context, ...string) ([]byte, error) {
-		return []byte(`{"url": "https://example.com/a", "ext": "mp3", "acodec": "mp3", "filesize": 100}`), nil
+		return []byte(`{"url": "https://example.com/a", "ext": "ogg", "acodec": "vorbis", "filesize": 100}`), nil
 	}
 	_, err := NewProxy(r).Download(context.Background(), testID, func(Stream) (int64, error) {
 		t.Error("resume was asked of a stream that won't play")
 		return 0, nil
 	}, &bytes.Buffer{}, nil)
 	if !errors.Is(err, ErrNoAudio) {
-		t.Errorf("an MP3 stream: %v", err)
+		t.Errorf("an Ogg stream: %v", err)
 	}
 }
 
@@ -274,5 +274,11 @@ func TestStreamVersion(t *testing.T) {
 	plain := Stream{URL: "https://example.com/a", MimeType: "audio/mp4", Size: 10}
 	if plain.Version() != "audio/mp4/10" || plain.Container() != "mp4" {
 		t.Errorf("version %q, container %q", plain.Version(), plain.Container())
+	}
+	// NetEase Cloud Music's songs download too, as MP3 or FLAC.
+	for mime, want := range map[string]string{"audio/mpeg": "mp3", "audio/flac": "flac", "video/mp4": ""} {
+		if got := (Stream{MimeType: mime}).Container(); got != want {
+			t.Errorf("the container of %s is %q, want %q", mime, got, want)
+		}
 	}
 }

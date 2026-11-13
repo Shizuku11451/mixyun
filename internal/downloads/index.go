@@ -10,6 +10,7 @@ import (
 
 	"github.com/fzn0x/mixmusic/internal/media"
 	"github.com/fzn0x/mixmusic/internal/store"
+	"github.com/fzn0x/mixmusic/internal/stream"
 )
 
 // indexVersion is the version of index.json this MixMusic writes.
@@ -71,7 +72,8 @@ const pinTrack = "track"
 
 // file is the audio of a video, downloaded.
 type file struct {
-	// Path is relative to the folder, as "audio/<video id>.webm".
+	// Path is relative to the folder, as "audio/<video id>.webm", or
+	// "audio/ne<song id>.flac" for a song of NetEase Cloud Music.
 	Path  string `json:"path"`
 	Bytes int64  `json:"bytes"`
 	// Format is the container, "webm" or "mp4", and Codec the audio's,
@@ -207,13 +209,17 @@ func (e *entry) video() string {
 	return videoOf(e.Track)
 }
 
-// videoOf returns the ID of the video of a track of YouTube Music, or "".
+// videoOf returns the key of the audio of a track of YouTube Music or of
+// NetEase Cloud Music, its video's ID or its song's key (stream.NetEaseKey),
+// or "".
 func videoOf(t media.Track) string {
-	if t.Source != media.SourceYouTube {
-		return ""
-	}
-	if _, id, err := media.ParseID(t.ID); err == nil {
+	_, id, err := media.ParseID(t.ID)
+	switch {
+	case err != nil:
+	case t.Source == media.SourceYouTube:
 		return id
+	case t.Source == media.SourceNetEase:
+		return stream.NetEaseKey(id)
 	}
 	return ""
 }
