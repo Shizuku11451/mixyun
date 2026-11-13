@@ -25,11 +25,27 @@ func (s *shell) nowPlayingPage(c *ui.Context) {
 		t := cur.Track
 		s.pageHeader(c, t.Title, nil, nil)
 		pane := s.paneWidth(c) - 2*k.gutter
-		sleeve := min(max(260, pane*0.4), 420)
-		stack := pane < 1100-s.railWidth()
-		grid := ui.Row(c).Gap(48).AlignItems(ui.Start)
+		// The sleeve goes above the lyrics only where both can't sit side by side.
+		stack := pane < 640
+		grid := ui.Row(c.Key("now-grid")).Gap(48).AlignItems(ui.Start)
 		if stack {
 			grid.Column()
+		}
+		// Beside the sleeve, the lyrics fill the window's height under the
+		// head, however tall it is, and the sleeve grows with the room.
+		room := float32(420)
+		if top, _, ok := s.downPage(grid); ok && !stack {
+			room = max(room, s.here.view-top-32)
+		}
+		// Bounds are the frame before's: one more frame settles a resize.
+		if room != s.lyricsView.room {
+			s.lyricsView.room = room
+			c.Invalidate()
+		}
+		sleeve := min(max(260, pane*0.4), max(420, room-48))
+		if stack && s.here.view > 0 {
+			// Above the lyrics, it leaves them room in the window.
+			sleeve = min(sleeve, max(200, s.here.view*0.4))
 		}
 		// The transport is the player bar's: the pane keeps the lyrics room.
 		grid.Children(func() {
@@ -58,7 +74,7 @@ func (s *shell) nowPlayingPage(c *ui.Context) {
 				})
 			})
 			ui.Column(c).Grow(1).MinWidth(0).Gap(24).Children(func() {
-				ui.Column(c).Height(420).Children(func() { s.lyrics(c, true) })
+				ui.Column(c).Height(room).Children(func() { s.lyrics(c, true) })
 				s.pluginWidgets(c)
 			})
 		})

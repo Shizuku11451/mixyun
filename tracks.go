@@ -146,7 +146,8 @@ func (s *shell) trackRow(c *ui.Context, key string, i int, t media.Track, tracks
 				s.artistLine(c, key+"-artists-"+count(i), t, sub)
 			}
 		})
-		if o.album {
+		// A narrow pane gives the title the album's room.
+		if o.album && s.paneWidth(c) >= 640 {
 			ui.Row(c).Grow(1).Basis(0).MinWidth(0).Children(func() {
 				if t.Album == nil {
 					return

@@ -225,6 +225,8 @@ type lyricsState struct {
 	romaji romajiView
 	// local is what they know of the lyrics romanized on the computer.
 	local romanizeView
+	// room is the height the page's lyrics took, the window's under its head.
+	room float32
 }
 
 // lyricsScroll is where a lyrics view scrolled, the line it last scrolled
@@ -301,7 +303,9 @@ func (s *shell) lyrics(c *ui.Context, large bool) {
 	}
 	size, sub := k.bodySize(), k.smallSize()
 	if large {
-		size, sub = k.size(2), k.bodySize()
+		// The page's lyrics grow with the pane, from 2rem to 3rem.
+		size = min(max(k.size(2), s.paneWidth(c)/40), k.size(3))
+		sub = k.bodySize() * size / k.size(2)
 	}
 	// Followed lyrics glide to the line sung now, as Apple Music's do: a
 	// row the list has built glides there, one far off shows at once, as

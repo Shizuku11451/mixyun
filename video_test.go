@@ -285,7 +285,8 @@ func TestNowPlayingVideo(t *testing.T) {
 	if !ok {
 		t.Fatalf("no picture: %q", tt.Texts())
 	}
-	if r.W != 420 || r.H != 236 {
+	// The sleeve grows with the window: the frame keeps the video's shape.
+	if r.W < 420 || r.H < r.W*9/16-1 || r.H > r.W*9/16+1 {
 		t.Errorf("the frame is %v × %v", r.W, r.H)
 	}
 	if _, ok := tt.Find("Visualizer"); ok {

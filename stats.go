@@ -162,7 +162,8 @@ func (s *shell) dayChart(c *ui.Context, days []library.DayPlays) {
 	s.sectionTitle(c, locales.StatsDayByDay())
 	ui.Text(c, locales.StatsMinutesEachDay()).FontSize(k.smallSize()).TextColor(k.muted).Margin(0, 0, 12)
 	ui.Text(c, locales.FormatMinutes(fmt.Sprintf("%.0f", top))).FontSize(k.captionSize()).TextColor(k.muted).FontFeatures("tnum")
-	plot := ui.Box(c).Height(160).FillWidth().Margin(4, 0, 0).BorderWidth(0, 0, 1, 0).BorderColor(k.border).
+	// The chart grows with a wide pane.
+	plot := ui.Box(c).Height(min(max(160, 0.12*s.paneWidth(c)), 320)).FillWidth().Margin(4, 0, 0).BorderWidth(0, 0, 1, 0).BorderColor(k.border).
 		Label(locales.StatsMinutesLabel()).Description(locales.StatsArrowKeys()).Focusable().
 		Draw(func(p *ui.Painter, r ui.Rect) {
 			w := r.W / float32(n)

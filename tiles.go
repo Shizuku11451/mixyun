@@ -22,15 +22,27 @@ var (
 	tileLarge = tileSpan{2, 2}
 )
 
-// tileGrid lays tiles on four columns of rows of at least 150px, capped at
-// 1040px, two columns under a 640px pane, half the theme's gap apart.
+// tileGrid lays tiles on four columns of rows (tileRow), as wide as the
+// pane up to tileGridMax, two columns under a 640px pane, half the theme's
+// gap apart.
 func (s *shell) tileGrid(c *ui.Context, tiles func(columns int)) {
 	columns := 4
 	if s.paneWidth(c) < 640 {
 		columns = 2
 	}
 	k := &s.lk
-	ui.Grid(c).Columns(columns).GapX(k.gap/2).GapY(k.gap/2).MaxWidth(1040).Margin(0, 0, k.sections()).Children(func() { tiles(columns) })
+	ui.Grid(c).Columns(columns).GapX(k.gap/2).GapY(k.gap/2).MaxWidth(tileGridMax).Margin(0, 0, k.sections()).Children(func() { tiles(columns) })
+}
+
+// tileGridMax is the widest the tile grid grows.
+const tileGridMax = 1600
+
+// tileRow is the height of a row of tiles: 150px in a grid 1040px wide or
+// narrower, and as much taller as the grid is wider, so tiles keep their
+// shape in a big window.
+func (s *shell) tileRow(c *ui.Context) float32 {
+	w := min(s.paneWidth(c)-2*s.lk.gutter, tileGridMax)
+	return max(150, w*150/1040)
 }
 
 // flatTile is a tile of the user's own, as "Liked songs". In the Tiles
@@ -43,7 +55,7 @@ func (s *shell) flatTile(c *ui.Context, key string, tone int, span tileSpan, col
 	if columns < 4 && span.cols > 1 {
 		span.cols = min(span.cols, columns)
 	}
-	t := s.buttonBase(c.Key(key)).ColumnSpan(span.cols).RowSpan(span.rows).MinHeight(150).Radius(k.radius).
+	t := s.buttonBase(c.Key(key)).ColumnSpan(span.cols).RowSpan(span.rows).MinHeight(s.tileRow(c)).Radius(k.radius).
 		Label(label).Cursor(ui.CursorPointer).Clip()
 	if k.moves() {
 		s.pressMotion(t, 0.97)

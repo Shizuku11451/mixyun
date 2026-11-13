@@ -60,8 +60,10 @@ func texts(ts ...string) []fact {
 // tells the top bar of them (headed).
 func (s *shell) collectionHead(c *ui.Context, h headProps) {
 	k := &s.lk
-	size := float32(math.Round(float64(k.cover * 208 / 172)))
-	if s.paneWidth(c) < 720 {
+	// The artwork grows with a wide pane, as the title does.
+	pane := s.paneWidth(c)
+	size := float32(math.Round(float64(min(max(k.cover*208/172, 0.18*(pane-2*k.gutter)), 320))))
+	if pane < 720 {
 		size = float32(math.Round(float64(k.cover * 128 / 172)))
 	}
 	head := ui.Row(c).Gap(24).AlignItems(ui.End).Margin(0, 0, 32)
