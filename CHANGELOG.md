@@ -6,6 +6,20 @@ All notable changes to MixMusic are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.7.1] - 2026-11-13
+
+### Changed
+
+- Now playing gives its lyrics more room: the song's artist and album
+  show under its cover, the transport is the player bar's alone, and
+  Share lines is a quiet link at the end of the lyrics' switches.
+
+### Fixed
+
+- On Windows, status bar lyrics show in the taskbar: their window stayed
+  out of sight there, unmoved and drawing nothing. They show at its left
+  end now, the cover, then the line sung now over the next one, dimmer.
+
 ## [0.7.0] - 2026-11-13
 
 Status bar lyrics show the line sung now in the menu bar or the taskbar,
@@ -1804,7 +1818,8 @@ player, for macOS, Windows and Linux.
 - Apps for macOS 12 and later (Apple silicon and Intel), Windows 10 and 11,
   and Linux, on x64 and Arm64.
 
-[Unreleased]: https://github.com/fzn0x/mixmusic/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/fzn0x/mixmusic/compare/v0.7.1...HEAD
+[0.7.1]: https://github.com/fzn0x/mixmusic/compare/v0.7.0...v0.7.1
 [0.7.0]: https://github.com/fzn0x/mixmusic/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/fzn0x/mixmusic/compare/v0.5.11...v0.6.0
 [0.5.11]: https://github.com/fzn0x/mixmusic/compare/v0.5.10...v0.5.11
