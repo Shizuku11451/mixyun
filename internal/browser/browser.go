@@ -96,7 +96,7 @@ var starters = map[Engine]starter{Firefox: startFirefox}
 func SignIn(ctx context.Context, b Browser, opts Options) ([]*http.Cookie, error) {
 	start := starters[b.Engine]
 	if start == nil {
-		return nil, fmt.Errorf("MixMusic can't open %s", b.Name)
+		return nil, fmt.Errorf("Mixyun can't open %s", b.Name)
 	}
 	dir, err := newProfile(b)
 	if err != nil {

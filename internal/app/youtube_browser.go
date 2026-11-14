@@ -63,7 +63,7 @@ func (s *Accounts) YouTubeBrowserLogin(ctx context.Context, id string) (Accounts
 	found := ways.Find()
 	i := slices.IndexFunc(found, func(b browser.Browser) bool { return b.ID == id })
 	if i < 0 {
-		return AccountsStatus{}, fmt.Errorf("MixMusic no longer finds %q on this computer", id)
+		return AccountsStatus{}, fmt.Errorf("Mixyun no longer finds %q on this computer", id)
 	}
 	b := found[i]
 	wait, cancel := context.WithTimeout(ctx, browserSignInTimeout)
@@ -84,7 +84,7 @@ func (s *Accounts) YouTubeBrowserLogin(ctx context.Context, id string) (Accounts
 	case errors.Is(err, context.DeadlineExceeded):
 		return AccountsStatus{}, worded("signing in to YouTube Music took too long; try again", err)
 	case err != nil:
-		return AccountsStatus{}, fmt.Errorf("MixMusic couldn't open %s: %w", b.Name, err)
+		return AccountsStatus{}, fmt.Errorf("Mixyun couldn't open %s: %w", b.Name, err)
 	}
 	return s.a.youtubeSignIn(ctx, youtubeMusicCookies(cookies, time.Now()))
 }

@@ -88,7 +88,7 @@ var (
 	// that is being written.
 	ErrPartial = errors.New("it ends partway through")
 	// ErrUnknown is a file that holds no colours MixMusic knows.
-	ErrUnknown = errors.New("it holds no colours MixMusic knows. MixMusic reads pywal's colors.json, matugen's JSON, what MixMusic's matugen template writes, and the colors of a theme.json")
+	ErrUnknown = errors.New("it holds no colours Mixyun knows. Mixyun reads pywal's colors.json, matugen's JSON, what Mixyun's matugen template writes, and the colors of a theme.json")
 	// ErrFolder is a path of a folder.
 	ErrFolder = errors.New("it's a folder")
 	// ErrTooBig is a file over MaxSize.
@@ -124,7 +124,7 @@ func plain(err error) error {
 	var pe *fs.PathError
 	switch {
 	case errors.Is(err, fs.ErrPermission):
-		return fmt.Errorf("MixMusic may not read it: %w", fs.ErrPermission)
+		return fmt.Errorf("Mixyun may not read it: %w", fs.ErrPermission)
 	case errors.As(err, &pe):
 		return pe.Err
 	}

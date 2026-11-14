@@ -39,7 +39,7 @@ type outputState struct {
 
 // errNoOutputs is why no output device can be listed: the system has no
 // audio output MixMusic can play on.
-var errNoOutputs = errors.New("MixMusic can't play sound on this system")
+var errNoOutputs = errors.New("Mixyun can't play sound on this system")
 
 // OutputDevices lists this computer's audio output devices, sorted by
 // name, the default one marked.

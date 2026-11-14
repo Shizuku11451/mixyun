@@ -110,8 +110,8 @@ func (a *App) keepYTDLPCurrent() {
 func (a *App) openMain(hidden bool) *mygo.Window {
 	if _, err := a.startGoPlayer(); err != nil {
 		log.Printf("mixmusic: can't play: %v", err)
-		_, _ = mygo.Dialog.Message(mygo.MessageOptions{Type: mygo.MessageError, Title: "MixMusic",
-			Message: "MixMusic can't play on this computer", Detail: err.Error()})
+		_, _ = mygo.Dialog.Message(mygo.MessageOptions{Type: mygo.MessageError, Title: "Mixyun",
+			Message: "Mixyun can't play on this computer", Detail: err.Error()})
 		mygo.App.Quit()
 		return nil
 	}
@@ -252,12 +252,12 @@ func (a *App) setupTray() {
 		{Label: "Next", Click: cmd(CommandNext)},
 		{Label: "Previous", Click: cmd(CommandPrevious)},
 		mygo.Separator(),
-		{Label: "Show MixMusic", Click: func(*mygo.MenuItem, *mygo.Window) { a.showMain() }},
+		{Label: "Show Mixyun", Click: func(*mygo.MenuItem, *mygo.Window) { a.showMain() }},
 		{Label: "Mini player", Click: func(*mygo.MenuItem, *mygo.Window) { a.showMini() }},
 		mygo.Separator(),
 		{Role: mygo.RoleQuit},
 	})
-	opts := mygo.TrayOptions{Icon: a.opts.TrayIcon, ToolTip: "MixMusic"}
+	opts := mygo.TrayOptions{Icon: a.opts.TrayIcon, ToolTip: "Mixyun"}
 	if runtime.GOOS == "linux" {
 		opts.Menu = menu // AppIndicator reports no clicks: it shows the menu
 	}

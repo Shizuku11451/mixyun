@@ -200,7 +200,7 @@ func (s *shell) titleCard(t shareTarget) cardBuilder {
 				{Text: strings.ToUpper(t.kind), Size: 34, Weight: 600, Ink: colors.Accent},
 				{Text: t.title, Size: 88, Weight: 700, MaxLines: 3, Gap: 18},
 			},
-			Foot: []sharecard.Line{{Text: "MixMusic", Size: 34, Weight: 600, Ink: colors.Accent}},
+			Foot: []sharecard.Line{{Text: "Mixyun", Size: 34, Weight: 600, Ink: colors.Accent}},
 		}
 		if t.subtitle != "" {
 			c.Lines = append(c.Lines, sharecard.Line{Text: t.subtitle, Size: 52, Weight: 400, Ink: colors.Muted, MaxLines: 2, Gap: 20})
@@ -271,7 +271,7 @@ func cardFileName(title string) string {
 	}, strings.TrimSpace(title))
 	name = strings.Trim(name, " .-")
 	if name == "" {
-		name = "MixMusic"
+		name = "Mixyun"
 	}
 	if r := []rune(name); len(r) > 80 {
 		name = string(r[:80])

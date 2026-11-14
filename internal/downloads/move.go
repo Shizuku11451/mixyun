@@ -20,7 +20,7 @@ var rename = os.Rename
 
 // moveFolder is the folder Move makes for the downloads in a folder that
 // holds other files.
-const moveFolder = "MixMusic downloads"
+const moveFolder = "Mixyun downloads"
 
 // Move moves the downloads to the folder dir, telling progress how many of
 // their bytes moved, and returns the folder they are in then: dir itself
@@ -31,7 +31,7 @@ const moveFolder = "MixMusic downloads"
 // them where they were.
 func (m *Manager) Move(ctx context.Context, dir string, exact bool, progress func(done, total int64)) (string, error) {
 	if m == nil {
-		return "", errors.New("MixMusic keeps no downloads here")
+		return "", errors.New("Mixyun keeps no downloads here")
 	}
 	dir, err := filepath.Abs(dir)
 	if err != nil {
@@ -57,7 +57,7 @@ func (m *Manager) Move(ctx context.Context, dir string, exact bool, progress fun
 	for _, avoid := range m.opts.Avoid {
 		if same(target, avoid) || inside(target, avoid) || inside(avoid, target) {
 			m.mu.Unlock()
-			return "", errors.New("the downloads can't share a folder with MixMusic's cache")
+			return "", errors.New("the downloads can't share a folder with Mixyun's cache")
 		}
 	}
 	m.setHold(holdMoving, true, "Moving to "+target, time.Time{})
@@ -75,7 +75,7 @@ func (m *Manager) Move(ctx context.Context, dir string, exact bool, progress fun
 	}
 	if err := writable(target); err != nil {
 		release()
-		return "", fmt.Errorf("MixMusic can't write to %s: %w", target, err)
+		return "", fmt.Errorf("Mixyun can't write to %s: %w", target, err)
 	}
 	theirs, _, err := readIndex(target)
 	if err != nil {

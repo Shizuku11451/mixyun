@@ -323,7 +323,7 @@ func TestGlobalShortcutsFromSettingsFile(t *testing.T) {
 
 func TestGlobalShortcutError(t *testing.T) {
 	entry := errors.New("mygo: global shortcuts on Wayland need the app installed, with its desktop entry mixmusic.desktop: GDBus.Error:org.freedesktop.portal.Error.NotAllowed")
-	if got := globalShortcutError(entry, "linux"); got != "Global shortcuts need MixMusic installed with its desktop entry" {
+	if got := globalShortcutError(entry, "linux"); got != "Global shortcuts need Mixyun installed with its desktop entry" {
 		t.Errorf("no desktop entry: %q", got)
 	}
 	grab := errors.New("mygo: Ctrl+Alt+P is already a global shortcut of another app")

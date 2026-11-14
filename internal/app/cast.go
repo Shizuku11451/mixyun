@@ -262,7 +262,7 @@ func (a *App) castTo(ctx context.Context, id string) error {
 		return nil
 	case c.starting != nil:
 		c.mu.Unlock()
-		return errors.New("MixMusic is connecting to a cast device already")
+		return errors.New("Mixyun is connecting to a cast device already")
 	}
 	d := castDeviceOf(f.device)
 	c.starting = &d
@@ -363,7 +363,7 @@ func (a *App) castEnded(out *castOut, err error) {
 	why := "the connection was lost"
 	switch {
 	case errors.Is(err, cast.ErrStopped):
-		why = "it stopped playing from MixMusic"
+		why = "it stopped playing from Mixyun"
 	case err != nil && strings.HasSuffix(err.Error(), "plays on the cast device now"):
 		why = err.Error()
 	}

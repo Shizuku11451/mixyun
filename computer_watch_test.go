@@ -43,7 +43,7 @@ func TestComputerUnwatched(t *testing.T) {
 	})
 	tt := testerOf(t, s, 1280, 4000)
 	show(s, tt, "/settings/playback")
-	want := "MixMusic can't watch " + music + " for changes: it's on a network drive. Rescan to see what changed in it."
+	want := "Mixyun can't watch " + music + " for changes: it's on a network drive. Rescan to see what changed in it."
 	until(t, s, tt, "the folder unwatched", func() bool { return tt.HasText(want) && tt.HasText("1 track") })
 	// The search of the settings finds it.
 	show(s, tt, "/settings/playback?q=network+drive")

@@ -194,7 +194,7 @@ func TestNotchShapes(t *testing.T) {
 		if a := alphaAt(img, o.Width/2, o.Height-2); a != 255 {
 			t.Errorf("%+v: open, the panel doesn't reach its foot", h)
 		}
-		for _, want := range []string{testTracks[0].Title, "M83", "Open MixMusic", "Close the player"} {
+		for _, want := range []string{testTracks[0].Title, "M83", "Open Mixyun", "Close the player"} {
 			if _, ok := x.tt.Find(want); !ok {
 				t.Errorf("%+v: the open panel doesn't show %q: %q", h, want, x.tt.Texts())
 			}
@@ -308,8 +308,8 @@ func TestNotchCloses(t *testing.T) {
 	x.closed("Escape")
 
 	x.openPanel()
-	x.click("Open MixMusic")
-	x.closed("Open MixMusic")
+	x.click("Open Mixyun")
+	x.closed("Open Mixyun")
 
 	x.openPanel()
 	x.tt.Move(-20, -20)

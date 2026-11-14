@@ -87,7 +87,7 @@ func TestAssistantRows(t *testing.T) {
 	if st = s.svc.System.AssistantStatus(); !s.svc.Preferences.Get().AssistantControl || !st.On {
 		t.Fatalf("the switch didn't let assistants in: %+v", st)
 	}
-	for _, text := range []string{st.Command, "Configuration", "How to add MixMusic to an assistant", "None now."} {
+	for _, text := range []string{st.Command, "Configuration", "How to add Mixyun to an assistant", "None now."} {
 		if !tt.HasText(text) {
 			t.Errorf("on, the page doesn't show %q: %q", text, tt.Texts())
 		}
@@ -145,7 +145,7 @@ func TestRelayAssistant(t *testing.T) {
 	var errOut bytes.Buffer
 	relayed, status := relayAssistant([]string{"--mcp"}, func() (string, error) { return t.TempDir(), nil },
 		strings.NewReader(""), io.Discard, &errOut)
-	if !relayed || status != 1 || !strings.Contains(errOut.String(), "Let AI assistants control MixMusic is off") {
-		t.Errorf("without MixMusic: %v, %d, %q", relayed, status, errOut.String())
+	if !relayed || status != 1 || !strings.Contains(errOut.String(), "Let AI assistants control Mixyun is off") {
+		t.Errorf("without Mixyun: %v, %d, %q", relayed, status, errOut.String())
 	}
 }

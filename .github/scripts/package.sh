@@ -43,11 +43,11 @@ fetch() {
 for dir in build/windows-*/; do
 	arch="$(basename "$dir")"
 	arch="${arch#windows-}"
-	stage="$work/portable-$arch/MixMusic"
+	stage="$work/portable-$arch/Mixyun"
 	mkdir -p "$stage"
-	cp "$dir"MixMusic.exe "$stage/"
+	cp "$dir"Mixyun.exe "$stage/"
 	for f in "$dir"*.png; do cp "$f" "$stage/"; done
-	(cd "$work/portable-$arch" && zip -qr9 "$out/mixmusic-$v-windows-$arch-portable.zip" MixMusic)
+	(cd "$work/portable-$arch" && zip -qr9 "$out/mixmusic-$v-windows-$arch-portable.zip" Mixyun)
 	echo "made mixmusic-$v-windows-$arch-portable.zip"
 done
 

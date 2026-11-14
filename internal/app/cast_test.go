@@ -544,7 +544,7 @@ func TestCastingEnds(t *testing.T) {
 	dev.StopApp("")
 	select {
 	case why := <-whys:
-		if why != "Casting to Living Room stopped: it stopped playing from MixMusic" {
+		if why != "Casting to Living Room stopped: it stopped playing from Mixyun" {
 			t.Errorf("told %q", why)
 		}
 	case <-time.After(5 * time.Second):

@@ -136,7 +136,7 @@ func (s *shell) discordPreview(c *ui.Context, d settings.Desktop) {
 	if a == nil {
 		return
 	}
-	name := "MixMusic"
+	name := "Mixyun"
 	if d.DiscordAppID != "" {
 		name = locales.DiscordYourApplication()
 	}

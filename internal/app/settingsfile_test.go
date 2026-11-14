@@ -113,7 +113,7 @@ func TestReloadSettingsIgnoresOwnSave(t *testing.T) {
 	n := told(t, a)
 	a.ReloadSettings()
 	if n.Load() != 0 || prefs.File().Seq != 0 {
-		t.Errorf("MixMusic's own save told the windows %d times, File %+v", n.Load(), prefs.File())
+		t.Errorf("Mixyun's own save told the windows %d times, File %+v", n.Load(), prefs.File())
 	}
 }
 

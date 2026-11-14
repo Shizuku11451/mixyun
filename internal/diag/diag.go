@@ -49,7 +49,7 @@ func Start(dir, version string) (*Log, string, error) {
 	if err != nil {
 		return nil, "", err
 	}
-	fmt.Fprintf(l, "MixMusic %s on %s/%s, started %s\n", version, runtime.GOOS, runtime.GOARCH, time.Now().Format(time.RFC3339))
+	fmt.Fprintf(l, "Mixyun %s on %s/%s, started %s\n", version, runtime.GOOS, runtime.GOARCH, time.Now().Format(time.RFC3339))
 	log.SetOutput(io.MultiWriter(l, os.Stderr))
 	crash, err := keepCrash(dir)
 	if err != nil {

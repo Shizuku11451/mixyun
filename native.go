@@ -37,7 +37,7 @@ func Open(a *app.App, hidden bool) *mygo.Window {
 	size := fitIn(mygo.Rectangle{X: work.X, Y: work.Y, Width: 1280, Height: 820}, work)
 	least := fitIn(mygo.Rectangle{X: work.X, Y: work.Y, Width: 940, Height: 600}, work)
 	s.attach(mygo.NewWindow(mygo.WindowOptions{
-		Title:           "MixMusic",
+		Title:           "Mixyun",
 		Width:           size.Width,
 		Height:          size.Height,
 		MinWidth:        least.Width,

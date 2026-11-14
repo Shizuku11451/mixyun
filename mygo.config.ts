@@ -2,14 +2,15 @@ import { defineConfig } from "mygo-cli";
 import pkg from "./package.json" with { type: "json" };
 
 export default defineConfig({
-  name: "MixMusic",
+  name: "Mixyun",
   // The slug names the update archives, the Windows installer and the disk
   // image, which release.yml and .github/scripts/package.sh look for by
-  // name. It is MyGo's default for "MixMusic": pinned so it can't move.
+  // name. It was MyGo's default for "MixMusic", the name before Mixyun: pinned so
+  // the release files keep their names.
   slug: "mixmusic",
   identifier: "app.mixmusic.desktop",
   version: pkg.version,
-  copyright: "© 2026 MixMusic contributors",
+  copyright: "© 2026 Mixyun and MixMusic contributors",
   // The icon that `mygo build` makes each platform's icons of. It isn't
   // in resources/, MyGo's place for it by default: `mygo build` ships every
   // file there beside the app, which reads none as it runs (#303).
@@ -29,7 +30,7 @@ export default defineConfig({
   // MYGO_UPDATER_PRIVATE_KEY secret of the release workflow).
   updates: {
     publicKey: "y/g7m+MircfXqdGupUFNygznyyR/Y41D1YAOYw41ISU=",
-    github: "Shizuku11451/mixmusic",
+    github: "Shizuku11451/mixyun",
   },
   // The release workflow signs with the certificate of its secrets, which
   // it puts in a keychain of its own: `mygo build` signs the app with the
@@ -50,11 +51,11 @@ export default defineConfig({
     // on other computers (remote control), on the network, and plays on
     // them or controls them, with this reason.
     infoPlist: {
-      NSLocalNetworkUsageDescription: "MixMusic finds the cast devices on your network, such as Chromecasts and Nest speakers, to play on them, and MixMusic on your other computers, to control it.",
+      NSLocalNetworkUsageDescription: "Mixyun finds the cast devices on your network, such as Chromecasts and Nest speakers, to play on them, and Mixyun on your other computers, to control it.",
       // And before the visualizer first hears Spotify in MixMusic, which
       // WebKit's own process plays: through a tap of that process, which
       // macOS counts as recording what other apps play.
-      NSAudioCaptureUsageDescription: "MixMusic hears the Spotify tracks it plays, for its visualizer and the plugins' analyser. It never records or sends them.",
+      NSAudioCaptureUsageDescription: "Mixyun hears the Spotify tracks it plays, for its visualizer and the plugins' analyser. It never records or sends them.",
       NSBonjourServices: ["_googlecast._tcp", "_mixmusic._tcp"],
     },
   },
@@ -65,7 +66,7 @@ export default defineConfig({
     certificate: process.env.WINDOWS_CERTIFICATE_FILE || undefined,
   },
   linux: {
-    comment: "Spotify and YouTube Music in one customizable player",
+    comment: "NetEase Cloud Music and Spotify in one customizable player",
     categories: ["AudioVideo", "Audio", "Player"],
     command: "mixmusic",
     // MixMusic plays through PulseAudio, which PipeWire serves too, or

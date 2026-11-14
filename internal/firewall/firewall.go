@@ -35,11 +35,11 @@ const trusted = ProfileDomain | ProfilePrivate
 const AllowFlag = "--allow-firewall"
 
 // RuleName is the name of the rule Allow adds.
-const RuleName = "MixMusic"
+const RuleName = "Mixyun"
 
 // ruleAbout is the description of the rule Allow adds, as the firewall's
 // settings show it.
-const ruleAbout = "Lets other computers and cast devices on private networks reach MixMusic, for remote control and casting. MixMusic's Settings › Desktop › Windows Firewall added it."
+const ruleAbout = "Lets other computers and cast devices on private networks reach Mixyun, for remote control and casting. Mixyun's Settings › Desktop › Windows Firewall added it."
 
 var (
 	// ErrUnsupported is the error of a system whose firewall MixMusic

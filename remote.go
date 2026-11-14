@@ -51,7 +51,7 @@ func (s *shell) remoteItems(m *ui.Menu) {
 	}
 	m.Separator()
 	for _, rc := range computers {
-		if m.Item(rc.Name + " · MixMusic").Chosen() {
+		if m.Item(rc.Name + " · Mixyun").Chosen() {
 			s.navigate(remotePath(rc.ID))
 		}
 	}

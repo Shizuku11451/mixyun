@@ -330,7 +330,7 @@ func (w *winControls) start() error {
 		return err
 	}
 	instance, _, _ := syscall.SyscallN(procGetModuleHandleW.Addr(), 0)
-	title, _ := syscall.UTF16PtrFromString("MixMusic")
+	title, _ := syscall.UTF16PtrFromString("Mixyun")
 	hwnd, _, errno := syscall.SyscallN(procCreateWindowExW.Addr(), 0, uintptr(unsafe.Pointer(class)), uintptr(unsafe.Pointer(title)),
 		wsPopup, 0, 0, 0, 0, 0, 0, instance, 0)
 	if hwnd == 0 {

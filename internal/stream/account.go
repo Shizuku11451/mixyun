@@ -136,7 +136,7 @@ func takenAsAccount(s Stream) error {
 	case s.Live:
 		return errors.New("a live video, whose audio is the same signed out")
 	case !strings.EqualFold(s.Codec, "opus") && s.Codec != "mp4a.40.2":
-		return fmt.Errorf("its audio is %q, which MixMusic doesn't play", s.Codec)
+		return fmt.Errorf("its audio is %q, which Mixyun doesn't play", s.Codec)
 	}
 	return nil
 }

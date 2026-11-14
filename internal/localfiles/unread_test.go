@@ -81,7 +81,7 @@ func TestUnreadMusicFolder(t *testing.T) {
 	allow := localfilestest.DenyRead(t, ti.dir)
 	ti.scan(t)
 	f := ti.Status().Folders[0]
-	if f.Problem != "MixMusic isn't allowed to read it" || f.Tracks != 3 || len(ti.Tracks()) != 3 {
+	if f.Problem != "Mixyun isn't allowed to read it" || f.Tracks != 3 || len(ti.Tracks()) != 3 {
 		t.Errorf("the folder: %+v, %d tracks", f, len(ti.Tracks()))
 	}
 	if !ti.Missing(ti.Tracks()[0].ID) {

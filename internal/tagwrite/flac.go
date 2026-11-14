@@ -62,7 +62,7 @@ func (f *file) writeFLAC(w io.Writer, t Tags, fields Fields) error {
 		}
 	}
 	if vcAt < 0 {
-		vc = comments{vendor: []byte("MixMusic")}
+		vc = comments{vendor: []byte("Mixyun")}
 	}
 	if start > 0 {
 		// The ID3 tag goes: what it told, the comments and pictures take.

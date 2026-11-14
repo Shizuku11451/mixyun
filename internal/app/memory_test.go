@@ -36,7 +36,7 @@ func TestRecordMemory(t *testing.T) {
 			t.Fatalf("memory.log holds %q", lines)
 		}
 	}
-	if !strings.Contains(lines[0], "Recording, MixMusic test on ") || !strings.Contains(lines[1], "Go heap ") {
+	if !strings.Contains(lines[0], "Recording, Mixyun test on ") || !strings.Contains(lines[1], "Go heap ") {
 		t.Errorf("memory.log starts %q", lines)
 	}
 	name, err := s.SaveHeapProfile()

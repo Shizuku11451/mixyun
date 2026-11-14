@@ -113,7 +113,7 @@ func (s *shell) captureFromEnv() {
 				ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 				result, err := s.a.SpotifyHereCheck(ctx)
 				cancel()
-				log.Printf("mixmusic: capture: MixMusic's own Spotify device: %s %v", result, err)
+				log.Printf("mixmusic: capture: Mixyun's own Spotify device: %s %v", result, err)
 			case "title":
 				log.Printf("mixmusic: capture: the window's title is %q", s.win.Title())
 			case "nowplaying":

@@ -775,9 +775,9 @@ func TestClean(t *testing.T) {
 // and name of their TXT records.
 func TestFoundOf(t *testing.T) {
 	got := foundOf([]dnssd.Instance{
-		{Name: "MixMusic a", Host: "192.0.2.1", Port: 4000, Text: map[string]string{"id": "aaaa", "name": "Desktop", "v": "1"}},
-		{Name: "MixMusic b", Host: "192.0.2.2", Port: 4000, Text: map[string]string{"id": "bbbb", "name": "Old", "v": "0"}},
-		{Name: "MixMusic c", Host: "192.0.2.3", Port: 4000, Text: map[string]string{"name": "No ID", "v": "1"}},
+		{Name: "Mixyun a", Host: "192.0.2.1", Port: 4000, Text: map[string]string{"id": "aaaa", "name": "Desktop", "v": "1"}},
+		{Name: "Mixyun b", Host: "192.0.2.2", Port: 4000, Text: map[string]string{"id": "bbbb", "name": "Old", "v": "0"}},
+		{Name: "Mixyun c", Host: "192.0.2.3", Port: 4000, Text: map[string]string{"name": "No ID", "v": "1"}},
 	})
 	want := []Found{{ID: "aaaa", Name: "Desktop", Addr: "192.0.2.1:4000"}}
 	if !reflect.DeepEqual(got, want) {

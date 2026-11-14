@@ -162,7 +162,7 @@ func TestMiniVolumeFits(t *testing.T) {
 				}
 				return top, bottom
 			}
-			_, windowFoot := row("Open MixMusic", "Close the mini player")
+			_, windowFoot := row("Open Mixyun", "Close the mini player")
 			panelsTop, panelsFoot := row("Queue", "Lyrics", "Output device")
 			transportTop, _ := row("Shuffle", "Previous", "Pause", "Next", "Repeat: off", "Like", "Dislike", "Mute")
 			if panelsTop < windowFoot-0.01 || transportTop < panelsFoot-0.01 {

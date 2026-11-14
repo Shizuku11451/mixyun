@@ -78,7 +78,7 @@ func song(size Size, colors Colors, title, artist string, withCover bool) Card {
 			{Text: title, Size: 88, Weight: 700, MaxLines: 3},
 			{Text: artist, Size: 52, Weight: 400, Ink: colors.Muted, MaxLines: 2, Gap: 20},
 		},
-		Foot: []Line{{Text: "MixMusic", Size: 34, Weight: 600, Ink: colors.Accent}},
+		Foot: []Line{{Text: "Mixyun", Size: 34, Weight: 600, Ink: colors.Accent}},
 	}
 	if withCover {
 		c.Cover = cover(600)

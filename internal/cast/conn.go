@@ -145,7 +145,7 @@ func (c *conn) reason() error {
 // connect opens the virtual connection to dest, which every destination
 // needs before it takes messages.
 func (c *conn) connect(dest string) error {
-	return c.send(nsConnection, dest, map[string]any{"type": "CONNECT", "userAgent": "MixMusic"})
+	return c.send(nsConnection, dest, map[string]any{"type": "CONNECT", "userAgent": "Mixyun"})
 }
 
 // send sends payload to dest in namespace ns, as JSON, without waiting for

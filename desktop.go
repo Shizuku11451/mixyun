@@ -43,7 +43,7 @@ func (s *shell) desktopSettings(c *ui.Context) {
 					s.save()
 				})
 				in.Placeholder(locales.DesktopSettingsDiscordPlaceholder()).Width(260).Label(locales.DesktopSettingsDiscordAppID())
-			}, "Discord shows the name of MixMusic's application. To show another, create one in the developer portal and paste its application ID.")
+			}, "Discord shows the name of Mixyun's application. To show another, create one in the developer portal and paste its application ID.")
 		}
 		s.settingsOf(c, desktopRows)
 		s.row(c, locales.DesktopSettingsLogin(), "", func() {

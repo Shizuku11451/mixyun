@@ -72,12 +72,12 @@ func reread(s *shell) { s.firewall.reread() }
 func TestFirewallAllow(t *testing.T) {
 	f := &fakeFirewall{state: firewall.State{On: true, Blocked: true, Asks: true}}
 	s, tt := firewallShell(t, f)
-	firewallShows(t, s, tt, "as it does once its question about MixMusic is answered with Cancel")
-	click(t, s, tt, "Allow MixMusic in Windows Firewall")
-	until(t, s, tt, "Allow", func() bool { return tt.HasText("Windows Firewall lets MixMusic in on private networks") })
-	firewallShows(t, s, tt, "Windows Firewall lets other computers and cast devices on this network reach MixMusic")
-	if f.allows != 1 || tt.HasText("Allow MixMusic in Windows Firewall") {
-		t.Errorf("Allow ran %d times, and shows %v after", f.allows, tt.HasText("Allow MixMusic in Windows Firewall"))
+	firewallShows(t, s, tt, "as it does once its question about Mixyun is answered with Cancel")
+	click(t, s, tt, "Allow Mixyun in Windows Firewall")
+	until(t, s, tt, "Allow", func() bool { return tt.HasText("Windows Firewall lets Mixyun in on private networks") })
+	firewallShows(t, s, tt, "Windows Firewall lets other computers and cast devices on this network reach Mixyun")
+	if f.allows != 1 || tt.HasText("Allow Mixyun in Windows Firewall") {
+		t.Errorf("Allow ran %d times, and shows %v after", f.allows, tt.HasText("Allow Mixyun in Windows Firewall"))
 	}
 }
 
@@ -87,13 +87,13 @@ func TestFirewallAllowDeclined(t *testing.T) {
 	f := &fakeFirewall{state: firewall.State{On: true, Asks: true}, allowErr: firewall.ErrDeclined}
 	s, tt := firewallShell(t, f)
 	firewallShows(t, s, tt, "it asks the first time remote control or casting starts")
-	click(t, s, tt, "Allow MixMusic in Windows Firewall")
+	click(t, s, tt, "Allow Mixyun in Windows Firewall")
 	until(t, s, tt, "Allow declined", func() bool {
 		return tt.HasText("Windows Firewall wasn't changed: the administrator's approval wasn't given")
 	})
 	f.allowErr = errors.New("Windows Firewall wasn't changed (code 1)")
-	until(t, s, tt, "Allow again", func() bool { return !s.firewall.allowing && tt.HasText("Allow MixMusic in Windows Firewall") })
-	click(t, s, tt, "Allow MixMusic in Windows Firewall")
+	until(t, s, tt, "Allow again", func() bool { return !s.firewall.allowing && tt.HasText("Allow Mixyun in Windows Firewall") })
+	click(t, s, tt, "Allow Mixyun in Windows Firewall")
 	until(t, s, tt, "Allow failed", func() bool { return tt.HasText("Windows Firewall wasn't changed (code 1)") })
 }
 
@@ -104,7 +104,7 @@ func TestFirewallPublic(t *testing.T) {
 	f := &fakeFirewall{state: firewall.State{On: true, Public: true, Asks: true}}
 	s, tt := firewallShell(t, f)
 	firewallShows(t, s, tt, "Windows counts this network as public")
-	if tt.HasText("Allow MixMusic in Windows Firewall") {
+	if tt.HasText("Allow Mixyun in Windows Firewall") {
 		t.Error("Allow shows on a public network")
 	}
 	click(t, s, tt, "network settings")
@@ -125,7 +125,7 @@ func TestFirewallStates(t *testing.T) {
 		allow bool
 	}{
 		{firewall.State{Asks: true}, "Windows Firewall is off for this network", false},
-		{firewall.State{On: true, Allowed: true, Asks: true}, "Windows Firewall lets other computers and cast devices on this network reach MixMusic", false},
+		{firewall.State{On: true, Allowed: true, Asks: true}, "Windows Firewall lets other computers and cast devices on this network reach Mixyun", false},
 		{firewall.State{On: true, Managed: true, Asks: true}, "your organization's policy decides what it lets in", false},
 		{firewall.State{On: true, Allowed: true, Shielded: true, Asks: true}, "Windows Firewall blocks every incoming connection on this network", false},
 		{firewall.State{On: true}, "and doesn't ask about apps", true},
@@ -134,7 +134,7 @@ func TestFirewallStates(t *testing.T) {
 		f.set(tc.state)
 		reread(s)
 		firewallShows(t, s, tt, tc.about)
-		if got := tt.HasText("Allow MixMusic in Windows Firewall"); got != tc.allow {
+		if got := tt.HasText("Allow Mixyun in Windows Firewall"); got != tc.allow {
 			t.Errorf("%+v: Allow shows %v, want %v", tc.state, got, tc.allow)
 		}
 	}

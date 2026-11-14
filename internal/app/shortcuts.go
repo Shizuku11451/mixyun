@@ -39,7 +39,7 @@ var GlobalCommands = []GlobalCommand{
 	{"player.mute", "Mute"},
 	{"player.like", "Like what plays"},
 	{"player.dislike", "Dislike what plays"},
-	{"app.show", "Show MixMusic"},
+	{"app.show", "Show Mixyun"},
 }
 
 // globalVolumeStep is how much a press of Volume up or Volume down turns
@@ -210,7 +210,7 @@ func globalShortcutError(err error, goos string) string {
 		return "Your desktop doesn't offer global shortcuts"
 	case goos == "linux" && strings.Contains(err.Error(), "desktop entry"):
 		// The portal answers NotAllowed to an app it can't name.
-		return "Global shortcuts need MixMusic installed with its desktop entry"
+		return "Global shortcuts need Mixyun installed with its desktop entry"
 	}
 	// MyGo tells no more than that the system refused them.
 	return "These keys are already in use: pick others, or try again once they're free"

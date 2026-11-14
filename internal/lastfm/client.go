@@ -132,7 +132,7 @@ func (c *Client) call(ctx context.Context, method string, params url.Values, out
 		return err
 	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("User-Agent", "MixMusic")
+	req.Header.Set("User-Agent", "Mixyun")
 	hc := c.HTTP
 	if hc == nil {
 		hc = defaultHTTP

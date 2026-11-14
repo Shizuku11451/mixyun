@@ -286,7 +286,7 @@ func readTrackFile(kind FileKind, path string, withTags bool) *TrackFile {
 		tf.Size = fi.Size()
 	}
 	if tf.Format, err = audio.Inspect(f); err != nil {
-		tf.Problem = "MixMusic can't play this file"
+		tf.Problem = "Mixyun can't play this file"
 		if !errors.Is(err, audio.ErrCantPlay) {
 			tf.Problem = "Can't read the file"
 		}

@@ -35,10 +35,10 @@ func TestVolumeCurveInBoth(t *testing.T) {
 		}
 		want := strconv.FormatFloat(c.Gain(0.5), 'f', -1, 64)
 		if got := here.level(); got != want {
-			t.Errorf("on %q, Spotify in MixMusic plays the volume at %s, not %s", c, got, want)
+			t.Errorf("on %q, Spotify in Mixyun plays the volume at %s, not %s", c, got, want)
 		}
 		if got := here.gain(0.5); got != want {
-			t.Errorf("on %q, Spotify in MixMusic is sent %s for the middle, not %s", c, got, want)
+			t.Errorf("on %q, Spotify in Mixyun is sent %s for the middle, not %s", c, got, want)
 		}
 		if v := p.State().Volume; v != 0.5 {
 			t.Errorf("on %q, the volume moved to %v", c, v)
@@ -64,7 +64,7 @@ func TestVolumeCurveInBoth(t *testing.T) {
 	a.command(PlayerCommand{Command: CommandVolumeBy, Value: 0.05})
 	waitPlayer(t, p, "a step up", func(s player.State) bool { return math.Abs(s.Volume-0.55) < 1e-9 })
 	if got, want := here.level(), strconv.FormatFloat(volume.Linear.Gain(p.State().Volume), 'f', -1, 64); got != want {
-		t.Errorf("a step up on Linear plays Spotify in MixMusic at %s, not %s", got, want)
+		t.Errorf("a step up on Linear plays Spotify in Mixyun at %s, not %s", got, want)
 	}
 }
 

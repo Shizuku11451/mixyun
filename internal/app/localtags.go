@@ -39,7 +39,7 @@ func pathOf(id string) (string, error) {
 
 // cantEdit words why the tags of the file at path can't be changed.
 func cantEdit(path string, err error) error {
-	return fmt.Errorf("MixMusic can't change %s: %w", filepath.Base(path), err)
+	return fmt.Errorf("Mixyun can't change %s: %w", filepath.Base(path), err)
 }
 
 // EditableTags reads the tags of the file of a local track, for the dialog

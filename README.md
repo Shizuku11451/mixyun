@@ -4,7 +4,9 @@
   <img src="brand/icon.png" width="112" height="112" alt="MixMusic's icon: two pink rings and a play button on black" />
 </p>
 
-<h1 align="center">MixMusic</h1>
+<h1 align="center">Mixyun</h1>
+
+<p align="center"><strong>Mixyun is a fork of <a href="https://github.com/fzn0x/mixmusic">MixMusic</a> that plays NetEase Cloud Music and Spotify, with a Chinese interface. <a href="README.zh-CN.md">中文说明</a> describes it; the rest of this page is MixMusic's, and still speaks of YouTube Music, which Mixyun replaced.</strong></p>
 
 <p align="center"><strong>One player for YouTube Music and Spotify.</strong></p>
 

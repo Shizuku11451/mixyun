@@ -546,11 +546,11 @@ func remoteProblem(name string, err error) string {
 	case errors.Is(err, remote.ErrVersion):
 		return remote.ErrVersion.Error() + "."
 	case errors.Is(err, remote.ErrOlder):
-		return "MixMusic on " + name + " is older, and can't do that: update it there."
+		return "Mixyun on " + name + " is older, and can't do that: update it there."
 	case errors.Is(err, remote.ErrLost):
 		return name + " stopped answering: connecting again…"
 	case errors.Is(err, context.DeadlineExceeded), errors.Is(err, context.Canceled):
 		return "The pairing took too long. Pair again for a new code."
 	}
-	return "Couldn't reach " + name + ": it may be asleep, or a firewall may turn MixMusic away."
+	return "Couldn't reach " + name + ": it may be asleep, or a firewall may turn Mixyun away."
 }

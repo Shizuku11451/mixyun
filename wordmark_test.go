@@ -45,7 +45,7 @@ func TestWordmarkFits(t *testing.T) {
 				}
 				s.refresh()
 				tt.Frame()
-				if !tt.HasText("mixmusic") {
+				if !tt.HasText("mixyun") {
 					t.Fatalf("%s, %s: no name in the rail: %q", th.ID, layout, tt.Texts())
 				}
 				f := s.wordmark
@@ -103,7 +103,7 @@ func TestRailTopOnMac(t *testing.T) {
 				s.refresh()
 				tt.Frame()
 				what := th.ID + ", " + string(layout) + ", " + string(density)
-				if f := s.wordmark; !tt.HasText("mixmusic") || f.width*f.size/24 > f.room {
+				if f := s.wordmark; !tt.HasText("mixyun") || f.width*f.size/24 > f.room {
 					t.Errorf("%s: the name is %v wide at %v, in %v", what, f.width*f.size/24, f.size, f.room)
 				}
 				inRail(what, "Collapse the sidebar")

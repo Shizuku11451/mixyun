@@ -223,7 +223,7 @@ jobs:
       - name: The app's signature
         if: matrix.name == 'macOS' && env.MACOS_SIGNING_IDENTITY != '' && env.NOTARY_KEYCHAIN == ''
         run: |
-          app=build/darwin-universal/MixMusic.app
+          app=build/darwin-universal/Mixyun.app
           # A tag from before signing, built again, signs ad hoc.
           if codesign -dv "$app" 2>&1 | grep -q '^Signature=adhoc'; then
             echo "::warning::The mygo.config.ts of $TAG signs ad hoc"
@@ -245,7 +245,7 @@ jobs:
       - name: Gatekeeper accepts the app
         if: matrix.name == 'macOS' && env.NOTARY_KEYCHAIN != ''
         run: |
-          app=build/darwin-universal/MixMusic.app
+          app=build/darwin-universal/Mixyun.app
           dmg="$(ls build/darwin-universal/*.dmg)"
           # A tag from before signing, built again, signs ad hoc.
           if codesign -dv "$app" 2>&1 | grep -q '^Signature=adhoc'; then

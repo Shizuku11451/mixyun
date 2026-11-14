@@ -321,21 +321,21 @@ func trayTip(np NowPlaying) string { return cut(playingLine(np), 120) }
 // keep it to MixMusic's name.
 func windowTitle(np NowPlaying, show bool) string {
 	if !show {
-		return "MixMusic"
+		return "Mixyun"
 	}
 	return cut(playingLine(np), 256)
 }
 
 // playingLine names what plays, as the tray's tooltip and the main
 // window's title show it: "One More Time - Daft Punk", after "Paused: "
-// while it's paused, or "MixMusic" with nothing to play.
+// while it's paused, or "Mixyun" with nothing to play.
 func playingLine(np NowPlaying) string {
 	if np.Track == nil {
-		return "MixMusic"
+		return "Mixyun"
 	}
 	line := oneLine(np.Track.Title)
 	if line == "" {
-		return "MixMusic"
+		return "Mixyun"
 	}
 	if artists := oneLine(np.Track.ArtistNames()); artists != "" {
 		line += " - " + artists

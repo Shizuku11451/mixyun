@@ -235,7 +235,7 @@ func (h *Host) stopLocked(pl *plugin) {
 		case <-pl.loop.done:
 		case <-time.After(wait):
 			if vm := pl.runtime.Load(); vm != nil {
-				vm.Interrupt("MixMusic stopped the plugin")
+				vm.Interrupt("Mixyun stopped the plugin")
 			}
 		}
 	}()

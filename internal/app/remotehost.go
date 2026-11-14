@@ -97,7 +97,7 @@ func (h remoteHost) Pairing(req remote.PairRequest) (func(error) error, error) {
 				break
 			}
 			log.Printf("mixmusic: remote control: paired with %s, which may control this computer", req.Name)
-			note = "Paired with " + req.Name + ": it can control MixMusic on this computer"
+			note = "Paired with " + req.Name + ": it can control Mixyun on this computer"
 		case errors.Is(err, remote.ErrCanceled):
 		case errors.Is(err, remote.ErrWrongCode):
 			log.Printf("mixmusic: remote control: %s typed another code", req.Name)

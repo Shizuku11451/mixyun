@@ -167,7 +167,7 @@ func TestLiveDeletePlaylist(t *testing.T) {
 		t.Fatal(err)
 	}
 	c.SetCookies(cookies)
-	id, err := c.CreatePlaylist(ctx, "MixMusic live test "+time.Now().Format("2006-01-02 15:04:05"), nil)
+	id, err := c.CreatePlaylist(ctx, "Mixyun live test "+time.Now().Format("2006-01-02 15:04:05"), nil)
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -730,7 +730,7 @@ func TestFolderUnreachable(t *testing.T) {
 		t.Error("served from a folder that isn't there")
 	}
 	// A folder the user chose, gone, as with its drive, isn't made again.
-	gone := filepath.Join(t.TempDir(), "unplugged", "MixMusic downloads")
+	gone := filepath.Join(t.TempDir(), "unplugged", "Mixyun downloads")
 	m = open(t, gone, Options{Fetcher: &fetcher{}, Exists: true})
 	if st := m.Status(); !strings.Contains(st.Problem, "can't be reached") {
 		t.Errorf("status %+v", st)

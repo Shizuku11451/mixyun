@@ -11,7 +11,7 @@ func TestShownArgsHidesSecrets(t *testing.T) {
 		"-J", "--no-playlist", "-f", "bestaudio",
 		"--cookies", `C:\Temp\mixmusic-session-12345.txt`,
 		"--extractor-args", "youtube:po_token=web+MadeUpTokenValue;visitor_data=MadeUpVisitorData;player_client=visionos",
-		"--cache-dir", `C:\Users\Someone\AppData\Local\MixMusic\ytdlp-cache`,
+		"--cache-dir", `C:\Users\Someone\AppData\Local\Mixyun\ytdlp-cache`,
 		"--js-runtimes", "deno:C:/Users/someone/tools/deno.exe",
 		"--proxy", "http://name:madeup-pass@proxy.example:8080",
 		"--add-header", "Authorization:Bearer madeup",
@@ -24,7 +24,7 @@ func TestShownArgsHidesSecrets(t *testing.T) {
 			t.Errorf("the shown arguments hold %q:\n%s", secret, got)
 		}
 	}
-	for _, kept := range []string{"-J", "--no-playlist", "player_client=visionos", `~\AppData\Local\MixMusic\ytdlp-cache`,
+	for _, kept := range []string{"-J", "--no-playlist", "player_client=visionos", `~\AppData\Local\Mixyun\ytdlp-cache`,
 		"deno:~/tools/deno.exe", "proxy.example:8080", "watch?v=aaaaaaaaaaa", "--cookies " + hidden} {
 		if !strings.Contains(got, kept) {
 			t.Errorf("the shown arguments lack %q:\n%s", kept, got)

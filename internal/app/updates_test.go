@@ -39,7 +39,7 @@ func TestNewerVersion(t *testing.T) {
 }
 
 func TestKindOf(t *testing.T) {
-	const installer = `C:\Users\me\AppData\Local\Programs\MixMusic`
+	const installer = `C:\Users\me\AppData\Local\Programs\Mixyun`
 	for _, c := range []struct {
 		name     string
 		goos     string
@@ -49,8 +49,8 @@ func TestKindOf(t *testing.T) {
 		want     string
 	}{
 		{"installer", "windows", installer, false, []string{filepath.Join(installer, "Uninstall.exe")}, "installer"},
-		{"portable zip", "windows", `D:\Apps\MixMusic`, false, nil, "portable"},
-		{"app bundle", "darwin", "/Applications/MixMusic.app/Contents/MacOS", false, nil, "app"},
+		{"portable zip", "windows", `D:\Apps\Mixyun`, false, nil, "portable"},
+		{"app bundle", "darwin", "/Applications/Mixyun.app/Contents/MacOS", false, nil, "app"},
 		{"deb", "linux", "/opt/mixmusic", false, []string{"/var/lib/dpkg/info/mixmusic.list"}, "deb"},
 		{"rpm", "linux", "/opt/mixmusic", false, nil, "rpm"},
 		{"AUR", "linux", "/opt/mixmusic", false, []string{"/var/lib/pacman/local"}, "pacman"},
@@ -130,7 +130,7 @@ func TestLatestRelease(t *testing.T) {
 	if r != want {
 		t.Errorf("latestRelease = %+v, want %+v", r, want)
 	}
-	if agent != "MixMusic/0.2.0" {
+	if agent != "Mixyun/0.2.0" {
 		t.Errorf("User-Agent = %q", agent)
 	}
 
@@ -222,7 +222,7 @@ func TestLatestReleaseRateLimited(t *testing.T) {
 
 func TestSummary(t *testing.T) {
 	for _, c := range []struct{ notes, want string }{
-		{"MixMusic tells you when a yt-dlp you installed\nis out of date, and offers `its own`.\n\n### Added\n\n- More.", "MixMusic tells you when a yt-dlp you installed is out of date, and offers its own."},
+		{"Mixyun tells you when a yt-dlp you installed\nis out of date, and offers `its own`.\n\n### Added\n\n- More.", "Mixyun tells you when a yt-dlp you installed is out of date, and offers its own."},
 		{"**Discord** shows what plays, on [Windows](https://example.com) too.", "Discord shows what plays, on Windows too."},
 		{"### Fixed\n\n- A crash.", ""},
 		{"", ""},

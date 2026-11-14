@@ -92,8 +92,8 @@ func TestBrowserLoginEnds(t *testing.T) {
 	}{
 		{name: "closed", id: "firefox", err: browser.ErrClosed, want: "Firefox closed before you signed in to YouTube Music"},
 		{name: "time is up", id: "firefox", err: context.DeadlineExceeded, want: "signing in to YouTube Music took too long; try again"},
-		{name: "doesn't open", id: "zen", err: errors.New("exec: no such file"), want: "MixMusic couldn't open Zen: exec: no such file"},
-		{name: "not found", id: "brave", want: `MixMusic no longer finds "brave" on this computer`},
+		{name: "doesn't open", id: "zen", err: errors.New("exec: no such file"), want: "Mixyun couldn't open Zen: exec: no such file"},
+		{name: "not found", id: "brave", want: `Mixyun no longer finds "brave" on this computer`},
 		{name: "cancelled", id: "firefox", cancel: true, want: context.Canceled.Error()},
 	} {
 		t.Run(c.name, func(t *testing.T) {

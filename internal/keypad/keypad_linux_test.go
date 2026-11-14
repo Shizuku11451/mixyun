@@ -133,7 +133,7 @@ func TestWatch(t *testing.T) {
 		}
 		return keys[:i] + strconv.Itoa(int(code))
 	}
-	const title = "MixMusic keypad test"
+	const title = "Mixyun keypad test"
 	win := gtkWindowNew(0) // GTK_WINDOW_TOPLEVEL
 	gtkWindowSetTitle(win, title)
 	gtkWindowSetDefaultSize(win, 200, 200)

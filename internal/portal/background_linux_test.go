@@ -290,7 +290,7 @@ func TestBackgroundPortal(t *testing.T) {
 	f := startFake(t)
 	ctx, cancel := context.WithTimeout(t.Context(), 10*time.Second)
 	defer cancel()
-	login := Background{Reason: "MixMusic starts when you log in", Autostart: true, Commandline: []string{"mixmusic", "--mygo-opened-at-login"}}
+	login := Background{Reason: "Mixyun starts when you log in", Autostart: true, Commandline: []string{"mixmusic", "--mygo-opened-at-login"}}
 
 	got, err := RequestBackground(ctx, login)
 	if err != nil {
@@ -299,7 +299,7 @@ func TestBackgroundPortal(t *testing.T) {
 	if got != (Answer{Background: true, Autostart: true}) {
 		t.Errorf("allowed to start at login: %+v", got)
 	}
-	got, err = RequestBackground(ctx, Background{Reason: "MixMusic plays on in the tray", Commandline: login.Commandline})
+	got, err = RequestBackground(ctx, Background{Reason: "Mixyun plays on in the tray", Commandline: login.Commandline})
 	if err != nil {
 		t.Fatal(err)
 	}

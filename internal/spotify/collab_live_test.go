@@ -38,8 +38,8 @@ func TestLiveCollaboration(t *testing.T) {
 		ID string `json:"id"`
 	}
 	if err := c.do(ctx, http.MethodPost, "/me/playlists", nil, map[string]any{
-		"name": "MixMusic live test " + time.Now().Format("2006-01-02 15:04:05"), "public": false,
-		"description": "Made by a test of MixMusic, which deletes it at its end.",
+		"name": "Mixyun live test " + time.Now().Format("2006-01-02 15:04:05"), "public": false,
+		"description": "Made by a test of Mixyun, which deletes it at its end.",
 	}, &made); err != nil {
 		t.Fatalf("making a playlist: %v", err)
 	}

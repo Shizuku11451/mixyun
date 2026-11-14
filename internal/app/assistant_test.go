@@ -462,7 +462,7 @@ func TestAssistantPlaylists(t *testing.T) {
 		t.Fatal(err)
 	}
 	if len(list.Playlists) != 3 || list.Playlists[0].ID != likedID || list.Playlists[0].Tracks != 2 ||
-		list.Playlists[1].Title != "Evening Mix" || list.Playlists[1].Service != "MixMusic" ||
+		list.Playlists[1].Title != "Evening Mix" || list.Playlists[1].Service != "Mixyun" ||
 		list.Playlists[2].Service != "YouTube Music" || len(list.Problems) != 1 {
 		t.Fatalf("playlists %+v", list)
 	}
@@ -557,13 +557,13 @@ func TestAssistantTools(t *testing.T) {
 // TestAssistantCommand quotes a program with spaces, and names the data
 // folder of a portable copy.
 func TestAssistantCommand(t *testing.T) {
-	if got := commandLine(`C:\Program Files\MixMusic\MixMusic.exe`, []string{"--mcp"}); got != `"C:\Program Files\MixMusic\MixMusic.exe" --mcp` {
+	if got := commandLine(`C:\Program Files\Mixyun\Mixyun.exe`, []string{"--mcp"}); got != `"C:\Program Files\Mixyun\Mixyun.exe" --mcp` {
 		t.Errorf("command %s", got)
 	}
 	if got := commandLine("/usr/bin/mixmusic", []string{"--mcp"}); got != "/usr/bin/mixmusic --mcp" {
 		t.Errorf("command %s", got)
 	}
-	cfg := assistantConfig(`C:\MixMusic\MixMusic.exe`, []string{"--mcp"}, map[string]string{"MIXMUSIC_DATA_DIR": `D:\Music`})
+	cfg := assistantConfig(`C:\Mixyun\Mixyun.exe`, []string{"--mcp"}, map[string]string{"MIXMUSIC_DATA_DIR": `D:\Music`})
 	var v struct {
 		Servers map[string]struct {
 			Command string            `json:"command"`
@@ -573,7 +573,7 @@ func TestAssistantCommand(t *testing.T) {
 	if err := json.Unmarshal([]byte(cfg), &v); err != nil {
 		t.Fatal(err)
 	}
-	if s := v.Servers["mixmusic"]; s.Command != `C:\MixMusic\MixMusic.exe` || s.Env["MIXMUSIC_DATA_DIR"] != `D:\Music` {
+	if s := v.Servers["mixmusic"]; s.Command != `C:\Mixyun\Mixyun.exe` || s.Env["MIXMUSIC_DATA_DIR"] != `D:\Music` {
 		t.Errorf("configuration %s", cfg)
 	}
 	t.Setenv("MIXMUSIC_DATA_DIR", `D:\Portable`)

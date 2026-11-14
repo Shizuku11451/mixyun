@@ -33,7 +33,7 @@ func TestLiveAddDuplicate(t *testing.T) {
 	}
 	c.SetCookies(cookies)
 	const song = "BH-SnQ8J1VU" // the first song of testdata/playlist.json
-	id, err := c.CreatePlaylist(ctx, "MixMusic live test "+time.Now().Format("2006-01-02 15:04:05"), []string{song})
+	id, err := c.CreatePlaylist(ctx, "Mixyun live test "+time.Now().Format("2006-01-02 15:04:05"), []string{song})
 	if err != nil {
 		t.Fatal(err)
 	}

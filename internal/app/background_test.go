@@ -75,7 +75,7 @@ func TestStartAtLoginInFlatpak(t *testing.T) {
 	// The user refused, or forbade MixMusic to run in the background.
 	d.asked, d.written = nil, nil
 	d.answer = portal.Answer{}
-	if err := setLogin(true); err == nil || !strings.Contains(err.Error(), "didn't let MixMusic start at login") {
+	if err := setLogin(true); err == nil || !strings.Contains(err.Error(), "didn't let Mixyun start at login") {
 		t.Errorf("refused: %v", err)
 	}
 	if len(d.written) != 0 {

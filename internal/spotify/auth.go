@@ -264,7 +264,7 @@ func randomString(n int) string {
 
 // writeCallbackPage tells the user, in the browser, how signing in went.
 func writeCallbackPage(w http.ResponseWriter, err error) {
-	title, msg := "Signed in to Spotify", "You can close this tab and go back to MixMusic."
+	title, msg := "Signed in to Spotify", "You can close this tab and go back to Mixyun."
 	if err != nil {
 		title, msg = "Could not sign in", err.Error()
 	}

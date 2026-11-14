@@ -145,9 +145,9 @@ func TestGlobalShortcutRecorder(t *testing.T) {
 	if _, ok := s.set.GlobalShortcuts["player.next"]; ok || len(h.registered()) != 0 {
 		t.Errorf("Backspace leaves %v, registered %v", s.set.GlobalShortcuts, h.registered())
 	}
-	click(t, s, tt, "set the global shortcut of Show MixMusic")
+	click(t, s, tt, "set the global shortcut of Show Mixyun")
 	tt.Key(ui.Cmd|ui.Alt, ui.KeyM)
-	click(t, s, tt, "remove the global shortcut of Show MixMusic")
+	click(t, s, tt, "remove the global shortcut of Show Mixyun")
 	if len(s.set.GlobalShortcuts) != 0 || len(h.registered()) != 0 {
 		t.Errorf("remove leaves %v, registered %v", s.set.GlobalShortcuts, h.registered())
 	}

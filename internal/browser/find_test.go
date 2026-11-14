@@ -169,7 +169,7 @@ func TestFindLinux(t *testing.T) {
 
 	sys.files = append(sys.files, "/.flatpak-info")
 	if got := find(sys.system()); got != nil {
-		t.Errorf("MixMusic's Flatpak found %q", found(got))
+		t.Errorf("Mixyun's Flatpak found %q", found(got))
 	}
 }
 

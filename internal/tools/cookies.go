@@ -31,7 +31,7 @@ var (
 	// ErrCookiesDenied is returned when the system keeps the browser's
 	// cookies from MixMusic, as macOS keeps Safari's without Full Disk
 	// Access.
-	ErrCookiesDenied = errors.New("the system keeps the browser's cookies from MixMusic")
+	ErrCookiesDenied = errors.New("the system keeps the browser's cookies from Mixyun")
 )
 
 // cookieErrors tell the reason of an error line of yt-dlp, by a part of it,

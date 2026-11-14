@@ -76,7 +76,7 @@ func newPlugin(h *Host, p addons.Plugin) *plugin {
 // the API.
 func (pl *plugin) activate(p addons.Plugin) error {
 	if p.API != addons.PluginAPI {
-		return errors.New("it was made for the web interface MixMusic had before: its author can update it for MixMusic's own interface (\"api\": 2)")
+		return errors.New("it was made for the web interface Mixyun had before: its author can update it for Mixyun's own interface (\"api\": 2)")
 	}
 	files, err := pl.h.a.AddonFiles(addons.KindPlugin, p.ID)
 	if err != nil {
@@ -372,7 +372,7 @@ func (pl *plugin) toGo(v sobek.Value, out any) {
 		return
 	}
 	if err := json.Unmarshal([]byte(s.String()), out); err != nil {
-		panic(pl.vm.NewTypeError(fmt.Sprintf("not what MixMusic takes: %v", err)))
+		panic(pl.vm.NewTypeError(fmt.Sprintf("not what Mixyun takes: %v", err)))
 	}
 }
 

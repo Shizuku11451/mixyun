@@ -50,13 +50,13 @@ func TestWebViewAudioOfOthers(t *testing.T) {
 		{pid: 51, parent: 0, name: "com.apple.WebKit.GPU"},        // whose owner macOS doesn't tell
 	}
 	if got := webViewAudio(procs); got != 0 {
-		t.Errorf("took process %d for MixMusic's", got)
+		t.Errorf("took process %d for Mixyun's", got)
 	}
 	if self == 0 {
 		t.Skip("macOS tells no process responsible for this one")
 	}
 	procs = append(procs, proc{pid: 52, parent: self, name: "com.apple.WebKit.GPU"})
 	if got := webViewAudio(procs); got != 52 {
-		t.Errorf("MixMusic's GPU process is %d, want 52", got)
+		t.Errorf("Mixyun's GPU process is %d, want 52", got)
 	}
 }

@@ -255,7 +255,7 @@ func (p Plugin) Validate() error {
 	}
 	errs = append(errs, validateFiles(p.Files, "plugin.json", p.Main))
 	if p.API < 0 || p.API > PluginAPI {
-		errs = append(errs, fmt.Errorf("api %d is unknown: MixMusic runs plugins of api %d", p.API, PluginAPI))
+		errs = append(errs, fmt.Errorf("api %d is unknown: Mixyun runs plugins of api %d", p.API, PluginAPI))
 	}
 	return errors.Join(errs...)
 }

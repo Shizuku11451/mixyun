@@ -433,7 +433,7 @@ func (l *linuxControls) property(name string) uintptr {
 	case "CanRaise", "CanGoNext", "CanGoPrevious", "CanControl":
 		return gVariantNewBoolean(true)
 	case "Identity":
-		return gVariantNewString("MixMusic")
+		return gVariantNewString("Mixyun")
 	case "DesktopEntry":
 		return gVariantNewString(desktopEntry)
 	case "SupportedUriSchemes", "SupportedMimeTypes":
@@ -526,7 +526,7 @@ func (l *linuxControls) method(name string, params uintptr) string {
 func mprisMethod(_ uintptr, _, _, _, method *byte, params, inv, _ uintptr) {
 	if l := mprisCurrent.Load(); l != nil {
 		if name := l.method(goString(method), params); name != "" {
-			gDBusMethodInvocationReturnDBusError(inv, name, "MixMusic doesn't open addresses")
+			gDBusMethodInvocationReturnDBusError(inv, name, "Mixyun doesn't open addresses")
 			return
 		}
 	}

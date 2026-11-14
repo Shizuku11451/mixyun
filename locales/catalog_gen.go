@@ -44,11 +44,11 @@ func (msgs Messages) LanguageTitle() string {
 	return Catalog.Format(msgs.locale, "languageTitle", nil)
 }
 
-// LanguageDescription says "The language MixMusic shows its words in."
+// LanguageDescription says "The language Mixyun shows its words in."
 // in the language the app shows.
 func LanguageDescription() string { return In(i18n.Locale()).LanguageDescription() }
 
-// LanguageDescription says "The language MixMusic shows its words in."
+// LanguageDescription says "The language Mixyun shows its words in."
 // in the language of msgs.
 func (msgs Messages) LanguageDescription() string {
 	return Catalog.Format(msgs.locale, "languageDescription", nil)
@@ -956,11 +956,11 @@ func (msgs Messages) ShellTitleSearch() string {
 	return Catalog.Format(msgs.locale, "shellTitleSearch", nil)
 }
 
-// ShellLostWhy says "This page isn't one of MixMusic's."
+// ShellLostWhy says "This page isn't one of Mixyun's."
 // in the language the app shows.
 func ShellLostWhy() string { return In(i18n.Locale()).ShellLostWhy() }
 
-// ShellLostWhy says "This page isn't one of MixMusic's."
+// ShellLostWhy says "This page isn't one of Mixyun's."
 // in the language of msgs.
 func (msgs Messages) ShellLostWhy() string {
 	return Catalog.Format(msgs.locale, "shellLostWhy", nil)
@@ -1026,21 +1026,21 @@ func (msgs Messages) SettingsFileMistake() string {
 	return Catalog.Format(msgs.locale, "settingsFileMistake", nil)
 }
 
-// SettingsFileKeeps says "{problem} MixMusic keeps the settings it had until you fix it."
+// SettingsFileKeeps says "{problem} Mixyun keeps the settings it had until you fix it."
 // in the language the app shows.
 func SettingsFileKeeps(problem string) string { return In(i18n.Locale()).SettingsFileKeeps(problem) }
 
-// SettingsFileKeeps says "{problem} MixMusic keeps the settings it had until you fix it."
+// SettingsFileKeeps says "{problem} Mixyun keeps the settings it had until you fix it."
 // in the language of msgs.
 func (msgs Messages) SettingsFileKeeps(problem string) string {
 	return Catalog.Format(msgs.locale, "settingsFileKeeps", map[string]any{"problem": problem})
 }
 
-// SettingsFileGoesOn says "{problem} MixMusic goes on with the settings it had, and saves what you change here once the file reads again."
+// SettingsFileGoesOn says "{problem} Mixyun goes on with the settings it had, and saves what you change here once the file reads again."
 // in the language the app shows.
 func SettingsFileGoesOn(problem string) string { return In(i18n.Locale()).SettingsFileGoesOn(problem) }
 
-// SettingsFileGoesOn says "{problem} MixMusic goes on with the settings it had, and saves what you change here once the file reads again."
+// SettingsFileGoesOn says "{problem} Mixyun goes on with the settings it had, and saves what you change here once the file reads again."
 // in the language of msgs.
 func (msgs Messages) SettingsFileGoesOn(problem string) string {
 	return Catalog.Format(msgs.locale, "settingsFileGoesOn", map[string]any{"problem": problem})
@@ -1056,13 +1056,13 @@ func (msgs Messages) SettingsFileDidntRead() string {
 	return Catalog.Format(msgs.locale, "settingsFileDidntRead", nil)
 }
 
-// SettingsFileStarted says "{problem} MixMusic started with the settings of a new install, and kept your file as settings.json.broken."
+// SettingsFileStarted says "{problem} Mixyun started with the settings of a new install, and kept your file as settings.json.broken."
 // in the language the app shows.
 func SettingsFileStarted(problem string) string {
 	return In(i18n.Locale()).SettingsFileStarted(problem)
 }
 
-// SettingsFileStarted says "{problem} MixMusic started with the settings of a new install, and kept your file as settings.json.broken."
+// SettingsFileStarted says "{problem} Mixyun started with the settings of a new install, and kept your file as settings.json.broken."
 // in the language of msgs.
 func (msgs Messages) SettingsFileStarted(problem string) string {
 	return Catalog.Format(msgs.locale, "settingsFileStarted", map[string]any{"problem": problem})
@@ -1128,13 +1128,13 @@ func (msgs Messages) SettingsFileNotUTF8() string {
 	return Catalog.Format(msgs.locale, "settingsFileNotUTF8", nil)
 }
 
-// SettingsFileUnknown says "MixMusic doesn't know {names}: its next save drops {count, plural, one {it} other {them}}."
+// SettingsFileUnknown says "Mixyun doesn't know {names}: its next save drops {count, plural, one {it} other {them}}."
 // in the language the app shows.
 func SettingsFileUnknown(names string, count int) string {
 	return In(i18n.Locale()).SettingsFileUnknown(names, count)
 }
 
-// SettingsFileUnknown says "MixMusic doesn't know {names}: its next save drops {count, plural, one {it} other {them}}."
+// SettingsFileUnknown says "Mixyun doesn't know {names}: its next save drops {count, plural, one {it} other {them}}."
 // in the language of msgs.
 func (msgs Messages) SettingsFileUnknown(names string, count int) string {
 	return Catalog.Format(msgs.locale, "settingsFileUnknown", map[string]any{"names": names, "count": count})
@@ -1360,13 +1360,13 @@ func (msgs Messages) AppearanceLayoutCrateDescription() string {
 	return Catalog.Format(msgs.locale, "appearanceLayoutCrateDescription", nil)
 }
 
-// AppearanceLayoutTilesDescription says "Flat tiles, giant light lowercase words and outlined boxes, as MixMusic first was."
+// AppearanceLayoutTilesDescription says "Flat tiles, giant light lowercase words and outlined boxes, as Mixyun first was."
 // in the language the app shows.
 func AppearanceLayoutTilesDescription() string {
 	return In(i18n.Locale()).AppearanceLayoutTilesDescription()
 }
 
-// AppearanceLayoutTilesDescription says "Flat tiles, giant light lowercase words and outlined boxes, as MixMusic first was."
+// AppearanceLayoutTilesDescription says "Flat tiles, giant light lowercase words and outlined boxes, as Mixyun first was."
 // in the language of msgs.
 func (msgs Messages) AppearanceLayoutTilesDescription() string {
 	return Catalog.Format(msgs.locale, "appearanceLayoutTilesDescription", nil)
@@ -1868,11 +1868,11 @@ func (msgs Messages) ColorFileMissingPywal() string {
 	return Catalog.Format(msgs.locale, "colorFileMissingPywal", nil)
 }
 
-// ColorFileMissingMatugen says "It isn't there yet: add MixMusic's template to matugen's config.toml, and run matugen."
+// ColorFileMissingMatugen says "It isn't there yet: add Mixyun's template to matugen's config.toml, and run matugen."
 // in the language the app shows.
 func ColorFileMissingMatugen() string { return In(i18n.Locale()).ColorFileMissingMatugen() }
 
-// ColorFileMissingMatugen says "It isn't there yet: add MixMusic's template to matugen's config.toml, and run matugen."
+// ColorFileMissingMatugen says "It isn't there yet: add Mixyun's template to matugen's config.toml, and run matugen."
 // in the language of msgs.
 func (msgs Messages) ColorFileMissingMatugen() string {
 	return Catalog.Format(msgs.locale, "colorFileMissingMatugen", nil)
@@ -1888,13 +1888,13 @@ func (msgs Messages) ColorFileMissing() string {
 	return Catalog.Format(msgs.locale, "colorFileMissing", nil)
 }
 
-// ColorFileUnreadKept says "It can't be read: {error}. MixMusic keeps the colours it read at {time}."
+// ColorFileUnreadKept says "It can't be read: {error}. Mixyun keeps the colours it read at {time}."
 // in the language the app shows.
 func ColorFileUnreadKept(error string, time_ string) string {
 	return In(i18n.Locale()).ColorFileUnreadKept(error, time_)
 }
 
-// ColorFileUnreadKept says "It can't be read: {error}. MixMusic keeps the colours it read at {time}."
+// ColorFileUnreadKept says "It can't be read: {error}. Mixyun keeps the colours it read at {time}."
 // in the language of msgs.
 func (msgs Messages) ColorFileUnreadKept(error string, time_ string) string {
 	return Catalog.Format(msgs.locale, "colorFileUnreadKept", map[string]any{"error": error, "time": time_})
@@ -2112,11 +2112,11 @@ func (msgs Messages) KeepOnTopTitle() string {
 	return Catalog.Format(msgs.locale, "keepOnTopTitle", nil)
 }
 
-// KeepOnTopDescription says "MixMusic's window stays above your other windows. The mini player stays on top either way."
+// KeepOnTopDescription says "Mixyun's window stays above your other windows. The mini player stays on top either way."
 // in the language the app shows.
 func KeepOnTopDescription() string { return In(i18n.Locale()).KeepOnTopDescription() }
 
-// KeepOnTopDescription says "MixMusic's window stays above your other windows. The mini player stays on top either way."
+// KeepOnTopDescription says "Mixyun's window stays above your other windows. The mini player stays on top either way."
 // in the language of msgs.
 func (msgs Messages) KeepOnTopDescription() string {
 	return Catalog.Format(msgs.locale, "keepOnTopDescription", nil)
@@ -2470,21 +2470,21 @@ func (msgs Messages) PlaybackSpotifyTracks() string {
 	return Catalog.Format(msgs.locale, "playbackSpotifyTracks", nil)
 }
 
-// PlaybackSpotifyHere says "MixMusic plays them itself, at Spotify's own quality, and shows among your Spotify devices. Needs Spotify Premium, an…"
+// PlaybackSpotifyHere says "Mixyun plays them itself, at Spotify's own quality, and shows among your Spotify devices. Needs Spotify Premium, and …"
 // in the language the app shows.
 func PlaybackSpotifyHere() string { return In(i18n.Locale()).PlaybackSpotifyHere() }
 
-// PlaybackSpotifyHere says "MixMusic plays them itself, at Spotify's own quality, and shows among your Spotify devices. Needs Spotify Premium, an…"
+// PlaybackSpotifyHere says "Mixyun plays them itself, at Spotify's own quality, and shows among your Spotify devices. Needs Spotify Premium, and …"
 // in the language of msgs.
 func (msgs Messages) PlaybackSpotifyHere() string {
 	return Catalog.Format(msgs.locale, "playbackSpotifyHere", nil)
 }
 
-// PlaybackSpotifyNoWebKit says "This computer's webview, WebKitGTK, can't play Spotify's protected audio, so MixMusic can't play Spotify itself."
+// PlaybackSpotifyNoWebKit says "This computer's webview, WebKitGTK, can't play Spotify's protected audio, so Mixyun can't play Spotify itself."
 // in the language the app shows.
 func PlaybackSpotifyNoWebKit() string { return In(i18n.Locale()).PlaybackSpotifyNoWebKit() }
 
-// PlaybackSpotifyNoWebKit says "This computer's webview, WebKitGTK, can't play Spotify's protected audio, so MixMusic can't play Spotify itself."
+// PlaybackSpotifyNoWebKit says "This computer's webview, WebKitGTK, can't play Spotify's protected audio, so Mixyun can't play Spotify itself."
 // in the language of msgs.
 func (msgs Messages) PlaybackSpotifyNoWebKit() string {
 	return Catalog.Format(msgs.locale, "playbackSpotifyNoWebKit", nil)
@@ -2500,11 +2500,11 @@ func (msgs Messages) PlaybackHowSpotifyPlays() string {
 	return Catalog.Format(msgs.locale, "playbackHowSpotifyPlays", nil)
 }
 
-// PlaybackFromSpotify says "In MixMusic, from Spotify"
+// PlaybackFromSpotify says "In Mixyun, from Spotify"
 // in the language the app shows.
 func PlaybackFromSpotify() string { return In(i18n.Locale()).PlaybackFromSpotify() }
 
-// PlaybackFromSpotify says "In MixMusic, from Spotify"
+// PlaybackFromSpotify says "In Mixyun, from Spotify"
 // in the language of msgs.
 func (msgs Messages) PlaybackFromSpotify() string {
 	return Catalog.Format(msgs.locale, "playbackFromSpotify", nil)
@@ -2530,21 +2530,21 @@ func (msgs Messages) PlaybackOnConnectDesc() string {
 	return Catalog.Format(msgs.locale, "playbackOnConnectDesc", nil)
 }
 
-// PlaybackFromYouTube says "In MixMusic, from NetEase Cloud Music"
+// PlaybackFromYouTube says "In Mixyun, from NetEase Cloud Music"
 // in the language the app shows.
 func PlaybackFromYouTube() string { return In(i18n.Locale()).PlaybackFromYouTube() }
 
-// PlaybackFromYouTube says "In MixMusic, from NetEase Cloud Music"
+// PlaybackFromYouTube says "In Mixyun, from NetEase Cloud Music"
 // in the language of msgs.
 func (msgs Messages) PlaybackFromYouTube() string {
 	return Catalog.Format(msgs.locale, "playbackFromYouTube", nil)
 }
 
-// PlaybackFromYouTubeDesc says "MixMusic plays their recording on NetEase Cloud Music, with the equalizer, crossfade and visualizer. Works without Pr…"
+// PlaybackFromYouTubeDesc says "Mixyun plays their recording on NetEase Cloud Music, with the equalizer, crossfade and visualizer. Works without Prem…"
 // in the language the app shows.
 func PlaybackFromYouTubeDesc() string { return In(i18n.Locale()).PlaybackFromYouTubeDesc() }
 
-// PlaybackFromYouTubeDesc says "MixMusic plays their recording on NetEase Cloud Music, with the equalizer, crossfade and visualizer. Works without Pr…"
+// PlaybackFromYouTubeDesc says "Mixyun plays their recording on NetEase Cloud Music, with the equalizer, crossfade and visualizer. Works without Prem…"
 // in the language of msgs.
 func (msgs Messages) PlaybackFromYouTubeDesc() string {
 	return Catalog.Format(msgs.locale, "playbackFromYouTubeDesc", nil)
@@ -2590,11 +2590,11 @@ func (msgs Messages) PlaybackSignInAgainTitle() string {
 	return Catalog.Format(msgs.locale, "playbackSignInAgainTitle", nil)
 }
 
-// PlaybackSignInAgainBody says "You signed in before MixMusic played Spotify itself, which your sign-in doesn't allow yet. Until you sign in again, S…"
+// PlaybackSignInAgainBody says "You signed in before Mixyun played Spotify itself, which your sign-in doesn't allow yet. Until you sign in again, Spo…"
 // in the language the app shows.
 func PlaybackSignInAgainBody() string { return In(i18n.Locale()).PlaybackSignInAgainBody() }
 
-// PlaybackSignInAgainBody says "You signed in before MixMusic played Spotify itself, which your sign-in doesn't allow yet. Until you sign in again, S…"
+// PlaybackSignInAgainBody says "You signed in before Mixyun played Spotify itself, which your sign-in doesn't allow yet. Until you sign in again, Spo…"
 // in the language of msgs.
 func (msgs Messages) PlaybackSignInAgainBody() string {
 	return Catalog.Format(msgs.locale, "playbackSignInAgainBody", nil)
@@ -2950,21 +2950,21 @@ func (msgs Messages) EqualizerBandDB(band string) string {
 	return Catalog.Format(msgs.locale, "equalizerBandDB", map[string]any{"band": band})
 }
 
-// EqualizerSpotifyNote says "The equalizer works only on NetEase Cloud Music, which MixMusic plays itself, Spotify tracks played from it included.…"
+// EqualizerSpotifyNote says "The equalizer works only on NetEase Cloud Music, which Mixyun plays itself, Spotify tracks played from it included. F…"
 // in the language the app shows.
 func EqualizerSpotifyNote() string { return In(i18n.Locale()).EqualizerSpotifyNote() }
 
-// EqualizerSpotifyNote says "The equalizer works only on NetEase Cloud Music, which MixMusic plays itself, Spotify tracks played from it included.…"
+// EqualizerSpotifyNote says "The equalizer works only on NetEase Cloud Music, which Mixyun plays itself, Spotify tracks played from it included. F…"
 // in the language of msgs.
 func (msgs Messages) EqualizerSpotifyNote() string {
 	return Catalog.Format(msgs.locale, "equalizerSpotifyNote", nil)
 }
 
-// EqualizerSpotifyLead says "The equalizer works only on NetEase Cloud Music, which MixMusic plays itself, Spotify tracks played from it included.…"
+// EqualizerSpotifyLead says "The equalizer works only on NetEase Cloud Music, which Mixyun plays itself, Spotify tracks played from it included. F…"
 // in the language the app shows.
 func EqualizerSpotifyLead() string { return In(i18n.Locale()).EqualizerSpotifyLead() }
 
-// EqualizerSpotifyLead says "The equalizer works only on NetEase Cloud Music, which MixMusic plays itself, Spotify tracks played from it included.…"
+// EqualizerSpotifyLead says "The equalizer works only on NetEase Cloud Music, which Mixyun plays itself, Spotify tracks played from it included. F…"
 // in the language of msgs.
 func (msgs Messages) EqualizerSpotifyLead() string {
 	return Catalog.Format(msgs.locale, "equalizerSpotifyLead", nil)
@@ -3000,11 +3000,11 @@ func (msgs Messages) SpeedTitle() string {
 	return Catalog.Format(msgs.locale, "speedTitle", nil)
 }
 
-// SpeedHint says "Speed changes what MixMusic plays itself: NetEase Cloud Music, and Spotify tracks played from it. Tracks and episodes…"
+// SpeedHint says "Speed changes what Mixyun plays itself: NetEase Cloud Music, and Spotify tracks played from it. Tracks and episodes S…"
 // in the language the app shows.
 func SpeedHint() string { return In(i18n.Locale()).SpeedHint() }
 
-// SpeedHint says "Speed changes what MixMusic plays itself: NetEase Cloud Music, and Spotify tracks played from it. Tracks and episodes…"
+// SpeedHint says "Speed changes what Mixyun plays itself: NetEase Cloud Music, and Spotify tracks played from it. Tracks and episodes S…"
 // in the language of msgs.
 func (msgs Messages) SpeedHint() string {
 	return Catalog.Format(msgs.locale, "speedHint", nil)
@@ -3090,23 +3090,23 @@ func (msgs Messages) OutputDevice() string {
 	return Catalog.Format(msgs.locale, "outputDevice", nil)
 }
 
-// OutputDescription says "The speakers or headphones MixMusic plays on. System default follows the device your system plays on; a device that's…"
+// OutputDescription says "The speakers or headphones Mixyun plays on. System default follows the device your system plays on; a device that's u…"
 // in the language the app shows.
 func OutputDescription() string { return In(i18n.Locale()).OutputDescription() }
 
-// OutputDescription says "The speakers or headphones MixMusic plays on. System default follows the device your system plays on; a device that's…"
+// OutputDescription says "The speakers or headphones Mixyun plays on. System default follows the device your system plays on; a device that's u…"
 // in the language of msgs.
 func (msgs Messages) OutputDescription() string {
 	return Catalog.Format(msgs.locale, "outputDescription", nil)
 }
 
-// OutputDescriptionGone says "The speakers or headphones MixMusic plays on. System default follows the device your system plays on; a device that's…"
+// OutputDescriptionGone says "The speakers or headphones Mixyun plays on. System default follows the device your system plays on; a device that's u…"
 // in the language the app shows.
 func OutputDescriptionGone(device string) string {
 	return In(i18n.Locale()).OutputDescriptionGone(device)
 }
 
-// OutputDescriptionGone says "The speakers or headphones MixMusic plays on. System default follows the device your system plays on; a device that's…"
+// OutputDescriptionGone says "The speakers or headphones Mixyun plays on. System default follows the device your system plays on; a device that's u…"
 // in the language of msgs.
 func (msgs Messages) OutputDescriptionGone(device string) string {
 	return Catalog.Format(msgs.locale, "outputDescriptionGone", map[string]any{"device": device})
@@ -3182,21 +3182,21 @@ func (msgs Messages) AudioAsAccountTitle() string {
 	return Catalog.Format(msgs.locale, "audioAsAccountTitle", nil)
 }
 
-// AudioAsAccountDesc says "For NetEase Cloud Music VIP's higher bitrate, MixMusic asks for each track's audio as your NetEase Cloud Music accoun…"
+// AudioAsAccountDesc says "For NetEase Cloud Music VIP's higher bitrate, Mixyun asks for each track's audio as your NetEase Cloud Music account.…"
 // in the language the app shows.
 func AudioAsAccountDesc() string { return In(i18n.Locale()).AudioAsAccountDesc() }
 
-// AudioAsAccountDesc says "For NetEase Cloud Music VIP's higher bitrate, MixMusic asks for each track's audio as your NetEase Cloud Music accoun…"
+// AudioAsAccountDesc says "For NetEase Cloud Music VIP's higher bitrate, Mixyun asks for each track's audio as your NetEase Cloud Music account.…"
 // in the language of msgs.
 func (msgs Messages) AudioAsAccountDesc() string {
 	return Catalog.Format(msgs.locale, "audioAsAccountDesc", nil)
 }
 
-// AudioAsAccountSignIn says "For NetEase Cloud Music VIP's higher bitrate, MixMusic asks for each track's audio as your NetEase Cloud Music accoun…"
+// AudioAsAccountSignIn says "For NetEase Cloud Music VIP's higher bitrate, Mixyun asks for each track's audio as your NetEase Cloud Music account.…"
 // in the language the app shows.
 func AudioAsAccountSignIn() string { return In(i18n.Locale()).AudioAsAccountSignIn() }
 
-// AudioAsAccountSignIn says "For NetEase Cloud Music VIP's higher bitrate, MixMusic asks for each track's audio as your NetEase Cloud Music accoun…"
+// AudioAsAccountSignIn says "For NetEase Cloud Music VIP's higher bitrate, Mixyun asks for each track's audio as your NetEase Cloud Music account.…"
 // in the language of msgs.
 func (msgs Messages) AudioAsAccountSignIn() string {
 	return Catalog.Format(msgs.locale, "audioAsAccountSignIn", nil)
@@ -3534,13 +3534,13 @@ func (msgs Messages) ToolSettingsNotFound() string {
 	return Catalog.Format(msgs.locale, "toolSettingsNotFound", nil)
 }
 
-// ToolSettingsFound says "yt-dlp {version} at {path}{managed, select, yes {, MixMusic's own, which it keeps up to date} other {}}{bundled, sele…"
+// ToolSettingsFound says "yt-dlp {version} at {path}{managed, select, yes {, Mixyun's own, which it keeps up to date} other {}}{bundled, select…"
 // in the language the app shows.
 func ToolSettingsFound(version string, path string, managed string, bundled string, outdated string, latest string) string {
 	return In(i18n.Locale()).ToolSettingsFound(version, path, managed, bundled, outdated, latest)
 }
 
-// ToolSettingsFound says "yt-dlp {version} at {path}{managed, select, yes {, MixMusic's own, which it keeps up to date} other {}}{bundled, sele…"
+// ToolSettingsFound says "yt-dlp {version} at {path}{managed, select, yes {, Mixyun's own, which it keeps up to date} other {}}{bundled, select…"
 // in the language of msgs.
 func (msgs Messages) ToolSettingsFound(version string, path string, managed string, bundled string, outdated string, latest string) string {
 	return Catalog.Format(msgs.locale, "toolSettingsFound", map[string]any{"version": version, "path": path, "managed": managed, "bundled": bundled, "outdated": outdated, "latest": latest})
@@ -3566,11 +3566,11 @@ func (msgs Messages) ToolSettingsUpdate() string {
 	return Catalog.Format(msgs.locale, "toolSettingsUpdate", nil)
 }
 
-// ToolSettingsUseOurs says "use MixMusic's yt-dlp"
+// ToolSettingsUseOurs says "use Mixyun's yt-dlp"
 // in the language the app shows.
 func ToolSettingsUseOurs() string { return In(i18n.Locale()).ToolSettingsUseOurs() }
 
-// ToolSettingsUseOurs says "use MixMusic's yt-dlp"
+// ToolSettingsUseOurs says "use Mixyun's yt-dlp"
 // in the language of msgs.
 func (msgs Messages) ToolSettingsUseOurs() string {
 	return Catalog.Format(msgs.locale, "toolSettingsUseOurs", nil)
@@ -3610,11 +3610,11 @@ func (msgs Messages) ToolSettingsJSRuntimeFlatpak(find string) string {
 	return Catalog.Format(msgs.locale, "toolSettingsJSRuntimeFlatpak", map[string]any{"find": find})
 }
 
-// ToolSettingsJSRuntimeNone says "yt-dlp needs Deno, Node.js, Bun or QuickJS to read most YouTube streams. Install one, and MixMusic finds it."
+// ToolSettingsJSRuntimeNone says "yt-dlp needs Deno, Node.js, Bun or QuickJS to read most YouTube streams. Install one, and Mixyun finds it."
 // in the language the app shows.
 func ToolSettingsJSRuntimeNone() string { return In(i18n.Locale()).ToolSettingsJSRuntimeNone() }
 
-// ToolSettingsJSRuntimeNone says "yt-dlp needs Deno, Node.js, Bun or QuickJS to read most YouTube streams. Install one, and MixMusic finds it."
+// ToolSettingsJSRuntimeNone says "yt-dlp needs Deno, Node.js, Bun or QuickJS to read most YouTube streams. Install one, and Mixyun finds it."
 // in the language of msgs.
 func (msgs Messages) ToolSettingsJSRuntimeNone() string {
 	return Catalog.Format(msgs.locale, "toolSettingsJSRuntimeNone", nil)
@@ -3794,11 +3794,11 @@ func (msgs Messages) CacheSettingsSize() string {
 	return Catalog.Format(msgs.locale, "cacheSettingsSize", nil)
 }
 
-// CacheSettingsOff says "Off: MixMusic keeps no tracks."
+// CacheSettingsOff says "Off: Mixyun keeps no tracks."
 // in the language the app shows.
 func CacheSettingsOff() string { return In(i18n.Locale()).CacheSettingsOff() }
 
-// CacheSettingsOff says "Off: MixMusic keeps no tracks."
+// CacheSettingsOff says "Off: Mixyun keeps no tracks."
 // in the language of msgs.
 func (msgs Messages) CacheSettingsOff() string {
 	return Catalog.Format(msgs.locale, "cacheSettingsOff", nil)
@@ -4018,11 +4018,11 @@ func (msgs Messages) ComputerSettingsGroup() string {
 	return Catalog.Format(msgs.locale, "computerSettingsGroup", nil)
 }
 
-// ComputerSettingsAbout says "Folders of music files MixMusic plays from your computer: MP3, FLAC, WAV, M4A, Opus and Vorbis. Nothing of them is up…"
+// ComputerSettingsAbout says "Folders of music files Mixyun plays from your computer: MP3, FLAC, WAV, M4A, Opus and Vorbis. Nothing of them is uplo…"
 // in the language the app shows.
 func ComputerSettingsAbout() string { return In(i18n.Locale()).ComputerSettingsAbout() }
 
-// ComputerSettingsAbout says "Folders of music files MixMusic plays from your computer: MP3, FLAC, WAV, M4A, Opus and Vorbis. Nothing of them is up…"
+// ComputerSettingsAbout says "Folders of music files Mixyun plays from your computer: MP3, FLAC, WAV, M4A, Opus and Vorbis. Nothing of them is uplo…"
 // in the language of msgs.
 func (msgs Messages) ComputerSettingsAbout() string {
 	return Catalog.Format(msgs.locale, "computerSettingsAbout", nil)
@@ -4112,13 +4112,13 @@ func (msgs Messages) ComputerSettingsTracks(count int) string {
 	return Catalog.Format(msgs.locale, "computerSettingsTracks", map[string]any{"count": count})
 }
 
-// ComputerSettingsTracksSkipped says "{count, plural, one {# track} other {# tracks}} · {skipped} skipped, of kinds MixMusic can't play or broken"
+// ComputerSettingsTracksSkipped says "{count, plural, one {# track} other {# tracks}} · {skipped} skipped, of kinds Mixyun can't play or broken"
 // in the language the app shows.
 func ComputerSettingsTracksSkipped(count int, skipped string) string {
 	return In(i18n.Locale()).ComputerSettingsTracksSkipped(count, skipped)
 }
 
-// ComputerSettingsTracksSkipped says "{count, plural, one {# track} other {# tracks}} · {skipped} skipped, of kinds MixMusic can't play or broken"
+// ComputerSettingsTracksSkipped says "{count, plural, one {# track} other {# tracks}} · {skipped} skipped, of kinds Mixyun can't play or broken"
 // in the language of msgs.
 func (msgs Messages) ComputerSettingsTracksSkipped(count int, skipped string) string {
 	return Catalog.Format(msgs.locale, "computerSettingsTracksSkipped", map[string]any{"count": count, "skipped": skipped})
@@ -4166,11 +4166,11 @@ func (msgs Messages) AboutVersion() string {
 	return Catalog.Format(msgs.locale, "aboutVersion", nil)
 }
 
-// AboutDescription says "Spotify and NetEase Cloud Music in one player. This is Shizuku11451's fork of MixMusic, which fzn0x and its contribut…"
+// AboutDescription says "Spotify and NetEase Cloud Music in one player. This is Shizuku11451's fork of Mixyun, which fzn0x and its contributor…"
 // in the language the app shows.
 func AboutDescription(dir string) string { return In(i18n.Locale()).AboutDescription(dir) }
 
-// AboutDescription says "Spotify and NetEase Cloud Music in one player. This is Shizuku11451's fork of MixMusic, which fzn0x and its contribut…"
+// AboutDescription says "Spotify and NetEase Cloud Music in one player. This is Shizuku11451's fork of Mixyun, which fzn0x and its contributor…"
 // in the language of msgs.
 func (msgs Messages) AboutDescription(dir string) string {
 	return Catalog.Format(msgs.locale, "aboutDescription", map[string]any{"dir": dir})
@@ -4276,11 +4276,11 @@ func (msgs Messages) MemoryRecordTitle() string {
 	return Catalog.Format(msgs.locale, "memoryRecordTitle", nil)
 }
 
-// MemoryRecordAbout says "Writes how MixMusic uses its memory to memory.log in the logs folder, once a minute, and saves a heap profile there o…"
+// MemoryRecordAbout says "Writes how Mixyun uses its memory to memory.log in the logs folder, once a minute, and saves a heap profile there onc…"
 // in the language the app shows.
 func MemoryRecordAbout() string { return In(i18n.Locale()).MemoryRecordAbout() }
 
-// MemoryRecordAbout says "Writes how MixMusic uses its memory to memory.log in the logs folder, once a minute, and saves a heap profile there o…"
+// MemoryRecordAbout says "Writes how Mixyun uses its memory to memory.log in the logs folder, once a minute, and saves a heap profile there onc…"
 // in the language of msgs.
 func (msgs Messages) MemoryRecordAbout() string {
 	return Catalog.Format(msgs.locale, "memoryRecordAbout", nil)
@@ -4296,11 +4296,11 @@ func (msgs Messages) MemoryHeapTitle() string {
 	return Catalog.Format(msgs.locale, "memoryHeapTitle", nil)
 }
 
-// MemoryHeapAbout says "Saves where MixMusic's Go code holds memory now, as heap-<time>.pprof beside memory.log. The newest five are kept."
+// MemoryHeapAbout says "Saves where Mixyun's Go code holds memory now, as heap-<time>.pprof beside memory.log. The newest five are kept."
 // in the language the app shows.
 func MemoryHeapAbout() string { return In(i18n.Locale()).MemoryHeapAbout() }
 
-// MemoryHeapAbout says "Saves where MixMusic's Go code holds memory now, as heap-<time>.pprof beside memory.log. The newest five are kept."
+// MemoryHeapAbout says "Saves where Mixyun's Go code holds memory now, as heap-<time>.pprof beside memory.log. The newest five are kept."
 // in the language of msgs.
 func (msgs Messages) MemoryHeapAbout() string {
 	return Catalog.Format(msgs.locale, "memoryHeapAbout", nil)
@@ -4356,11 +4356,11 @@ func (msgs Messages) RemoteSwitch() string {
 	return Catalog.Format(msgs.locale, "remoteSwitch", nil)
 }
 
-// RemoteAbout says "Other computers on this network with MixMusic can find this one, as “{name}”, pair with it by a code it shows, an…"
+// RemoteAbout says "Other computers on this network with Mixyun can find this one, as “{name}”, pair with it by a code it shows, and …"
 // in the language the app shows.
 func RemoteAbout(name string) string { return In(i18n.Locale()).RemoteAbout(name) }
 
-// RemoteAbout says "Other computers on this network with MixMusic can find this one, as “{name}”, pair with it by a code it shows, an…"
+// RemoteAbout says "Other computers on this network with Mixyun can find this one, as “{name}”, pair with it by a code it shows, and …"
 // in the language of msgs.
 func (msgs Messages) RemoteAbout(name string) string {
 	return Catalog.Format(msgs.locale, "remoteAbout", map[string]any{"name": name})
@@ -4478,51 +4478,51 @@ func (msgs Messages) FirewallRow() string {
 	return Catalog.Format(msgs.locale, "firewallRow", nil)
 }
 
-// FirewallReading says "Reading whether Windows Firewall lets other computers and cast devices on this network reach MixMusic…"
+// FirewallReading says "Reading whether Windows Firewall lets other computers and cast devices on this network reach Mixyun…"
 // in the language the app shows.
 func FirewallReading() string { return In(i18n.Locale()).FirewallReading() }
 
-// FirewallReading says "Reading whether Windows Firewall lets other computers and cast devices on this network reach MixMusic…"
+// FirewallReading says "Reading whether Windows Firewall lets other computers and cast devices on this network reach Mixyun…"
 // in the language of msgs.
 func (msgs Messages) FirewallReading() string {
 	return Catalog.Format(msgs.locale, "firewallReading", nil)
 }
 
-// FirewallError says "MixMusic couldn't read Windows Firewall: {detail}."
+// FirewallError says "Mixyun couldn't read Windows Firewall: {detail}."
 // in the language the app shows.
 func FirewallError(detail string) string { return In(i18n.Locale()).FirewallError(detail) }
 
-// FirewallError says "MixMusic couldn't read Windows Firewall: {detail}."
+// FirewallError says "Mixyun couldn't read Windows Firewall: {detail}."
 // in the language of msgs.
 func (msgs Messages) FirewallError(detail string) string {
 	return Catalog.Format(msgs.locale, "firewallError", map[string]any{"detail": detail})
 }
 
-// FirewallOff says "Windows Firewall is off for this network, so other computers and cast devices on it reach MixMusic, for remote contro…"
+// FirewallOff says "Windows Firewall is off for this network, so other computers and cast devices on it reach Mixyun, for remote control …"
 // in the language the app shows.
 func FirewallOff() string { return In(i18n.Locale()).FirewallOff() }
 
-// FirewallOff says "Windows Firewall is off for this network, so other computers and cast devices on it reach MixMusic, for remote contro…"
+// FirewallOff says "Windows Firewall is off for this network, so other computers and cast devices on it reach Mixyun, for remote control …"
 // in the language of msgs.
 func (msgs Messages) FirewallOff() string {
 	return Catalog.Format(msgs.locale, "firewallOff", nil)
 }
 
-// FirewallLetsIn says "Windows Firewall lets other computers and cast devices on this network reach MixMusic, for remote control and casting."
+// FirewallLetsIn says "Windows Firewall lets other computers and cast devices on this network reach Mixyun, for remote control and casting."
 // in the language the app shows.
 func FirewallLetsIn() string { return In(i18n.Locale()).FirewallLetsIn() }
 
-// FirewallLetsIn says "Windows Firewall lets other computers and cast devices on this network reach MixMusic, for remote control and casting."
+// FirewallLetsIn says "Windows Firewall lets other computers and cast devices on this network reach Mixyun, for remote control and casting."
 // in the language of msgs.
 func (msgs Messages) FirewallLetsIn() string {
 	return Catalog.Format(msgs.locale, "firewallLetsIn", nil)
 }
 
-// FirewallManaged says "Windows Firewall keeps other computers and cast devices on this network from reaching MixMusic, and your organization…"
+// FirewallManaged says "Windows Firewall keeps other computers and cast devices on this network from reaching Mixyun, and your organization's…"
 // in the language the app shows.
 func FirewallManaged() string { return In(i18n.Locale()).FirewallManaged() }
 
-// FirewallManaged says "Windows Firewall keeps other computers and cast devices on this network from reaching MixMusic, and your organization…"
+// FirewallManaged says "Windows Firewall keeps other computers and cast devices on this network from reaching Mixyun, and your organization's…"
 // in the language of msgs.
 func (msgs Messages) FirewallManaged() string {
 	return Catalog.Format(msgs.locale, "firewallManaged", nil)
@@ -4548,31 +4548,31 @@ func (msgs Messages) FirewallPublic() string {
 	return Catalog.Format(msgs.locale, "firewallPublic", nil)
 }
 
-// FirewallBlocked says "Windows Firewall keeps other computers and cast devices on this network from reaching MixMusic, as it does once its q…"
+// FirewallBlocked says "Windows Firewall keeps other computers and cast devices on this network from reaching Mixyun, as it does once its que…"
 // in the language the app shows.
 func FirewallBlocked() string { return In(i18n.Locale()).FirewallBlocked() }
 
-// FirewallBlocked says "Windows Firewall keeps other computers and cast devices on this network from reaching MixMusic, as it does once its q…"
+// FirewallBlocked says "Windows Firewall keeps other computers and cast devices on this network from reaching Mixyun, as it does once its que…"
 // in the language of msgs.
 func (msgs Messages) FirewallBlocked() string {
 	return Catalog.Format(msgs.locale, "firewallBlocked", nil)
 }
 
-// FirewallAsks says "Windows Firewall doesn't let other computers and cast devices reach MixMusic yet: it asks the first time remote contr…"
+// FirewallAsks says "Windows Firewall doesn't let other computers and cast devices reach Mixyun yet: it asks the first time remote control…"
 // in the language the app shows.
 func FirewallAsks() string { return In(i18n.Locale()).FirewallAsks() }
 
-// FirewallAsks says "Windows Firewall doesn't let other computers and cast devices reach MixMusic yet: it asks the first time remote contr…"
+// FirewallAsks says "Windows Firewall doesn't let other computers and cast devices reach Mixyun yet: it asks the first time remote control…"
 // in the language of msgs.
 func (msgs Messages) FirewallAsks() string {
 	return Catalog.Format(msgs.locale, "firewallAsks", nil)
 }
 
-// FirewallDefault says "Windows Firewall keeps other computers and cast devices on this network from reaching MixMusic, and doesn't ask about…"
+// FirewallDefault says "Windows Firewall keeps other computers and cast devices on this network from reaching Mixyun, and doesn't ask about a…"
 // in the language the app shows.
 func FirewallDefault() string { return In(i18n.Locale()).FirewallDefault() }
 
-// FirewallDefault says "Windows Firewall keeps other computers and cast devices on this network from reaching MixMusic, and doesn't ask about…"
+// FirewallDefault says "Windows Firewall keeps other computers and cast devices on this network from reaching Mixyun, and doesn't ask about a…"
 // in the language of msgs.
 func (msgs Messages) FirewallDefault() string {
 	return Catalog.Format(msgs.locale, "firewallDefault", nil)
@@ -4598,11 +4598,11 @@ func (msgs Messages) FirewallAllowing() string {
 	return Catalog.Format(msgs.locale, "firewallAllowing", nil)
 }
 
-// FirewallAllowLabel says "Allow MixMusic in Windows Firewall"
+// FirewallAllowLabel says "Allow Mixyun in Windows Firewall"
 // in the language the app shows.
 func FirewallAllowLabel() string { return In(i18n.Locale()).FirewallAllowLabel() }
 
-// FirewallAllowLabel says "Allow MixMusic in Windows Firewall"
+// FirewallAllowLabel says "Allow Mixyun in Windows Firewall"
 // in the language of msgs.
 func (msgs Messages) FirewallAllowLabel() string {
 	return Catalog.Format(msgs.locale, "firewallAllowLabel", nil)
@@ -4618,11 +4618,11 @@ func (msgs Messages) FirewallNetworkSettings() string {
 	return Catalog.Format(msgs.locale, "firewallNetworkSettings", nil)
 }
 
-// FirewallAllowed says "Windows Firewall lets MixMusic in on private networks"
+// FirewallAllowed says "Windows Firewall lets Mixyun in on private networks"
 // in the language the app shows.
 func FirewallAllowed() string { return In(i18n.Locale()).FirewallAllowed() }
 
-// FirewallAllowed says "Windows Firewall lets MixMusic in on private networks"
+// FirewallAllowed says "Windows Firewall lets Mixyun in on private networks"
 // in the language of msgs.
 func (msgs Messages) FirewallAllowed() string {
 	return Catalog.Format(msgs.locale, "firewallAllowed", nil)
@@ -4648,11 +4648,11 @@ func (msgs Messages) AssistantsTitle() string {
 	return Catalog.Format(msgs.locale, "assistantsTitle", nil)
 }
 
-// AssistantsSwitch says "Let AI assistants control MixMusic"
+// AssistantsSwitch says "Let AI assistants control Mixyun"
 // in the language the app shows.
 func AssistantsSwitch() string { return In(i18n.Locale()).AssistantsSwitch() }
 
-// AssistantsSwitch says "Let AI assistants control MixMusic"
+// AssistantsSwitch says "Let AI assistants control Mixyun"
 // in the language of msgs.
 func (msgs Messages) AssistantsSwitch() string {
 	return Catalog.Format(msgs.locale, "assistantsSwitch", nil)
@@ -4698,11 +4698,11 @@ func (msgs Messages) AssistantsCommand() string {
 	return Catalog.Format(msgs.locale, "assistantsCommand", nil)
 }
 
-// AssistantsCommandNote says ". An assistant starts it, as a server of MCP that runs a command (stdio), to reach MixMusic while it runs."
+// AssistantsCommandNote says ". An assistant starts it, as a server of MCP that runs a command (stdio), to reach Mixyun while it runs."
 // in the language the app shows.
 func AssistantsCommandNote() string { return In(i18n.Locale()).AssistantsCommandNote() }
 
-// AssistantsCommandNote says ". An assistant starts it, as a server of MCP that runs a command (stdio), to reach MixMusic while it runs."
+// AssistantsCommandNote says ". An assistant starts it, as a server of MCP that runs a command (stdio), to reach Mixyun while it runs."
 // in the language of msgs.
 func (msgs Messages) AssistantsCommandNote() string {
 	return Catalog.Format(msgs.locale, "assistantsCommandNote", nil)
@@ -4748,11 +4748,11 @@ func (msgs Messages) AssistantsConfigNote() string {
 	return Catalog.Format(msgs.locale, "assistantsConfigNote", nil)
 }
 
-// AssistantsHowTo says "How to add MixMusic to an assistant"
+// AssistantsHowTo says "How to add Mixyun to an assistant"
 // in the language the app shows.
 func AssistantsHowTo() string { return In(i18n.Locale()).AssistantsHowTo() }
 
-// AssistantsHowTo says "How to add MixMusic to an assistant"
+// AssistantsHowTo says "How to add Mixyun to an assistant"
 // in the language of msgs.
 func (msgs Messages) AssistantsHowTo() string {
 	return Catalog.Format(msgs.locale, "assistantsHowTo", nil)
@@ -4818,11 +4818,11 @@ func (msgs Messages) PlaybackErrorsGroup() string {
 	return Catalog.Format(msgs.locale, "playbackErrorsGroup", nil)
 }
 
-// PlaybackErrorsNone says "No track failed to play since MixMusic started. The last few that do are listed here until MixMusic closes, with what…"
+// PlaybackErrorsNone says "No track failed to play since Mixyun started. The last few that do are listed here until Mixyun closes, with what was…"
 // in the language the app shows.
 func PlaybackErrorsNone() string { return In(i18n.Locale()).PlaybackErrorsNone() }
 
-// PlaybackErrorsNone says "No track failed to play since MixMusic started. The last few that do are listed here until MixMusic closes, with what…"
+// PlaybackErrorsNone says "No track failed to play since Mixyun started. The last few that do are listed here until Mixyun closes, with what was…"
 // in the language of msgs.
 func (msgs Messages) PlaybackErrorsNone() string {
 	return Catalog.Format(msgs.locale, "playbackErrorsNone", nil)
@@ -4890,11 +4890,11 @@ func (msgs Messages) DesktopSettingsMediaKeysTitle() string {
 	return Catalog.Format(msgs.locale, "desktopSettingsMediaKeysTitle", nil)
 }
 
-// DesktopSettingsMediaKeysAbout says "The keyboard's play, next and previous keys control MixMusic. Keys of your own that work everywhere are in Settings …"
+// DesktopSettingsMediaKeysAbout says "The keyboard's play, next and previous keys control Mixyun. Keys of your own that work everywhere are in Settings …"
 // in the language the app shows.
 func DesktopSettingsMediaKeysAbout() string { return In(i18n.Locale()).DesktopSettingsMediaKeysAbout() }
 
-// DesktopSettingsMediaKeysAbout says "The keyboard's play, next and previous keys control MixMusic. Keys of your own that work everywhere are in Settings …"
+// DesktopSettingsMediaKeysAbout says "The keyboard's play, next and previous keys control Mixyun. Keys of your own that work everywhere are in Settings …"
 // in the language of msgs.
 func (msgs Messages) DesktopSettingsMediaKeysAbout() string {
 	return Catalog.Format(msgs.locale, "desktopSettingsMediaKeysAbout", nil)
@@ -4912,13 +4912,13 @@ func (msgs Messages) DesktopSettingsNotificationsTitle() string {
 	return Catalog.Format(msgs.locale, "desktopSettingsNotificationsTitle", nil)
 }
 
-// DesktopSettingsNotificationsAbout says "Tell what starts playing while MixMusic is in the background."
+// DesktopSettingsNotificationsAbout says "Tell what starts playing while Mixyun is in the background."
 // in the language the app shows.
 func DesktopSettingsNotificationsAbout() string {
 	return In(i18n.Locale()).DesktopSettingsNotificationsAbout()
 }
 
-// DesktopSettingsNotificationsAbout says "Tell what starts playing while MixMusic is in the background."
+// DesktopSettingsNotificationsAbout says "Tell what starts playing while Mixyun is in the background."
 // in the language of msgs.
 func (msgs Messages) DesktopSettingsNotificationsAbout() string {
 	return Catalog.Format(msgs.locale, "desktopSettingsNotificationsAbout", nil)
@@ -4964,11 +4964,11 @@ func (msgs Messages) DesktopSettingsDiscordAbout() string {
 	return Catalog.Format(msgs.locale, "desktopSettingsDiscordAbout", nil)
 }
 
-// DesktopSettingsDiscordBefore says "Discord shows the name of MixMusic's application. To show another, create one in the "
+// DesktopSettingsDiscordBefore says "Discord shows the name of Mixyun's application. To show another, create one in the "
 // in the language the app shows.
 func DesktopSettingsDiscordBefore() string { return In(i18n.Locale()).DesktopSettingsDiscordBefore() }
 
-// DesktopSettingsDiscordBefore says "Discord shows the name of MixMusic's application. To show another, create one in the "
+// DesktopSettingsDiscordBefore says "Discord shows the name of Mixyun's application. To show another, create one in the "
 // in the language of msgs.
 func (msgs Messages) DesktopSettingsDiscordBefore() string {
 	return Catalog.Format(msgs.locale, "desktopSettingsDiscordBefore", nil)
@@ -5004,13 +5004,13 @@ func (msgs Messages) DesktopSettingsDiscordAppID() string {
 	return Catalog.Format(msgs.locale, "desktopSettingsDiscordAppID", nil)
 }
 
-// DesktopSettingsDiscordPlaceholder says "MixMusic's"
+// DesktopSettingsDiscordPlaceholder says "Mixyun's"
 // in the language the app shows.
 func DesktopSettingsDiscordPlaceholder() string {
 	return In(i18n.Locale()).DesktopSettingsDiscordPlaceholder()
 }
 
-// DesktopSettingsDiscordPlaceholder says "MixMusic's"
+// DesktopSettingsDiscordPlaceholder says "Mixyun's"
 // in the language of msgs.
 func (msgs Messages) DesktopSettingsDiscordPlaceholder() string {
 	return Catalog.Format(msgs.locale, "desktopSettingsDiscordPlaceholder", nil)
@@ -5036,13 +5036,13 @@ func (msgs Messages) DesktopSettingsSettingsFile() string {
 	return Catalog.Format(msgs.locale, "desktopSettingsSettingsFile", nil)
 }
 
-// DesktopSettingsSettingsFileAbout says "Your settings, as settings.json in your data folder. Save it while MixMusic runs, and they apply at once."
+// DesktopSettingsSettingsFileAbout says "Your settings, as settings.json in your data folder. Save it while Mixyun runs, and they apply at once."
 // in the language the app shows.
 func DesktopSettingsSettingsFileAbout() string {
 	return In(i18n.Locale()).DesktopSettingsSettingsFileAbout()
 }
 
-// DesktopSettingsSettingsFileAbout says "Your settings, as settings.json in your data folder. Save it while MixMusic runs, and they apply at once."
+// DesktopSettingsSettingsFileAbout says "Your settings, as settings.json in your data folder. Save it while Mixyun runs, and they apply at once."
 // in the language of msgs.
 func (msgs Messages) DesktopSettingsSettingsFileAbout() string {
 	return Catalog.Format(msgs.locale, "desktopSettingsSettingsFileAbout", nil)
@@ -5354,23 +5354,23 @@ func (msgs Messages) UpdatesInstallAbout() string {
 	return Catalog.Format(msgs.locale, "updatesInstallAbout", nil)
 }
 
-// UpdatesInstalledTitle says "MixMusic {version} is installed"
+// UpdatesInstalledTitle says "Mixyun {version} is installed"
 // in the language the app shows.
 func UpdatesInstalledTitle(version string) string {
 	return In(i18n.Locale()).UpdatesInstalledTitle(version)
 }
 
-// UpdatesInstalledTitle says "MixMusic {version} is installed"
+// UpdatesInstalledTitle says "Mixyun {version} is installed"
 // in the language of msgs.
 func (msgs Messages) UpdatesInstalledTitle(version string) string {
 	return Catalog.Format(msgs.locale, "updatesInstalledTitle", map[string]any{"version": version})
 }
 
-// UpdatesRestartHint says "It runs once MixMusic restarts."
+// UpdatesRestartHint says "It runs once Mixyun restarts."
 // in the language the app shows.
 func UpdatesRestartHint() string { return In(i18n.Locale()).UpdatesRestartHint() }
 
-// UpdatesRestartHint says "It runs once MixMusic restarts."
+// UpdatesRestartHint says "It runs once Mixyun restarts."
 // in the language of msgs.
 func (msgs Messages) UpdatesRestartHint() string {
 	return Catalog.Format(msgs.locale, "updatesRestartHint", nil)
@@ -5428,11 +5428,11 @@ func (msgs Messages) UpdatesOutSinceHow(date string, how string) string {
 	return Catalog.Format(msgs.locale, "updatesOutSinceHow", map[string]any{"date": date, "how": how})
 }
 
-// UpdatesOut says "MixMusic {version} is out"
+// UpdatesOut says "Mixyun {version} is out"
 // in the language the app shows.
 func UpdatesOut(version string) string { return In(i18n.Locale()).UpdatesOut(version) }
 
-// UpdatesOut says "MixMusic {version} is out"
+// UpdatesOut says "Mixyun {version} is out"
 // in the language of msgs.
 func (msgs Messages) UpdatesOut(version string) string {
 	return Catalog.Format(msgs.locale, "updatesOut", map[string]any{"version": version})
@@ -5774,11 +5774,11 @@ func (msgs Messages) UpdatesReplaceDevelopment() string {
 	return Catalog.Format(msgs.locale, "updatesReplaceDevelopment", nil)
 }
 
-// UpdatesReplaceOther says "MixMusic can't write where it is installed, so it can't replace itself: run {file}. Your library and settings stay."
+// UpdatesReplaceOther says "Mixyun can't write where it is installed, so it can't replace itself: run {file}. Your library and settings stay."
 // in the language the app shows.
 func UpdatesReplaceOther(file string) string { return In(i18n.Locale()).UpdatesReplaceOther(file) }
 
-// UpdatesReplaceOther says "MixMusic can't write where it is installed, so it can't replace itself: run {file}. Your library and settings stay."
+// UpdatesReplaceOther says "Mixyun can't write where it is installed, so it can't replace itself: run {file}. Your library and settings stay."
 // in the language of msgs.
 func (msgs Messages) UpdatesReplaceOther(file string) string {
 	return Catalog.Format(msgs.locale, "updatesReplaceOther", map[string]any{"file": file})
@@ -6018,13 +6018,13 @@ func (msgs Messages) AccountSettingsSpotifySignOutTitle() string {
 	return Catalog.Format(msgs.locale, "accountSettingsSpotifySignOutTitle", nil)
 }
 
-// AccountSettingsSpotifySignOutBody says "MixMusic forgets your Spotify sign-in."
+// AccountSettingsSpotifySignOutBody says "Mixyun forgets your Spotify sign-in."
 // in the language the app shows.
 func AccountSettingsSpotifySignOutBody() string {
 	return In(i18n.Locale()).AccountSettingsSpotifySignOutBody()
 }
 
-// AccountSettingsSpotifySignOutBody says "MixMusic forgets your Spotify sign-in."
+// AccountSettingsSpotifySignOutBody says "Mixyun forgets your Spotify sign-in."
 // in the language of msgs.
 func (msgs Messages) AccountSettingsSpotifySignOutBody() string {
 	return Catalog.Format(msgs.locale, "accountSettingsSpotifySignOutBody", nil)
@@ -6052,21 +6052,21 @@ func (msgs Messages) AccountSettingsYouTubeForm() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeForm", nil)
 }
 
-// AccountSettingsYouTubeHint says "NetEase Cloud Music needs no account: search, artists, albums, playlists and radios work signed out. Signed in, MixMu…"
+// AccountSettingsYouTubeHint says "NetEase Cloud Music needs no account: search, artists, albums, playlists and radios work signed out. Signed in, Mixyu…"
 // in the language the app shows.
 func AccountSettingsYouTubeHint() string { return In(i18n.Locale()).AccountSettingsYouTubeHint() }
 
-// AccountSettingsYouTubeHint says "NetEase Cloud Music needs no account: search, artists, albums, playlists and radios work signed out. Signed in, MixMu…"
+// AccountSettingsYouTubeHint says "NetEase Cloud Music needs no account: search, artists, albums, playlists and radios work signed out. Signed in, Mixyu…"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeHint() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeHint", nil)
 }
 
-// AccountSettingsYouTubeSession says "You sign in on Google's own page, in a window of MixMusic: MixMusic never sees your password, and keeps the session e…"
+// AccountSettingsYouTubeSession says "You sign in on Google's own page, in a window of Mixyun: Mixyun never sees your password, and keeps the session encry…"
 // in the language the app shows.
 func AccountSettingsYouTubeSession() string { return In(i18n.Locale()).AccountSettingsYouTubeSession() }
 
-// AccountSettingsYouTubeSession says "You sign in on Google's own page, in a window of MixMusic: MixMusic never sees your password, and keeps the session e…"
+// AccountSettingsYouTubeSession says "You sign in on Google's own page, in a window of Mixyun: Mixyun never sees your password, and keeps the session encry…"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeSession() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeSession", nil)
@@ -6154,13 +6154,13 @@ func (msgs Messages) AccountSettingsYouTubeSignOutTitle() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeSignOutTitle", nil)
 }
 
-// AccountSettingsYouTubeSignOutBody says "MixMusic forgets your NetEase Cloud Music session; your library stays on NetEase Cloud Music."
+// AccountSettingsYouTubeSignOutBody says "Mixyun forgets your NetEase Cloud Music session; your library stays on NetEase Cloud Music."
 // in the language the app shows.
 func AccountSettingsYouTubeSignOutBody() string {
 	return In(i18n.Locale()).AccountSettingsYouTubeSignOutBody()
 }
 
-// AccountSettingsYouTubeSignOutBody says "MixMusic forgets your NetEase Cloud Music session; your library stays on NetEase Cloud Music."
+// AccountSettingsYouTubeSignOutBody says "Mixyun forgets your NetEase Cloud Music session; your library stays on NetEase Cloud Music."
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeSignOutBody() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeSignOutBody", nil)
@@ -6236,23 +6236,23 @@ func (msgs Messages) AccountSettingsYouTubeImport() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeImport", nil)
 }
 
-// AccountSettingsYouTubeProfile says "Another profile than the browser's own, by its name or its folder. MixMusic finds those of Zen, Helium and the browse…"
+// AccountSettingsYouTubeProfile says "Another profile than the browser's own, by its name or its folder. Mixyun finds those of Zen, Helium and the browsers…"
 // in the language the app shows.
 func AccountSettingsYouTubeProfile() string { return In(i18n.Locale()).AccountSettingsYouTubeProfile() }
 
-// AccountSettingsYouTubeProfile says "Another profile than the browser's own, by its name or its folder. MixMusic finds those of Zen, Helium and the browse…"
+// AccountSettingsYouTubeProfile says "Another profile than the browser's own, by its name or its folder. Mixyun finds those of Zen, Helium and the browsers…"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeProfile() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeProfile", nil)
 }
 
-// AccountSettingsYouTubeImportHint says "MixMusic reads the browser's cookies with yt-dlp, keeps YouTube's alone, encrypted on this computer, and deletes the …"
+// AccountSettingsYouTubeImportHint says "Mixyun reads the browser's cookies with yt-dlp, keeps YouTube's alone, encrypted on this computer, and deletes the re…"
 // in the language the app shows.
 func AccountSettingsYouTubeImportHint() string {
 	return In(i18n.Locale()).AccountSettingsYouTubeImportHint()
 }
 
-// AccountSettingsYouTubeImportHint says "MixMusic reads the browser's cookies with yt-dlp, keeps YouTube's alone, encrypted on this computer, and deletes the …"
+// AccountSettingsYouTubeImportHint says "Mixyun reads the browser's cookies with yt-dlp, keeps YouTube's alone, encrypted on this computer, and deletes the re…"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeImportHint() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeImportHint", nil)
@@ -6382,13 +6382,13 @@ func (msgs Messages) AccountSettingsSigningIn() string {
 	return Catalog.Format(msgs.locale, "accountSettingsSigningIn", nil)
 }
 
-// AccountSettingsYouTubeCookieProblem says "MixMusic didn't sign in to NetEase Cloud Music"
+// AccountSettingsYouTubeCookieProblem says "Mixyun didn't sign in to NetEase Cloud Music"
 // in the language the app shows.
 func AccountSettingsYouTubeCookieProblem() string {
 	return In(i18n.Locale()).AccountSettingsYouTubeCookieProblem()
 }
 
-// AccountSettingsYouTubeCookieProblem says "MixMusic didn't sign in to NetEase Cloud Music"
+// AccountSettingsYouTubeCookieProblem says "Mixyun didn't sign in to NetEase Cloud Music"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeCookieProblem() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeCookieProblem", nil)
@@ -6436,43 +6436,43 @@ func (msgs Messages) AccountSettingsAccountChannelAbout() string {
 	return Catalog.Format(msgs.locale, "accountSettingsAccountChannelAbout", nil)
 }
 
-// AccountSettingsUnswitchable says "YouTube doesn't let MixMusic switch to this channel"
+// AccountSettingsUnswitchable says "YouTube doesn't let Mixyun switch to this channel"
 // in the language the app shows.
 func AccountSettingsUnswitchable() string { return In(i18n.Locale()).AccountSettingsUnswitchable() }
 
-// AccountSettingsUnswitchable says "YouTube doesn't let MixMusic switch to this channel"
+// AccountSettingsUnswitchable says "YouTube doesn't let Mixyun switch to this channel"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsUnswitchable() string {
 	return Catalog.Format(msgs.locale, "accountSettingsUnswitchable", nil)
 }
 
-// AccountSettingsChannelGone says "The account or channel MixMusic used is no longer one of this session: choose one."
+// AccountSettingsChannelGone says "The account or channel Mixyun used is no longer one of this session: choose one."
 // in the language the app shows.
 func AccountSettingsChannelGone() string { return In(i18n.Locale()).AccountSettingsChannelGone() }
 
-// AccountSettingsChannelGone says "The account or channel MixMusic used is no longer one of this session: choose one."
+// AccountSettingsChannelGone says "The account or channel Mixyun used is no longer one of this session: choose one."
 // in the language of msgs.
 func (msgs Messages) AccountSettingsChannelGone() string {
 	return Catalog.Format(msgs.locale, "accountSettingsChannelGone", nil)
 }
 
-// AccountSettingsChannelMany says "Your session reaches more than one account or channel. MixMusic uses the first account: choose another here."
+// AccountSettingsChannelMany says "Your session reaches more than one account or channel. Mixyun uses the first account: choose another here."
 // in the language the app shows.
 func AccountSettingsChannelMany() string { return In(i18n.Locale()).AccountSettingsChannelMany() }
 
-// AccountSettingsChannelMany says "Your session reaches more than one account or channel. MixMusic uses the first account: choose another here."
+// AccountSettingsChannelMany says "Your session reaches more than one account or channel. Mixyun uses the first account: choose another here."
 // in the language of msgs.
 func (msgs Messages) AccountSettingsChannelMany() string {
 	return Catalog.Format(msgs.locale, "accountSettingsChannelMany", nil)
 }
 
-// AccountSettingsSwitchNotice says "YouTube doesn't let MixMusic switch to {name}"
+// AccountSettingsSwitchNotice says "YouTube doesn't let Mixyun switch to {name}"
 // in the language the app shows.
 func AccountSettingsSwitchNotice(name string) string {
 	return In(i18n.Locale()).AccountSettingsSwitchNotice(name)
 }
 
-// AccountSettingsSwitchNotice says "YouTube doesn't let MixMusic switch to {name}"
+// AccountSettingsSwitchNotice says "YouTube doesn't let Mixyun switch to {name}"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsSwitchNotice(name string) string {
 	return Catalog.Format(msgs.locale, "accountSettingsSwitchNotice", map[string]any{"name": name})
@@ -6564,13 +6564,13 @@ func (msgs Messages) AccountSettingsDisconnectAskTitle() string {
 	return Catalog.Format(msgs.locale, "accountSettingsDisconnectAskTitle", nil)
 }
 
-// AccountSettingsDisconnectAskBody says "MixMusic forgets your Last.fm connection; your scrobbles stay on Last.fm."
+// AccountSettingsDisconnectAskBody says "Mixyun forgets your Last.fm connection; your scrobbles stay on Last.fm."
 // in the language the app shows.
 func AccountSettingsDisconnectAskBody() string {
 	return In(i18n.Locale()).AccountSettingsDisconnectAskBody()
 }
 
-// AccountSettingsDisconnectAskBody says "MixMusic forgets your Last.fm connection; your scrobbles stay on Last.fm."
+// AccountSettingsDisconnectAskBody says "Mixyun forgets your Last.fm connection; your scrobbles stay on Last.fm."
 // in the language of msgs.
 func (msgs Messages) AccountSettingsDisconnectAskBody() string {
 	return Catalog.Format(msgs.locale, "accountSettingsDisconnectAskBody", nil)
@@ -6626,11 +6626,11 @@ func (msgs Messages) AccountSettingsLastfmStep2() string {
 	return Catalog.Format(msgs.locale, "accountSettingsLastfmStep2", nil)
 }
 
-// AccountSettingsLastfmStep3 says "Approve MixMusic on the page that opens in your browser."
+// AccountSettingsLastfmStep3 says "Approve Mixyun on the page that opens in your browser."
 // in the language the app shows.
 func AccountSettingsLastfmStep3() string { return In(i18n.Locale()).AccountSettingsLastfmStep3() }
 
-// AccountSettingsLastfmStep3 says "Approve MixMusic on the page that opens in your browser."
+// AccountSettingsLastfmStep3 says "Approve Mixyun on the page that opens in your browser."
 // in the language of msgs.
 func (msgs Messages) AccountSettingsLastfmStep3() string {
 	return Catalog.Format(msgs.locale, "accountSettingsLastfmStep3", nil)
@@ -6676,11 +6676,11 @@ func (msgs Messages) AccountSettingsWaitingLastfm() string {
 	return Catalog.Format(msgs.locale, "accountSettingsWaitingLastfm", nil)
 }
 
-// AccountSettingsApproveLastfm says "Approve MixMusic on Last.fm, in your browser"
+// AccountSettingsApproveLastfm says "Approve Mixyun on Last.fm, in your browser"
 // in the language the app shows.
 func AccountSettingsApproveLastfm() string { return In(i18n.Locale()).AccountSettingsApproveLastfm() }
 
-// AccountSettingsApproveLastfm says "Approve MixMusic on Last.fm, in your browser"
+// AccountSettingsApproveLastfm says "Approve Mixyun on Last.fm, in your browser"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsApproveLastfm() string {
 	return Catalog.Format(msgs.locale, "accountSettingsApproveLastfm", nil)
@@ -6698,11 +6698,11 @@ func (msgs Messages) AccountSettingsConnectedLastfm() string {
 	return Catalog.Format(msgs.locale, "accountSettingsConnectedLastfm", nil)
 }
 
-// AccountSettingsLastfmHint says "MixMusic keeps them in your system's credential store, with the connection."
+// AccountSettingsLastfmHint says "Mixyun keeps them in your system's credential store, with the connection."
 // in the language the app shows.
 func AccountSettingsLastfmHint() string { return In(i18n.Locale()).AccountSettingsLastfmHint() }
 
-// AccountSettingsLastfmHint says "MixMusic keeps them in your system's credential store, with the connection."
+// AccountSettingsLastfmHint says "Mixyun keeps them in your system's credential store, with the connection."
 // in the language of msgs.
 func (msgs Messages) AccountSettingsLastfmHint() string {
 	return Catalog.Format(msgs.locale, "accountSettingsLastfmHint", nil)
@@ -6996,13 +6996,13 @@ func (msgs Messages) AccountSettingsNetEaseSignOutTitle() string {
 	return Catalog.Format(msgs.locale, "accountSettingsNetEaseSignOutTitle", nil)
 }
 
-// AccountSettingsNetEaseSignOutBody says "MixMusic forgets your NetEase Cloud Music session; your playlists stay on NetEase Cloud Music."
+// AccountSettingsNetEaseSignOutBody says "Mixyun forgets your NetEase Cloud Music session; your playlists stay on NetEase Cloud Music."
 // in the language the app shows.
 func AccountSettingsNetEaseSignOutBody() string {
 	return In(i18n.Locale()).AccountSettingsNetEaseSignOutBody()
 }
 
-// AccountSettingsNetEaseSignOutBody says "MixMusic forgets your NetEase Cloud Music session; your playlists stay on NetEase Cloud Music."
+// AccountSettingsNetEaseSignOutBody says "Mixyun forgets your NetEase Cloud Music session; your playlists stay on NetEase Cloud Music."
 // in the language of msgs.
 func (msgs Messages) AccountSettingsNetEaseSignOutBody() string {
 	return Catalog.Format(msgs.locale, "accountSettingsNetEaseSignOutBody", nil)
@@ -7526,31 +7526,31 @@ func (msgs Messages) GlobalKeysGroup() string {
 	return Catalog.Format(msgs.locale, "globalKeysGroup", nil)
 }
 
-// GlobalKeysHint says "These keys control MixMusic whichever window is in front, and while it runs they do nothing else."
+// GlobalKeysHint says "These keys control Mixyun whichever window is in front, and while it runs they do nothing else."
 // in the language the app shows.
 func GlobalKeysHint() string { return In(i18n.Locale()).GlobalKeysHint() }
 
-// GlobalKeysHint says "These keys control MixMusic whichever window is in front, and while it runs they do nothing else."
+// GlobalKeysHint says "These keys control Mixyun whichever window is in front, and while it runs they do nothing else."
 // in the language of msgs.
 func (msgs Messages) GlobalKeysHint() string {
 	return Catalog.Format(msgs.locale, "globalKeysHint", nil)
 }
 
-// GlobalKeysHintLinux says "These keys control MixMusic whichever window is in front, and while it runs they do nothing else. On Wayland your des…"
+// GlobalKeysHintLinux says "These keys control Mixyun whichever window is in front, and while it runs they do nothing else. On Wayland your deskt…"
 // in the language the app shows.
 func GlobalKeysHintLinux() string { return In(i18n.Locale()).GlobalKeysHintLinux() }
 
-// GlobalKeysHintLinux says "These keys control MixMusic whichever window is in front, and while it runs they do nothing else. On Wayland your des…"
+// GlobalKeysHintLinux says "These keys control Mixyun whichever window is in front, and while it runs they do nothing else. On Wayland your deskt…"
 // in the language of msgs.
 func (msgs Messages) GlobalKeysHintLinux() string {
 	return Catalog.Format(msgs.locale, "globalKeysHintLinux", nil)
 }
 
-// GlobalKeysHintMac says "These keys control MixMusic whichever window is in front, and while it runs they do nothing else. A letter is the key…"
+// GlobalKeysHintMac says "These keys control Mixyun whichever window is in front, and while it runs they do nothing else. A letter is the key i…"
 // in the language the app shows.
 func GlobalKeysHintMac() string { return In(i18n.Locale()).GlobalKeysHintMac() }
 
-// GlobalKeysHintMac says "These keys control MixMusic whichever window is in front, and while it runs they do nothing else. A letter is the key…"
+// GlobalKeysHintMac says "These keys control Mixyun whichever window is in front, and while it runs they do nothing else. A letter is the key i…"
 // in the language of msgs.
 func (msgs Messages) GlobalKeysHintMac() string {
 	return Catalog.Format(msgs.locale, "globalKeysHintMac", nil)
@@ -7620,31 +7620,31 @@ func (msgs Messages) GlobalKeysNoGlobal(title string) string {
 	return Catalog.Format(msgs.locale, "globalKeysNoGlobal", map[string]any{"title": title})
 }
 
-// GlobalKeysShowApp says "Show MixMusic"
+// GlobalKeysShowApp says "Show Mixyun"
 // in the language the app shows.
 func GlobalKeysShowApp() string { return In(i18n.Locale()).GlobalKeysShowApp() }
 
-// GlobalKeysShowApp says "Show MixMusic"
+// GlobalKeysShowApp says "Show Mixyun"
 // in the language of msgs.
 func (msgs Messages) GlobalKeysShowApp() string {
 	return Catalog.Format(msgs.locale, "globalKeysShowApp", nil)
 }
 
-// OnTopStays says "MixMusic stays on top of other windows"
+// OnTopStays says "Mixyun stays on top of other windows"
 // in the language the app shows.
 func OnTopStays() string { return In(i18n.Locale()).OnTopStays() }
 
-// OnTopStays says "MixMusic stays on top of other windows"
+// OnTopStays says "Mixyun stays on top of other windows"
 // in the language of msgs.
 func (msgs Messages) OnTopStays() string {
 	return Catalog.Format(msgs.locale, "onTopStays", nil)
 }
 
-// OnTopNoLonger says "MixMusic no longer stays on top"
+// OnTopNoLonger says "Mixyun no longer stays on top"
 // in the language the app shows.
 func OnTopNoLonger() string { return In(i18n.Locale()).OnTopNoLonger() }
 
-// OnTopNoLonger says "MixMusic no longer stays on top"
+// OnTopNoLonger says "Mixyun no longer stays on top"
 // in the language of msgs.
 func (msgs Messages) OnTopNoLonger() string {
 	return Catalog.Format(msgs.locale, "onTopNoLonger", nil)
@@ -7790,13 +7790,13 @@ func (msgs Messages) ReleasesNewFrom() string {
 	return Catalog.Format(msgs.locale, "releasesNewFrom", nil)
 }
 
-// UpdateOfferInstalled says "MixMusic {version} is installed. It runs once MixMusic restarts."
+// UpdateOfferInstalled says "Mixyun {version} is installed. It runs once Mixyun restarts."
 // in the language the app shows.
 func UpdateOfferInstalled(version string) string {
 	return In(i18n.Locale()).UpdateOfferInstalled(version)
 }
 
-// UpdateOfferInstalled says "MixMusic {version} is installed. It runs once MixMusic restarts."
+// UpdateOfferInstalled says "Mixyun {version} is installed. It runs once Mixyun restarts."
 // in the language of msgs.
 func (msgs Messages) UpdateOfferInstalled(version string) string {
 	return Catalog.Format(msgs.locale, "updateOfferInstalled", map[string]any{"version": version})
@@ -8010,21 +8010,21 @@ func (msgs Messages) FailureStepNumbered(n int, step string) string {
 	return Catalog.Format(msgs.locale, "failureStepNumbered", map[string]any{"n": n, "step": step})
 }
 
-// FailureStopped says "MixMusic stopped playing after it, as the tracks just before it couldn't play either."
+// FailureStopped says "Mixyun stopped playing after it, as the tracks just before it couldn't play either."
 // in the language the app shows.
 func FailureStopped() string { return In(i18n.Locale()).FailureStopped() }
 
-// FailureStopped says "MixMusic stopped playing after it, as the tracks just before it couldn't play either."
+// FailureStopped says "Mixyun stopped playing after it, as the tracks just before it couldn't play either."
 // in the language of msgs.
 func (msgs Messages) FailureStopped() string {
 	return Catalog.Format(msgs.locale, "failureStopped", nil)
 }
 
-// FailureReportHead says "MixMusic couldn't play a track\n\n"
+// FailureReportHead says "Mixyun couldn't play a track\n\n"
 // in the language the app shows.
 func FailureReportHead() string { return In(i18n.Locale()).FailureReportHead() }
 
-// FailureReportHead says "MixMusic couldn't play a track\n\n"
+// FailureReportHead says "Mixyun couldn't play a track\n\n"
 // in the language of msgs.
 func (msgs Messages) FailureReportHead() string {
 	return Catalog.Format(msgs.locale, "failureReportHead", nil)
@@ -8082,13 +8082,13 @@ func (msgs Messages) FailureReportTried() string {
 	return Catalog.Format(msgs.locale, "failureReportTried", nil)
 }
 
-// FailureReportSystem says "MixMusic {version} on {platform} {arch}"
+// FailureReportSystem says "Mixyun {version} on {platform} {arch}"
 // in the language the app shows.
 func FailureReportSystem(version string, platform string, arch string) string {
 	return In(i18n.Locale()).FailureReportSystem(version, platform, arch)
 }
 
-// FailureReportSystem says "MixMusic {version} on {platform} {arch}"
+// FailureReportSystem says "Mixyun {version} on {platform} {arch}"
 // in the language of msgs.
 func (msgs Messages) FailureReportSystem(version string, platform string, arch string) string {
 	return Catalog.Format(msgs.locale, "failureReportSystem", map[string]any{"version": version, "platform": platform, "arch": arch})
@@ -8634,11 +8634,11 @@ func (msgs Messages) ComputerNoMusicTitle() string {
 	return Catalog.Format(msgs.locale, "computerNoMusicTitle", nil)
 }
 
-// ComputerNoMusicText says "The folders hold no files MixMusic plays: MP3, FLAC, WAV, M4A, Opus or Vorbis."
+// ComputerNoMusicText says "The folders hold no files Mixyun plays: MP3, FLAC, WAV, M4A, Opus or Vorbis."
 // in the language the app shows.
 func ComputerNoMusicText() string { return In(i18n.Locale()).ComputerNoMusicText() }
 
-// ComputerNoMusicText says "The folders hold no files MixMusic plays: MP3, FLAC, WAV, M4A, Opus or Vorbis."
+// ComputerNoMusicText says "The folders hold no files Mixyun plays: MP3, FLAC, WAV, M4A, Opus or Vorbis."
 // in the language of msgs.
 func (msgs Messages) ComputerNoMusicText() string {
 	return Catalog.Format(msgs.locale, "computerNoMusicText", nil)
@@ -8798,21 +8798,21 @@ func (msgs Messages) ComputerRemoveFolderQuestion(folder string) string {
 	return Catalog.Format(msgs.locale, "computerRemoveFolderQuestion", map[string]any{"folder": folder})
 }
 
-// ComputerCantPlayFile says "MixMusic can't play this file"
+// ComputerCantPlayFile says "Mixyun can't play this file"
 // in the language the app shows.
 func ComputerCantPlayFile() string { return In(i18n.Locale()).ComputerCantPlayFile() }
 
-// ComputerCantPlayFile says "MixMusic can't play this file"
+// ComputerCantPlayFile says "Mixyun can't play this file"
 // in the language of msgs.
 func (msgs Messages) ComputerCantPlayFile() string {
 	return Catalog.Format(msgs.locale, "computerCantPlayFile", nil)
 }
 
-// ComputerCantPlayFiles says "MixMusic can't play these files"
+// ComputerCantPlayFiles says "Mixyun can't play these files"
 // in the language the app shows.
 func ComputerCantPlayFiles() string { return In(i18n.Locale()).ComputerCantPlayFiles() }
 
-// ComputerCantPlayFiles says "MixMusic can't play these files"
+// ComputerCantPlayFiles says "Mixyun can't play these files"
 // in the language of msgs.
 func (msgs Messages) ComputerCantPlayFiles() string {
 	return Catalog.Format(msgs.locale, "computerCantPlayFiles", nil)
@@ -8828,13 +8828,13 @@ func (msgs Messages) ComputerPlaying(title string) string {
 	return Catalog.Format(msgs.locale, "computerPlaying", map[string]any{"title": title})
 }
 
-// ComputerPlayingSkipped says "Playing {title} · {skipped} skipped, which MixMusic can't play"
+// ComputerPlayingSkipped says "Playing {title} · {skipped} skipped, which Mixyun can't play"
 // in the language the app shows.
 func ComputerPlayingSkipped(title string, skipped int) string {
 	return In(i18n.Locale()).ComputerPlayingSkipped(title, skipped)
 }
 
-// ComputerPlayingSkipped says "Playing {title} · {skipped} skipped, which MixMusic can't play"
+// ComputerPlayingSkipped says "Playing {title} · {skipped} skipped, which Mixyun can't play"
 // in the language of msgs.
 func (msgs Messages) ComputerPlayingSkipped(title string, skipped int) string {
 	return Catalog.Format(msgs.locale, "computerPlayingSkipped", map[string]any{"title": title, "skipped": skipped})
@@ -8850,13 +8850,13 @@ func (msgs Messages) ComputerPlayingFiles(count int) string {
 	return Catalog.Format(msgs.locale, "computerPlayingFiles", map[string]any{"count": count})
 }
 
-// ComputerPlayingFilesSkipped says "Playing {count, plural, one {# file} other {# files}} · {skipped} skipped, which MixMusic can't play"
+// ComputerPlayingFilesSkipped says "Playing {count, plural, one {# file} other {# files}} · {skipped} skipped, which Mixyun can't play"
 // in the language the app shows.
 func ComputerPlayingFilesSkipped(count int, skipped int) string {
 	return In(i18n.Locale()).ComputerPlayingFilesSkipped(count, skipped)
 }
 
-// ComputerPlayingFilesSkipped says "Playing {count, plural, one {# file} other {# files}} · {skipped} skipped, which MixMusic can't play"
+// ComputerPlayingFilesSkipped says "Playing {count, plural, one {# file} other {# files}} · {skipped} skipped, which Mixyun can't play"
 // in the language of msgs.
 func (msgs Messages) ComputerPlayingFilesSkipped(count int, skipped int) string {
 	return Catalog.Format(msgs.locale, "computerPlayingFilesSkipped", map[string]any{"count": count, "skipped": skipped})
@@ -8904,7 +8904,7 @@ func (msgs Messages) ComputerShowInFolder() string {
 	return Catalog.Format(msgs.locale, "computerShowInFolder", nil)
 }
 
-// ComputerUnwatched says "MixMusic can't watch {folder} for changes: {reason}. Rescan to see what changed in it."
+// ComputerUnwatched says "Mixyun can't watch {folder} for changes: {reason}. Rescan to see what changed in it."
 // in the language the app shows.
 //
 // Settings line for a music folder that can't be watched. The reason comes
@@ -8913,7 +8913,7 @@ func ComputerUnwatched(folder string, reason string) string {
 	return In(i18n.Locale()).ComputerUnwatched(folder, reason)
 }
 
-// ComputerUnwatched says "MixMusic can't watch {folder} for changes: {reason}. Rescan to see what changed in it."
+// ComputerUnwatched says "Mixyun can't watch {folder} for changes: {reason}. Rescan to see what changed in it."
 // in the language of msgs.
 //
 // Settings line for a music folder that can't be watched. The reason comes
@@ -9206,13 +9206,13 @@ func (msgs Messages) DownloadsCollection(title string) string {
 	return Catalog.Format(msgs.locale, "downloadsCollection", map[string]any{"title": title})
 }
 
-// DownloadsCollectionPartial says "Downloading {title}: the {kept} of its {total} tracks MixMusic reads"
+// DownloadsCollectionPartial says "Downloading {title}: the {kept} of its {total} tracks Mixyun reads"
 // in the language the app shows.
 func DownloadsCollectionPartial(title string, kept int, total int) string {
 	return In(i18n.Locale()).DownloadsCollectionPartial(title, kept, total)
 }
 
-// DownloadsCollectionPartial says "Downloading {title}: the {kept} of its {total} tracks MixMusic reads"
+// DownloadsCollectionPartial says "Downloading {title}: the {kept} of its {total} tracks Mixyun reads"
 // in the language of msgs.
 func (msgs Messages) DownloadsCollectionPartial(title string, kept int, total int) string {
 	return Catalog.Format(msgs.locale, "downloadsCollectionPartial", map[string]any{"title": title, "kept": kept, "total": total})
@@ -9949,13 +9949,13 @@ func (msgs Messages) HiddenWhyOwn() string {
 // HiddenSpotifyPlaylist says "Spotify playlist"
 // in the language the app shows.
 //
-// Title of a Spotify playlist whose name MixMusic doesn't know.
+// Title of a Spotify playlist whose name Mixyun doesn't know.
 func HiddenSpotifyPlaylist() string { return In(i18n.Locale()).HiddenSpotifyPlaylist() }
 
 // HiddenSpotifyPlaylist says "Spotify playlist"
 // in the language of msgs.
 //
-// Title of a Spotify playlist whose name MixMusic doesn't know.
+// Title of a Spotify playlist whose name Mixyun doesn't know.
 func (msgs Messages) HiddenSpotifyPlaylist() string {
 	return Catalog.Format(msgs.locale, "hiddenSpotifyPlaylist", nil)
 }
@@ -10470,23 +10470,23 @@ func (msgs Messages) LocalTagsEditAlbumTitle() string {
 	return Catalog.Format(msgs.locale, "localTagsEditAlbumTitle", nil)
 }
 
-// LocalTagsAboutSong says "The tags of {name}, which MixMusic writes into its file."
+// LocalTagsAboutSong says "The tags of {name}, which Mixyun writes into its file."
 // in the language the app shows.
 func LocalTagsAboutSong(name string) string { return In(i18n.Locale()).LocalTagsAboutSong(name) }
 
-// LocalTagsAboutSong says "The tags of {name}, which MixMusic writes into its file."
+// LocalTagsAboutSong says "The tags of {name}, which Mixyun writes into its file."
 // in the language of msgs.
 func (msgs Messages) LocalTagsAboutSong(name string) string {
 	return Catalog.Format(msgs.locale, "localTagsAboutSong", map[string]any{"name": name})
 }
 
-// LocalTagsAboutAlbum says "What the {count, plural, one {# song} other {# songs}} of {name} share, which MixMusic writes into their files."
+// LocalTagsAboutAlbum says "What the {count, plural, one {# song} other {# songs}} of {name} share, which Mixyun writes into their files."
 // in the language the app shows.
 func LocalTagsAboutAlbum(count int, name string) string {
 	return In(i18n.Locale()).LocalTagsAboutAlbum(count, name)
 }
 
-// LocalTagsAboutAlbum says "What the {count, plural, one {# song} other {# songs}} of {name} share, which MixMusic writes into their files."
+// LocalTagsAboutAlbum says "What the {count, plural, one {# song} other {# songs}} of {name} share, which Mixyun writes into their files."
 // in the language of msgs.
 func (msgs Messages) LocalTagsAboutAlbum(count int, name string) string {
 	return Catalog.Format(msgs.locale, "localTagsAboutAlbum", map[string]any{"count": count, "name": name})
@@ -10782,11 +10782,11 @@ func (msgs Messages) LocalTagsMoveTitle() string {
 	return Catalog.Format(msgs.locale, "localTagsMoveTitle", nil)
 }
 
-// LocalTagsMoveAbout says "Choose an album of this computer for {title}, or name a new one. MixMusic writes it into the song's file."
+// LocalTagsMoveAbout says "Choose an album of this computer for {title}, or name a new one. Mixyun writes it into the song's file."
 // in the language the app shows.
 func LocalTagsMoveAbout(title string) string { return In(i18n.Locale()).LocalTagsMoveAbout(title) }
 
-// LocalTagsMoveAbout says "Choose an album of this computer for {title}, or name a new one. MixMusic writes it into the song's file."
+// LocalTagsMoveAbout says "Choose an album of this computer for {title}, or name a new one. Mixyun writes it into the song's file."
 // in the language of msgs.
 func (msgs Messages) LocalTagsMoveAbout(title string) string {
 	return Catalog.Format(msgs.locale, "localTagsMoveAbout", map[string]any{"title": title})
@@ -11350,11 +11350,11 @@ func (msgs Messages) ToolsNeedTitle() string {
 	return Catalog.Format(msgs.locale, "toolsNeedTitle", nil)
 }
 
-// ToolsNeedMessage says "MixMusic finds the audio of most tracks itself, and asks yt-dlp for the rest, such as tracks made for children. Insta…"
+// ToolsNeedMessage says "Mixyun finds the audio of most tracks itself, and asks yt-dlp for the rest, such as tracks made for children. Install…"
 // in the language the app shows.
 func ToolsNeedMessage() string { return In(i18n.Locale()).ToolsNeedMessage() }
 
-// ToolsNeedMessage says "MixMusic finds the audio of most tracks itself, and asks yt-dlp for the rest, such as tracks made for children. Insta…"
+// ToolsNeedMessage says "Mixyun finds the audio of most tracks itself, and asks yt-dlp for the rest, such as tracks made for children. Install…"
 // in the language of msgs.
 func (msgs Messages) ToolsNeedMessage() string {
 	return Catalog.Format(msgs.locale, "toolsNeedMessage", nil)
@@ -11404,7 +11404,7 @@ func (msgs Messages) ToolsHowWithCommand(command string) string {
 	return Catalog.Format(msgs.locale, "toolsHowWithCommand", map[string]any{"command": command})
 }
 
-// ToolsOutdatedMessage says "yt-dlp {version} finds the audio of the tracks YouTube won't give MixMusic itself, and {latest} is out. As YouTube ch…"
+// ToolsOutdatedMessage says "yt-dlp {version} finds the audio of the tracks YouTube won't give Mixyun itself, and {latest} is out. As YouTube chan…"
 // in the language the app shows.
 //
 // Home notice body when the user's own yt-dlp is older than the latest
@@ -11413,7 +11413,7 @@ func ToolsOutdatedMessage(version string, latest string, how string) string {
 	return In(i18n.Locale()).ToolsOutdatedMessage(version, latest, how)
 }
 
-// ToolsOutdatedMessage says "yt-dlp {version} finds the audio of the tracks YouTube won't give MixMusic itself, and {latest} is out. As YouTube ch…"
+// ToolsOutdatedMessage says "yt-dlp {version} finds the audio of the tracks YouTube won't give Mixyun itself, and {latest} is out. As YouTube chan…"
 // in the language of msgs.
 //
 // Home notice body when the user's own yt-dlp is older than the latest
@@ -12770,11 +12770,11 @@ func (msgs Messages) TrackInfoPlays() string {
 	return Catalog.Format(msgs.locale, "trackInfoPlays", nil)
 }
 
-// TrackInfoPlaysSpotify says "In Spotify's own player, in MixMusic"
+// TrackInfoPlaysSpotify says "In Spotify's own player, in Mixyun"
 // in the language the app shows.
 func TrackInfoPlaysSpotify() string { return In(i18n.Locale()).TrackInfoPlaysSpotify() }
 
-// TrackInfoPlaysSpotify says "In Spotify's own player, in MixMusic"
+// TrackInfoPlaysSpotify says "In Spotify's own player, in Mixyun"
 // in the language of msgs.
 func (msgs Messages) TrackInfoPlaysSpotify() string {
 	return Catalog.Format(msgs.locale, "trackInfoPlaysSpotify", nil)
@@ -12790,11 +12790,11 @@ func (msgs Messages) TrackInfoPlaysConnect() string {
 	return Catalog.Format(msgs.locale, "trackInfoPlaysConnect", nil)
 }
 
-// TrackInfoQualitySpotify says "As your Spotify account and Spotify's settings choose: Spotify tells MixMusic nothing of its audio."
+// TrackInfoQualitySpotify says "As your Spotify account and Spotify's settings choose: Spotify tells Mixyun nothing of its audio."
 // in the language the app shows.
 func TrackInfoQualitySpotify() string { return In(i18n.Locale()).TrackInfoQualitySpotify() }
 
-// TrackInfoQualitySpotify says "As your Spotify account and Spotify's settings choose: Spotify tells MixMusic nothing of its audio."
+// TrackInfoQualitySpotify says "As your Spotify account and Spotify's settings choose: Spotify tells Mixyun nothing of its audio."
 // in the language of msgs.
 func (msgs Messages) TrackInfoQualitySpotify() string {
 	return Catalog.Format(msgs.locale, "trackInfoQualitySpotify", nil)
@@ -12840,21 +12840,21 @@ func (msgs Messages) TrackInfoFormat() string {
 	return Catalog.Format(msgs.locale, "trackInfoFormat", nil)
 }
 
-// TrackInfoFormatSpotify says "Play it to see its format, bitrate and the rest: MixMusic finds its recording on NetEase Cloud Music as it plays."
+// TrackInfoFormatSpotify says "Play it to see its format, bitrate and the rest: Mixyun finds its recording on NetEase Cloud Music as it plays."
 // in the language the app shows.
 func TrackInfoFormatSpotify() string { return In(i18n.Locale()).TrackInfoFormatSpotify() }
 
-// TrackInfoFormatSpotify says "Play it to see its format, bitrate and the rest: MixMusic finds its recording on NetEase Cloud Music as it plays."
+// TrackInfoFormatSpotify says "Play it to see its format, bitrate and the rest: Mixyun finds its recording on NetEase Cloud Music as it plays."
 // in the language of msgs.
 func (msgs Messages) TrackInfoFormatSpotify() string {
 	return Catalog.Format(msgs.locale, "trackInfoFormatSpotify", nil)
 }
 
-// TrackInfoFormatStream says "Play it to see its format, bitrate and the rest: MixMusic finds its stream as it plays."
+// TrackInfoFormatStream says "Play it to see its format, bitrate and the rest: Mixyun finds its stream as it plays."
 // in the language the app shows.
 func TrackInfoFormatStream() string { return In(i18n.Locale()).TrackInfoFormatStream() }
 
-// TrackInfoFormatStream says "Play it to see its format, bitrate and the rest: MixMusic finds its stream as it plays."
+// TrackInfoFormatStream says "Play it to see its format, bitrate and the rest: Mixyun finds its stream as it plays."
 // in the language of msgs.
 func (msgs Messages) TrackInfoFormatStream() string {
 	return Catalog.Format(msgs.locale, "trackInfoFormatStream", nil)
@@ -13064,21 +13064,21 @@ func (msgs Messages) TrackInfoPlaying() string {
 	return Catalog.Format(msgs.locale, "trackInfoPlaying", nil)
 }
 
-// TrackInfoEngineOpening says "MixMusic's audio engine is opening it…"
+// TrackInfoEngineOpening says "Mixyun's audio engine is opening it…"
 // in the language the app shows.
 func TrackInfoEngineOpening() string { return In(i18n.Locale()).TrackInfoEngineOpening() }
 
-// TrackInfoEngineOpening says "MixMusic's audio engine is opening it…"
+// TrackInfoEngineOpening says "Mixyun's audio engine is opening it…"
 // in the language of msgs.
 func (msgs Messages) TrackInfoEngineOpening() string {
 	return Catalog.Format(msgs.locale, "trackInfoEngineOpening", nil)
 }
 
-// TrackInfoEngineLine says "In MixMusic's audio engine, {how}"
+// TrackInfoEngineLine says "In Mixyun's audio engine, {how}"
 // in the language the app shows.
 func TrackInfoEngineLine(how string) string { return In(i18n.Locale()).TrackInfoEngineLine(how) }
 
-// TrackInfoEngineLine says "In MixMusic's audio engine, {how}"
+// TrackInfoEngineLine says "In Mixyun's audio engine, {how}"
 // in the language of msgs.
 func (msgs Messages) TrackInfoEngineLine(how string) string {
 	return Catalog.Format(msgs.locale, "trackInfoEngineLine", map[string]any{"how": how})
@@ -13202,11 +13202,11 @@ func (msgs Messages) TrackInfoFileLoudness() string {
 	return Catalog.Format(msgs.locale, "trackInfoFileLoudness", nil)
 }
 
-// TrackInfoNoMeasure says "MixMusic has no measure of it yet: it plays at its own level."
+// TrackInfoNoMeasure says "Mixyun has no measure of it yet: it plays at its own level."
 // in the language the app shows.
 func TrackInfoNoMeasure() string { return In(i18n.Locale()).TrackInfoNoMeasure() }
 
-// TrackInfoNoMeasure says "MixMusic has no measure of it yet: it plays at its own level."
+// TrackInfoNoMeasure says "Mixyun has no measure of it yet: it plays at its own level."
 // in the language of msgs.
 func (msgs Messages) TrackInfoNoMeasure() string {
 	return Catalog.Format(msgs.locale, "trackInfoNoMeasure", nil)
@@ -13562,11 +13562,11 @@ func (msgs Messages) MiniSeekValue(at string, total string) string {
 	return Catalog.Format(msgs.locale, "miniSeekValue", map[string]any{"at": at, "total": total})
 }
 
-// MiniWindowTitle says "MixMusic mini player"
+// MiniWindowTitle says "Mixyun mini player"
 // in the language the app shows.
 func MiniWindowTitle() string { return In(i18n.Locale()).MiniWindowTitle() }
 
-// MiniWindowTitle says "MixMusic mini player"
+// MiniWindowTitle says "Mixyun mini player"
 // in the language of msgs.
 func (msgs Messages) MiniWindowTitle() string {
 	return Catalog.Format(msgs.locale, "miniWindowTitle", nil)
@@ -13582,21 +13582,21 @@ func (msgs Messages) MiniRowNothingPlaying() string {
 	return Catalog.Format(msgs.locale, "miniRowNothingPlaying", nil)
 }
 
-// MiniRowPlaySomething says "play something in MixMusic"
+// MiniRowPlaySomething says "play something in Mixyun"
 // in the language the app shows.
 func MiniRowPlaySomething() string { return In(i18n.Locale()).MiniRowPlaySomething() }
 
-// MiniRowPlaySomething says "play something in MixMusic"
+// MiniRowPlaySomething says "play something in Mixyun"
 // in the language of msgs.
 func (msgs Messages) MiniRowPlaySomething() string {
 	return Catalog.Format(msgs.locale, "miniRowPlaySomething", nil)
 }
 
-// MiniRowOpen says "Open MixMusic"
+// MiniRowOpen says "Open Mixyun"
 // in the language the app shows.
 func MiniRowOpen() string { return In(i18n.Locale()).MiniRowOpen() }
 
-// MiniRowOpen says "Open MixMusic"
+// MiniRowOpen says "Open Mixyun"
 // in the language of msgs.
 func (msgs Messages) MiniRowOpen() string {
 	return Catalog.Format(msgs.locale, "miniRowOpen", nil)
@@ -13702,11 +13702,11 @@ func (msgs Messages) MiniPanelNoChapters() string {
 	return Catalog.Format(msgs.locale, "miniPanelNoChapters", nil)
 }
 
-// MiniPanelSystemDevice says "MixMusic plays on the system's default device."
+// MiniPanelSystemDevice says "Mixyun plays on the system's default device."
 // in the language the app shows.
 func MiniPanelSystemDevice() string { return In(i18n.Locale()).MiniPanelSystemDevice() }
 
-// MiniPanelSystemDevice says "MixMusic plays on the system's default device."
+// MiniPanelSystemDevice says "Mixyun plays on the system's default device."
 // in the language of msgs.
 func (msgs Messages) MiniPanelSystemDevice() string {
 	return Catalog.Format(msgs.locale, "miniPanelSystemDevice", nil)
@@ -13742,11 +13742,11 @@ func (msgs Messages) MiniPanelActive() string {
 	return Catalog.Format(msgs.locale, "miniPanelActive", nil)
 }
 
-// MiniPanelNoFailure says "No track failed to play since MixMusic started."
+// MiniPanelNoFailure says "No track failed to play since Mixyun started."
 // in the language the app shows.
 func MiniPanelNoFailure() string { return In(i18n.Locale()).MiniPanelNoFailure() }
 
-// MiniPanelNoFailure says "No track failed to play since MixMusic started."
+// MiniPanelNoFailure says "No track failed to play since Mixyun started."
 // in the language of msgs.
 func (msgs Messages) MiniPanelNoFailure() string {
 	return Catalog.Format(msgs.locale, "miniPanelNoFailure", nil)
@@ -13844,11 +13844,11 @@ func (msgs Messages) CastPlayingOn(name string) string {
 	return Catalog.Format(msgs.locale, "castPlayingOn", map[string]any{"name": name})
 }
 
-// NotchPanelWindowTitle says "MixMusic around the notch"
+// NotchPanelWindowTitle says "Mixyun around the notch"
 // in the language the app shows.
 func NotchPanelWindowTitle() string { return In(i18n.Locale()).NotchPanelWindowTitle() }
 
-// NotchPanelWindowTitle says "MixMusic around the notch"
+// NotchPanelWindowTitle says "Mixyun around the notch"
 // in the language of msgs.
 func (msgs Messages) NotchPanelWindowTitle() string {
 	return Catalog.Format(msgs.locale, "notchPanelWindowTitle", nil)
@@ -13874,11 +13874,11 @@ func (msgs Messages) NotchPanelClosePlayer() string {
 	return Catalog.Format(msgs.locale, "notchPanelClosePlayer", nil)
 }
 
-// NotchPanelOpenMixMusic says "Open MixMusic"
+// NotchPanelOpenMixMusic says "Open Mixyun"
 // in the language the app shows.
 func NotchPanelOpenMixMusic() string { return In(i18n.Locale()).NotchPanelOpenMixMusic() }
 
-// NotchPanelOpenMixMusic says "Open MixMusic"
+// NotchPanelOpenMixMusic says "Open Mixyun"
 // in the language of msgs.
 func (msgs Messages) NotchPanelOpenMixMusic() string {
 	return Catalog.Format(msgs.locale, "notchPanelOpenMixMusic", nil)
@@ -13904,11 +13904,11 @@ func (msgs Messages) NotchPanelPaused() string {
 	return Catalog.Format(msgs.locale, "notchPanelPaused", nil)
 }
 
-// NotchPanelShowPlays says "Show what plays in MixMusic"
+// NotchPanelShowPlays says "Show what plays in Mixyun"
 // in the language the app shows.
 func NotchPanelShowPlays() string { return In(i18n.Locale()).NotchPanelShowPlays() }
 
-// NotchPanelShowPlays says "Show what plays in MixMusic"
+// NotchPanelShowPlays says "Show what plays in Mixyun"
 // in the language of msgs.
 func (msgs Messages) NotchPanelShowPlays() string {
 	return Catalog.Format(msgs.locale, "notchPanelShowPlays", nil)
@@ -13944,11 +13944,11 @@ func (msgs Messages) NotchPanelNoTimed() string {
 	return Catalog.Format(msgs.locale, "notchPanelNoTimed", nil)
 }
 
-// RemotePageAway says "{name} isn't on the network now. It shows here while MixMusic runs there, with Settings › Desktop › Remote contro…"
+// RemotePageAway says "{name} isn't on the network now. It shows here while Mixyun runs there, with Settings › Desktop › Remote control …"
 // in the language the app shows.
 func RemotePageAway(name string) string { return In(i18n.Locale()).RemotePageAway(name) }
 
-// RemotePageAway says "{name} isn't on the network now. It shows here while MixMusic runs there, with Settings › Desktop › Remote contro…"
+// RemotePageAway says "{name} isn't on the network now. It shows here while Mixyun runs there, with Settings › Desktop › Remote control …"
 // in the language of msgs.
 func (msgs Messages) RemotePageAway(name string) string {
 	return Catalog.Format(msgs.locale, "remotePageAway", map[string]any{"name": name})
@@ -14110,11 +14110,11 @@ func (msgs Messages) RemoteQueueRemoveOn(title string, name string) string {
 	return Catalog.Format(msgs.locale, "remoteQueueRemoveOn", map[string]any{"title": title, "name": name})
 }
 
-// RemoteQueueOlder says "MixMusic on {name} is older: update it there to change its queue from here, and to move what plays here to it."
+// RemoteQueueOlder says "Mixyun on {name} is older: update it there to change its queue from here, and to move what plays here to it."
 // in the language the app shows.
 func RemoteQueueOlder(name string) string { return In(i18n.Locale()).RemoteQueueOlder(name) }
 
-// RemoteQueueOlder says "MixMusic on {name} is older: update it there to change its queue from here, and to move what plays here to it."
+// RemoteQueueOlder says "Mixyun on {name} is older: update it there to change its queue from here, and to move what plays here to it."
 // in the language of msgs.
 func (msgs Messages) RemoteQueueOlder(name string) string {
 	return Catalog.Format(msgs.locale, "remoteQueueOlder", map[string]any{"name": name})
@@ -14182,13 +14182,13 @@ func (msgs Messages) HandoverLeft(name string, count int, next string) string {
 	return Catalog.Format(msgs.locale, "handoverLeft", map[string]any{"name": name, "count": count, "next": next})
 }
 
-// RemoteCodeMessage says "{name} asks to control MixMusic on this computer. To let it, type this code there: {code}"
+// RemoteCodeMessage says "{name} asks to control Mixyun on this computer. To let it, type this code there: {code}"
 // in the language the app shows.
 func RemoteCodeMessage(name string, code string) string {
 	return In(i18n.Locale()).RemoteCodeMessage(name, code)
 }
 
-// RemoteCodeMessage says "{name} asks to control MixMusic on this computer. To let it, type this code there: {code}"
+// RemoteCodeMessage says "{name} asks to control Mixyun on this computer. To let it, type this code there: {code}"
 // in the language of msgs.
 func (msgs Messages) RemoteCodeMessage(name string, code string) string {
 	return Catalog.Format(msgs.locale, "remoteCodeMessage", map[string]any{"name": name, "code": code})
@@ -14204,11 +14204,11 @@ func (msgs Messages) RemoteCodeTitle(name string) string {
 	return Catalog.Format(msgs.locale, "remoteCodeTitle", map[string]any{"name": name})
 }
 
-// RemoteCodeAsks says "{name} asks to control MixMusic on this computer. To let it, type this code there:"
+// RemoteCodeAsks says "{name} asks to control Mixyun on this computer. To let it, type this code there:"
 // in the language the app shows.
 func RemoteCodeAsks(name string) string { return In(i18n.Locale()).RemoteCodeAsks(name) }
 
-// RemoteCodeAsks says "{name} asks to control MixMusic on this computer. To let it, type this code there:"
+// RemoteCodeAsks says "{name} asks to control Mixyun on this computer. To let it, type this code there:"
 // in the language of msgs.
 func (msgs Messages) RemoteCodeAsks(name string) string {
 	return Catalog.Format(msgs.locale, "remoteCodeAsks", map[string]any{"name": name})
@@ -14414,11 +14414,11 @@ func (msgs Messages) TilesScrollOn(title string) string {
 	return Catalog.Format(msgs.locale, "tilesScrollOn", map[string]any{"title": title})
 }
 
-// AccountsBrowserAbout says "MixMusic opens the browser with a new, empty profile of its own, at NetEase Cloud Music's sign-in. Sign in there as i…"
+// AccountsBrowserAbout says "Mixyun opens the browser with a new, empty profile of its own, at NetEase Cloud Music's sign-in. Sign in there as in …"
 // in the language the app shows.
 func AccountsBrowserAbout() string { return In(i18n.Locale()).AccountsBrowserAbout() }
 
-// AccountsBrowserAbout says "MixMusic opens the browser with a new, empty profile of its own, at NetEase Cloud Music's sign-in. Sign in there as i…"
+// AccountsBrowserAbout says "Mixyun opens the browser with a new, empty profile of its own, at NetEase Cloud Music's sign-in. Sign in there as in …"
 // in the language of msgs.
 func (msgs Messages) AccountsBrowserAbout() string {
 	return Catalog.Format(msgs.locale, "accountsBrowserAbout", nil)
@@ -14454,31 +14454,31 @@ func (msgs Messages) AccountsBrowserDone() string {
 	return Catalog.Format(msgs.locale, "accountsBrowserDone", nil)
 }
 
-// AccountsBrowserFailed says "MixMusic didn't sign in to NetEase Cloud Music"
+// AccountsBrowserFailed says "Mixyun didn't sign in to NetEase Cloud Music"
 // in the language the app shows.
 func AccountsBrowserFailed() string { return In(i18n.Locale()).AccountsBrowserFailed() }
 
-// AccountsBrowserFailed says "MixMusic didn't sign in to NetEase Cloud Music"
+// AccountsBrowserFailed says "Mixyun didn't sign in to NetEase Cloud Music"
 // in the language of msgs.
 func (msgs Messages) AccountsBrowserFailed() string {
 	return Catalog.Format(msgs.locale, "accountsBrowserFailed", nil)
 }
 
-// AccountsBrowserHint says "Closing the browser, or cancel, ends the sign-in, as do 10 minutes without one. MixMusic reads the new profile alone,…"
+// AccountsBrowserHint says "Closing the browser, or cancel, ends the sign-in, as do 10 minutes without one. Mixyun reads the new profile alone, n…"
 // in the language the app shows.
 func AccountsBrowserHint() string { return In(i18n.Locale()).AccountsBrowserHint() }
 
-// AccountsBrowserHint says "Closing the browser, or cancel, ends the sign-in, as do 10 minutes without one. MixMusic reads the new profile alone,…"
+// AccountsBrowserHint says "Closing the browser, or cancel, ends the sign-in, as do 10 minutes without one. Mixyun reads the new profile alone, n…"
 // in the language of msgs.
 func (msgs Messages) AccountsBrowserHint() string {
 	return Catalog.Format(msgs.locale, "accountsBrowserHint", nil)
 }
 
-// AccountsBrowserNone says "MixMusic signs in through Firefox or Zen, and found neither. Google refuses a sign-in in Chrome, Edge and the others …"
+// AccountsBrowserNone says "Mixyun signs in through Firefox or Zen, and found neither. Google refuses a sign-in in Chrome, Edge and the others ma…"
 // in the language the app shows.
 func AccountsBrowserNone() string { return In(i18n.Locale()).AccountsBrowserNone() }
 
-// AccountsBrowserNone says "MixMusic signs in through Firefox or Zen, and found neither. Google refuses a sign-in in Chrome, Edge and the others …"
+// AccountsBrowserNone says "Mixyun signs in through Firefox or Zen, and found neither. Google refuses a sign-in in Chrome, Edge and the others ma…"
 // in the language of msgs.
 func (msgs Messages) AccountsBrowserNone() string {
 	return Catalog.Format(msgs.locale, "accountsBrowserNone", nil)
@@ -14636,11 +14636,11 @@ func (msgs Messages) AudioAccount2NotNow() string {
 	return Catalog.Format(msgs.locale, "audioAccount2NotNow", nil)
 }
 
-// AudioAccount2Offer says "Your NetEase Cloud Music account has Premium, whose audio has a higher bitrate. MixMusic can ask for each track's aud…"
+// AudioAccount2Offer says "Your NetEase Cloud Music account has Premium, whose audio has a higher bitrate. Mixyun can ask for each track's audio…"
 // in the language the app shows.
 func AudioAccount2Offer() string { return In(i18n.Locale()).AudioAccount2Offer() }
 
-// AudioAccount2Offer says "Your NetEase Cloud Music account has Premium, whose audio has a higher bitrate. MixMusic can ask for each track's aud…"
+// AudioAccount2Offer says "Your NetEase Cloud Music account has Premium, whose audio has a higher bitrate. Mixyun can ask for each track's audio…"
 // in the language of msgs.
 func (msgs Messages) AudioAccount2Offer() string {
 	return Catalog.Format(msgs.locale, "audioAccount2Offer", nil)
@@ -15442,21 +15442,21 @@ func (msgs Messages) FollowEmpty() string {
 	return Catalog.Format(msgs.locale, "followEmpty", nil)
 }
 
-// FollowInMixMusic says "{name}: following in MixMusic"
+// FollowInMixMusic says "{name}: following in Mixyun"
 // in the language the app shows.
 func FollowInMixMusic(name string) string { return In(i18n.Locale()).FollowInMixMusic(name) }
 
-// FollowInMixMusic says "{name}: following in MixMusic"
+// FollowInMixMusic says "{name}: following in Mixyun"
 // in the language of msgs.
 func (msgs Messages) FollowInMixMusic(name string) string {
 	return Catalog.Format(msgs.locale, "followInMixMusic", map[string]any{"name": name})
 }
 
-// FollowIntro says "Follow an artist from their page or their menu, and they wait here, kept in MixMusic: their new albums and singles sh…"
+// FollowIntro says "Follow an artist from their page or their menu, and they wait here, kept in Mixyun: their new albums and singles show…"
 // in the language the app shows.
 func FollowIntro() string { return In(i18n.Locale()).FollowIntro() }
 
-// FollowIntro says "Follow an artist from their page or their menu, and they wait here, kept in MixMusic: their new albums and singles sh…"
+// FollowIntro says "Follow an artist from their page or their menu, and they wait here, kept in Mixyun: their new albums and singles show…"
 // in the language of msgs.
 func (msgs Messages) FollowIntro() string {
 	return Catalog.Format(msgs.locale, "followIntro", nil)
@@ -15514,11 +15514,11 @@ func (msgs Messages) FollowUnfollow() string {
 	return Catalog.Format(msgs.locale, "followUnfollow", nil)
 }
 
-// FollowedInMixMusic says "Followed in MixMusic"
+// FollowedInMixMusic says "Followed in Mixyun"
 // in the language the app shows.
 func FollowedInMixMusic() string { return In(i18n.Locale()).FollowedInMixMusic() }
 
-// FollowedInMixMusic says "Followed in MixMusic"
+// FollowedInMixMusic says "Followed in Mixyun"
 // in the language of msgs.
 func (msgs Messages) FollowedInMixMusic() string {
 	return Catalog.Format(msgs.locale, "followedInMixMusic", nil)
@@ -15686,25 +15686,25 @@ func (msgs Messages) NeteaseNoLiked() string {
 	return Catalog.Format(msgs.locale, "neteaseNoLiked", nil)
 }
 
-// PlaylistReadCut says "MixMusic shows and plays the first {max} tracks of a {noun, select, mix {mix} playlist {playlist} other {list}}: this…"
+// PlaylistReadCut says "Mixyun shows and plays the first {max} tracks of a {noun, select, mix {mix} playlist {playlist} other {list}}: this o…"
 // in the language the app shows.
 func PlaylistReadCut(max string, noun string) string {
 	return In(i18n.Locale()).PlaylistReadCut(max, noun)
 }
 
-// PlaylistReadCut says "MixMusic shows and plays the first {max} tracks of a {noun, select, mix {mix} playlist {playlist} other {list}}: this…"
+// PlaylistReadCut says "Mixyun shows and plays the first {max} tracks of a {noun, select, mix {mix} playlist {playlist} other {list}}: this o…"
 // in the language of msgs.
 func (msgs Messages) PlaylistReadCut(max string, noun string) string {
 	return Catalog.Format(msgs.locale, "playlistReadCut", map[string]any{"max": max, "noun": noun})
 }
 
-// PlaylistReadCutOf says "This {noun, select, mix {mix} playlist {playlist} other {list}} has {count} tracks: MixMusic shows and plays its firs…"
+// PlaylistReadCutOf says "This {noun, select, mix {mix} playlist {playlist} other {list}} has {count} tracks: Mixyun shows and plays its first …"
 // in the language the app shows.
 func PlaylistReadCutOf(noun string, count string, n string) string {
 	return In(i18n.Locale()).PlaylistReadCutOf(noun, count, n)
 }
 
-// PlaylistReadCutOf says "This {noun, select, mix {mix} playlist {playlist} other {list}} has {count} tracks: MixMusic shows and plays its firs…"
+// PlaylistReadCutOf says "This {noun, select, mix {mix} playlist {playlist} other {list}} has {count} tracks: Mixyun shows and plays its first …"
 // in the language of msgs.
 func (msgs Messages) PlaylistReadCutOf(noun string, count string, n string) string {
 	return Catalog.Format(msgs.locale, "playlistReadCutOf", map[string]any{"noun": noun, "count": count, "n": n})
@@ -16488,13 +16488,13 @@ func (msgs Messages) PodcastsEpisodeCount(count int) string {
 	return Catalog.Format(msgs.locale, "podcastsEpisodeCount", map[string]any{"count": count})
 }
 
-// PodcastsSpotifyOnlyLead says "Spotify's podcasts play only from Spotify: choose In MixMusic, from Spotify or On Spotify Connect in "
+// PodcastsSpotifyOnlyLead says "Spotify's podcasts play only from Spotify: choose In Mixyun, from Spotify or On Spotify Connect in "
 // in the language the app shows.
 //
 // Split around the link to Settings › Playback.
 func PodcastsSpotifyOnlyLead() string { return In(i18n.Locale()).PodcastsSpotifyOnlyLead() }
 
-// PodcastsSpotifyOnlyLead says "Spotify's podcasts play only from Spotify: choose In MixMusic, from Spotify or On Spotify Connect in "
+// PodcastsSpotifyOnlyLead says "Spotify's podcasts play only from Spotify: choose In Mixyun, from Spotify or On Spotify Connect in "
 // in the language of msgs.
 //
 // Split around the link to Settings › Playback.
@@ -18630,11 +18630,11 @@ func (msgs Messages) MarketplaceRemove() string {
 	return Catalog.Format(msgs.locale, "marketplaceRemove", nil)
 }
 
-// MarketplaceOlder says "made for an older MixMusic"
+// MarketplaceOlder says "made for an older Mixyun"
 // in the language the app shows.
 func MarketplaceOlder() string { return In(i18n.Locale()).MarketplaceOlder() }
 
-// MarketplaceOlder says "made for an older MixMusic"
+// MarketplaceOlder says "made for an older Mixyun"
 // in the language of msgs.
 func (msgs Messages) MarketplaceOlder() string {
 	return Catalog.Format(msgs.locale, "marketplaceOlder", nil)

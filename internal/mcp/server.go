@@ -104,13 +104,13 @@ func (s *Server) Start() error {
 	ln, err := listen()
 	if err != nil {
 		s.mu.Unlock()
-		return fmt.Errorf("MixMusic can't listen for AI assistants on this computer: %w", err)
+		return fmt.Errorf("Mixyun can't listen for AI assistants on this computer: %w", err)
 	}
 	addr, ok := ln.Addr().(*net.TCPAddr)
 	if !ok || !addr.IP.IsLoopback() {
 		ln.Close()
 		s.mu.Unlock()
-		return fmt.Errorf("MixMusic listens for AI assistants on 127.0.0.1 alone, not %s", ln.Addr())
+		return fmt.Errorf("Mixyun listens for AI assistants on 127.0.0.1 alone, not %s", ln.Addr())
 	}
 	key, err := newKey()
 	if err == nil {
@@ -119,7 +119,7 @@ func (s *Server) Start() error {
 	if err != nil {
 		ln.Close()
 		s.mu.Unlock()
-		return fmt.Errorf("MixMusic can't tell AI assistants how to reach it: %w", err)
+		return fmt.Errorf("Mixyun can't tell AI assistants how to reach it: %w", err)
 	}
 	s.ln, s.key = ln, key
 	s.sessions = map[*session]struct{}{}
@@ -196,7 +196,7 @@ func (s *Server) greet(conn net.Conn, key string) {
 	var h hello
 	if err != nil || json.Unmarshal(line, &h) != nil ||
 		subtle.ConstantTimeCompare([]byte(h.Key), []byte(key)) != 1 {
-		answer(conn, welcome{Error: "the key isn't MixMusic's: turn AI assistants off and on again in MixMusic's Settings › Desktop, and start the command again"})
+		answer(conn, welcome{Error: "the key isn't Mixyun's: turn AI assistants off and on again in Mixyun's Settings › Desktop, and start the command again"})
 		conn.Close()
 		return
 	}
@@ -206,12 +206,12 @@ func (s *Server) greet(conn net.Conn, key string) {
 	switch {
 	case s.key != key:
 		s.mu.Unlock()
-		answer(conn, welcome{Error: "AI assistants are off in MixMusic's Settings › Desktop"})
+		answer(conn, welcome{Error: "AI assistants are off in Mixyun's Settings › Desktop"})
 		conn.Close()
 		return
 	case len(s.sessions) >= maxSessions:
 		s.mu.Unlock()
-		answer(conn, welcome{Error: fmt.Sprintf("%d assistants are connected to MixMusic already", maxSessions)})
+		answer(conn, welcome{Error: fmt.Sprintf("%d assistants are connected to Mixyun already", maxSessions)})
 		conn.Close()
 		return
 	}

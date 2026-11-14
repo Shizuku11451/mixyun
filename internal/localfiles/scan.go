@@ -308,7 +308,7 @@ func problemOf(err error) string {
 	case errors.Is(err, fs.ErrNotExist):
 		return "It isn't there: is its drive plugged in?"
 	case errors.Is(err, fs.ErrPermission):
-		return "MixMusic isn't allowed to read it"
+		return "Mixyun isn't allowed to read it"
 	}
 	return "It can't be read"
 }

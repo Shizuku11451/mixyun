@@ -87,7 +87,7 @@ func RemuxWebM(w io.Writer, src io.ReadSeeker, t Tags, fields Fields) error {
 	if err := ow.page(oggPage{flags: pageFirst, granule: 0, segs: []byte{byte(len(head))}, body: head}); err != nil {
 		return err
 	}
-	vc := comments{vendor: []byte("MixMusic")}
+	vc := comments{vendor: []byte("Mixyun")}
 	var picture []byte
 	if fields&Cover != 0 && t.Cover != nil {
 		picture = pictureBlock(t.Cover)
@@ -113,7 +113,7 @@ func opusHead(t webm.Track) ([]byte, error) {
 	case len(h) >= 19 && string(h[:8]) == "OpusHead" && h[8]&0xF0 == 0 && len(h) < 255:
 		return bytes.Clone(h), nil
 	case len(h) > 0 || t.Channels < 1 || t.Channels > 2:
-		return nil, fmt.Errorf("%w: its Opus track has no header MixMusic can use", ErrFormat)
+		return nil, fmt.Errorf("%w: its Opus track has no header Mixyun can use", ErrFormat)
 	}
 	b := append([]byte("OpusHead"), 1, byte(t.Channels))
 	b = binary.LittleEndian.AppendUint16(b, uint16(min(samplesOf(t.CodecDelay), math.MaxUint16)))

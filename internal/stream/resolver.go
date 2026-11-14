@@ -693,7 +693,7 @@ func parseInfo(out []byte) (Stream, error) {
 	if strings.HasPrefix(in.Protocol, "m3u8") {
 		// The engine plays HLS only as a live stream goes on.
 		if in.LiveStatus != "is_live" {
-			return Stream{}, errors.New("YouTube gave no audio for this track that MixMusic plays")
+			return Stream{}, errors.New("YouTube gave no audio for this track that Mixyun plays")
 		}
 		s := Stream{URL: in.URL, Header: http.Header{}, MimeType: "audio/aac", Codec: "mp4a.40.2", Expires: expiry(in.URL), Live: true}
 		for k, v := range in.Headers {

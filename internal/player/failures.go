@@ -177,7 +177,7 @@ func (p *Player) way(cur Item) string {
 	case src.Mode == ModeConnect:
 		return "Spotify Connect"
 	case src.Mode == ModeSpotify:
-		return "Spotify in MixMusic"
+		return "Spotify in Mixyun"
 	case src.Live:
 		return "the live stream"
 	case p.playsOffline():
@@ -192,7 +192,7 @@ func (p *Player) spotifyWay() string {
 	if p.spotifyMode == settings.SpotifyPlaybackConnect {
 		return "Spotify Connect"
 	}
-	return "Spotify in MixMusic"
+	return "Spotify in Mixyun"
 }
 
 // again names a way tried once more, after n tries that failed.

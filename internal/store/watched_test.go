@@ -79,7 +79,7 @@ func TestVersionCountsEdits(t *testing.T) {
 	}
 	v := f.Version()
 	if c, err := f.Reload(); err != nil || c.Changed {
-		t.Fatalf("a reload of MixMusic's own save: changed %v, %v", c.Changed, err)
+		t.Fatalf("a reload of Mixyun's own save: changed %v, %v", c.Changed, err)
 	}
 	if got := f.Version(); got != v {
 		t.Errorf("a reload that found nothing new moved the version from %d to %d", v, got)

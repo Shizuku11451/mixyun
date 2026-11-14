@@ -1897,7 +1897,7 @@ func TestSpotifyHereNowhere(t *testing.T) {
 	h := newHarness(t, Saved{}, func(f *fakeServices) { f.prepare = here })
 	h.p.PlayTracks([]media.Track{spotifyTrack("1")}, 0)
 	h.wait("a stream instead", func(p *Player) bool { return h.stream.lastLoad() == "load url:spotify:1 0s true" })
-	if n := h.notices(); len(n) != 1 || !strings.Contains(n[0].Message, "can't play inside MixMusic") {
+	if n := h.notices(); len(n) != 1 || !strings.Contains(n[0].Message, "can't play inside Mixyun") {
 		t.Errorf("notices %+v", n)
 	}
 }
@@ -1911,13 +1911,13 @@ func TestSpotifyHere(t *testing.T) {
 	own := &fakeDevice{}
 	h.p.SpotifyHere(own)
 	h.p.PlayTracks([]media.Track{spotifyTrack("1"), track("b", "B")}, 0)
-	h.wait("MixMusic's device playing", func(p *Player) bool { return p.connect.active() && p.s.Playing })
+	h.wait("Mixyun's device playing", func(p *Player) bool { return p.connect.active() && p.s.Playing })
 	if !own.has("play spotify:1 0s") || h.device.has("play spotify:1 0s") {
-		t.Errorf("MixMusic's device %v, Spotify Connect's %v", own.calls, h.device.calls)
+		t.Errorf("Mixyun's device %v, Spotify Connect's %v", own.calls, h.device.calls)
 	}
 	h.p.Next()
 	h.wait("b playing", playing("b"))
-	h.wait("MixMusic's device paused", func(p *Player) bool { return own.has("pause") })
+	h.wait("Mixyun's device paused", func(p *Player) bool { return own.has("pause") })
 	if h.device.has("pause") {
 		t.Errorf("Spotify Connect's device was paused: %v", h.device.calls)
 	}

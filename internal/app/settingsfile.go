@@ -270,7 +270,7 @@ func (a *App) tellProblem() {
 	problem := a.file.problem
 	a.fileMu.Unlock()
 	if first {
-		log.Printf("mixmusic: settings.json has a mistake (%s): MixMusic goes on with the settings it had, and saves to it once it reads again", problem)
+		log.Printf("mixmusic: settings.json has a mistake (%s): Mixyun goes on with the settings it had, and saves to it once it reads again", problem)
 	}
 	notify()
 }
@@ -339,7 +339,7 @@ func (a *App) settingsChanged(prev, s settings.Settings, outside bool) {
 
 // ErrNoJSONApp is what OpenSettingsFile returns where no app opens JSON
 // files, once it showed settings.json in its folder instead.
-var ErrNoJSONApp = errors.New("no app on this computer opens .json files, so MixMusic showed settings.json in its folder")
+var ErrNoJSONApp = errors.New("no app on this computer opens .json files, so Mixyun showed settings.json in its folder")
 
 // OpenSettingsFile opens settings.json in the app the computer opens JSON
 // files with; where none does, it shows the file in its folder, and

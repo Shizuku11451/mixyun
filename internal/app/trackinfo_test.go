@@ -240,7 +240,7 @@ func TestTrackInfoOfSpotify(t *testing.T) {
 		t.Errorf("on a device: %+v", info)
 	}
 	if info := infoOf(t, a, tr, &player.Source{Mode: player.ModeSpotify, Track: tr}); info.Plays != PlaysSpotify || !info.Playing {
-		t.Errorf("in MixMusic: %+v", info)
+		t.Errorf("in Mixyun: %+v", info)
 	}
 	// Played from YouTube Music, as when no device answers.
 	rec := ytTrack("fffffffffff")

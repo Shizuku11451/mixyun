@@ -349,7 +349,7 @@ func TestColorFileSettings(t *testing.T) {
 		says   string
 	}{
 		{settings.ColorsPywal, "", "It isn't there yet: pywal writes it when you run wal."},
-		{settings.ColorsMatugen, "", "It isn't there yet: add MixMusic's template to matugen's config.toml, and run matugen."},
+		{settings.ColorsMatugen, "", "It isn't there yet: add Mixyun's template to matugen's config.toml, and run matugen."},
 		{settings.ColorsFile, "", "Choose a file: pywal's colors.json, what matugen --json prints, or a theme.json."},
 		{settings.ColorsFile, "colors.json", "It can't be read: it isn't a full path"},
 		{settings.ColorsFile, broken, "It can't be read: it ends partway through. The theme's colours show."},
@@ -416,7 +416,7 @@ func TestColorFileNote(t *testing.T) {
 		t.Errorf("%q, %v", got, bad)
 	}
 	read.ReadAt, read.Err = now.AddDate(0, 0, -1), "it's empty"
-	if got, bad := colorFileNote(read, set, now); got != "It can't be read: it's empty. MixMusic keeps the colours it read at 1 Nov 14:30." || !bad {
+	if got, bad := colorFileNote(read, set, now); got != "It can't be read: it's empty. Mixyun keeps the colours it read at 1 Nov 14:30." || !bad {
 		t.Errorf("%q, %v", got, bad)
 	}
 	if got, _ := colorFileNote(app.ColorFileStatus{Source: settings.ColorsMatugen}, set, now); got != "Reading it…" {

@@ -116,7 +116,7 @@ type Session struct {
 
 // ErrStopped is why a session ends that the device ended: its receiver
 // stopped, as from another sender or by its own timeout.
-var ErrStopped = errors.New("the cast device stopped playing from MixMusic")
+var ErrStopped = errors.New("the cast device stopped playing from Mixyun")
 
 // errNoMedia is why a command of the media fails before anything loaded.
 var errNoMedia = errors.New("cast: nothing loaded")

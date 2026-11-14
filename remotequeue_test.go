@@ -61,7 +61,7 @@ func TestRemoteQueueRows(t *testing.T) {
 		return clear && lt.HasText("Glósóli") && lt.HasText("Sigur Rós")
 	})
 	if lt.HasText("is older") {
-		t.Error("the page takes the desktop for an older MixMusic")
+		t.Error("the page takes the desktop for an older Mixyun")
 	}
 	order := func(want ...string) func(player.State) bool {
 		return func(st player.State) bool { return slices.Equal(queueOf(st), want) }

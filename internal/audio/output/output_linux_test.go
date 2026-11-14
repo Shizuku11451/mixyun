@@ -31,7 +31,7 @@ func TestStreamMovesBetweenSinks(t *testing.T) {
 	const sink = "mixmusic_test_sink"
 	load := func() string {
 		out, err := exec.Command("pactl", "load-module", "module-null-sink", "sink_name="+sink,
-			"sink_properties=device.description=MixMusic-test").Output()
+			"sink_properties=device.description=Mixyun-test").Output()
 		if err != nil {
 			t.Fatalf("pactl load-module: %v", err)
 		}
@@ -53,7 +53,7 @@ func TestStreamMovesBetweenSinks(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !slices.ContainsFunc(devices, func(d Device) bool { return d.ID == sink && d.Name == "MixMusic-test" }) {
+	if !slices.ContainsFunc(devices, func(d Device) bool { return d.ID == sink && d.Name == "Mixyun-test" }) {
 		t.Fatalf("the sink isn't among the devices: %+v", devices)
 	}
 

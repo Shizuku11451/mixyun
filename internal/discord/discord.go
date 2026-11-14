@@ -68,7 +68,7 @@ type Client struct {
 
 // New returns a client that shows presence as the Discord application whose
 // ID, as the Discord Developer Portal shows it, is appID. Discord names the
-// application in the presence, as in "Listening to MixMusic".
+// application in the presence, as in "Listening to Mixyun".
 func New(appID string) *Client {
 	return &Client{dial: dial, busy: make(chan struct{}, 1), appID: appID}
 }

@@ -336,7 +336,7 @@ func TestMediaFlyout(t *testing.T) {
 		t.Errorf("position %v at %v, want about 10 s at %v", f.at, f.updated, info.At)
 	}
 	if f.thumbnail {
-		t.Error("the flyout shows a cover before MixMusic has it")
+		t.Error("the flyout shows a cover before Mixyun has it")
 	}
 	info.Cover, info.At = testCover(), time.Now()
 	c.Show(&info)

@@ -276,7 +276,7 @@ func TestProxyGivesUpWhenNoServerAnswers(t *testing.T) {
 	if took := time.Since(started); took < handshake || took > 5*time.Second {
 		t.Errorf("gave up after %s", took)
 	}
-	if why := p.Failure(testID); !strings.HasPrefix(why, "MixMusic could not reach YouTube's audio servers") {
+	if why := p.Failure(testID); !strings.HasPrefix(why, "Mixyun could not reach YouTube's audio servers") {
 		t.Errorf("Failure = %q", why)
 	}
 	if firstConns() != 1 || nextConns() != 1 {

@@ -25,7 +25,7 @@ import (
 )
 
 // errNoPlayer is why a tool can't reach the player.
-var errNoPlayer = errors.New("MixMusic's player isn't ready yet, as MixMusic is still starting: try again in a moment")
+var errNoPlayer = errors.New("Mixyun's player isn't ready yet, as Mixyun is still starting: try again in a moment")
 
 // assistantPlayer is the player, as remote control has it.
 func (a *App) assistantPlayer() (*player.Player, error) {
@@ -68,7 +68,7 @@ func serviceName(s media.Source) string {
 	case media.SourceFile:
 		return "this computer"
 	case media.SourceLocal:
-		return "MixMusic"
+		return "Mixyun"
 	}
 	return string(s)
 }
@@ -114,7 +114,7 @@ const noArgs = `{"type":"object","properties":{},"additionalProperties":false}`
 func (a *App) assistantTools() []mcp.Tool {
 	return []mcp.Tool{
 		{Name: "now_playing", Title: "Now playing", ReadOnly: true, Input: json.RawMessage(noArgs),
-			Description: "Tells what MixMusic plays: the track, with its artists, album and service, whether it plays or is " +
+			Description: "Tells what Mixyun plays: the track, with its artists, album and service, whether it plays or is " +
 				"paused, where it is and how long it is in seconds, the volume, shuffle and repeat. The track is null " +
 				"when nothing is in the queue.",
 			Call: a.toolNowPlaying},
@@ -152,7 +152,7 @@ func (a *App) assistantTools() []mcp.Tool {
 				`"percent":{"type":"integer","minimum":0,"maximum":100,"description":"The volume, from 0 to 100."},` +
 				`"by_percent":{"type":"integer","minimum":-100,"maximum":100,"description":"How much to turn the volume up, or down when negative."}},` +
 				`"additionalProperties":false}`),
-			Description: "Sets MixMusic's volume: give percent, or by_percent, not both. It unmutes.",
+			Description: "Sets Mixyun's volume: give percent, or by_percent, not both. It unmutes.",
 			Call:        a.toolVolume},
 		{Name: "search", Title: "Search", ReadOnly: true, OpenWorld: true,
 			Input: json.RawMessage(`{"type":"object","properties":{` +
@@ -174,7 +174,7 @@ func (a *App) assistantTools() []mcp.Tool {
 				"when the user's autoplay is on.",
 			Call: a.toolPlayResult},
 		{Name: "list_playlists", Title: "Your playlists", ReadOnly: true, OpenWorld: true, Input: json.RawMessage(noArgs),
-			Description: "Lists the user's own: their liked songs, their mixes made in MixMusic, and their playlists on " +
+			Description: "Lists the user's own: their liked songs, their mixes made in Mixyun, and their playlists on " +
 				"YouTube Music and Spotify, when they signed in to those. Each has an id, which play_playlist and " +
 				"play_result take.",
 			Call: a.toolPlaylists},

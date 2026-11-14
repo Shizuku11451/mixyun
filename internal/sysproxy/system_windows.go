@@ -148,7 +148,7 @@ func takeString(p *uint16) string {
 
 // session is the WinHTTP session automatic setup asks with, opened once.
 var session = sync.OnceValues(func() (uintptr, error) {
-	agent, _ := syscall.UTF16PtrFromString("MixMusic")
+	agent, _ := syscall.UTF16PtrFromString("Mixyun")
 	h, _, err := procWinHttpOpen.Call(uintptr(unsafe.Pointer(agent)), winhttpAccessTypeNoProxy, 0, 0, 0)
 	if h == 0 {
 		return 0, err

@@ -39,7 +39,7 @@ func TestReportURL(t *testing.T) {
 	more := q.Get("more")
 	// The first line tells how MixMusic was installed: a Flatpak, a .deb…
 	first, _, _ := strings.Cut(more, "\n")
-	if want := "MixMusic 9.9.9 on " + runtime.GOOS + " " + runtime.GOARCH + ", installed as " + installKind(); first != want {
+	if want := "Mixyun 9.9.9 on " + runtime.GOOS + " " + runtime.GOARCH + ", installed as " + installKind(); first != want {
 		t.Errorf("the report starts %q, want %q", first, want)
 	}
 	for _, want := range []string{"Theme: aurora", "Plugins: sleep-timer", "yt-dlp: not installed", "mixmusic.log"} {

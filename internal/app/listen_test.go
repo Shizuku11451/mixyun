@@ -45,10 +45,10 @@ func TestChildNamed(t *testing.T) {
 		{pid: 61, parent: 60, name: "msedgewebview2.exe"}, // its audio service
 	}
 	if got := childNamed(procs, own, "msedgewebview2.exe"); got != 60 {
-		t.Errorf("MixMusic's webview is process %d, want 60", got)
+		t.Errorf("Mixyun's webview is process %d, want 60", got)
 	}
 	if got := childNamed(procs[:1], own, "msedgewebview2.exe"); got != 0 {
-		t.Errorf("without a webview of MixMusic's, found process %d", got)
+		t.Errorf("without a webview of Mixyun's, found process %d", got)
 	}
 }
 

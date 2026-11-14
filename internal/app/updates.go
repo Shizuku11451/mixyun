@@ -21,7 +21,7 @@ import (
 )
 
 // releasesAPI answers with the newest release of MixMusic.
-const releasesAPI = "https://api.github.com/repos/Shizuku11451/mixmusic/releases/latest"
+const releasesAPI = "https://api.github.com/repos/Shizuku11451/mixyun/releases/latest"
 
 const (
 	// firstUpdateCheck is how long after start MixMusic looks for a new
@@ -178,7 +178,7 @@ func (a *App) lookForUpdate() time.Duration {
 		defer cancel()
 		if _, err := a.installUpdate(ctx, nil); err != nil {
 			// As when GitHub lists the release before its update files.
-			log.Printf("mixmusic: installing MixMusic %s: %v", r.Version, err)
+			log.Printf("mixmusic: installing Mixyun %s: %v", r.Version, err)
 			return updateRetry
 		}
 	case updateOffer:
@@ -298,7 +298,7 @@ func (a *App) installUpdate(ctx context.Context, progress func(done, total int64
 	}
 	switch {
 	case errors.Is(err, mygo.ErrUpdatesDisabled):
-		return "", errors.New("this copy of MixMusic cannot replace its own files: download the new version instead")
+		return "", errors.New("this copy of Mixyun cannot replace its own files: download the new version instead")
 	case err != nil:
 		return "", err
 	case up == nil:
@@ -401,7 +401,7 @@ func latestRelease(ctx context.Context, client *http.Client, api, kind, arch, ru
 		return Release{}, err
 	}
 	req.Header.Set("Accept", "application/vnd.github+json")
-	req.Header.Set("User-Agent", "MixMusic/"+running)
+	req.Header.Set("User-Agent", "Mixyun/"+running)
 	res, err := client.Do(req)
 	if err != nil {
 		return Release{}, fmt.Errorf("asking GitHub for the newest version: %w", err)

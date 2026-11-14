@@ -345,7 +345,7 @@ func (t *tap) open(process uint32, mute int) error {
 	t.rate = f.sampleRate
 	// The device of the tap alone, which starts the tap as it starts.
 	desc := nsDictionary(
-		"name", nsString("MixMusic's visualizer"),
+		"name", nsString("Mixyun's visualizer"),
 		"uid", class("NSUUID").Send(sel("UUID")).Send(sel("UUIDString")),
 		"private", nsNumber(1),
 		"stacked", nsNumber(0),

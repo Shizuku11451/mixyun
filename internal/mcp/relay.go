@@ -17,7 +17,7 @@ const Flag = "--mcp"
 
 // ErrUnreachable is why Relay can't reach MixMusic: it doesn't run, or AI
 // assistants are off.
-var ErrUnreachable = errors.New("MixMusic isn't open, or Let AI assistants control MixMusic is off in its Settings › Desktop")
+var ErrUnreachable = errors.New("Mixyun isn't open, or Let AI assistants control Mixyun is off in its Settings › Desktop")
 
 // dialWait is how long Relay waits for the server to answer.
 const dialWait = 5 * time.Second
@@ -51,7 +51,7 @@ func Relay(dir string, in io.Reader, out io.Writer) error {
 		return ErrUnreachable
 	}
 	if !w.OK {
-		return fmt.Errorf("MixMusic refused the assistant: %s", w.Error)
+		return fmt.Errorf("Mixyun refused the assistant: %s", w.Error)
 	}
 	_ = conn.SetDeadline(time.Time{})
 	go func() {

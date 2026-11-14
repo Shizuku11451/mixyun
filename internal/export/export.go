@@ -123,7 +123,7 @@ func Cover(data []byte) (*tagwrite.Picture, error) {
 	}
 	img, _, err := image.Decode(bytes.NewReader(data))
 	if err != nil {
-		return nil, fmt.Errorf("a cover MixMusic can't read: %w", err)
+		return nil, fmt.Errorf("a cover Mixyun can't read: %w", err)
 	}
 	var b bytes.Buffer
 	if err := jpeg.Encode(&b, img, &jpeg.Options{Quality: 90}); err != nil {

@@ -17,7 +17,7 @@ func bundledManager(t *testing.T) (m *Manager, bundled, managed string) {
 	t.Setenv("PATH", "")
 	noToolDirs(t)
 	srv := httptest.NewServer(http.HandlerFunc(func(_ http.ResponseWriter, r *http.Request) {
-		t.Errorf("MixMusic asked %s with a yt-dlp of its package", r.URL)
+		t.Errorf("Mixyun asked %s with a yt-dlp of its package", r.URL)
 	}))
 	t.Cleanup(srv.Close)
 	savedRelease, savedLatest := releaseURL, latestURL

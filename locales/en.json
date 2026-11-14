@@ -1,7 +1,7 @@
 {
   "@@locale": "en",
   "languageTitle": "Language",
-  "languageDescription": "The language MixMusic shows its words in.",
+  "languageDescription": "The language Mixyun shows its words in.",
   "settingsTitle": "Settings",
   "settingsTabAppearance": "appearance",
   "@settingsTabAppearance": {
@@ -207,14 +207,14 @@
   "playerVolume": "Volume",
   "shellTitleHome": "Home",
   "shellTitleSearch": "Search",
-  "shellLostWhy": "This page isn't one of MixMusic's.",
+  "shellLostWhy": "This page isn't one of Mixyun's.",
   "shellLost": "Lost",
   "shellNothingHere": "Nothing lives here",
   "shellGoHome": "go home",
   "widgetsLoading": "Loading",
   "widgetsTryAgain": "try again",
   "settingsFileMistake": "settings.json has a mistake",
-  "settingsFileKeeps": "{problem} MixMusic keeps the settings it had until you fix it.",
+  "settingsFileKeeps": "{problem} Mixyun keeps the settings it had until you fix it.",
   "@settingsFileKeeps": {
     "placeholders": {
       "problem": {
@@ -222,7 +222,7 @@
       }
     }
   },
-  "settingsFileGoesOn": "{problem} MixMusic goes on with the settings it had, and saves what you change here once the file reads again.",
+  "settingsFileGoesOn": "{problem} Mixyun goes on with the settings it had, and saves what you change here once the file reads again.",
   "@settingsFileGoesOn": {
     "placeholders": {
       "problem": {
@@ -231,7 +231,7 @@
     }
   },
   "settingsFileDidntRead": "settings.json didn't read",
-  "settingsFileStarted": "{problem} MixMusic started with the settings of a new install, and kept your file as settings.json.broken.",
+  "settingsFileStarted": "{problem} Mixyun started with the settings of a new install, and kept your file as settings.json.broken.",
   "@settingsFileStarted": {
     "placeholders": {
       "problem": {
@@ -245,7 +245,7 @@
   "settingsFileShow": "show",
   "settingsFileOpenJSON": "open settings.json",
   "settingsFileNotUTF8": "It isn't UTF-8, so letters outside ASCII read as � in it: save it as UTF-8.",
-  "settingsFileUnknown": "MixMusic doesn't know {names}: its next save drops {count, plural, one {it} other {them}}.",
+  "settingsFileUnknown": "Mixyun doesn't know {names}: its next save drops {count, plural, one {it} other {them}}.",
   "@settingsFileUnknown": {
     "placeholders": {
       "names": {
@@ -339,7 +339,7 @@
   "appearanceLayoutBlendDescription": "Expressive's rounded shapes and springy motion, on Crate's dense rows, big covers in cards and bold headings. The default.",
   "appearanceLayoutExpressiveDescription": "Playful and colourful: tonal fills, big rounded shapes, pill buttons, a floating player bar and springy motion. The Material themes go with it, their colours made of the cover's.",
   "appearanceLayoutCrateDescription": "Restrained: dense rows, big covers in cards and bold, tight headings, so that the covers do the work.",
-  "appearanceLayoutTilesDescription": "Flat tiles, giant light lowercase words and outlined boxes, as MixMusic first was.",
+  "appearanceLayoutTilesDescription": "Flat tiles, giant light lowercase words and outlined boxes, as Mixyun first was.",
   "appearanceLayoutTitle": "Layout",
   "appearanceThemeTitle": "Theme",
   "appearanceGetMoreThemes": "get more themes",
@@ -412,9 +412,9 @@
   "colorFileNoPath": "Choose a file: pywal's colors.json, what matugen --json prints, or a theme.json.",
   "colorFileReading": "Reading it…",
   "colorFileMissingPywal": "It isn't there yet: pywal writes it when you run wal.",
-  "colorFileMissingMatugen": "It isn't there yet: add MixMusic's template to matugen's config.toml, and run matugen.",
+  "colorFileMissingMatugen": "It isn't there yet: add Mixyun's template to matugen's config.toml, and run matugen.",
   "colorFileMissing": "It isn't there. The theme's colours show until it is.",
-  "colorFileUnreadKept": "It can't be read: {error}. MixMusic keeps the colours it read at {time}.",
+  "colorFileUnreadKept": "It can't be read: {error}. Mixyun keeps the colours it read at {time}.",
   "@colorFileUnreadKept": {
     "placeholders": {
       "error": {
@@ -467,7 +467,7 @@
   "overlayDataNote": ". JSON of what plays; /events streams each change, and /cover is the cover.",
   "overlayCopy": "copy",
   "keepOnTopTitle": "Keep on top",
-  "keepOnTopDescription": "MixMusic's window stays above your other windows. The mini player stays on top either way.",
+  "keepOnTopDescription": "Mixyun's window stays above your other windows. The mini player stays on top either way.",
   "discordPreview": "Preview",
   "discordFirstLine": "First line",
   "discordSecondLine": "Second line",
@@ -540,19 +540,19 @@
   "discordSampleArtist": "Artist",
   "discordSampleAlbum": "Album",
   "playbackSpotifyTracks": "Spotify tracks",
-  "playbackSpotifyHere": "MixMusic plays them itself, at Spotify's own quality, and shows among your Spotify devices. Needs Spotify Premium, and no Spotify app.",
-  "playbackSpotifyNoWebKit": "This computer's webview, WebKitGTK, can't play Spotify's protected audio, so MixMusic can't play Spotify itself.",
+  "playbackSpotifyHere": "Mixyun plays them itself, at Spotify's own quality, and shows among your Spotify devices. Needs Spotify Premium, and no Spotify app.",
+  "playbackSpotifyNoWebKit": "This computer's webview, WebKitGTK, can't play Spotify's protected audio, so Mixyun can't play Spotify itself.",
   "playbackHowSpotifyPlays": "How Spotify tracks play",
-  "playbackFromSpotify": "In MixMusic, from Spotify",
+  "playbackFromSpotify": "In Mixyun, from Spotify",
   "playbackOnConnect": "On Spotify Connect",
   "playbackOnConnectDesc": "Your Spotify app, or another Spotify device, plays them, at Spotify's own quality. Needs Spotify Premium and a device with Spotify open.",
-  "playbackFromYouTube": "In MixMusic, from NetEase Cloud Music",
-  "playbackFromYouTubeDesc": "MixMusic plays their recording on NetEase Cloud Music, with the equalizer, crossfade and visualizer. Works without Premium.",
+  "playbackFromYouTube": "In Mixyun, from NetEase Cloud Music",
+  "playbackFromYouTubeDesc": "Mixyun plays their recording on NetEase Cloud Music, with the equalizer, crossfade and visualizer. Works without Premium.",
   "playbackSignInSpotify": "Sign in to Spotify in accounts to play your Spotify library.",
   "playbackSignInSpotifyLead": "Sign in to Spotify in ",
   "playbackSignInSpotifyTail": " to play your Spotify library.",
   "playbackSignInAgainTitle": "Sign in to Spotify again",
-  "playbackSignInAgainBody": "You signed in before MixMusic played Spotify itself, which your sign-in doesn't allow yet. Until you sign in again, Spotify tracks play from NetEase Cloud Music.",
+  "playbackSignInAgainBody": "You signed in before Mixyun played Spotify itself, which your sign-in doesn't allow yet. Until you sign in again, Spotify tracks play from NetEase Cloud Music.",
   "playbackSignInAgain": "sign in again",
   "playbackWaitingBrowser": "waiting for the browser…",
   "playbackFinishSignIn": "Finish signing in in your browser",
@@ -595,12 +595,12 @@
       }
     }
   },
-  "equalizerSpotifyNote": "The equalizer works only on NetEase Cloud Music, which MixMusic plays itself, Spotify tracks played from it included. For Spotify, use a system-wide equalizer: Spotify notes that its audio settings can't change while another device plays it.",
-  "equalizerSpotifyLead": "The equalizer works only on NetEase Cloud Music, which MixMusic plays itself, Spotify tracks played from it included. For Spotify, use a system-wide equalizer: ",
+  "equalizerSpotifyNote": "The equalizer works only on NetEase Cloud Music, which Mixyun plays itself, Spotify tracks played from it included. For Spotify, use a system-wide equalizer: Spotify notes that its audio settings can't change while another device plays it.",
+  "equalizerSpotifyLead": "The equalizer works only on NetEase Cloud Music, which Mixyun plays itself, Spotify tracks played from it included. For Spotify, use a system-wide equalizer: ",
   "equalizerSpotifyNotes": "Spotify notes",
   "equalizerSpotifyTail": " that its audio settings can't change while another device plays it.",
   "speedTitle": "Speed",
-  "speedHint": "Speed changes what MixMusic plays itself: NetEase Cloud Music, and Spotify tracks played from it. Tracks and episodes Spotify plays, in MixMusic or on Spotify Connect, keep their own speed. So do live streams, which play as they're broadcast. The speed button by the player changes it too, for the kind of track that plays.",
+  "speedHint": "Speed changes what Mixyun plays itself: NetEase Cloud Music, and Spotify tracks played from it. Tracks and episodes Spotify plays, in Mixyun or on Spotify Connect, keep their own speed. So do live streams, which play as they're broadcast. The speed button by the player changes it too, for the kind of track that plays.",
   "speedOwn": "Their own speed.",
   "speedAt": "{speed}, at their own pitch.",
   "@speedAt": {
@@ -616,8 +616,8 @@
   "speedPodcasts": "Podcasts",
   "speedOfPodcasts": "Speed of podcasts",
   "outputDevice": "Output device",
-  "outputDescription": "The speakers or headphones MixMusic plays on. System default follows the device your system plays on; a device that's unplugged gives way to it until it's back.",
-  "outputDescriptionGone": "The speakers or headphones MixMusic plays on. System default follows the device your system plays on; a device that's unplugged gives way to it until it's back. {device} isn't connected now: the system's default plays.",
+  "outputDescription": "The speakers or headphones Mixyun plays on. System default follows the device your system plays on; a device that's unplugged gives way to it until it's back.",
+  "outputDescriptionGone": "The speakers or headphones Mixyun plays on. System default follows the device your system plays on; a device that's unplugged gives way to it until it's back. {device} isn't connected now: the system's default plays.",
   "@outputDescriptionGone": {
     "placeholders": {
       "device": {
@@ -632,8 +632,8 @@
   "loudnessLevelling": "Volume levelling",
   "loudnessLevellingDesc": "Squeezes loud and quiet moments closer together as they play, and lifts quiet recordings.",
   "audioAsAccountTitle": "Play audio as your account",
-  "audioAsAccountDesc": "For NetEase Cloud Music VIP's higher bitrate, MixMusic asks for each track's audio as your NetEase Cloud Music account. NetEase Cloud Music may flag an account used this way, and tracks may start more slowly. A track it can't get this way plays as before.",
-  "audioAsAccountSignIn": "For NetEase Cloud Music VIP's higher bitrate, MixMusic asks for each track's audio as your NetEase Cloud Music account. NetEase Cloud Music may flag an account used this way, and tracks may start more slowly. A track it can't get this way plays as before. Sign in to NetEase Cloud Music in accounts first.",
+  "audioAsAccountDesc": "For NetEase Cloud Music VIP's higher bitrate, Mixyun asks for each track's audio as your NetEase Cloud Music account. NetEase Cloud Music may flag an account used this way, and tracks may start more slowly. A track it can't get this way plays as before.",
+  "audioAsAccountSignIn": "For NetEase Cloud Music VIP's higher bitrate, Mixyun asks for each track's audio as your NetEase Cloud Music account. NetEase Cloud Music may flag an account used this way, and tracks may start more slowly. A track it can't get this way plays as before. Sign in to NetEase Cloud Music in accounts first.",
   "volumeCurveGroup": "Volume",
   "volumeCurveTitle": "Volume curve",
   "volumeCurveDescription": "Natural gives the volume slider even steps of loudness: each tenth of it is 6 dB. On Linear, the level grows evenly along the slider, so its middle is half the level, 6 dB down. Spotify tracks play on the same curve.",
@@ -641,8 +641,8 @@
   "volumeCurveLinear": "linear",
   "dislikeSkip": "Skip songs you dislike",
   "dislikeSkipDesc": "Songs you dislike don't play when the queue moves on, and radios leave them out.",
-  "dislikeNote": "Signed in to NetEase Cloud Music, your dislikes of its songs go there too. Spotify takes no dislikes from apps: those of its tracks stay in MixMusic.",
-  "dislikeNoteSee": "Signed in to NetEase Cloud Music, your dislikes of its songs go there too. Spotify takes no dislikes from apps: those of its tracks stay in MixMusic. See the songs you dislike.",
+  "dislikeNote": "Signed in to NetEase Cloud Music, your dislikes of its songs go there too. Spotify takes no dislikes from apps: those of its tracks stay in Mixyun.",
+  "dislikeNoteSee": "Signed in to NetEase Cloud Music, your dislikes of its songs go there too. Spotify takes no dislikes from apps: those of its tracks stay in Mixyun. See the songs you dislike.",
   "dislikeSee": "See the songs you dislike",
   "dislikeSeeEnd": ".",
   "cleanVersionsGroup": "Explicit content",
@@ -681,7 +681,7 @@
   },
   "toolSettingsGroup": "Tools",
   "toolSettingsNotFound": "Not found. Some NetEase Cloud Music tracks play only with it.",
-  "toolSettingsFound": "yt-dlp {version} at {path}{managed, select, yes {, MixMusic's own, which it keeps up to date} other {}}{bundled, select, yes {, which comes with MixMusic and updates with it} other {}}{outdated, select, yes {. {latest} is out.} other {}}",
+  "toolSettingsFound": "yt-dlp {version} at {path}{managed, select, yes {, Mixyun's own, which it keeps up to date} other {}}{bundled, select, yes {, which comes with Mixyun and updates with it} other {}}{outdated, select, yes {. {latest} is out.} other {}}",
   "@toolSettingsFound": {
     "placeholders": {
       "version": {
@@ -706,7 +706,7 @@
   },
   "toolSettingsInstall": "install yt-dlp",
   "toolSettingsUpdate": "update yt-dlp",
-  "toolSettingsUseOurs": "use MixMusic's yt-dlp",
+  "toolSettingsUseOurs": "use Mixyun's yt-dlp",
   "toolSettingsJSRuntime": "JavaScript runtime",
   "toolSettingsJSRuntimeFound": "{name} {version} · yt-dlp uses it to solve YouTube's challenges.",
   "@toolSettingsJSRuntimeFound": {
@@ -727,7 +727,7 @@
       }
     }
   },
-  "toolSettingsJSRuntimeNone": "yt-dlp needs Deno, Node.js, Bun or QuickJS to read most YouTube streams. Install one, and MixMusic finds it.",
+  "toolSettingsJSRuntimeNone": "yt-dlp needs Deno, Node.js, Bun or QuickJS to read most YouTube streams. Install one, and Mixyun finds it.",
   "toolSettingsFindOne": "Find one",
   "toolSettingsOwn": "Own yt-dlp",
   "toolSettingsOwnFlatpak": "Use a yt-dlp of your own instead. The Flatpak sees only its own folders: put it in ~/.var/app/io.github.fzn0x.mixmusic.",
@@ -765,7 +765,7 @@
   "cacheSettingsCleared": "Cache cleared",
   "cacheSettingsCoversCleared": "Covers cleared",
   "cacheSettingsSize": "Size",
-  "cacheSettingsOff": "Off: MixMusic keeps no tracks.",
+  "cacheSettingsOff": "Off: Mixyun keeps no tracks.",
   "cacheSettingsLimit": "{size} at most.",
   "@cacheSettingsLimit": {
     "placeholders": {
@@ -811,7 +811,7 @@
   "downloadAddedRowTitle": "Download songs added later",
   "downloadAddedAbout": "When a playlist, an album, a mix or the liked songs you downloaded gain songs, they download too as you open its page. Over a hundred at once, or a gigabyte, wait for you to ask. Off: its page offers them.",
   "computerSettingsGroup": "Music on this computer",
-  "computerSettingsAbout": "Folders of music files MixMusic plays from your computer: MP3, FLAC, WAV, M4A, Opus and Vorbis. Nothing of them is uploaded.",
+  "computerSettingsAbout": "Folders of music files Mixyun plays from your computer: MP3, FLAC, WAV, M4A, Opus and Vorbis. Nothing of them is uploaded.",
   "computerSettingsFolders": "Folders",
   "computerSettingsAddFolder": "add a folder",
   "computerSettingsAddFolderLabel": "Add a folder of music",
@@ -834,7 +834,7 @@
       }
     }
   },
-  "computerSettingsTracksSkipped": "{count, plural, one {# track} other {# tracks}} · {skipped} skipped, of kinds MixMusic can't play or broken",
+  "computerSettingsTracksSkipped": "{count, plural, one {# track} other {# tracks}} · {skipped} skipped, of kinds Mixyun can't play or broken",
   "@computerSettingsTracksSkipped": {
     "placeholders": {
       "count": {
@@ -863,7 +863,7 @@
     }
   },
   "aboutVersion": "Version",
-  "aboutDescription": "Spotify and NetEase Cloud Music in one player. This is Shizuku11451's fork of MixMusic, which fzn0x and its contributors make, open source under the MIT license or the GNU GPL, version 3. Your data lives in {dir}.",
+  "aboutDescription": "Spotify and NetEase Cloud Music in one player. This is Shizuku11451's fork of Mixyun, which fzn0x and its contributors make, open source under the MIT license or the GNU GPL, version 3. Your data lives in {dir}.",
   "@aboutDescription": {
     "placeholders": {
       "dir": {
@@ -881,9 +881,9 @@
   "aboutHide": "hide",
   "memoryUse": "Memory use",
   "memoryRecordTitle": "Record memory use",
-  "memoryRecordAbout": "Writes how MixMusic uses its memory to memory.log in the logs folder, once a minute, and saves a heap profile there once it passes 1 GB, for a report of a problem. They hold only how MixMusic uses its memory, nothing of your music or accounts. It's off again at the next start.",
+  "memoryRecordAbout": "Writes how Mixyun uses its memory to memory.log in the logs folder, once a minute, and saves a heap profile there once it passes 1 GB, for a report of a problem. They hold only how Mixyun uses its memory, nothing of your music or accounts. It's off again at the next start.",
   "memoryHeapTitle": "Heap profile",
-  "memoryHeapAbout": "Saves where MixMusic's Go code holds memory now, as heap-<time>.pprof beside memory.log. The newest five are kept.",
+  "memoryHeapAbout": "Saves where Mixyun's Go code holds memory now, as heap-<time>.pprof beside memory.log. The newest five are kept.",
   "memorySaveHeap": "save a heap profile",
   "memoryOpenLogs": "open logs folder",
   "memorySaved": "Saved {name} in the logs folder",
@@ -896,7 +896,7 @@
   },
   "remoteTitle": "Remote control",
   "remoteSwitch": "Allow remote control",
-  "remoteAbout": "Other computers on this network with MixMusic can find this one, as “{name}”, pair with it by a code it shows, and control what it plays. What they send goes encrypted, between the two alone.",
+  "remoteAbout": "Other computers on this network with Mixyun can find this one, as “{name}”, pair with it by a code it shows, and control what it plays. What they send goes encrypted, between the two alone.",
   "@remoteAbout": {
     "placeholders": {
       "name": {
@@ -939,8 +939,8 @@
   },
   "firewallTitle": "Windows Firewall",
   "firewallRow": "Connections from your network",
-  "firewallReading": "Reading whether Windows Firewall lets other computers and cast devices on this network reach MixMusic…",
-  "firewallError": "MixMusic couldn't read Windows Firewall: {detail}.",
+  "firewallReading": "Reading whether Windows Firewall lets other computers and cast devices on this network reach Mixyun…",
+  "firewallError": "Mixyun couldn't read Windows Firewall: {detail}.",
   "@firewallError": {
     "placeholders": {
       "detail": {
@@ -948,19 +948,19 @@
       }
     }
   },
-  "firewallOff": "Windows Firewall is off for this network, so other computers and cast devices on it reach MixMusic, for remote control and casting.",
-  "firewallLetsIn": "Windows Firewall lets other computers and cast devices on this network reach MixMusic, for remote control and casting.",
-  "firewallManaged": "Windows Firewall keeps other computers and cast devices on this network from reaching MixMusic, and your organization's policy decides what it lets in. Its administrators can let MixMusic in.",
-  "firewallShielded": "Windows Firewall blocks every incoming connection on this network, those of the apps it allows too, so other computers and cast devices can't reach MixMusic. Windows Security turns that off, in Firewall & network protection.",
-  "firewallPublic": "Windows counts this network as public, so Windows Firewall keeps other computers and cast devices on it from reaching MixMusic. If you trust the network, as the one at home, make it private in Windows' network settings.",
-  "firewallBlocked": "Windows Firewall keeps other computers and cast devices on this network from reaching MixMusic, as it does once its question about MixMusic is answered with Cancel. Allow lets them in on private networks, with an administrator's approval.",
-  "firewallAsks": "Windows Firewall doesn't let other computers and cast devices reach MixMusic yet: it asks the first time remote control or casting starts. Allow lets them in on private networks now, with an administrator's approval.",
-  "firewallDefault": "Windows Firewall keeps other computers and cast devices on this network from reaching MixMusic, and doesn't ask about apps. Allow lets them in on private networks, with an administrator's approval.",
+  "firewallOff": "Windows Firewall is off for this network, so other computers and cast devices on it reach Mixyun, for remote control and casting.",
+  "firewallLetsIn": "Windows Firewall lets other computers and cast devices on this network reach Mixyun, for remote control and casting.",
+  "firewallManaged": "Windows Firewall keeps other computers and cast devices on this network from reaching Mixyun, and your organization's policy decides what it lets in. Its administrators can let Mixyun in.",
+  "firewallShielded": "Windows Firewall blocks every incoming connection on this network, those of the apps it allows too, so other computers and cast devices can't reach Mixyun. Windows Security turns that off, in Firewall & network protection.",
+  "firewallPublic": "Windows counts this network as public, so Windows Firewall keeps other computers and cast devices on it from reaching Mixyun. If you trust the network, as the one at home, make it private in Windows' network settings.",
+  "firewallBlocked": "Windows Firewall keeps other computers and cast devices on this network from reaching Mixyun, as it does once its question about Mixyun is answered with Cancel. Allow lets them in on private networks, with an administrator's approval.",
+  "firewallAsks": "Windows Firewall doesn't let other computers and cast devices reach Mixyun yet: it asks the first time remote control or casting starts. Allow lets them in on private networks now, with an administrator's approval.",
+  "firewallDefault": "Windows Firewall keeps other computers and cast devices on this network from reaching Mixyun, and doesn't ask about apps. Allow lets them in on private networks, with an administrator's approval.",
   "firewallAllow": "allow",
   "firewallAllowing": "allowing…",
-  "firewallAllowLabel": "Allow MixMusic in Windows Firewall",
+  "firewallAllowLabel": "Allow Mixyun in Windows Firewall",
   "firewallNetworkSettings": "network settings",
-  "firewallAllowed": "Windows Firewall lets MixMusic in on private networks",
+  "firewallAllowed": "Windows Firewall lets Mixyun in on private networks",
   "firewallNotChanged": "Windows Firewall wasn't changed: {reason}",
   "@firewallNotChanged": {
     "placeholders": {
@@ -970,7 +970,7 @@
     }
   },
   "assistantsTitle": "AI assistants",
-  "assistantsSwitch": "Let AI assistants control MixMusic",
+  "assistantsSwitch": "Let AI assistants control Mixyun",
   "assistantsAbout": "AI assistants on this computer that speak MCP, the Model Context Protocol, can tell what plays, play, pause, skip, search, and play your playlists. Each thing one does shows here. Nothing on the network can reach it.",
   "assistantsProblemTitle": "AI assistants can't connect",
   "assistantsProblem": "{problem}.",
@@ -982,12 +982,12 @@
     }
   },
   "assistantsCommand": "Command",
-  "assistantsCommandNote": ". An assistant starts it, as a server of MCP that runs a command (stdio), to reach MixMusic while it runs.",
+  "assistantsCommandNote": ". An assistant starts it, as a server of MCP that runs a command (stdio), to reach Mixyun while it runs.",
   "assistantsCopy": "copy",
   "assistantsCopyCommand": "Copy the command",
   "assistantsConfiguration": "Configuration",
   "assistantsConfigNote": "For the assistants that keep their servers in a JSON file, as mcpServers. ",
-  "assistantsHowTo": "How to add MixMusic to an assistant",
+  "assistantsHowTo": "How to add Mixyun to an assistant",
   "assistantsCopyConfig": "Copy the configuration",
   "assistantsNone": "None now. Turning this off ends every session at once.",
   "assistantsConnected": "{list}. Turning this off ends their sessions at once.",
@@ -1001,7 +1001,7 @@
   "assistantsNameSeparator": ", ",
   "assistantsConnectedTitle": "Connected",
   "playbackErrorsGroup": "Recent playback errors",
-  "playbackErrorsNone": "No track failed to play since MixMusic started. The last few that do are listed here until MixMusic closes, with what was tried.",
+  "playbackErrorsNone": "No track failed to play since Mixyun started. The last few that do are listed here until Mixyun closes, with what was tried.",
   "playbackErrorsDetails": "details",
   "playbackErrorsDetailsOf": "details of {title}",
   "@playbackErrorsDetailsOf": {
@@ -1015,21 +1015,21 @@
   "desktopSettingsTrayTitle": "Close to the tray",
   "desktopSettingsTrayAbout": "Closing the window keeps the music playing; quit from the tray icon.",
   "desktopSettingsMediaKeysTitle": "Media keys",
-  "desktopSettingsMediaKeysAbout": "The keyboard's play, next and previous keys control MixMusic. Keys of your own that work everywhere are in Settings › Shortcuts.",
+  "desktopSettingsMediaKeysAbout": "The keyboard's play, next and previous keys control Mixyun. Keys of your own that work everywhere are in Settings › Shortcuts.",
   "desktopSettingsNotificationsTitle": "Notifications",
-  "desktopSettingsNotificationsAbout": "Tell what starts playing while MixMusic is in the background.",
+  "desktopSettingsNotificationsAbout": "Tell what starts playing while Mixyun is in the background.",
   "desktopSettingsTitleTitle": "Show what plays in the window title",
   "desktopSettingsTitleAbout": "The window's title names the track that plays, for the taskbar, the window switcher and screen readers.",
   "desktopSettingsDiscordTitle": "Show what plays on Discord",
   "desktopSettingsDiscordAbout": "While Discord runs, your profile says what you listen to: you choose its lines, cover, time and button.",
-  "desktopSettingsDiscordBefore": "Discord shows the name of MixMusic's application. To show another, create one in the ",
+  "desktopSettingsDiscordBefore": "Discord shows the name of Mixyun's application. To show another, create one in the ",
   "desktopSettingsDiscordPortal": "developer portal",
   "desktopSettingsDiscordAfter": " and paste its application ID.",
   "desktopSettingsDiscordAppID": "Discord application ID",
-  "desktopSettingsDiscordPlaceholder": "MixMusic's",
+  "desktopSettingsDiscordPlaceholder": "Mixyun's",
   "desktopSettingsLogin": "Start at login",
   "desktopSettingsSettingsFile": "Settings file",
-  "desktopSettingsSettingsFileAbout": "Your settings, as settings.json in your data folder. Save it while MixMusic runs, and they apply at once.",
+  "desktopSettingsSettingsFileAbout": "Your settings, as settings.json in your data folder. Save it while Mixyun runs, and they apply at once.",
   "desktopSettingsOpen": "open",
   "desktopSettingsShowInFolder": "show in folder",
   "desktopSettingsReset": "Reset settings",
@@ -1122,7 +1122,7 @@
   "updatesCheckTitle": "Check for updates",
   "updatesInstallTitle": "Install updates without asking",
   "updatesInstallAbout": "New versions download in the background and run at the next launch.",
-  "updatesInstalledTitle": "MixMusic {version} is installed",
+  "updatesInstalledTitle": "Mixyun {version} is installed",
   "@updatesInstalledTitle": {
     "placeholders": {
       "version": {
@@ -1130,7 +1130,7 @@
       }
     }
   },
-  "updatesRestartHint": "It runs once MixMusic restarts.",
+  "updatesRestartHint": "It runs once Mixyun restarts.",
   "updatesRestartNow": "restart now",
   "updatesLooking": "Looking for a newer version…",
   "updatesCouldntLook": "Couldn't look for a newer version",
@@ -1153,7 +1153,7 @@
       }
     }
   },
-  "updatesOut": "MixMusic {version} is out",
+  "updatesOut": "Mixyun {version} is out",
   "@updatesOut": {
     "placeholders": {
       "version": {
@@ -1236,7 +1236,7 @@
   },
   "updatesReplaceFlathub": "Your software center, such as GNOME Software or KDE Discover, installs it from Flathub with your other updates, once Flathub has built it, or run flatpak update. Your library and settings stay.",
   "updatesReplaceDevelopment": "Development builds don't update themselves.",
-  "updatesReplaceOther": "MixMusic can't write where it is installed, so it can't replace itself: run {file}. Your library and settings stay.",
+  "updatesReplaceOther": "Mixyun can't write where it is installed, so it can't replace itself: run {file}. Your library and settings stay.",
   "@updatesReplaceOther": {
     "placeholders": {
       "file": {
@@ -1273,11 +1273,11 @@
   "accountSettingsFinishSpotify": "Finish signing in in your browser",
   "accountSettingsSignedInSpotify": "Signed in to Spotify",
   "accountSettingsSpotifySignOutTitle": "sign out of Spotify",
-  "accountSettingsSpotifySignOutBody": "MixMusic forgets your Spotify sign-in.",
+  "accountSettingsSpotifySignOutBody": "Mixyun forgets your Spotify sign-in.",
   "accountSettingsYouTubeSignInTitle": "Sign in to NetEase Cloud Music",
-  "accountSettingsYouTubeForm": "Sign in to NetEase Cloud Music. Log in. Google account. NetEase Cloud Music needs no account: search, artists, albums, playlists and radios work signed out. Signed in, MixMusic shows your own home feed and library, and saves what you like and follow to NetEase Cloud Music. Tracks play as they do signed out: your session never goes to yt-dlp. You sign in on Google's own page, in a window of MixMusic: MixMusic never sees your password, and keeps the session encrypted on this computer. NetEase Cloud Music does not offer this to apps officially, so it may stop working when YouTube changes.",
-  "accountSettingsYouTubeHint": "NetEase Cloud Music needs no account: search, artists, albums, playlists and radios work signed out. Signed in, MixMusic shows your own home feed and library, and saves what you like and follow to NetEase Cloud Music. Tracks play as they do signed out: your session never goes to yt-dlp.",
-  "accountSettingsYouTubeSession": "You sign in on Google's own page, in a window of MixMusic: MixMusic never sees your password, and keeps the session encrypted on this computer. NetEase Cloud Music does not offer this to apps officially, so it may stop working when YouTube changes.",
+  "accountSettingsYouTubeForm": "Sign in to NetEase Cloud Music. Log in. Google account. NetEase Cloud Music needs no account: search, artists, albums, playlists and radios work signed out. Signed in, Mixyun shows your own home feed and library, and saves what you like and follow to NetEase Cloud Music. Tracks play as they do signed out: your session never goes to yt-dlp. You sign in on Google's own page, in a window of Mixyun: Mixyun never sees your password, and keeps the session encrypted on this computer. NetEase Cloud Music does not offer this to apps officially, so it may stop working when YouTube changes.",
+  "accountSettingsYouTubeHint": "NetEase Cloud Music needs no account: search, artists, albums, playlists and radios work signed out. Signed in, Mixyun shows your own home feed and library, and saves what you like and follow to NetEase Cloud Music. Tracks play as they do signed out: your session never goes to yt-dlp.",
+  "accountSettingsYouTubeSession": "You sign in on Google's own page, in a window of Mixyun: Mixyun never sees your password, and keeps the session encrypted on this computer. NetEase Cloud Music does not offer this to apps officially, so it may stop working when YouTube changes.",
   "accountSettingsYouTubeSignInButton": "sign in to youtube music",
   "accountSettingsYouTubeWaitingWindow": "waiting for the sign-in window…",
   "accountSettingsYouTubeSignedIn": "Signed in to NetEase Cloud Music",
@@ -1292,15 +1292,15 @@
   },
   "accountSettingsYouTubeSignedInDesc": "Your home feed, your library, and likes that reach NetEase Cloud Music.",
   "accountSettingsYouTubeSignOutTitle": "sign out of NetEase Cloud Music",
-  "accountSettingsYouTubeSignOutBody": "MixMusic forgets your NetEase Cloud Music session; your library stays on NetEase Cloud Music.",
+  "accountSettingsYouTubeSignOutBody": "Mixyun forgets your NetEase Cloud Music session; your library stays on NetEase Cloud Music.",
   "accountSettingsYouTubeHistoryTitle": "Add what you play to your history",
   "accountSettingsYouTubeHistoryDesc": "NetEase Cloud Music makes its home and its radios of your history. Tracks join it once they played a while, as they do on Last.fm, and episodes keep where you left them, for NetEase Cloud Music to go on from there on your other devices.",
   "accountSettingsYouTubeHistorySwitch": "Add what you play to your NetEase Cloud Music history",
   "accountSettingsYouTubeCookieTitle": "Sign in to NetEase Cloud Music with a browser's cookies",
-  "accountSettingsYouTubeCookieForm": "Import from a browser. Sign in with the session of a browser you signed in to NetEase Cloud Music with. Browser. Profile. Another profile than the browser's own, by its name or its folder. MixMusic finds those of Zen, Helium and the browsers installed as Flatpaks in their folders. Import. MixMusic reads the browser's cookies with yt-dlp, keeps YouTube's alone, encrypted on this computer, and deletes the rest at once. Close the browser first: while it's open, it may hold its cookies, or not have saved a new sign-in yet. Recent Chrome on Windows seals its cookies against other programs: use Firefox there, or paste a cookie header. Paste a cookie header. In a tab signed in to music.youtube.com, open the developer tools, and copy the Cookie header of a request to music.youtube.com from the Network panel. The text of a cookies.txt file will do too. Sign in with it. Log in. A cookie header is as good as your password: paste it here alone. YouTube may end a session that goes on in the browser; one from a private window you then close lasts longest.",
+  "accountSettingsYouTubeCookieForm": "Import from a browser. Sign in with the session of a browser you signed in to NetEase Cloud Music with. Browser. Profile. Another profile than the browser's own, by its name or its folder. Mixyun finds those of Zen, Helium and the browsers installed as Flatpaks in their folders. Import. Mixyun reads the browser's cookies with yt-dlp, keeps YouTube's alone, encrypted on this computer, and deletes the rest at once. Close the browser first: while it's open, it may hold its cookies, or not have saved a new sign-in yet. Recent Chrome on Windows seals its cookies against other programs: use Firefox there, or paste a cookie header. Paste a cookie header. In a tab signed in to music.youtube.com, open the developer tools, and copy the Cookie header of a request to music.youtube.com from the Network panel. The text of a cookies.txt file will do too. Sign in with it. Log in. A cookie header is as good as your password: paste it here alone. YouTube may end a session that goes on in the browser; one from a private window you then close lasts longest.",
   "accountSettingsYouTubeImport": "Sign in with the session of a browser you signed in to NetEase Cloud Music with.",
-  "accountSettingsYouTubeProfile": "Another profile than the browser's own, by its name or its folder. MixMusic finds those of Zen, Helium and the browsers installed as Flatpaks in their folders.",
-  "accountSettingsYouTubeImportHint": "MixMusic reads the browser's cookies with yt-dlp, keeps YouTube's alone, encrypted on this computer, and deletes the rest at once. Close the browser first: while it's open, it may hold its cookies, or not have saved a new sign-in yet. Recent Chrome on Windows seals its cookies against other programs: use Firefox there, or paste a cookie header.",
+  "accountSettingsYouTubeProfile": "Another profile than the browser's own, by its name or its folder. Mixyun finds those of Zen, Helium and the browsers installed as Flatpaks in their folders.",
+  "accountSettingsYouTubeImportHint": "Mixyun reads the browser's cookies with yt-dlp, keeps YouTube's alone, encrypted on this computer, and deletes the rest at once. Close the browser first: while it's open, it may hold its cookies, or not have saved a new sign-in yet. Recent Chrome on Windows seals its cookies against other programs: use Firefox there, or paste a cookie header.",
   "accountSettingsYouTubePaste": "In a tab signed in to music.youtube.com, open the developer tools, and copy the Cookie header of a request to music.youtube.com from the Network panel. The text of a cookies.txt file will do too.",
   "accountSettingsYouTubePasteHint": "A cookie header is as good as your password: paste it here alone. YouTube may end a session that goes on in the browser; one from a private window you then close lasts longest.",
   "accountSettingsImportFromBrowser": "Import from a browser",
@@ -1313,15 +1313,15 @@
   "accountSettingsCookieHeader": "Cookie header",
   "accountSettingsSignInWithIt": "sign in with it",
   "accountSettingsSigningIn": "signing in…",
-  "accountSettingsYouTubeCookieProblem": "MixMusic didn't sign in to NetEase Cloud Music",
+  "accountSettingsYouTubeCookieProblem": "Mixyun didn't sign in to NetEase Cloud Music",
   "accountSettingsChannel": "Channel",
   "accountSettingsChannelAbout": "Brand channels of your account have their own home feed, library and likes.",
   "accountSettingsAccountChannel": "Account and channel",
   "accountSettingsAccountChannelAbout": "Each Google account of the session, and each of their brand channels, has its own home feed, library and likes.",
-  "accountSettingsUnswitchable": "YouTube doesn't let MixMusic switch to this channel",
-  "accountSettingsChannelGone": "The account or channel MixMusic used is no longer one of this session: choose one.",
-  "accountSettingsChannelMany": "Your session reaches more than one account or channel. MixMusic uses the first account: choose another here.",
-  "accountSettingsSwitchNotice": "YouTube doesn't let MixMusic switch to {name}",
+  "accountSettingsUnswitchable": "YouTube doesn't let Mixyun switch to this channel",
+  "accountSettingsChannelGone": "The account or channel Mixyun used is no longer one of this session: choose one.",
+  "accountSettingsChannelMany": "Your session reaches more than one account or channel. Mixyun uses the first account: choose another here.",
+  "accountSettingsSwitchNotice": "YouTube doesn't let Mixyun switch to {name}",
   "@accountSettingsSwitchNotice": {
     "placeholders": {
       "name": {
@@ -1351,20 +1351,20 @@
   "accountSettingsScrobbleSwitch": "Scrobble to Last.fm",
   "accountSettingsDisconnect": "disconnect",
   "accountSettingsDisconnectAskTitle": "disconnect Last.fm",
-  "accountSettingsDisconnectAskBody": "MixMusic forgets your Last.fm connection; your scrobbles stay on Last.fm.",
+  "accountSettingsDisconnectAskBody": "Mixyun forgets your Last.fm connection; your scrobbles stay on Last.fm.",
   "accountSettingsConnectLastfm": "Connect to Last.fm",
-  "accountSettingsLastfmForm": "Create an API account on Last.fm; any name and description will do, and the callback URL can stay empty. Paste its API key and shared secret here, and connect. Approve MixMusic on the page that opens in your browser. Connect to Last.fm. Scrobble, scrobbling. Sign in, log in. MixMusic keeps them in your system's credential store, with the connection.",
+  "accountSettingsLastfmForm": "Create an API account on Last.fm; any name and description will do, and the callback URL can stay empty. Paste its API key and shared secret here, and connect. Approve Mixyun on the page that opens in your browser. Connect to Last.fm. Scrobble, scrobbling. Sign in, log in. Mixyun keeps them in your system's credential store, with the connection.",
   "accountSettingsLastfmStep1A": "Create an API account on ",
   "accountSettingsLastfmStep1B": "; any name and description will do, and the callback URL can stay empty.",
   "accountSettingsLastfmStep2": "Paste its API key and shared secret here, and connect.",
-  "accountSettingsLastfmStep3": "Approve MixMusic on the page that opens in your browser.",
+  "accountSettingsLastfmStep3": "Approve Mixyun on the page that opens in your browser.",
   "accountSettingsAPIKey": "API key",
   "accountSettingsSharedSecret": "Shared secret",
   "accountSettingsConnectButton": "connect to last.fm",
   "accountSettingsWaitingLastfm": "waiting for Last.fm…",
-  "accountSettingsApproveLastfm": "Approve MixMusic on Last.fm, in your browser",
+  "accountSettingsApproveLastfm": "Approve Mixyun on Last.fm, in your browser",
   "accountSettingsConnectedLastfm": "Connected to Last.fm",
-  "accountSettingsLastfmHint": "MixMusic keeps them in your system's credential store, with the connection.",
+  "accountSettingsLastfmHint": "Mixyun keeps them in your system's credential store, with the connection.",
   "pluginSettingsGroup": "Installed plugins",
   "pluginSettingsGetPlugins": "get plugins",
   "pluginSettingsOpenFolder": "open plugins folder",
@@ -1456,7 +1456,7 @@
   "accountSettingsNetEaseSignedInDesc": "Your daily picks, your playlists and liked songs, and songs as your account may play them.",
   "accountSettingsNetEaseRefused": "NetEase Cloud Music refused the session",
   "accountSettingsNetEaseSignOutTitle": "sign out of NetEase Cloud Music",
-  "accountSettingsNetEaseSignOutBody": "MixMusic forgets your NetEase Cloud Music session; your playlists stay on NetEase Cloud Music.",
+  "accountSettingsNetEaseSignOutBody": "Mixyun forgets your NetEase Cloud Music session; your playlists stay on NetEase Cloud Music.",
   "cmdPlayerToggle": "Play or pause",
   "cmdPlayerNext": "Next track",
   "cmdPlayerPrevious": "Previous track",
@@ -1572,9 +1572,9 @@
   "cmdGroupThemes": "themes",
   "cmdGroupSearch": "search",
   "globalKeysGroup": "From any app",
-  "globalKeysHint": "These keys control MixMusic whichever window is in front, and while it runs they do nothing else.",
-  "globalKeysHintLinux": "These keys control MixMusic whichever window is in front, and while it runs they do nothing else. On Wayland your desktop asks you to confirm them, and its keyboard settings can change them.",
-  "globalKeysHintMac": "These keys control MixMusic whichever window is in front, and while it runs they do nothing else. A letter is the key in its place on a US keyboard.",
+  "globalKeysHint": "These keys control Mixyun whichever window is in front, and while it runs they do nothing else.",
+  "globalKeysHintLinux": "These keys control Mixyun whichever window is in front, and while it runs they do nothing else. On Wayland your desktop asks you to confirm them, and its keyboard settings can change them.",
+  "globalKeysHintMac": "These keys control Mixyun whichever window is in front, and while it runs they do nothing else. A letter is the key in its place on a US keyboard.",
   "globalKeysInUse": "If nothing happens, these keys are in use elsewhere.",
   "globalKeysRecording": "press the keys · esc cancels · backspace removes",
   "globalKeysEditLabel": "{action} the global shortcut of {title}",
@@ -1612,9 +1612,9 @@
       }
     }
   },
-  "globalKeysShowApp": "Show MixMusic",
-  "onTopStays": "MixMusic stays on top of other windows",
-  "onTopNoLonger": "MixMusic no longer stays on top",
+  "globalKeysShowApp": "Show Mixyun",
+  "onTopStays": "Mixyun stays on top of other windows",
+  "onTopNoLonger": "Mixyun no longer stays on top",
   "zoomMenuReset": "reset",
   "dialogMoreOf": "more of {title}",
   "@dialogMoreOf": {
@@ -1650,7 +1650,7 @@
   },
   "versionsSwitch": "Versions",
   "releasesNewFrom": "New from artists you follow",
-  "updateOfferInstalled": "MixMusic {version} is installed. It runs once MixMusic restarts.",
+  "updateOfferInstalled": "Mixyun {version} is installed. It runs once Mixyun restarts.",
   "@updateOfferInstalled": {
     "placeholders": {
       "version": {
@@ -1808,8 +1808,8 @@
       }
     }
   },
-  "failureStopped": "MixMusic stopped playing after it, as the tracks just before it couldn't play either.",
-  "failureReportHead": "MixMusic couldn't play a track\n\n",
+  "failureStopped": "Mixyun stopped playing after it, as the tracks just before it couldn't play either.",
+  "failureReportHead": "Mixyun couldn't play a track\n\n",
   "failureReportTrack": "Track: {track}",
   "@failureReportTrack": {
     "placeholders": {
@@ -1846,7 +1846,7 @@
     }
   },
   "failureReportTried": "What was tried:",
-  "failureReportSystem": "MixMusic {version} on {platform} {arch}",
+  "failureReportSystem": "Mixyun {version} on {platform} {arch}",
   "@failureReportSystem": {
     "placeholders": {
       "version": {
@@ -1950,7 +1950,7 @@
   "@collectionDeletePlaylist": {
     "description": "Title of the question before a playlist on NetEase Cloud Music is deleted. Lowercase."
   },
-  "collectionDeleteYouTubeQuestion": "Delete {title} from NetEase Cloud Music? It goes from NetEase Cloud Music too, and you can't undo this. To keep its tracks in MixMusic, copy it into a mix first.",
+  "collectionDeleteYouTubeQuestion": "Delete {title} from NetEase Cloud Music? It goes from NetEase Cloud Music too, and you can't undo this. To keep its tracks in Mixyun, copy it into a mix first.",
   "@collectionDeleteYouTubeQuestion": {
     "placeholders": {
       "title": {
@@ -2040,7 +2040,7 @@
     "description": "Heading while the first scan of the folders is under way."
   },
   "computerNoMusicTitle": "No music found",
-  "computerNoMusicText": "The folders hold no files MixMusic plays: MP3, FLAC, WAV, M4A, Opus or Vorbis.",
+  "computerNoMusicText": "The folders hold no files Mixyun plays: MP3, FLAC, WAV, M4A, Opus or Vorbis.",
   "computerOpenFiles": "open files",
   "@computerOpenFiles": {
     "description": "Button that asks for music files to play. Lowercase."
@@ -2122,8 +2122,8 @@
       }
     }
   },
-  "computerCantPlayFile": "MixMusic can't play this file",
-  "computerCantPlayFiles": "MixMusic can't play these files",
+  "computerCantPlayFile": "Mixyun can't play this file",
+  "computerCantPlayFiles": "Mixyun can't play these files",
   "computerPlaying": "Playing {title}",
   "@computerPlaying": {
     "placeholders": {
@@ -2132,7 +2132,7 @@
       }
     }
   },
-  "computerPlayingSkipped": "Playing {title} · {skipped} skipped, which MixMusic can't play",
+  "computerPlayingSkipped": "Playing {title} · {skipped} skipped, which Mixyun can't play",
   "@computerPlayingSkipped": {
     "placeholders": {
       "title": {
@@ -2151,7 +2151,7 @@
       }
     }
   },
-  "computerPlayingFilesSkipped": "Playing {count, plural, one {# file} other {# files}} · {skipped} skipped, which MixMusic can't play",
+  "computerPlayingFilesSkipped": "Playing {count, plural, one {# file} other {# files}} · {skipped} skipped, which Mixyun can't play",
   "@computerPlayingFilesSkipped": {
     "placeholders": {
       "count": {
@@ -2174,7 +2174,7 @@
   "@computerShowInFolder": {
     "description": "Menu item that shows a file on Linux."
   },
-  "computerUnwatched": "MixMusic can't watch {folder} for changes: {reason}. Rescan to see what changed in it.",
+  "computerUnwatched": "Mixyun can't watch {folder} for changes: {reason}. Rescan to see what changed in it.",
   "@computerUnwatched": {
     "description": "Settings line for a music folder that can't be watched. The reason comes from the library and stays English.",
     "placeholders": {
@@ -2327,7 +2327,7 @@
       }
     }
   },
-  "downloadsCollectionPartial": "Downloading {title}: the {kept} of its {total} tracks MixMusic reads",
+  "downloadsCollectionPartial": "Downloading {title}: the {kept} of its {total} tracks Mixyun reads",
   "@downloadsCollectionPartial": {
     "placeholders": {
       "title": {
@@ -2667,7 +2667,7 @@
   "hiddenWhyOwn": "Spotify shows apps nothing of its own playlists, nor of those deleted or made private: open this one on Spotify to play it.",
   "hiddenSpotifyPlaylist": "Spotify playlist",
   "@hiddenSpotifyPlaylist": {
-    "description": "Title of a Spotify playlist whose name MixMusic doesn't know."
+    "description": "Title of a Spotify playlist whose name Mixyun doesn't know."
   },
   "hiddenOpenOn": "open on {source}",
   "@hiddenOpenOn": {
@@ -2838,7 +2838,7 @@
   "@localTagsEditAlbumTitle": {
     "description": "Title of the Edit album dialog. Lowercase."
   },
-  "localTagsAboutSong": "The tags of {name}, which MixMusic writes into its file.",
+  "localTagsAboutSong": "The tags of {name}, which Mixyun writes into its file.",
   "@localTagsAboutSong": {
     "placeholders": {
       "name": {
@@ -2846,7 +2846,7 @@
       }
     }
   },
-  "localTagsAboutAlbum": "What the {count, plural, one {# song} other {# songs}} of {name} share, which MixMusic writes into their files.",
+  "localTagsAboutAlbum": "What the {count, plural, one {# song} other {# songs}} of {name} share, which Mixyun writes into their files.",
   "@localTagsAboutAlbum": {
     "placeholders": {
       "count": {
@@ -2980,7 +2980,7 @@
   "@localTagsMoveTitle": {
     "description": "Title of the Move to album dialog. Lowercase."
   },
-  "localTagsMoveAbout": "Choose an album of this computer for {title}, or name a new one. MixMusic writes it into the song's file.",
+  "localTagsMoveAbout": "Choose an album of this computer for {title}, or name a new one. Mixyun writes it into the song's file.",
   "@localTagsMoveAbout": {
     "placeholders": {
       "title": {
@@ -3222,7 +3222,7 @@
   "@toolsNeedTitle": {
     "description": "Home notice title when yt-dlp isn't installed."
   },
-  "toolsNeedMessage": "MixMusic finds the audio of most tracks itself, and asks yt-dlp for the rest, such as tracks made for children. Install it once, and it stays up to date from Settings.",
+  "toolsNeedMessage": "Mixyun finds the audio of most tracks itself, and asks yt-dlp for the rest, such as tracks made for children. Install it once, and it stays up to date from Settings.",
   "toolsOutdatedTitle": "Your yt-dlp is out of date",
   "@toolsOutdatedTitle": {
     "description": "Home notice title when the user's own yt-dlp is old."
@@ -3240,7 +3240,7 @@
       }
     }
   },
-  "toolsOutdatedMessage": "yt-dlp {version} finds the audio of the tracks YouTube won't give MixMusic itself, and {latest} is out. As YouTube changes, an old yt-dlp stops finding it. Update it {how}, or use MixMusic's own, which it keeps up to date.",
+  "toolsOutdatedMessage": "yt-dlp {version} finds the audio of the tracks YouTube won't give Mixyun itself, and {latest} is out. As YouTube changes, an old yt-dlp stops finding it. Update it {how}, or use Mixyun's own, which it keeps up to date.",
   "@toolsOutdatedMessage": {
     "description": "Home notice body when the user's own yt-dlp is older than the latest release. {how} is one of the two How messages.",
     "placeholders": {
@@ -3531,15 +3531,15 @@
     }
   },
   "trackInfoPlays": "Plays",
-  "trackInfoPlaysSpotify": "In Spotify's own player, in MixMusic",
+  "trackInfoPlaysSpotify": "In Spotify's own player, in Mixyun",
   "trackInfoPlaysConnect": "On a Spotify Connect device",
-  "trackInfoQualitySpotify": "As your Spotify account and Spotify's settings choose: Spotify tells MixMusic nothing of its audio.",
+  "trackInfoQualitySpotify": "As your Spotify account and Spotify's settings choose: Spotify tells Mixyun nothing of its audio.",
   "trackInfoLength": "Length",
   "trackInfoLoudnessSpotify": "Spotify plays it at its own loudness.",
   "trackInfoLoudness": "Loudness",
   "trackInfoFormat": "Format",
-  "trackInfoFormatSpotify": "Play it to see its format, bitrate and the rest: MixMusic finds its recording on NetEase Cloud Music as it plays.",
-  "trackInfoFormatStream": "Play it to see its format, bitrate and the rest: MixMusic finds its stream as it plays.",
+  "trackInfoFormatSpotify": "Play it to see its format, bitrate and the rest: Mixyun finds its recording on NetEase Cloud Music as it plays.",
+  "trackInfoFormatStream": "Play it to see its format, bitrate and the rest: Mixyun finds its stream as it plays.",
   "trackInfoCodecIn": "{codec} in {container}",
   "@trackInfoCodecIn": {
     "placeholders": {
@@ -3615,8 +3615,8 @@
     }
   },
   "trackInfoPlaying": "Playing",
-  "trackInfoEngineOpening": "MixMusic's audio engine is opening it…",
-  "trackInfoEngineLine": "In MixMusic's audio engine, {how}",
+  "trackInfoEngineOpening": "Mixyun's audio engine is opening it…",
+  "trackInfoEngineLine": "In Mixyun's audio engine, {how}",
   "@trackInfoEngineLine": {
     "placeholders": {
       "how": {
@@ -3679,7 +3679,7 @@
     }
   },
   "trackInfoFileLoudness": "It plays at its own level: Even loudness turns tracks down from a measure of each, which a file on this computer hasn't.",
-  "trackInfoNoMeasure": "MixMusic has no measure of it yet: it plays at its own level.",
+  "trackInfoNoMeasure": "Mixyun has no measure of it yet: it plays at its own level.",
   "trackInfoLevelling": "{line} Volume levelling squeezes its loud and quiet moments closer together.",
   "@trackInfoLevelling": {
     "placeholders": {
@@ -3746,10 +3746,10 @@
       }
     }
   },
-  "miniWindowTitle": "MixMusic mini player",
+  "miniWindowTitle": "Mixyun mini player",
   "miniRowNothingPlaying": "Nothing playing",
-  "miniRowPlaySomething": "play something in MixMusic",
-  "miniRowOpen": "Open MixMusic",
+  "miniRowPlaySomething": "play something in Mixyun",
+  "miniRowOpen": "Open Mixyun",
   "miniRowClose": "Close the mini player",
   "miniPanelWhy": "Why it couldn't play",
   "miniPanelEmptyQueue": "Play something and the queue shows here.",
@@ -3774,11 +3774,11 @@
   "miniPanelInstrumental": "This track is instrumental.",
   "miniPanelDetailsLooking": "Looking for the details…",
   "miniPanelNoChapters": "No chapters.",
-  "miniPanelSystemDevice": "MixMusic plays on the system's default device.",
+  "miniPanelSystemDevice": "Mixyun plays on the system's default device.",
   "miniPanelOnComputer": "On this computer",
   "miniPanelCast": "Cast",
   "miniPanelActive": "active",
-  "miniPanelNoFailure": "No track failed to play since MixMusic started.",
+  "miniPanelNoFailure": "No track failed to play since Mixyun started.",
   "miniPanelCloseQueue": "Close the queue",
   "miniPanelCloseLyrics": "Close the lyrics",
   "miniPanelCloseOutput": "Close the output devices",
@@ -3805,17 +3805,17 @@
       }
     }
   },
-  "notchPanelWindowTitle": "MixMusic around the notch",
+  "notchPanelWindowTitle": "Mixyun around the notch",
   "notchPanelOpenPlayer": "Open the player",
   "notchPanelClosePlayer": "Close the player",
-  "notchPanelOpenMixMusic": "Open MixMusic",
+  "notchPanelOpenMixMusic": "Open Mixyun",
   "notchPanelPlaying": "Playing",
   "notchPanelPaused": "Paused",
-  "notchPanelShowPlays": "Show what plays in MixMusic",
+  "notchPanelShowPlays": "Show what plays in Mixyun",
   "notchPanelLyricsLooking": "Looking for the lyrics…",
   "notchPanelInstrumental": "This track is instrumental.",
   "notchPanelNoTimed": "No timed lyrics.",
-  "remotePageAway": "{name} isn't on the network now. It shows here while MixMusic runs there, with Settings › Desktop › Remote control on, on the same network as this computer.",
+  "remotePageAway": "{name} isn't on the network now. It shows here while Mixyun runs there, with Settings › Desktop › Remote control on, on the same network as this computer.",
   "@remotePageAway": {
     "placeholders": {
       "name": {
@@ -3924,7 +3924,7 @@
       }
     }
   },
-  "remoteQueueOlder": "MixMusic on {name} is older: update it there to change its queue from here, and to move what plays here to it.",
+  "remoteQueueOlder": "Mixyun on {name} is older: update it there to change its queue from here, and to move what plays here to it.",
   "@remoteQueueOlder": {
     "placeholders": {
       "name": {
@@ -3979,7 +3979,7 @@
       }
     }
   },
-  "remoteCodeMessage": "{name} asks to control MixMusic on this computer. To let it, type this code there: {code}",
+  "remoteCodeMessage": "{name} asks to control Mixyun on this computer. To let it, type this code there: {code}",
   "@remoteCodeMessage": {
     "placeholders": {
       "name": {
@@ -3998,7 +3998,7 @@
       }
     }
   },
-  "remoteCodeAsks": "{name} asks to control MixMusic on this computer. To let it, type this code there:",
+  "remoteCodeAsks": "{name} asks to control Mixyun on this computer. To let it, type this code there:",
   "@remoteCodeAsks": {
     "placeholders": {
       "name": {
@@ -4096,13 +4096,13 @@
       }
     }
   },
-  "accountsBrowserAbout": "MixMusic opens the browser with a new, empty profile of its own, at NetEase Cloud Music's sign-in. Sign in there as in any browser: MixMusic then takes the session, closes the browser and deletes the profile. Your own profiles stay as they are.",
+  "accountsBrowserAbout": "Mixyun opens the browser with a new, empty profile of its own, at NetEase Cloud Music's sign-in. Sign in there as in any browser: Mixyun then takes the session, closes the browser and deletes the profile. Your own profiles stay as they are.",
   "accountsBrowserCancel": "cancel",
   "accountsBrowserChoose": "Browser to sign in with",
   "accountsBrowserDone": "Signed in to NetEase Cloud Music",
-  "accountsBrowserFailed": "MixMusic didn't sign in to NetEase Cloud Music",
-  "accountsBrowserHint": "Closing the browser, or cancel, ends the sign-in, as do 10 minutes without one. MixMusic reads the new profile alone, never yours, and keeps the session encrypted on this computer.",
-  "accountsBrowserNone": "MixMusic signs in through Firefox or Zen, and found neither. Google refuses a sign-in in Chrome, Edge and the others made from Chromium when MixMusic opens them.",
+  "accountsBrowserFailed": "Mixyun didn't sign in to NetEase Cloud Music",
+  "accountsBrowserHint": "Closing the browser, or cancel, ends the sign-in, as do 10 minutes without one. Mixyun reads the new profile alone, never yours, and keeps the session encrypted on this computer.",
+  "accountsBrowserNone": "Mixyun signs in through Firefox or Zen, and found neither. Google refuses a sign-in in Chrome, Edge and the others made from Chromium when Mixyun opens them.",
   "accountsBrowserOpened": "Sign in to NetEase Cloud Music in {browser}",
   "@accountsBrowserOpened": {
     "placeholders": {
@@ -4185,7 +4185,7 @@
   },
   "audioAccount2Change": "You can change this in Settings › Playback › Sound.",
   "audioAccount2NotNow": "not now",
-  "audioAccount2Offer": "Your NetEase Cloud Music account has Premium, whose audio has a higher bitrate. MixMusic can ask for each track's audio as your account to play it. NetEase Cloud Music may flag an account used this way, and tracks may start more slowly. A track it can't get this way plays as before.",
+  "audioAccount2Offer": "Your NetEase Cloud Music account has Premium, whose audio has a higher bitrate. Mixyun can ask for each track's audio as your account to play it. NetEase Cloud Music may flag an account used this way, and tracks may start more slowly. A track it can't get this way plays as before.",
   "audioAccount2Title": "play audio as your account",
   "audioAccount2TurnOn": "turn on",
   "collabAddToSpotify": "Add to Spotify playlist",
@@ -4482,7 +4482,7 @@
     }
   },
   "followEmpty": "Follow an artist from their page or their menu, and they wait here.",
-  "followInMixMusic": "{name}: following in MixMusic",
+  "followInMixMusic": "{name}: following in Mixyun",
   "@followInMixMusic": {
     "placeholders": {
       "name": {
@@ -4490,7 +4490,7 @@
       }
     }
   },
-  "followIntro": "Follow an artist from their page or their menu, and they wait here, kept in MixMusic: their new albums and singles show here and on Home. Signed in to their service, you follow them there.",
+  "followIntro": "Follow an artist from their page or their menu, and they wait here, kept in Mixyun: their new albums and singles show here and on Home. Signed in to their service, you follow them there.",
   "followLabel": "Follow",
   "followNoLonger": "{name}: no longer following",
   "@followNoLonger": {
@@ -4513,7 +4513,7 @@
     }
   },
   "followUnfollow": "Unfollow",
-  "followedInMixMusic": "Followed in MixMusic",
+  "followedInMixMusic": "Followed in Mixyun",
   "followedOnSpotify": "Followed on Spotify",
   "followedOnYouTube": "Followed on NetEase Cloud Music",
   "mixCoverCancel": "cancel",
@@ -4575,7 +4575,7 @@
   },
   "neteaseLiked": "Liked on NetEase Cloud Music",
   "neteaseNoLiked": "No liked songs on NetEase Cloud Music.",
-  "playlistReadCut": "MixMusic shows and plays the first {max} tracks of a {noun, select, mix {mix} playlist {playlist} other {list}}: this one has more.",
+  "playlistReadCut": "Mixyun shows and plays the first {max} tracks of a {noun, select, mix {mix} playlist {playlist} other {list}}: this one has more.",
   "@playlistReadCut": {
     "placeholders": {
       "max": {
@@ -4586,7 +4586,7 @@
       }
     }
   },
-  "playlistReadCutOf": "This {noun, select, mix {mix} playlist {playlist} other {list}} has {count} tracks: MixMusic shows and plays its first {n}.",
+  "playlistReadCutOf": "This {noun, select, mix {mix} playlist {playlist} other {list}} has {count} tracks: Mixyun shows and plays its first {n}.",
   "@playlistReadCutOf": {
     "placeholders": {
       "noun": {
@@ -4967,7 +4967,7 @@
       }
     }
   },
-  "podcastsSpotifyOnlyLead": "Spotify's podcasts play only from Spotify: choose In MixMusic, from Spotify or On Spotify Connect in ",
+  "podcastsSpotifyOnlyLead": "Spotify's podcasts play only from Spotify: choose In Mixyun, from Spotify or On Spotify Connect in ",
   "@podcastsSpotifyOnlyLead": {
     "description": "Split around the link to Settings › Playback."
   },
@@ -5535,7 +5535,7 @@
   },
   "marketplaceBuiltIn": "built in",
   "marketplaceRemove": "remove",
-  "marketplaceOlder": "made for an older MixMusic",
+  "marketplaceOlder": "made for an older Mixyun",
   "marketplaceInstalling": "installing…",
   "marketplaceUpdateTo": "update to {version}",
   "@marketplaceUpdateTo": {

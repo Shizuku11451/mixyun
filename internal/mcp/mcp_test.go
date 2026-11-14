@@ -57,7 +57,7 @@ type testServer struct {
 func newTestServer(t *testing.T) *testServer {
 	t.Helper()
 	ts := &testServer{started: make(chan struct{}, 1)}
-	ts.Server = &Server{Name: "mixmusic", Title: "MixMusic", Version: "test", Instructions: "Play music.",
+	ts.Server = &Server{Name: "mixmusic", Title: "Mixyun", Version: "test", Instructions: "Play music.",
 		Tools: testTools(ts.started, &ts.cancelled), Dir: t.TempDir()}
 	if err := ts.Start(); err != nil {
 		t.Fatal(err)
@@ -201,7 +201,7 @@ func TestLegacySession(t *testing.T) {
 	}
 	info, _ := r.Result["serverInfo"].(map[string]any)
 	caps, _ := r.Result["capabilities"].(map[string]any)
-	if info["name"] != "mixmusic" || info["title"] != "MixMusic" || caps["tools"] == nil {
+	if info["name"] != "mixmusic" || info["title"] != "Mixyun" || caps["tools"] == nil {
 		t.Errorf("initialize: %s", r.raw)
 	}
 	c.send(map[string]any{"jsonrpc": "2.0", "method": "notifications/initialized"})
@@ -340,7 +340,7 @@ func TestToolErrors(t *testing.T) {
 		{"fail", nil, "nothing to play"},
 		{"echo", map[string]any{"text": 5}, "the argument text isn't a string"},
 		{"echo", map[string]any{"text": "a", "loud": true}, "unknown field"},
-		{"panic", nil, "panic failed inside MixMusic"},
+		{"panic", nil, "panic failed inside Mixyun"},
 	} {
 		r := call(10+i, tc.name, tc.args)
 		if r.Result["isError"] != true || !strings.Contains(text(t, r), tc.want) {

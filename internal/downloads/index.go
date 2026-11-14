@@ -130,7 +130,7 @@ func readIndex(dir string) (*index, bool, error) {
 	if err := json.Unmarshal(data, idx); err != nil || idx.Version > indexVersion {
 		if err == nil {
 			// A later MixMusic's: kept as it is, and not read.
-			return nil, true, errors.New("the downloads were kept by a later version of MixMusic")
+			return nil, true, errors.New("the downloads were kept by a later version of Mixyun")
 		}
 		if err := os.Rename(path, path+".broken"); err != nil {
 			return nil, true, err

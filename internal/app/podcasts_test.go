@@ -208,7 +208,7 @@ func TestUnfollowSavedPodcast(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := c.SetPodcastFollowed(ctx, show, false); err != nil || c.Follows(show.ID) {
-		t.Errorf("Spotify refused a show followed in MixMusic: %v, follows %v", err, c.Follows(show.ID))
+		t.Errorf("Spotify refused a show followed in Mixyun: %v, follows %v", err, c.Follows(show.ID))
 	}
 }
 

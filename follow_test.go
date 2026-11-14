@@ -87,7 +87,7 @@ func TestFollowArtistSignedOut(t *testing.T) {
 	if !s.svc.Collection.FollowsArtist(testArtist.ID) || !headSays(tt, "following") {
 		t.Fatalf("following: %q", tt.Texts())
 	}
-	if !tt.HasText("Harbour Lights: following in MixMusic") {
+	if !tt.HasText("Harbour Lights: following in Mixyun") {
 		t.Errorf("no toast: %q", tt.Texts())
 	}
 	if l := s.loads["releases"].(*loaded[[]media.Release]); !l.again {
@@ -115,7 +115,7 @@ func TestFollowArtistSignedOut(t *testing.T) {
 	}
 	s.drain()
 	show(s, tt, "/library/artists")
-	if !showsText(tt.Texts(), "Followed in MixMusic") || !tt.HasText("Harbour Lights") {
+	if !showsText(tt.Texts(), "Followed in Mixyun") || !tt.HasText("Harbour Lights") {
 		t.Errorf("Library › Artists shows %q", tt.Texts())
 	}
 	if calls := f.made(); len(calls) != 0 {
@@ -142,7 +142,7 @@ func TestFollowArtistSignedIn(t *testing.T) {
 		t.Errorf("no toast: %q", tt.Texts())
 	}
 	show(s, tt, "/library/artists")
-	if !showsText(tt.Texts(), "Followed on NetEase Cloud Music") || !tt.HasText("Harbour Lights") || showsText(tt.Texts(), "Followed in MixMusic") {
+	if !showsText(tt.Texts(), "Followed on NetEase Cloud Music") || !tt.HasText("Harbour Lights") || showsText(tt.Texts(), "Followed in Mixyun") {
 		t.Errorf("Library › Artists shows %q", tt.Texts())
 	}
 

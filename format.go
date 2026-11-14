@@ -99,7 +99,7 @@ func sourceName(s media.Source) string {
 	case media.SourceFile:
 		return locales.FormatThisComputer()
 	}
-	return "MixMusic"
+	return "Mixyun"
 }
 
 // trackLine is "Title - Artist", for notices.

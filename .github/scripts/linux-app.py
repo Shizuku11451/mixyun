@@ -68,7 +68,7 @@ WATCHER_PATH = "/StatusNotifierWatcher"
 ITEM = "org.kde.StatusNotifierItem"
 MENU = "com.canonical.dbusmenu"
 # The tray menu's items, as MixMusic makes them (internal/app/desktop.go).
-TRAY_ITEMS = ["Play / Pause", "Next", "Previous", "Show MixMusic", "Mini player"]
+TRAY_ITEMS = ["Play / Pause", "Next", "Previous", "Show Mixyun", "Mini player"]
 
 WATCHER_XML = """<node>
   <interface name="org.kde.StatusNotifierWatcher">
@@ -725,7 +725,7 @@ class Session:
               'interface name="org.mpris.MediaPlayer2"' in xml and f'interface name="{PLAYER}"' in xml,
               f"{len(xml)} bytes")
         root = get_all(MPRIS, MPRIS_PATH, "org.mpris.MediaPlayer2")
-        c.add("MPRIS names MixMusic", root.get("Identity") == "MixMusic" and root.get("DesktopEntry") == "mixmusic",
+        c.add("MPRIS names MixMusic", root.get("Identity") == "Mixyun" and root.get("DesktopEntry") == "mixmusic",
               f"Identity {root.get('Identity')}, DesktopEntry {root.get('DesktopEntry')}, "
               f"CanRaise {root.get('CanRaise')}, CanQuit {root.get('CanQuit')}")
         art = until(lambda: get_all(MPRIS, MPRIS_PATH, PLAYER)["Metadata"].get("mpris:artUrl"), 30)

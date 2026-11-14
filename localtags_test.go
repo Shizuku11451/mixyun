@@ -157,7 +157,7 @@ func TestEditInfoProblems(t *testing.T) {
 	show(s, tt, "/library/computer")
 	choose(t, s, tt, "Voice memo", "Edit info…")
 	until(t, s, tt, "the notice", func() bool {
-		return tt.HasText("MixMusic can't change Voice memo.wav: MixMusic doesn't change the tags of this kind of file")
+		return tt.HasText("Mixyun can't change Voice memo.wav: Mixyun doesn't change the tags of this kind of file")
 	})
 	if s.tagDialogs.edit.open {
 		t.Error("a dialog opened of a WAV file")

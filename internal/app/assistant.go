@@ -42,7 +42,7 @@ type assistantHost struct {
 func (a *App) assistantServer() *mcp.Server {
 	h := &a.assistants
 	h.once.Do(func() {
-		h.server.Store(&mcp.Server{Name: "mixmusic", Title: "MixMusic", Version: a.version(),
+		h.server.Store(&mcp.Server{Name: "mixmusic", Title: "Mixyun", Version: a.version(),
 			Instructions: assistantInstructions, Tools: a.assistantTools(), Dir: a.opts.DataDir,
 			Changed: notify})
 		// Every session ends as MixMusic quits, and the file goes.
@@ -53,11 +53,11 @@ func (a *App) assistantServer() *mcp.Server {
 
 // assistantInstructions tell the assistant what MixMusic is and how its
 // tools go together.
-const assistantInstructions = "MixMusic is the music player on this computer: it plays YouTube Music, " +
+const assistantInstructions = "Mixyun is the music player on this computer: it plays YouTube Music, " +
 	"Spotify and the music files of this computer, in one queue. now_playing tells what plays, and get_queue " +
 	"what comes next. To play something, search for it, then play a result with play_result, by its id; or " +
 	"list the user's own playlists, mixes and liked songs with list_playlists, and play one with play_playlist. " +
-	"MixMusic shows the user each thing you do."
+	"Mixyun shows the user each thing you do."
 
 // applyAssistants has the server listen as the settings say, or stop,
 // which ends every session at once.
@@ -148,7 +148,7 @@ func assistantCommand() (cmd string, args []string, env map[string]string) {
 	default:
 		exe, err := os.Executable()
 		if err != nil {
-			exe = "MixMusic"
+			exe = "Mixyun"
 		}
 		cmd, args = exe, []string{mcp.Flag}
 	}

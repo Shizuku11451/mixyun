@@ -395,7 +395,7 @@ func (p *Player) playAt(i int, start time.Duration, autoplay bool) {
 		case src.Mode == ModeSpotify && p.here != nil:
 			p.playOnDevice(token, entry, src, start, autoplay, p.here)
 		case src.Mode == ModeSpotify:
-			p.fellBack("Spotify can't play inside MixMusic on this computer")
+			p.fellBack("Spotify can't play inside Mixyun on this computer")
 			p.streamInstead(token, entry, start, autoplay)
 		default:
 			p.loadStream(src, start, autoplay)

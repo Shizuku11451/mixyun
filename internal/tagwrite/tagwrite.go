@@ -85,15 +85,15 @@ const All = Title | Artists | Album | AlbumArtists | Track | Disc | Year | Genre
 var (
 	// ErrUnsupported is returned for a file of a kind whose tags MixMusic
 	// doesn't write, as WAV.
-	ErrUnsupported = errors.New("MixMusic doesn't change the tags of this kind of file")
+	ErrUnsupported = errors.New("Mixyun doesn't change the tags of this kind of file")
 	// ErrFormat is wrapped by the errors of a file whose layout MixMusic
 	// can't change safely, as one that is damaged.
-	ErrFormat = errors.New("its layout isn't one MixMusic can change safely")
+	ErrFormat = errors.New("its layout isn't one Mixyun can change safely")
 	// ErrReadOnly is returned for a file that is read-only, and
 	// ErrFolderReadOnly for one whose folder MixMusic can't write in,
 	// which a safe write writes the new file in.
 	ErrReadOnly       = errors.New("the file is read-only")
-	ErrFolderReadOnly = errors.New("MixMusic can't write in its folder")
+	ErrFolderReadOnly = errors.New("Mixyun can't write in its folder")
 	// ErrCover is returned for a cover that isn't a JPEG or PNG image, or
 	// is larger than MaxCover.
 	ErrCover = errors.New("the cover must be a JPEG or PNG image of at most 10 MB")
@@ -282,7 +282,7 @@ func describe(err error) error {
 	case inUse(err):
 		return errors.New("another program has it open: close it there, and try again")
 	case errors.Is(err, fs.ErrPermission):
-		return errors.New("MixMusic isn't allowed to change it, or another program has it open")
+		return errors.New("Mixyun isn't allowed to change it, or another program has it open")
 	case diskFull(err):
 		return errors.New("the disk is full")
 	}

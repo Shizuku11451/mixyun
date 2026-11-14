@@ -12,7 +12,7 @@ import (
 
 // errUnswitchable refuses a brand channel the list of the session's
 // channels tells no page ID of.
-var errUnswitchable = errors.New("YouTube doesn't let MixMusic switch to this channel")
+var errUnswitchable = errors.New("YouTube doesn't let Mixyun switch to this channel")
 
 // YouTubeChannels returns the channels the YouTube session can use YouTube
 // Music as: each Google account it is signed in to, and the brand channels
@@ -70,7 +70,7 @@ func (s *Accounts) SetYouTubeChannel(ctx context.Context, ch youtube.AccountChan
 			log.Printf("mixmusic: going back to the YouTube Music account used before: %v", err)
 		}
 		notify()
-		return AccountsStatus{}, fmt.Errorf("YouTube Music answered as the account %s, not as its channel %s: MixMusic goes on as before", me.Name, ch.Name)
+		return AccountsStatus{}, fmt.Errorf("YouTube Music answered as the account %s, not as its channel %s: Mixyun goes on as before", me.Name, ch.Name)
 	default:
 		log.Print("mixmusic: YouTube Music answers with another name than the account list gives the channel chosen")
 	}

@@ -569,7 +569,7 @@ func runTool(ctx context.Context, tool Tool, args json.RawMessage) (res Result, 
 	defer func() {
 		if r := recover(); r != nil {
 			log.Printf("mixmusic: AI assistants: %s panicked: %v", tool.Name, r)
-			err = fmt.Errorf("%s failed inside MixMusic", tool.Name)
+			err = fmt.Errorf("%s failed inside Mixyun", tool.Name)
 		}
 	}()
 	return tool.Call(ctx, args)

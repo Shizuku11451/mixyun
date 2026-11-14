@@ -133,8 +133,8 @@ func TestEditTagsRefuses(t *testing.T) {
 	t.Cleanup(func() { os.Chmod(ro, 0o644) })
 	l := &LocalFiles{a}
 	for _, c := range []struct{ id, want string }{
-		{localfiles.TrackID(wav), "MixMusic can't change memo.wav: MixMusic doesn't change the tags of this kind of file"},
-		{localfiles.TrackID(ro), "MixMusic can't change 02 Low Water.flac: the file is read-only"},
+		{localfiles.TrackID(wav), "Mixyun can't change memo.wav: Mixyun doesn't change the tags of this kind of file"},
+		{localfiles.TrackID(ro), "Mixyun can't change 02 Low Water.flac: the file is read-only"},
 		{"yt:abc", "it isn't a song on this computer"},
 	} {
 		if _, err := l.EditableTags(c.id); err == nil || err.Error() != c.want {

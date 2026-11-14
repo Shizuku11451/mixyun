@@ -215,11 +215,11 @@ func TestCardFileName(t *testing.T) {
 	for in, want := range map[string]string{
 		"Glass Harbor":          "Glass Harbor.png",
 		`AC/DC: "Back"?`:        "AC-DC- -Back.png",
-		"   ":                   "MixMusic.png",
-		"...":                   "MixMusic.png",
+		"   ":                   "Mixyun.png",
+		"...":                   "Mixyun.png",
 		"Ñandú blanco":          "Ñandú blanco.png",
 		"a\nb":                  "a-b.png",
-		string(make([]rune, 0)): "MixMusic.png",
+		string(make([]rune, 0)): "Mixyun.png",
 	} {
 		if got := cardFileName(in); got != want {
 			t.Errorf("cardFileName(%q) = %q, want %q", in, got, want)

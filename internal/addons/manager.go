@@ -123,7 +123,7 @@ func check(err error, id, dir string, seen map[string]bool) string {
 	case id != dir:
 		return "the folder must be named after the id, " + id
 	case seen[id]:
-		return "an add-on MixMusic ships with has this id"
+		return "an add-on Mixyun ships with has this id"
 	}
 	seen[id] = true
 	return ""
@@ -138,7 +138,7 @@ func (m *Manager) isBuiltin(kindFolder, id string) bool {
 }
 
 // ErrBuiltin is returned when removing an add-on MixMusic ships with.
-var ErrBuiltin = errors.New("addons: add-ons MixMusic ships with cannot be removed")
+var ErrBuiltin = errors.New("addons: add-ons Mixyun ships with cannot be removed")
 
 // Uninstall removes an add-on the user installed.
 func (m *Manager) Uninstall(kind Kind, id string) error {

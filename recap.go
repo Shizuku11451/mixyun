@@ -173,9 +173,9 @@ func recapDay(date string) string {
 // story's name says so, so that both saved in one folder keep apart.
 func recapFileName(r library.Recap, size sharecard.Size) string {
 	if size == sharecard.Story {
-		return fmt.Sprintf("MixMusic %d story", r.Year)
+		return fmt.Sprintf("Mixyun %d story", r.Year)
 	}
-	return fmt.Sprintf("MixMusic %d", r.Year)
+	return fmt.Sprintf("Mixyun %d", r.Year)
 }
 
 // recapCard builds the card of r in the colours of the current theme: the
@@ -193,7 +193,7 @@ func recapCardOf(r library.Recap, colors sharecard.Colors) cardBuilder {
 				{Text: thousands(r.Minutes), Size: 170, Weight: 700, Gap: 10},
 				{Text: locales.RecapCardMinutes(r.Plays), Size: 42, Weight: 400, Ink: colors.Muted, MaxLines: 2},
 			},
-			Foot: []sharecard.Line{{Text: "MixMusic", Size: 34, Weight: 600, Ink: colors.Accent}},
+			Foot: []sharecard.Line{{Text: "Mixyun", Size: 34, Weight: 600, Ink: colors.Accent}},
 		}
 		section := func(title string, rows []recapRow) {
 			if len(rows) == 0 {

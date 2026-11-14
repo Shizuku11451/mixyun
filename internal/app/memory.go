@@ -16,7 +16,7 @@ import (
 )
 
 // errNoLogs is returned where MixMusic keeps no log.
-var errNoLogs = errors.New("MixMusic keeps no log here")
+var errNoLogs = errors.New("Mixyun keeps no log here")
 
 // memoryRecorder returns the recorder of the logs folder, made at its
 // first use, or nil where MixMusic keeps no log.
@@ -46,7 +46,7 @@ func (s *System) RecordMemory(on bool) error {
 	if r.On() {
 		return nil
 	}
-	head := fmt.Sprintf("Recording, MixMusic %s on %s/%s", s.a.version(), runtime.GOOS, runtime.GOARCH)
+	head := fmt.Sprintf("Recording, Mixyun %s on %s/%s", s.a.version(), runtime.GOOS, runtime.GOARCH)
 	if err := r.Start(head); err != nil {
 		return fmt.Errorf("can't record memory use: %w", err)
 	}
@@ -92,7 +92,7 @@ func (s *System) memoryNote() string {
 		return ""
 	}
 	return "Recording memory use left " + strings.Join(files, ", ") +
-		" in the same folder: they hold only how MixMusic uses its memory, nothing of your music or accounts. Attach them too.\n"
+		" in the same folder: they hold only how Mixyun uses its memory, nothing of your music or accounts. Attach them too.\n"
 }
 
 // stopMemory stops recording memory use, as the app closes.

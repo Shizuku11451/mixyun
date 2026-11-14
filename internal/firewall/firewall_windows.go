@@ -507,10 +507,10 @@ func run(program, verb string) error {
 		if errno, isErrno := callErr.(syscall.Errno); isErrno && errno == errorCancelled {
 			return ErrDeclined
 		}
-		return fmt.Errorf("starting MixMusic as administrator: %w", callErr)
+		return fmt.Errorf("starting Mixyun as administrator: %w", callErr)
 	}
 	if info.process == 0 {
-		return errors.New("starting MixMusic as administrator: no process")
+		return errors.New("starting Mixyun as administrator: no process")
 	}
 	defer syscall.CloseHandle(info.process)
 	if _, err := syscall.WaitForSingleObject(info.process, syscall.INFINITE); err != nil {

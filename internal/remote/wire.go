@@ -61,10 +61,10 @@ var (
 	// ErrLost: it stopped answering.
 	ErrLost = errors.New("that computer stopped answering")
 	// ErrVersion: it speaks another version of the protocol.
-	ErrVersion = errors.New("that computer's MixMusic is of another version: update both")
+	ErrVersion = errors.New("that computer's Mixyun is of another version: update both")
 	// ErrOlder: it speaks this version, but its MixMusic is older, and
 	// can't do what was asked, which its welcome doesn't tell.
-	ErrOlder = errors.New("that computer's MixMusic is older, and can't do that: update it")
+	ErrOlder = errors.New("that computer's Mixyun is older, and can't do that: update it")
 )
 
 // errOf is the error of a reason the other computer gave.

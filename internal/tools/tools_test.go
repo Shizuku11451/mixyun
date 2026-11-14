@@ -224,7 +224,7 @@ func TestYTDLPToolTellsANewerRelease(t *testing.T) {
 		t.Errorf("a current yt-dlp: %+v", got)
 	}
 	if got := m.ytdlpTool(ctx, m.managedPath(), "2025.01.15"); got.Latest != "2026.09.01" || got.UpdateCommand != "" || !got.Managed {
-		t.Errorf("an old yt-dlp of MixMusic's: %+v", got)
+		t.Errorf("an old yt-dlp of Mixyun's: %+v", got)
 	}
 	if n := asked.Load(); n != 1 {
 		t.Errorf("GitHub was asked %d times, want once", n)

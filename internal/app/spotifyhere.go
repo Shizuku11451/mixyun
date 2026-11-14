@@ -68,13 +68,13 @@ type spotifyHere struct {
 
 // page returns the page of the device, opening its window if need be.
 func (h *spotifyHere) page(ctx context.Context) (*mygo.Page, error) {
-	if err := needWebView("playing Spotify in MixMusic"); err != nil {
+	if err := needWebView("playing Spotify in Mixyun"); err != nil {
 		return nil, err
 	}
 	h.mu.Lock()
 	if h.win == nil {
 		win := mygo.NewWindow(mygo.WindowOptions{
-			Title:       "MixMusic's Spotify player",
+			Title:       "Mixyun's Spotify player",
 			Width:       320,
 			Height:      240,
 			Hidden:      true,
@@ -101,7 +101,7 @@ func (h *spotifyHere) page(ctx context.Context) (*mygo.Page, error) {
 	case <-loaded:
 		return win.Page(), nil
 	case <-ctx.Done():
-		return nil, errors.New("MixMusic's Spotify player didn't load")
+		return nil, errors.New("Mixyun's Spotify player didn't load")
 	}
 }
 
@@ -208,7 +208,7 @@ func (d hereDevice) PlayAhead(ctx context.Context, t media.Track, at time.Durati
 	case !a.spotify.SignedIn():
 		return errors.New("sign in to Spotify in Settings › Accounts to play it")
 	case !a.spotify.Granted("streaming"):
-		return errors.New("sign in to Spotify again in Settings › Accounts, for MixMusic to play it itself")
+		return errors.New("sign in to Spotify again in Settings › Accounts, for Mixyun to play it itself")
 	}
 	page, err := d.h.page(ctx)
 	if err != nil {

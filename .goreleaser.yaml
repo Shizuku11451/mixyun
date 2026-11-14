@@ -24,7 +24,7 @@ release:
     # The repository the workflow runs in: a fork releases on its own.
     owner: "{{ .Env.GITHUB_REPOSITORY_OWNER }}"
     name: mixmusic
-  name_template: "MixMusic {{ .Tag }}"
+  name_template: "Mixyun {{ .Tag }}"
   make_latest: true
   # release.yml run by hand builds an existing tag again: its release
   # takes the new notes and files.

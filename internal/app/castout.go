@@ -253,9 +253,9 @@ func (o *castOut) load(gen int, m cast.Media, speed float64) {
 // Firewall tells why, and lets it in (#496).
 var castUnreachable = func() string {
 	if firewall.Supported {
-		return "The cast device couldn't reach MixMusic: Settings › Desktop › Windows Firewall tells why, and lets it in"
+		return "The cast device couldn't reach Mixyun: Settings › Desktop › Windows Firewall tells why, and lets it in"
 	}
-	return "The cast device couldn't reach MixMusic: let MixMusic take connections from your network in the firewall"
+	return "The cast device couldn't reach Mixyun: let Mixyun take connections from your network in the firewall"
 }()
 
 // loadFailure tells why a load failed, in the interface's words: a device

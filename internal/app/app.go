@@ -355,7 +355,7 @@ func New(opts Options) (*App, error) {
 	a.proxy.Cache = a.cache
 	a.matcher = match.New(neteaseSearcher{a.netease}, matches)
 	a.labels = newLabelCache(a.youtube.MadeWithAI, aiLabels, time.Now)
-	userAgent := "MixMusic/" + opts.Version + " (https://github.com/fzn0x/mixmusic)"
+	userAgent := "Mixyun/" + opts.Version + " (https://github.com/fzn0x/mixmusic)"
 	a.lyrics = lyrics.New(userAgent)
 	a.unison = lyrics.NewUnison(userAgent)
 	a.betterLyrics = lyrics.NewBetterLyrics(userAgent)

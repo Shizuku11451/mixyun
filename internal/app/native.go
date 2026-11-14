@@ -22,7 +22,7 @@ import (
 )
 
 // errNoNative is returned where the system has no audio engine.
-var errNoNative = errors.New("MixMusic's audio engine isn't available on this system")
+var errNoNative = errors.New("Mixyun's audio engine isn't available on this system")
 
 // engineEvents passes the engine's events to the player, once there is one.
 type engineEvents struct{ a *App }

@@ -152,7 +152,7 @@ func (s *shell) saveLyricsCard(t media.Track, ly lyrics.Lyrics, size sharecard.S
 		if credit != "" {
 			c.Foot = append(c.Foot, sharecard.Line{Text: credit, Size: 26, Weight: 400, Ink: colors.Muted, MaxLines: 2})
 		}
-		c.Mark = &sharecard.Mark{Logo: cardLogo(), Name: sharecard.Line{Text: "mixmusic", Size: 30, Weight: 700}}
+		c.Mark = &sharecard.Mark{Logo: cardLogo(), Name: sharecard.Line{Text: "mixyun", Size: 30, Weight: 700}}
 		return c
 	})
 }

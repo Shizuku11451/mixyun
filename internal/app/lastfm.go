@@ -185,7 +185,7 @@ func (s *Accounts) LastfmLogin(ctx context.Context, apiKey, secret string) (Acco
 		}
 		select {
 		case <-ctx.Done():
-			return AccountsStatus{}, errors.New("Last.fm did not hear from you in time: approve MixMusic in the browser, then connect again")
+			return AccountsStatus{}, errors.New("Last.fm did not hear from you in time: approve Mixyun in the browser, then connect again")
 		case <-time.After(lastfmPoll):
 		}
 	}

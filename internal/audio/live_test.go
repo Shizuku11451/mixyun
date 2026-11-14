@@ -50,7 +50,7 @@ func TestLivePlays(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 	defer cancel()
 	config, _ := os.UserConfigDir()
-	tm := tools.New(filepath.Join(config, "MixMusic", "bin"))
+	tm := tools.New(filepath.Join(config, "Mixyun", "bin"))
 	_, noYTDLP := tm.YTDLP()
 
 	for _, song := range liveSongs {
@@ -328,7 +328,7 @@ func TestLiveStreamPlays(t *testing.T) {
 		play(t, r)
 	})
 	config, _ := os.UserConfigDir()
-	tm := tools.New(filepath.Join(config, "MixMusic", "bin"))
+	tm := tools.New(filepath.Join(config, "Mixyun", "bin"))
 	if _, err := tm.YTDLP(); err != nil {
 		t.Logf("yt-dlp: %v", err)
 		return

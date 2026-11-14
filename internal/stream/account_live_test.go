@@ -34,7 +34,7 @@ func TestLiveAccountStream(t *testing.T) {
 		t.Fatal(err)
 	}
 	config, _ := os.UserConfigDir()
-	tm := tools.New(filepath.Join(config, "MixMusic", "bin"))
+	tm := tools.New(filepath.Join(config, "Mixyun", "bin"))
 	if _, err := tm.YTDLP(); err != nil {
 		t.Skip("no yt-dlp")
 	}

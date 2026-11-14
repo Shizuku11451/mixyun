@@ -134,7 +134,7 @@ func TestRecapSave(t *testing.T) {
 		button string
 		size   sharecard.Size
 		name   string
-	}{{"save image", sharecard.Square, "MixMusic 2026.png"}, {"save image for a story", sharecard.Story, "MixMusic 2026 story.png"}} {
+	}{{"save image", sharecard.Square, "Mixyun 2026.png"}, {"save image for a story", sharecard.Story, "Mixyun 2026 story.png"}} {
 		path := filepath.Join(dir, sizeName(tc.size)+".png")
 		asked := savesTo(t, path)
 		click(t, s, tt, tc.button)

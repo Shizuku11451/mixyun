@@ -32,7 +32,7 @@ var (
 	ErrNetwork = errors.New("stream: the network failed")
 	// ErrNoAudio: YouTube gave a stream of a format the engine doesn't
 	// play.
-	ErrNoAudio = errors.New("YouTube has no audio of this track that MixMusic plays")
+	ErrNoAudio = errors.New("YouTube has no audio of this track that Mixyun plays")
 	// ErrLive: the video is live, as its broadcast goes on: its stream is
 	// a playlist of what comes next, with no file to keep.
 	ErrLive = errors.New("it's a live stream, which doesn't download")

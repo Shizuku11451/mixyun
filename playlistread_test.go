@@ -247,7 +247,7 @@ func TestLongPlaylistCut(t *testing.T) {
 		Title: "Everything", TrackCount: 25000, Tracks: tracks, Cut: true}}
 	tt := tester(t, s)
 	show(s, tt, playlistPath("yt:PLcut"))
-	if !tt.HasText("This playlist has 25,000 tracks: MixMusic shows and plays its first 20,000.") {
+	if !tt.HasText("This playlist has 25,000 tracks: Mixyun shows and plays its first 20,000.") {
 		t.Errorf("the page shows %q", tt.Texts())
 	}
 }

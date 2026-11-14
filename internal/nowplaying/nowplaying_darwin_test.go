@@ -37,7 +37,7 @@ func setUp(t *testing.T) {
 		purego.RegisterFunc(&msgString, msgSend)
 		purego.RegisterFunc(&msgImageSized, msgSend)
 		var err error
-		positionEvent, err = objc.RegisterClass("MixMusicTestPositionEvent", objc.GetClass("NSObject"), nil, nil, []objc.MethodDef{{
+		positionEvent, err = objc.RegisterClass("MixyunTestPositionEvent", objc.GetClass("NSObject"), nil, nil, []objc.MethodDef{{
 			Cmd: sel("positionTime"),
 			Fn:  func(objc.ID, objc.SEL) double { return double{42.5} },
 		}})

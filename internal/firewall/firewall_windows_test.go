@@ -79,7 +79,7 @@ func TestAllowLive(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	name := fmt.Sprintf("MixMusic test %d", time.Now().UnixNano())
+	name := fmt.Sprintf("Mixyun test %d", time.Now().UnixNano())
 	block := name + " block"
 	t.Cleanup(func() { removeRules(t, name, block) })
 	err = withCOM(func() error {
@@ -111,10 +111,10 @@ func TestAllowLive(t *testing.T) {
 		}
 	}
 	if len(own) != 1 {
-		t.Fatalf("%d rules of MixMusic's own, want 1: %+v", len(own), own)
+		t.Fatalf("%d rules of Mixyun's own, want 1: %+v", len(own), own)
 	}
 	if r := own[0]; !r.Allow || !r.Inbound || !r.Enabled || r.Profiles != trusted || !SameProgram(r.Program, exe) {
-		t.Errorf("MixMusic's rule = %+v, want an inbound rule letting %s in on private and domain networks", r, exe)
+		t.Errorf("Mixyun's rule = %+v, want an inbound rule letting %s in on private and domain networks", r, exe)
 	}
 	if blocking.Allow || !blocking.Enabled || blocking.Profiles != ProfilePublic {
 		t.Errorf("the blocking rule = %+v, want it on, blocking public networks alone", blocking)

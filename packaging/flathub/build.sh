@@ -46,7 +46,7 @@ EOF
 # the same.
 mygo=github.com/egoist/mygo
 go build -trimpath -tags mygo_noinspector -o mixmusic -ldflags "-s -w \
-	-X $mygo.packageName=MixMusic \
+	-X $mygo.packageName=Mixyun \
 	-X $mygo.packageVersion=$version \
 	-X $mygo.packageIdentifier=app.mixmusic.desktop \
 	-X $mygo.packageURLSchemes=mixmusic \

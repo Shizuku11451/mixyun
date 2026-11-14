@@ -139,7 +139,7 @@ func (s *secretStore) save(data []byte) error {
 	case s.seal != nil:
 		if serr := s.writeSealed(data); serr != nil {
 			log.Printf("mixmusic: the Credential Manager can't keep %s: %v", s.key, err)
-			return fmt.Errorf("Windows did not let MixMusic keep your sign-in: %w", serr)
+			return fmt.Errorf("Windows did not let Mixyun keep your sign-in: %w", serr)
 		}
 		removeFile(s.plain)
 		s.tell("store", "mixmusic: the Credential Manager can't keep %s (%v): keeping it encrypted for the Windows user in %s", s.key, err, filepath.Base(s.sealed))
