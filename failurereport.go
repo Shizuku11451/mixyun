@@ -60,7 +60,7 @@ var (
 	// token or a key, as "token=…".
 	headerRe = regexp.MustCompile(`(?i)\b((?:set-)?cookies?|authorization)\s*[:=][^\n]*`)
 	bearerRe = regexp.MustCompile(`(?i)\b(bearer)\s+[^\s,;]+`)
-	secretRe = regexp.MustCompile(`(?i)\b(access_token|refresh_token|token|sapisid|apisid|password|secret|api_?key|key)\s*[:=]\s*("[^"]*"|[^\s,;]+)`)
+	secretRe = regexp.MustCompile(`(?i)\b(access_token|refresh_token|token|sapisid|apisid|music_u|password|secret|api_?key|key)\s*[:=]\s*("[^"]*"|[^\s,;]+)`)
 	// addressRe matches an IPv4 address, or an IPv6 one in brackets, with
 	// its port.
 	addressRe = regexp.MustCompile(`\b\d{1,3}(?:\.\d{1,3}){3}(?::\d+)?\b|\[[0-9A-Fa-f:.%]+\](?::\d+)?`)

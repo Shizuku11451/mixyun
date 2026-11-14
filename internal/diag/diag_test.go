@@ -17,6 +17,7 @@ func TestRedact(t *testing.T) {
 		"GET /2.0/?method=track.scrobble&api_key=KEY&sk=SESSION&api_sig=SIG": "GET /2.0/?method=track.scrobble&api_key=…&sk=…&api_sig=…",
 		`{"access_token":"BQD","refresh_token":"AQB","expires_in":3600}`:     `{"access_token":"…","refresh_token":"…","expires_in":3600}`,
 		"Authorization: Bearer BQDxyz.abc-123":                               "Authorization: Bearer …",
+		"Cookie: os=pc; MUSIC_U=00AB12CD":                                    "Cookie: os=pc; MUSIC_U=…",
 		"mixmusic: playing Let It Happen by Tame Impala":                     "mixmusic: playing Let It Happen by Tame Impala",
 		// The computer's own address goes from socket errors; the host's
 		// stays, and so does a dial's, which has no address of its own.

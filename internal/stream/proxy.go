@@ -371,7 +371,8 @@ func (p *Proxy) setFailure(videoID, why string) {
 // as when it skipped the track, is no failure.
 func (p *Proxy) fail(w http.ResponseWriter, videoID string, err error) {
 	if w != nil {
-		http.Error(w, err.Error(), http.StatusBadGateway)
+		// Without the stream's URL, as the log: what is cast to hears it.
+		http.Error(w, loggable(err).Error(), http.StatusBadGateway)
 	}
 	if errors.Is(err, context.Canceled) {
 		return

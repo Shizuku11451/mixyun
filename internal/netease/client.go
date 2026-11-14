@@ -56,8 +56,20 @@ type Client struct {
 func New() *Client {
 	id := make([]byte, 16)
 	rand.Read(id)
-	return &Client{HTTP: &http.Client{Timeout: 20 * time.Second}, BaseURL: origin, eapiURL: "https://interface.music.163.com",
+	return &Client{HTTP: &http.Client{Timeout: 20 * time.Second, CheckRedirect: httpsOnly}, BaseURL: origin, eapiURL: "https://interface.music.163.com",
 		deviceID: strings.ToUpper(hex.EncodeToString(id))}
+}
+
+// httpsOnly follows a redirect only to an HTTPS address: the session's
+// cookie goes on with the request, and would in the clear to another.
+func httpsOnly(req *http.Request, via []*http.Request) error {
+	switch {
+	case req.URL.Scheme != "https":
+		return errors.New("netease: redirected off HTTPS")
+	case len(via) >= 10:
+		return errors.New("netease: stopped after 10 redirects")
+	}
+	return nil
 }
 
 // SetSession signs the client in with the value of a MUSIC_U cookie, or out

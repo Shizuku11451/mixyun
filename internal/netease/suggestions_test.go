@@ -64,3 +64,24 @@ func TestSuggestions(t *testing.T) {
 		t.Errorf("without the items' page: %+v, %v", got, err)
 	}
 }
+
+// TestRedirectsStayOnHTTPS refuses a redirect to an address that isn't
+// HTTPS, which the session's cookie would follow in the clear.
+func TestRedirectsStayOnHTTPS(t *testing.T) {
+	seen := false
+	plain := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		seen = true
+		fmt.Fprint(w, `{"code":200}`)
+	}))
+	defer plain.Close()
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, plain.URL+"/elsewhere", http.StatusTemporaryRedirect)
+	}))
+	defer srv.Close()
+	c := New()
+	c.BaseURL = srv.URL
+	c.SetSession("SECRET")
+	if err := c.call(context.Background(), "/anything", nil, nil); err == nil || seen {
+		t.Errorf("the redirect was followed off HTTPS: %v, reached %v", err, seen)
+	}
+}

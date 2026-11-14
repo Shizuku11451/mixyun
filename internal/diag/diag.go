@@ -144,10 +144,10 @@ func (l *Log) Close() error {
 }
 
 // secrets match what a log line must not keep: the cookies and hashes of a
-// YouTube session, and the keys and tokens of an API, each with the part
-// before its value kept.
+// YouTube session, the cookie of a NetEase Cloud Music one, and the keys
+// and tokens of an API, each with the part before its value kept.
 var secrets = []*regexp.Regexp{
-	regexp.MustCompile(`(?i)\b((?:__Secure-[0-9A-Za-z_-]+|SAPISID|APISID|SSID|HSID|SID|SIDCC|LOGIN_INFO)=)[^;\s"']+`),
+	regexp.MustCompile(`(?i)\b((?:__Secure-[0-9A-Za-z_-]+|SAPISID|APISID|SSID|HSID|SID|SIDCC|LOGIN_INFO|MUSIC_U)=)[^;\s"']+`),
 	regexp.MustCompile(`(?i)\b((?:SAPISID|SAPISID1P|SAPISID3P)HASH )[0-9]+_[0-9a-f]+`),
 	regexp.MustCompile(`(?i)\b((?:api_key|api_sig|sk|token|access_token|refresh_token|client_secret|secret|code)=)[^&\s"']+`),
 	regexp.MustCompile(`(?i)("(?:access_token|refresh_token|session_key|secret|key)"\s*:\s*")[^"]+`),
