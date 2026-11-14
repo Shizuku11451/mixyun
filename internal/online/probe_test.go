@@ -18,10 +18,10 @@ func probeAgainst(t *testing.T, youtube, spotify http.HandlerFunc) {
 	sp := httptest.NewTLSServer(spotify)
 	t.Cleanup(yt.Close)
 	t.Cleanup(sp.Close)
-	urls, sURL, client := youtubeProbes, spotifyProbe, probeClient
-	t.Cleanup(func() { youtubeProbes, spotifyProbe, probeClient = urls, sURL, client })
+	urls, anyURLs, client := youtubeProbes, anyProbes, probeClient
+	t.Cleanup(func() { youtubeProbes, anyProbes, probeClient = urls, anyURLs, client })
 	youtubeProbes = []string{yt.URL + "/generate_204", yt.URL + "/generate_204"}
-	spotifyProbe = sp.URL + "/v1/"
+	anyProbes = []string{sp.URL + "/v1/"}
 	// The servers share their test certificate.
 	probeClient = yt.Client()
 	probeClient.CheckRedirect = newProbeClient().CheckRedirect

@@ -14,10 +14,12 @@ import (
 
 // The addresses Probe asks, and how; tests change them. YouTube's answer
 // 204 with no body, where yt-dlp and YouTube Music ask; a captive portal's
-// page doesn't. Spotify's API answers anything at all.
+// page doesn't. Spotify's API and NetEase Cloud Music's answer anything at
+// all: a portal can't answer them over TLS. NetEase's is asked where the
+// other two are blocked.
 var (
 	youtubeProbes = []string{"https://www.youtube.com/generate_204", "https://music.youtube.com/generate_204"}
-	spotifyProbe  = "https://api.spotify.com/v1/"
+	anyProbes     = []string{"https://api.spotify.com/v1/", "https://interface.music.163.com/"}
 	probeClient   = newProbeClient()
 )
 
@@ -36,17 +38,19 @@ func newProbeClient() *http.Client {
 	return c
 }
 
-// Probe asks YouTube and Spotify whether they answer, at once, and returns
+// Probe asks YouTube, Spotify and NetEase Cloud Music whether they answer, at once, and returns
 // nil as soon as one does, or why none did.
 func Probe(ctx context.Context) error {
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
-	n := len(youtubeProbes) + 1
+	n := len(youtubeProbes) + len(anyProbes)
 	answers := make(chan error, n)
 	for _, u := range youtubeProbes {
 		go func() { answers <- ask(ctx, u, http.StatusNoContent) }()
 	}
-	go func() { answers <- ask(ctx, spotifyProbe, 0) }()
+	for _, u := range anyProbes {
+		go func() { answers <- ask(ctx, u, 0) }()
+	}
 	var errs []error
 	for range n {
 		err := <-answers
