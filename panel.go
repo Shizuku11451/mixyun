@@ -225,7 +225,8 @@ type lyricsState struct {
 	romaji romajiView
 	// local is what they know of the lyrics romanized on the computer.
 	local romanizeView
-	// room is the height the page's lyrics took, the window's under its head.
+	// room is the height the page's lyrics took, the window's under its head:
+	// the page only compares it, to redraw once a resize settles.
 	room float32
 }
 

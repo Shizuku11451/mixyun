@@ -50,6 +50,12 @@ type Client struct {
 
 	mu     sync.Mutex
 	musicU string
+	// lyrics is the song whose lyrics were read last, which its
+	// translation reads again right after.
+	lyrics struct {
+		native string
+		found  SongLyrics
+	}
 }
 
 // New returns a client without a session.

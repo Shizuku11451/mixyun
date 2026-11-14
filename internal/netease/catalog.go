@@ -294,12 +294,16 @@ func (c *Client) Suggestions(ctx context.Context, input string) (media.Suggestio
 			} `json:"allMatch"`
 		} `json:"result"`
 	}
-	kerr := c.call(ctx, "/search/suggest/keyword", map[string]any{"s": input}, &kw)
+	// The keywords and the web's suggestions are asked at once.
+	kdone := make(chan error, 1)
+	go func() { kdone <- c.call(ctx, "/search/suggest/keyword", map[string]any{"s": input}, &kw) }()
+	var r searchResult
+	err := c.call(ctx, "/search/suggest/web", map[string]any{"s": input}, &r)
+	kerr := <-kdone
 	for _, m := range kw.Result.AllMatch {
 		out.Searches = append(out.Searches, m.Keyword)
 	}
-	var r searchResult
-	if err := c.call(ctx, "/search/suggest/web", map[string]any{"s": input}, &r); err != nil {
+	if err != nil {
 		if kerr != nil {
 			return out, err
 		}
@@ -555,6 +559,12 @@ type SongLyrics struct {
 
 // Lyrics returns a song's lyrics.
 func (c *Client) Lyrics(ctx context.Context, native string) (SongLyrics, error) {
+	c.mu.Lock()
+	last := c.lyrics
+	c.mu.Unlock()
+	if last.native == native {
+		return last.found, nil
+	}
 	type text struct {
 		Lyric string `json:"lyric"`
 	}
@@ -570,8 +580,12 @@ func (c *Client) Lyrics(ctx context.Context, native string) (SongLyrics, error) 
 	if err := c.call(ctx, "/song/lyric/v1", params, &r); err != nil {
 		return SongLyrics{}, err
 	}
-	return SongLyrics{LRC: r.Lrc.Lyric, Translation: r.Tlyric.Lyric, Roman: r.Romalrc.Lyric,
-		YRC: r.Yrc.Lyric, YRCTranslation: r.Ytlrc.Lyric, YRCRoman: r.Yromalrc.Lyric}, nil
+	found := SongLyrics{LRC: r.Lrc.Lyric, Translation: r.Tlyric.Lyric, Roman: r.Romalrc.Lyric,
+		YRC: r.Yrc.Lyric, YRCTranslation: r.Ytlrc.Lyric, YRCRoman: r.Yromalrc.Lyric}
+	c.mu.Lock()
+	c.lyrics.native, c.lyrics.found = native, found
+	c.mu.Unlock()
+	return found, nil
 }
 
 // Audio is where a song's audio is.

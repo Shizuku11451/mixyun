@@ -17,7 +17,9 @@ import (
 // other languages, and songs it has no translation of, to Unison.
 func TestNetEaseTranslation(t *testing.T) {
 	translation := `"tlyric":{"lyric":"[00:01.000]第一行\n[00:03.000]第二行"},"ytlrc":{"lyric":"[00:01.200]第一行\n[00:03.200]第二行"},`
+	asked := 0
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		asked++
 		if r.URL.Path != "/weapi/song/lyric/v1" {
 			http.NotFound(w, r)
 			return
@@ -40,11 +42,15 @@ func TestNetEaseTranslation(t *testing.T) {
 	if !ok || len(tr.Lines) != 2 || tr.Lines[0].Text != "第一行" || tr.Lines[1].Text != "第二行" {
 		t.Errorf("translation: %+v, %v", tr, ok)
 	}
+	if asked != 1 {
+		t.Errorf("the lyrics and their translation asked NetEase %d times, not once", asked)
+	}
 	if _, ok := c.neteaseTranslation(ctx, track, l, "en"); ok {
 		t.Error("NetEase translated into English")
 	}
+	// Another song: the client keeps the lyrics of the last one read.
 	translation = ""
-	if _, ok := c.neteaseTranslation(ctx, track, l, "zh"); ok {
+	if _, ok := c.neteaseTranslation(ctx, media.Track{ID: "ne:2", Source: media.SourceNetEase}, l, "zh"); ok {
 		t.Error("a song without a translation has one")
 	}
 }
