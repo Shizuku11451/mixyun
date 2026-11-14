@@ -24,7 +24,7 @@ release:
     # The repository the workflow runs in, by its current name: a fork, or
     # a renamed repository, releases on its own.
     owner: "{{ .Env.GITHUB_REPOSITORY_OWNER }}"
-    name: "{{ .Env.REPOSITORY_NAME }}"
+    name: '{{ trimprefix .Env.GITHUB_REPOSITORY (print .Env.GITHUB_REPOSITORY_OWNER "/") }}'
   name_template: "Mixyun {{ .Tag }}"
   make_latest: true
   # release.yml run by hand builds an existing tag again: its release
