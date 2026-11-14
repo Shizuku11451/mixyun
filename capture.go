@@ -145,11 +145,11 @@ func (s *shell) captureFromEnv() {
 					continue
 				}
 				res, err := s.svc.Catalog.Search(context.Background(), arg)
-				if err != nil || len(res.YouTube.Tracks) == 0 {
+				if err != nil || len(res.NetEase.Tracks) == 0 {
 					log.Printf("mixmusic: capture: searching %q: %v", arg, err)
 					continue
 				}
-				s.p.PlayTracks(res.YouTube.Tracks, 0)
+				s.p.PlayTracks(res.NetEase.Tracks, 0)
 			case "local":
 				if !mayPlay("the music on this computer") {
 					continue

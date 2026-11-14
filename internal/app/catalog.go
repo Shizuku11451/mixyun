@@ -42,7 +42,7 @@ func emptyResults() media.SearchResults {
 	return media.SearchResults{Tracks: []media.Track{}, Videos: []media.Track{}, Albums: []media.Album{}, Artists: []media.Artist{}, Playlists: []media.Playlist{}}
 }
 
-// Search searches YouTube Music, and Spotify when the user signed in, and
+// Search searches NetEase Cloud Music, and Spotify when the user signed in, and
 // keeps the query among the recent searches.
 func (c *Catalog) Search(ctx context.Context, query string) (SearchResponse, error) {
 	res, err := c.search(ctx, query)
