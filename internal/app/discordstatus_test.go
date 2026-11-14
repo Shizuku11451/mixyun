@@ -86,6 +86,12 @@ func TestDiscordActivityChoices(t *testing.T) {
 			&discord.Activity{Type: discord.Listening, Details: "Teardrop", State: "Massive Attack",
 				Start: start, End: start.Add(330 * time.Second),
 				Buttons: []discord.Button{{Label: "Listen on Spotify", URL: "https://open.spotify.com/track/4uLU6hMCjMI75M1A2tKUQC"}}}},
+		{"listen on NetEase Cloud Music, from the track's ID", desktop(func(d *settings.Desktop) {
+			d.DiscordListenButton, d.DiscordCover, d.DiscordSecondLine = true, false, "on {service}"
+		}), media.Track{ID: "ne:1901371647", Source: media.SourceNetEase, Title: "海阔天空", DurationMs: 326000}, false,
+			&discord.Activity{Type: discord.Listening, Details: "海阔天空", State: "on NetEase Cloud Music",
+				Start: start, End: start.Add(326 * time.Second),
+				Buttons: []discord.Button{{Label: "Listen on NetEase Cloud Music", URL: "https://music.163.com/#/song?id=1901371647"}}}},
 		{"a file on this computer", desktop(func(d *settings.Desktop) { d.DiscordListenButton, d.DiscordServiceBadge = true, true }), statusFile, false,
 			&discord.Activity{Type: discord.Listening, Details: "Demo", State: "Me",
 				Start: start, End: start.Add(2 * time.Minute), LargeImage: discordBadges + "computer.png", LargeText: "A file on my computer"}},

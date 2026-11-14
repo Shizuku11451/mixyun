@@ -220,6 +220,8 @@ func discordServiceName(t media.Track) string {
 		return "YouTube Music"
 	case media.SourceSpotify:
 		return "Spotify"
+	case media.SourceNetEase:
+		return "NetEase Cloud Music"
 	case media.SourceFile:
 		return "my computer"
 	}
@@ -254,7 +256,7 @@ func discordServiceBadge(t media.Track) string {
 func discordListen(t media.Track) (label, link string) {
 	source := discordSource(t)
 	switch source {
-	case media.SourceYouTube, media.SourceSpotify:
+	case media.SourceYouTube, media.SourceSpotify, media.SourceNetEase:
 		label = "Listen on " + discordServiceName(t)
 	default:
 		return "", ""
@@ -266,8 +268,11 @@ func discordListen(t media.Track) (label, link string) {
 	if err != nil {
 		return "", ""
 	}
-	if source == media.SourceYouTube {
+	switch source {
+	case media.SourceYouTube:
 		return label, "https://music.youtube.com/watch?v=" + url.QueryEscape(native)
+	case media.SourceNetEase:
+		return label, "https://music.163.com/#/song?id=" + url.QueryEscape(native)
 	}
 	kind := "track"
 	if t.IsEpisode() {
