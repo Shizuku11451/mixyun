@@ -1,4 +1,4 @@
-<p align="center"><a href="README.md">English</a> · <a href="README.hi.md">हिन्दी</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.id.md">Bahasa Indonesia</a> · <a href="README.ur.md">اردو</a> · <a href="README.ha.md">Hausa</a> · <a href="README.pt-BR.md">Português (Brasil)</a> · <a href="README.bn.md">বাংলা</a> · <a href="README.ru.md">Русский</a> · <strong>አማርኛ</strong></p>
+<p align="center"><a href="README.en.md">English</a> · <a href="README.hi.md">हिन्दी</a> · <a href="README.md">简体中文</a> · <a href="README.id.md">Bahasa Indonesia</a> · <a href="README.ur.md">اردو</a> · <a href="README.ha.md">Hausa</a> · <a href="README.pt-BR.md">Português (Brasil)</a> · <a href="README.bn.md">বাংলা</a> · <a href="README.ru.md">Русский</a> · <strong>አማርኛ</strong></p>
 
 <p align="center">
   <img src="brand/icon.png" width="112" height="112" alt="የMixMusic አዶ፦ ሁለት ሮዝ ቀለበቶችና በጥቁር ላይ የማጫወቻ ቁልፍ" />
@@ -10,7 +10,7 @@
 
 <p align="center">ለmacOS፣ Windows እና Linux የYouTube Music እና የSpotify ደንበኛ። YouTube Music ያለ መለያ ይሠራል። አንድ ፍለጋ፣ አንድ ሰልፍ (ወረፋ)፣ የተቀላቀሉ ፕሌይሊስቶች፣ ከዘፈኑ ጋር የሚሄድ ግጥም፣ ገጽታዎችና ፕለጊኖች።</p>
 
-<p align="center"><sub>ይህ የ<a href="README.md">እንግሊዝኛው README</a> ትርጉም ነው። በሁለቱ መካከል ልዩነት ካለ፣ ትክክለኛው የአሁኑ የእንግሊዝኛው ነው።</sub></p>
+<p align="center"><sub>ይህ የ<a href="README.en.md">እንግሊዝኛው README</a> ትርጉም ነው። በሁለቱ መካከል ልዩነት ካለ፣ ትክክለኛው የአሁኑ የእንግሊዝኛው ነው።</sub></p>
 
 <p align="center">
   <a href="https://github.com/fzn0x/mixmusic/actions/workflows/ci.yml"><img src="https://github.com/fzn0x/mixmusic/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>

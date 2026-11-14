@@ -19,7 +19,7 @@ Download the file for your system from the
 - **Windows 10 and 11**, on x64 or Arm: the installer, `mixmusic-<version>-windows-<arch>-setup.exe`, or the portable zip, `mixmusic-<version>-windows-<arch>-portable.zip`, which you unpack anywhere and start with `MixMusic.exe`.
 - **Linux**, on x64 or Arm64: the `.deb` for Debian, Ubuntu and their derivatives, the `.rpm` for Fedora and openSUSE, the AppImage for any Linux (make it executable with `chmod +x`, then open it), the Flatpak for any Linux, or the `.tar.gz` archive with its `install.sh`, which installs MixMusic in your home folder.
 
-`<arch>` is `amd64` for x64 and `arm64` for Arm. Each release lists `SHA256SUMS` to check the downloads with, and files you don't need, which installed copies update from. The [README](../README.md#install) has the full table of downloads.
+`<arch>` is `amd64` for x64 and `arm64` for Arm. Each release lists `SHA256SUMS` to check the downloads with, and files you don't need, which installed copies update from. The [README](../README.en.md#install) has the full table of downloads.
 
 The installers, the portable zip and the Linux archive update themselves: MixMusic looks for a new version at start and every few hours, and asks before it installs one, unless you let it install updates by itself. The `.deb`, the `.rpm`, the AppImage and the Flatpak can't replace their own files, so MixMusic tells you when a new version is out and downloads its file for you. [Settings › About](settings.md#about) shows your version and the newest one.
 
@@ -47,7 +47,7 @@ MixMusic opens on Home in the [Blend layout](look-and-feel.md#layouts). Your set
 
 ### The Flatpak
 
-The Flatpak runs MixMusic in a sandbox, which sees the network, the sound server, the display and the GPU, and none of your home folder. It keeps its settings and library in `~/.var/app/io.github.fzn0x.mixmusic`, apart from a `.deb`, `.rpm`, AppImage or archive copy, and both can run at once. The [README](../README.md#the-flatpak) tells how to bring another copy's settings and library over.
+The Flatpak runs MixMusic in a sandbox, which sees the network, the sound server, the display and the GPU, and none of your home folder. It keeps its settings and library in `~/.var/app/io.github.fzn0x.mixmusic`, apart from a `.deb`, `.rpm`, AppImage or archive copy, and both can run at once. The [README](../README.en.md#the-flatpak) tells how to bring another copy's settings and library over.
 
 In the Flatpak, start at login goes through your desktop, which may ask you first, and a yt-dlp of your own must be in `~/.var/app/io.github.fzn0x.mixmusic`, as the sandbox sees no other folder. A Discord app that isn't a Flatpak shows what plays only if it was running when MixMusic started.
 

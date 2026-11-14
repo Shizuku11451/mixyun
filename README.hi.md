@@ -1,4 +1,4 @@
-<p align="center"><a href="README.md">English</a> · <strong>हिन्दी</strong> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.id.md">Bahasa Indonesia</a> · <a href="README.ur.md">اردو</a> · <a href="README.ha.md">Hausa</a> · <a href="README.pt-BR.md">Português (Brasil)</a> · <a href="README.bn.md">বাংলা</a> · <a href="README.ru.md">Русский</a> · <a href="README.am.md">አማርኛ</a></p>
+<p align="center"><a href="README.en.md">English</a> · <strong>हिन्दी</strong> · <a href="README.md">简体中文</a> · <a href="README.id.md">Bahasa Indonesia</a> · <a href="README.ur.md">اردو</a> · <a href="README.ha.md">Hausa</a> · <a href="README.pt-BR.md">Português (Brasil)</a> · <a href="README.bn.md">বাংলা</a> · <a href="README.ru.md">Русский</a> · <a href="README.am.md">አማርኛ</a></p>
 
 <p align="center">
   <img src="brand/icon.png" width="112" height="112" alt="MixMusic का आइकन: काले रंग पर दो गुलाबी छल्ले और एक प्ले बटन" />
@@ -10,7 +10,7 @@
 
 <p align="center">macOS, Windows और Linux के लिए YouTube Music और Spotify क्लाइंट। YouTube Music बिना अकाउंट के चलता है। एक सर्च, एक क्यू, मिली-जुली playlist, सिंक होने वाले lyrics, थीम और प्लगइन।</p>
 
-<p align="center"><sub>यह <a href="README.md">अंग्रेज़ी README</a> का अनुवाद है। जहाँ दोनों में फ़र्क़ हो, वहाँ अंग्रेज़ी वाला ताज़ा और सही है।</sub></p>
+<p align="center"><sub>यह <a href="README.en.md">अंग्रेज़ी README</a> का अनुवाद है। जहाँ दोनों में फ़र्क़ हो, वहाँ अंग्रेज़ी वाला ताज़ा और सही है।</sub></p>
 
 <p align="center">
   <a href="https://github.com/fzn0x/mixmusic/actions/workflows/ci.yml"><img src="https://github.com/fzn0x/mixmusic/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>

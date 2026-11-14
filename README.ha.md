@@ -1,4 +1,4 @@
-<p align="center"><a href="README.md">English</a> · <a href="README.hi.md">हिन्दी</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.id.md">Bahasa Indonesia</a> · <a href="README.ur.md">اردو</a> · <strong>Hausa</strong> · <a href="README.pt-BR.md">Português (Brasil)</a> · <a href="README.bn.md">বাংলা</a> · <a href="README.ru.md">Русский</a> · <a href="README.am.md">አማርኛ</a></p>
+<p align="center"><a href="README.en.md">English</a> · <a href="README.hi.md">हिन्दी</a> · <a href="README.md">简体中文</a> · <a href="README.id.md">Bahasa Indonesia</a> · <a href="README.ur.md">اردو</a> · <strong>Hausa</strong> · <a href="README.pt-BR.md">Português (Brasil)</a> · <a href="README.bn.md">বাংলা</a> · <a href="README.ru.md">Русский</a> · <a href="README.am.md">አማርኛ</a></p>
 
 <p align="center">
   <img src="brand/icon.png" width="112" height="112" alt="Alamar MixMusic: zobba biyu masu launin hoda da maɓallin kunnawa a kan baƙin fage" />
@@ -10,7 +10,7 @@
 
 <p align="center">Manhajar YouTube Music da Spotify don macOS, Windows da Linux. YouTube Music yana aiki ba tare da asusu ba. Bincike ɗaya, jerin gaba ɗaya, playlist ɗin da aka haɗa, kalmomin waƙa masu daidaita da waƙar, jigogi da plugin.</p>
 
-<p align="center"><sub>Wannan fassara ce ta <a href="README.md">README na Turanci</a>. Idan akwai bambanci, na Turanci shi ne mafi sabo.</sub></p>
+<p align="center"><sub>Wannan fassara ce ta <a href="README.en.md">README na Turanci</a>. Idan akwai bambanci, na Turanci shi ne mafi sabo.</sub></p>
 
 <p align="center">
   <a href="https://github.com/fzn0x/mixmusic/actions/workflows/ci.yml"><img src="https://github.com/fzn0x/mixmusic/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>

@@ -1,4 +1,4 @@
-<p align="center"><a href="README.md">English</a> · <a href="README.hi.md">हिन्दी</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.id.md">Bahasa Indonesia</a> · <strong>اردو</strong> · <a href="README.ha.md">Hausa</a> · <a href="README.pt-BR.md">Português (Brasil)</a> · <a href="README.bn.md">বাংলা</a> · <a href="README.ru.md">Русский</a> · <a href="README.am.md">አማርኛ</a></p>
+<p align="center"><a href="README.en.md">English</a> · <a href="README.hi.md">हिन्दी</a> · <a href="README.md">简体中文</a> · <a href="README.id.md">Bahasa Indonesia</a> · <strong>اردو</strong> · <a href="README.ha.md">Hausa</a> · <a href="README.pt-BR.md">Português (Brasil)</a> · <a href="README.bn.md">বাংলা</a> · <a href="README.ru.md">Русский</a> · <a href="README.am.md">አማርኛ</a></p>
 
 <p align="center">
   <img src="brand/icon.png" width="112" height="112" alt="MixMusic کا آئیکن: سیاہ پس منظر پر دو گلابی حلقے اور پلے کا بٹن" />
@@ -10,7 +10,7 @@
 
 <p align="center" dir="rtl">macOS، Windows اور Linux کے لیے YouTube Music اور Spotify کا کلائنٹ۔ YouTube Music بغیر اکاؤنٹ کے چلتا ہے۔ ایک سرچ، ایک قطار (queue)، ملے جلے پلے لسٹس، ہم وقت بول (lyrics)، تھیمز اور پلگ اِنز۔</p>
 
-<p align="center" dir="rtl"><sub>یہ <a href="README.md">انگریزی README</a> کا ترجمہ ہے۔ کسی فرق کی صورت میں انگریزی نسخہ ہی تازہ ترین مانا جائے۔</sub></p>
+<p align="center" dir="rtl"><sub>یہ <a href="README.en.md">انگریزی README</a> کا ترجمہ ہے۔ کسی فرق کی صورت میں انگریزی نسخہ ہی تازہ ترین مانا جائے۔</sub></p>
 
 <p align="center">
   <a href="https://github.com/fzn0x/mixmusic/actions/workflows/ci.yml"><img src="https://github.com/fzn0x/mixmusic/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>

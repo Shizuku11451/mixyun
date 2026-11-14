@@ -386,12 +386,12 @@ the image must be published for both architectures, as Flathub's are.
 
 ## Translations of the README
 
-[README.hi.md](README.hi.md) (Hindi), [README.zh-CN.md](README.zh-CN.md)
-(Simplified Chinese), [README.id.md](README.id.md) (Indonesian),
+[README.md](README.md) is Mixyun's own, in Simplified Chinese.
+[README.hi.md](README.hi.md) (Hindi), [README.id.md](README.id.md) (Indonesian),
 [README.ur.md](README.ur.md) (Urdu), [README.pt-BR.md](README.pt-BR.md)
 (Brazilian Portuguese), [README.bn.md](README.bn.md) (Bengali),
 [README.ru.md](README.ru.md) (Russian) and [README.am.md](README.am.md)
-(Amharic) translate [README.md](README.md), which stays the one that's
+(Amharic) translate MixMusic's English [README.en.md](README.en.md), which stays the one that's
 current. A pull request
 that changes the README needn't change them: say in it which sections
 changed, so that a translator can follow. Corrections and new languages are

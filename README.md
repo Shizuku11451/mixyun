@@ -1,595 +1,102 @@
-<p align="center"><strong>English</strong> · <a href="README.hi.md">हिन्दी</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.id.md">Bahasa Indonesia</a> · <a href="README.ur.md">اردو</a> · <a href="README.ha.md">Hausa</a> · <a href="README.pt-BR.md">Português (Brasil)</a> · <a href="README.bn.md">বাংলা</a> · <a href="README.ru.md">Русский</a> · <a href="README.am.md">አማርኛ</a></p>
+<p align="center"><strong>简体中文</strong> · <a href="README.en.md">English</a></p>
 
 <p align="center">
-  <img src="brand/icon.png" width="112" height="112" alt="MixMusic's icon: two pink rings and a play button on black" />
+  <img src="brand/icon.png" width="112" height="112" alt="混云的图标：黑色背景上的两个粉色圆环和一个播放按钮" />
 </p>
 
-<h1 align="center">Mixyun</h1>
+<h1 align="center">混云 Mixyun</h1>
 
-<p align="center"><strong>Mixyun is a fork of <a href="https://github.com/fzn0x/mixmusic">MixMusic</a> that plays NetEase Cloud Music and Spotify, with a Chinese interface. <a href="README.zh-CN.md">中文说明</a> describes it; the rest of this page is MixMusic's, and still speaks of YouTube Music, which Mixyun replaced.</strong></p>
+<p align="center"><strong>网易云音乐和 Spotify，放进同一个播放器。</strong></p>
 
-<p align="center"><strong>One player for YouTube Music and Spotify.</strong></p>
-
-<p align="center">YouTube Music and Spotify client for macOS, Windows and Linux. YouTube Music works with no account. One search, one queue, mixed playlists, synced lyrics, themes and plugins.</p>
+<p align="center">适用于 macOS、Windows 和 Linux 的桌面音乐播放器，中文界面，逐字歌词，可下载无损音乐。</p>
 
 <p align="center">
-  <a href="https://github.com/fzn0x/mixmusic/actions/workflows/ci.yml"><img src="https://github.com/fzn0x/mixmusic/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
-  <a href="https://github.com/fzn0x/mixmusic/actions/workflows/pages.yml"><img src="https://github.com/fzn0x/mixmusic/actions/workflows/pages.yml/badge.svg" alt="Website" /></a>
-  <a href="https://github.com/fzn0x/mixmusic/releases/latest"><img src="https://img.shields.io/github/v/release/fzn0x/mixmusic" alt="Latest release" /></a>
-  <a href="https://github.com/fzn0x/mixmusic/releases"><img src="https://img.shields.io/github/downloads/fzn0x/mixmusic/total" alt="Downloads" /></a>
-  <a href="https://pkg.go.dev/github.com/fzn0x/mixmusic"><img src="https://pkg.go.dev/badge/github.com/fzn0x/mixmusic.svg" alt="Go Reference" /></a>
-  <a href="go.mod"><img src="https://img.shields.io/github/go-mod/go-version/fzn0x/mixmusic" alt="Go version" /></a>
-  <a href="https://awesomemygo.dev/apps/mixmusic"><img src="https://awesomemygo.dev/badge.svg" height="20" alt="Listed on Awesome MyGo" /></a>
-  <img src="https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux-lightgrey" alt="macOS, Windows and Linux" />
-  <a href="#license"><img src="https://img.shields.io/badge/license-MIT%20or%20GPL--3.0-blue" alt="MIT or GPL-3.0" /></a>
+  <a href="https://github.com/Shizuku11451/mixyun/releases/latest"><img src="https://img.shields.io/github/v/release/Shizuku11451/mixyun" alt="最新版本" /></a>
+  <img src="https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux-lightgrey" alt="macOS、Windows 和 Linux" />
+  <a href="#许可证"><img src="https://img.shields.io/badge/license-MIT%20or%20GPL--3.0-blue" alt="MIT 或 GPL-3.0" /></a>
 </p>
 
 <p align="center">
-  <a href="https://fzn0x.github.io/mixmusic/">Website</a> ·
-  <a href="https://github.com/fzn0x/mixmusic/releases/latest">Download</a> ·
-  <a href="https://fzn0x.github.io/mixmusic/docs/">Docs</a> ·
-  <a href="CHANGELOG.md">Changelog</a>
+  <a href="https://github.com/Shizuku11451/mixyun/releases/latest">下载</a> ·
+  <a href="CHANGELOG.md">更新日志</a>
 </p>
 
-<p align="center">
-  <img src="docs/banner.webp" alt="MixMusic 0.5.9 in its default look, the Blend layout with the Mix theme, standing upright on a dark stage and facing you: now playing アイドル by YOASOBI in the middle, outlined in pink, with romaji under each line of its lyrics and the mini player in front of it; a search on the left and the library's mixes on the right" />
-</p>
+> 混云是 [MixMusic](https://github.com/fzn0x/mixmusic) 的分支。原项目把 YouTube Music 和 Spotify 放在一起；混云把 YouTube Music 换成了网易云音乐，并加上了中文界面和更多面向中文用户的功能。感谢 MixMusic 的作者和贡献者。
 
-## Why MixMusic
+## 功能
 
-If your music is split between YouTube Music and Spotify, you usually need
-two apps, with two searches, two queues and two libraries. MixMusic puts
-both services in one player:
+### 播放
 
-- **One search.** It looks through YouTube Music and Spotify at once, and
-  marks each result with the service it comes from.
-- **One queue and one library.** A Spotify track can play right after a
-  YouTube Music one, and a playlist can hold tracks from both.
-- **No account needed.** YouTube Music plays as soon as you open the app.
-  Sign in only if you want your own library. Spotify is optional.
-- **A small program.** MixMusic is one Go program that draws its own
-  windows on the GPU. There is no browser inside it to download or keep in
-  memory.
-- **Yours to change.** Four layouts and fourteen themes come with it, the
-  community adds more themes and plugins, and any command can have a key
-  of your own.
-- **Private.** MixMusic has no account, server, analytics or telemetry of
-  its own.
-- **Free and open source,** under the MIT license or the GPL 3.0.
+- **网易云音乐 + Spotify**：一个搜索框同时搜两边，歌曲可以混在同一个播放队列和歌单里。
+- **音质可选**：在 设置 › 播放 › 音质 里选择，最高可播放无损 FLAC（需要账号有相应权限），也可以用 128 kbit/s 省流量。
+- **下载**：网易云音乐的歌曲按原格式（MP3 或 FLAC）下载，没有网络也能播放。
+- **漫游**：按标签连续播放；登录网易云音乐后，还能按你喜欢的歌漫游（心动模式），队列播完会自动续上。
+- **本地音乐**：播放电脑里的 MP3、FLAC、WAV、M4A、Opus 和 Vorbis 文件。
 
-## Features
+### 歌词
 
-### Search and play
+- **逐字歌词**：网易云音乐有逐字时间轴的歌，会一个字一个字地亮起来。
+- **歌词翻译**：优先用网易云音乐里听众写的中文翻译，没有时再用机器翻译。
+- **状态栏歌词**：在 macOS 菜单栏或 Windows 任务栏显示正在唱的那一句。
+- **日文罗马音**：日文歌词可以显示罗马音。
 
-- **One search for both services.** Results from YouTube Music and Spotify
-  side by side, each marked with its service. YouTube Music results show
-  how many times each track was played, so the original stands out from
-  covers.
-- **One queue.** Mix tracks of both services, shuffle and repeat across
-  them, and let a radio carry on when the queue runs out.
-- **Explore.** New releases, trending songs, the charts, moods and genres,
-  and related songs for what plays.
-- **Synced lyrics** that follow the song, or plain text if you prefer.
-- **A mini player** that stays on top of your other windows.
+### 其他
 
-### Your library
+- **搜索联想**：边打字边给出建议，包括歌曲、歌手、专辑和歌单。
+- **统计**：播放热力图、常听的语言和曲风，以及每个服务各播了多少首。
+- **Discord 状态**：在 Discord 个人资料上显示正在听的歌。
+- **主题和插件**：自带多种布局和主题，支持社区主题和插件，所有命令都可以设置快捷键。
+- **远程控制和投屏**：在局域网里用另一台电脑控制播放，或投到 Chromecast 等设备上。
+- **AI 助手**：支持 MCP 协议的 AI 助手可以查询和控制播放。
+- **中文界面**：界面完整翻译成简体中文。
 
-- **Mixes:** playlists that hold tracks from every service. Import a
-  service's playlist into a mix, and search and sort inside any of them.
-- **Liked songs** from both services in one list.
-- **History and listening stats,** day by day.
-- **Your accounts.** Sign in to YouTube Music on Google's own page for your
-  home feed, liked songs, playlists, albums and artists, as your account or
-  one of its brand channels. Sign in to Spotify for your library there.
-  Likes, saved albums and playlists, and followed artists reach the service
-  too. What you play joins your YouTube Music history, which its
-  recommendations come from.
+## 安装
 
-### Spotify, three ways
+到 [Releases 页面](https://github.com/Shizuku11451/mixyun/releases/latest) 下载对应系统的安装包：
 
-- **In MixMusic itself,** at Spotify's quality, with no Spotify app open
-  (Premium, on Windows and macOS).
-- **On Spotify Connect:** your Spotify app, your phone or a speaker.
-- **From YouTube Music:** MixMusic plays the Spotify track's recording on
-  YouTube Music, which needs no Premium to play.
+| 系统 | 文件 |
+| --- | --- |
+| macOS 12 及以上（Apple 芯片和 Intel） | `mixmusic-版本号-macos-universal.dmg` |
+| Windows 10 / 11 | `mixmusic-版本号-windows-amd64-setup.exe`，或免安装的 `-portable.zip` |
+| Debian / Ubuntu | `.deb` |
+| Fedora / openSUSE | `.rpm` |
+| 任意 Linux | `.AppImage` 或 `.flatpak` |
 
-### Sound
+> 安装包文件名暂时沿用 `mixmusic-` 开头，装好后应用名就是混云（Mixyun）。
 
-- Crossfade, even loudness and volume levelling.
-- A ten-band equalizer with presets.
-- A visualizer.
-- An offline cache of the tracks you played.
-
-### On your desktop
-
-- Media keys and the system's media controls on Windows, macOS and Linux.
-- Global shortcuts of your own to play, pause, skip, change the volume,
-  mute, like or dislike what plays or show MixMusic, whichever window is
-  in front.
-- The player's buttons on the taskbar thumbnail on Windows.
-- Tray controls, notifications of new tracks, and start at login.
-- `mixmusic://` links.
-- **Last.fm:** every track you hear joins your profile, and scrobbles made
-  offline are sent once you are back online.
-- **Discord:** your profile shows what plays, with its artwork and the time
-  left.
-- **Updates:** MixMusic checks for a new release at start and every few
-  hours, checks its signature, and installs it when you say so, or by
-  itself if you choose.
-
-### Make it yours
-
-- **Layouts.** Blend, the default, has rounded shapes and springy motion
-  on dense rows of big covers. Expressive, after Material 3 Expressive, is
-  playful, with tonal fills, pill buttons and a floating player bar. Crate
-  is restrained, so that the covers do the work, and Tiles is MixMusic's
-  first look, with flat tiles and giant lowercase words.
-- **Themes.** Fourteen built in, each in any layout, with effects you can
-  tune, one theme for light mode and one for dark mode, and an accent
-  color of your own or taken from the artwork that plays. Material and
-  Material Dark make every color of the cover's.
-- **Community themes and plugins,** one click away in the marketplace.
-- **Plugins** add pages, commands, track actions and widgets through a
-  typed API, drawn in your theme.
-- **Keyboard first.** Shortcuts for everything common, a key of your own for
-  any command, plugins' commands included, keys that control the music
-  from any app, and a command palette (<kbd>Ctrl</kbd> <kbd>K</kbd>) for
-  the rest.
-- **A settings file.** Your settings are `settings.json` in your data folder
-  (`%AppData%\MixMusic` on Windows, `~/Library/Application Support/MixMusic`
-  on macOS, `~/.config/MixMusic` on Linux), which you can keep with your
-  dotfiles. Save it while MixMusic runs, and it applies at once; Settings ›
-  Desktop › Settings file opens it.
-
-## A look around
-
-<p align="center">
-  <img src="docs/look-listen.webp" alt="MixMusic's pages in the Blend layout, standing upright on a dark stage and facing you: now playing アイドル by YOASOBI in the middle, outlined in pink, each line of its lyrics with romaji and an English translation under it; the album THE BOOK 3 on the left and a followed podcast's page on the right" />
-</p>
-
-<p align="center"><sub><b>Listen.</b> In the middle, now playing アイドル by YOASOBI: each line lights up as it's sung, with romaji and a translation under it. On the left, an album; on the right, a podcast you follow.</sub></p>
-
-<p align="center">
-  <img src="docs/look-yours.webp" alt="More of MixMusic, standing upright on a dark stage and facing you: Settings › Appearance with the four layouts in the middle, outlined in pink; a Material theme coloured by the cover that plays on the left, and the marketplace's community themes on the right" />
-</p>
-
-<p align="center"><sub><b>Make it yours.</b> In the middle, the four layouts: Blend, the default, Expressive, Crate and Tiles, under the themes. On the left, a Material theme that takes its colours from the cover that plays. On the right, community themes in the marketplace.</sub></p>
-
-## Install
-
-Download the file for your system from the
-[latest release](https://github.com/fzn0x/mixmusic/releases/latest):
-
-| System | Download |
-|---|---|
-| macOS 12 and later (Apple silicon and Intel) | [`mixmusic-<version>-macos-universal.dmg`](https://github.com/fzn0x/mixmusic/releases/latest) |
-| Windows 10 and 11 (x64, Arm), installer | [`mixmusic-<version>-windows-<arch>-setup.exe`](https://github.com/fzn0x/mixmusic/releases/latest) |
-| Windows, portable, no installation | [`mixmusic-<version>-windows-<arch>-portable.zip`](https://github.com/fzn0x/mixmusic/releases/latest) |
-| Debian, Ubuntu and derivatives | [`mixmusic-<version>-linux-<arch>.deb`](https://github.com/fzn0x/mixmusic/releases/latest) |
-| Fedora, openSUSE and derivatives | [`mixmusic-<version>-linux-<arch>.rpm`](https://github.com/fzn0x/mixmusic/releases/latest) |
-| Arch Linux and derivatives (coming soon) | [`mixmusic-bin`](https://aur.archlinux.org/packages/mixmusic-bin) on the AUR: `yay -S mixmusic-bin` |
-| Any Linux, one file | [`mixmusic-<version>-linux-<arch>.AppImage`](https://github.com/fzn0x/mixmusic/releases/latest) |
-| Any Linux, sandboxed (Flatpak) | [`mixmusic-<version>-linux-<arch>.flatpak`](https://github.com/fzn0x/mixmusic/releases/latest) |
-| Any Linux, in your home folder | [`mixmusic-<version>-linux-<arch>.tar.gz`](https://github.com/fzn0x/mixmusic/releases/latest), with `install.sh` |
-
-`<arch>` is `amd64` for x64 and `arm64` for Arm. Each release lists
-`SHA256SUMS` to check the downloads with. You don't need the files named
-`update-…`, `….delta`, `mixmusic-<version>-macos-…` or
-`-windows-<arch>.tar.gz`: installed apps update from them.
-
-The installers, the portable zip and the Linux archive update themselves.
-The `.deb`, the `.rpm`, the AppImage and the Flatpak can't replace their
-own files, so MixMusic tells you when a new version is out and downloads
-it for you. The AUR's `mixmusic-bin` updates with the rest of your
-system. For the portable zip, unpack it anywhere and open
-`MixMusic.exe`. For the AppImage, make it executable (`chmod +x`) and open
-it. For the Flatpak, open it with your software center, or run
-`flatpak install ./mixmusic-<version>-linux-<arch>.flatpak`; the first time,
-Flatpak fetches the GNOME runtime from Flathub.
-
-On a Mac, [Homebrew](https://brew.sh) installs MixMusic too, and
-`brew upgrade` updates it:
+**macOS 首次打开**：应用还没有经过 Apple 公证，第一次需要在 系统设置 › 隐私与安全性 里点"仍要打开"，或者在终端运行：
 
 ```sh
-brew install --cask fzn0x/tap/mixmusic
+xattr -dr com.apple.quarantine /Applications/Mixyun.app
 ```
 
-### The first launch
+**Windows 首次打开**：安装包还没有签名，如果 SmartScreen 弹出警告，点"更多信息" › "仍要运行"。
 
-- **macOS:** the app isn't notarized by Apple yet, so the first time you
-  open it, macOS says it can't check it. Open it anyway from System
-  Settings › Privacy & Security › Open Anyway, or run this once in
-  Terminal:
+装好后应用会自动检查并安装更新。
 
-  ```sh
-  xattr -dr com.apple.quarantine /Applications/MixMusic.app
-  ```
-- **Windows:** the installer isn't signed yet, so SmartScreen may warn
-  about it: choose More info, then Run anyway. Signing in to YouTube Music
-  and playing Spotify in MixMusic need the WebView2 Runtime, which Windows
-  11 includes.
-- **Linux:** MixMusic needs GTK 3, and PulseAudio (PipeWire serves it too)
-  or ALSA. Signing in to YouTube Music needs WebKitGTK 4.1, the tray icon
-  needs `libayatana-appindicator3`, and keeping your sign-ins in the
-  system's keyring needs `libsecret`. The `.deb` and the `.rpm` install
-  them, and the Flatpak brings them with it; for the AppImage and the
-  archive:
+## 使用
 
-  ```sh
-  # Debian and Ubuntu
-  sudo apt install libgtk-3-0 libpulse0 libwebkit2gtk-4.1-0 libayatana-appindicator3-1 libsecret-1-0
-  # Fedora
-  sudo dnf install gtk3 pulseaudio-libs webkit2gtk4.1 libayatana-appindicator-gtk3 libsecret
-  ```
-- **Every system:** MixMusic finds the audio of most YouTube Music tracks
-  itself. For the rest, such as tracks made for children, it uses
-  [yt-dlp](https://github.com/yt-dlp/yt-dlp), which it installs for you
-  from Settings › Playback and keeps up to date. yt-dlp needs a JavaScript
-  runtime: [Deno](https://deno.com), Node.js, Bun or QuickJS. The Flatpak
-  has Node.js.
+- **网易云音乐**：在 设置 › 账号 登录后，可以用自己的歌单、喜欢的音乐和心动模式，VIP 账号还能播放更高音质。
+- **Spotify**：需要 Spotify Premium，在 设置 › 账号 登录。
 
-### The Flatpak
+## 从源码构建
 
-The Flatpak runs MixMusic in a sandbox, which sees the network, the sound
-server, the display and the GPU, and none of your home folder. MixMusic
-keeps its settings and library in `~/.var/app/io.github.fzn0x.mixmusic`,
-apart from a `.deb`, `.rpm`, AppImage or archive copy, and both can run at
-once. To bring a copy's settings and library over, quit both, copy
-`settings.json`, `library.json`, `queue.json` and the `addons` folder from
-`~/.config/MixMusic` into `~/.var/app/io.github.fzn0x.mixmusic/config/MixMusic`,
-and sign in to your accounts again: sign-ins stay in the other copy's
-keyring.
+需要 [Go](https://go.dev/dl/) 1.27.3 或更高版本、[Bun](https://bun.sh) 1.2 或更高版本，以及 Git：
 
-In the Flatpak, start at login goes through your desktop, which may ask
-you first, and a yt-dlp of your own must be in
-`~/.var/app/io.github.fzn0x.mixmusic`, as the sandbox sees no other
-folder. A Discord app that isn't a Flatpak shows what plays only if it
-was running when MixMusic started, until it restarts; Discord as a
-Flatpak works either way. The Flatpak is new: tell us in an
-[issue](https://github.com/fzn0x/mixmusic/issues) how it runs on your
-desktop.
-
-### Accounts (all optional)
-
-- **YouTube Music:** choose Sign in to YouTube Music in Settings › Accounts
-  and sign in to Google in the window that opens. What you type goes to
-  Google only. MixMusic keeps the session encrypted, with a key in your
-  system's keyring where there is one. Where that window can't open, or
-  Google refuses it, sign in with your own browser, which MixMusic opens
-  with a new profile of its own and deletes once you're in; import the
-  session of a browser you signed in with (MixMusic reads it with its
-  yt-dlp, and keeps YouTube's cookies alone); or paste the Cookie header
-  of a signed-in music.youtube.com tab.
-- **Spotify:** Spotify lets an app serve up to five users, and only while
-  its owner has Premium, so you sign in with a Spotify app of your own. It
-  takes two minutes: [docs/spotify.md](docs/spotify.md) walks you through
-  it.
-- **Last.fm:** create an API account at
-  [last.fm/api/account/create](https://www.last.fm/api/account/create)
-  (any name, no callback URL), paste its API key and shared secret in
-  Settings › Accounts, and approve MixMusic in your browser.
-- **Discord:** while the Discord app runs, your profile shows what you
-  listen to. Turn it off in Settings › Desktop.
-
-Something not working? [docs/troubleshooting.md](docs/troubleshooting.md)
-covers the common problems and the known issues.
-
-## Build from source
-
-You need [Go](https://go.dev/dl/) 1.27.3 or later, [Bun](https://bun.sh)
-1.2 or later, which runs MyGo's command line, and Git. MyGo needs no C
-compiler, so any system builds MixMusic for every system.
-
-### Windows
-
-```powershell
-winget install GoLang.Go
-winget install Oven-sh.Bun
-winget install Git.Git
-```
-
-Open a new terminal, then:
-
-```powershell
-git clone https://github.com/fzn0x/mixmusic
-cd mixmusic
+```sh
+git clone https://github.com/Shizuku11451/mixyun
+cd mixyun
 bun install
-bun run dev
+bun run dev     # 开发模式运行
+bun run build   # 构建安装包，输出到 build/
 ```
 
-Signing in and Spotify playback need the WebView2 Runtime, which Windows 11
-includes. On Windows 10, install it from
-[Microsoft](https://developer.microsoft.com/microsoft-edge/webview2/).
+Linux 还需要 GTK、PulseAudio、WebKitGTK 等运行库，详见[英文 README](README.en.md)。
 
-### macOS
+## 隐私
 
-With [Homebrew](https://brew.sh):
+混云没有自己的账号体系和服务器，也不做统计和遥测。登录信息保存在系统钥匙串里，只发给对应的音乐服务。
 
-```sh
-brew install go oven-sh/bun/bun
-git clone https://github.com/fzn0x/mixmusic
-cd mixmusic
-bun install
-bun run dev
-```
+## 许可证
 
-### Linux
-
-Install Go from [go.dev/dl](https://go.dev/dl/) (distribution packages are
-often older than 1.27.3), then Bun and the libraries MixMusic runs with:
-
-```sh
-curl -fsSL https://bun.sh/install | bash
-# Debian and Ubuntu
-sudo apt install git libgtk-3-0 libpulse0 libwebkit2gtk-4.1-0 libayatana-appindicator3-1 libsecret-1-0
-# Fedora
-sudo dnf install git gtk3 pulseaudio-libs webkit2gtk4.1 libayatana-appindicator-gtk3 libsecret
-```
-
-Then:
-
-```sh
-git clone https://github.com/fzn0x/mixmusic
-cd mixmusic
-bun install
-bun run dev
-```
-
-### Nix
-
-With [Nix](https://nixos.org), `nix develop` gives you the tools releases
-are built with, at the versions `flake.lock` pins: Go, Bun, NSIS,
-GoReleaser and Zola. `nix build` builds MixMusic for Linux from source,
-into `result/`.
-
-### Develop
-
-`bun run dev` builds the app, starts it, and rebuilds it as you edit. Its
-data stays apart from an installed MixMusic, under the name
-`MixMusic Dev`.
-
-```sh
-bun run build:plugins          # the plugins' JavaScript, from their TypeScript
-go test ./...                  # the app's tests
-bun run typecheck              # the plugin SDK and the community's plugins
-go run ./tools/registry -check # the community registry
-bun run build                  # the packaged app for this system, in build/
-bun run build -- -platform windows/amd64,linux/amd64,linux/arm64
-```
-
-In the Nix shell, build Linux downloads with
-`.github/scripts/build.sh linux/amd64,linux/arm64`, as releases do. A plain
-`bun run build` there makes a Linux program that asks for Nix's own loader,
-and it starts only on NixOS. `go run ./tools/elfloader build/linux-amd64`
-checks a build.
-
-The [website](https://fzn0x.github.io/mixmusic/) is in `site/`, built with
-[Zola](https://www.getzola.org), and the guides in `docs/` are its
-`/docs/` pages. `go run ./tools/sitedocs && zola --root site serve`
-previews it. Releases are built in the Nix shell and published by
-[GoReleaser](https://goreleaser.com) (`.goreleaser.yaml`).
-
-[docs/architecture](docs/architecture/README.md) explains how the parts fit
-together.
-
-### Layout
-
-The app is the root package, with the packages of `internal/` under it. The
-packages outside `internal/` are for anyone to import, and documented on
-[pkg.go.dev](https://pkg.go.dev/github.com/fzn0x/mixmusic).
-
-```
-*.go                 the app and its windows: the pages, the player bar, the
-                     mini player, the tray, media keys, deep links
-fonts/               the typefaces the windows draw with
-internal/app         the services the windows call, and the desktop integration
-internal/player      the queue, played by the audio engine or on Spotify's devices
-internal/audio       MixMusic's audio engine, and the system's audio output
-internal/plugins     plugins, each in a JavaScript engine of its own
-internal/youtube     YouTube Music's catalog, and your account there
-internal/spotify     the Spotify Web API, its sign-in and Spotify Connect
-internal/stream      audio streams, from YouTube or yt-dlp, opened for the engine
-internal/match       Spotify tracks matched to their YouTube Music recordings
-internal/romaji      Japanese lyrics in romaji, kanji read by kagome
-internal/library     liked and disliked songs, mixes, history and stats
-internal/lastfm      scrobbling to Last.fm
-internal/discord     what plays, on your Discord profile
-internal/diag        the log, without secrets, and the reports of crashes
-internal/addons      themes and plugins, and the community registry
-builtin/themes       the themes MixMusic ships with
-public/              the page of Spotify's player, on Windows
-sdk/                 the types of the plugin API
-community/           community themes and plugins, and their registry
-```
-
-The packages you can import:
-
-```
-opus/                an Opus decoder in pure Go, a port of libopus's
-aac/                 an AAC-LC decoder in pure Go
-ac3/                 an AC-3 and E-AC-3 decoder in pure Go, written from ATSC A/52
-webm/                the audio of WebM files: packets, times and seeking
-mp4/                 the audio of MP4 files: packets, times and seeking
-resample/            sample rate conversion, with Kaiser-windowed sincs
-lyrics/              synced lyrics from Unison and LRCLIB, and translations
-brand/               MixMusic's logo, for code that draws it
-```
-
-## Community
-
-Anyone can install community themes and plugins from the marketplace, the
-store icon in the sidebar, and you can add yours.
-
-### Make a theme
-
-A theme is a `theme.json` file that sets colors, fonts and corners, which
-show in the layout the user chose.
-[docs/themes.md](docs/themes.md) lists every token and shows a complete
-theme. To try yours, put its folder in the themes folder (Settings ›
-Appearance › open themes folder) and choose it in Settings › Appearance.
-
-### Make a plugin
-
-A plugin is a small module, written in TypeScript or JavaScript, that adds
-pages, commands, track actions and widgets.
-[docs/plugins.md](docs/plugins.md) documents the API, with its
-[types](sdk/index.d.ts) for your editor. The community's
-[sleep timer](community/plugins/sleep-timer) and
-[spectrum](community/plugins/spectrum) are working examples.
-
-### Share it
-
-1. Fork this repository.
-2. Add one folder: `community/themes/<id>/` for a theme, or
-   `community/plugins/<id>/` for a plugin, with its `plugin.json` and its
-   `index.ts`.
-3. Run `bun run build:plugins`, `go run ./tools/registry` and
-   `go run ./tools/registry -check`.
-4. Open a pull request.
-
-Once it is merged, CI publishes it to the
-[registry branch](https://github.com/fzn0x/mixmusic/tree/registry), and it
-shows up in everyone's marketplace. [community/README.md](community/README.md)
-has the details.
-
-## Privacy
-
-MixMusic has no account, server, analytics or telemetry of its own. It
-talks to:
-
-- **YouTube and Google:** YouTube Music's catalog, its streams and how loud
-  each track is, asked for while signed out, and the artwork; some streams
-  through yt-dlp. Signed in, your library there, and, unless you turn it
-  off in Settings › Accounts, the tracks you play, which join your YouTube
-  Music history.
-- **Spotify,** once you sign in: your library, your Spotify Connect devices,
-  and Spotify's player, loaded from `sdk.scdn.co`, when Spotify plays in
-  MixMusic.
-- **Unison:** the video ID of the track that plays, or, without one, its
-  title, artists, album and length, to find its lyrics. Only while you
-  turn on translate, or romanize, beside the lyrics, the lyrics of the
-  track that plays, with its video ID, which Unison has Google translate.
-- **LRCLIB:** the title, artists, album and length of the track that plays,
-  to find its lyrics.
-- **GitHub:** a check for a new version at start and every few hours,
-  which you can turn off in Settings › About; the community registry when
-  you open the marketplace; the downloads of yt-dlp; and, the first time
-  you turn on romaji beside Japanese lyrics, the dictionary of the
-  readings of kanji (11.7 MB). Romaji is made on your computer: the
-  lyrics aren't sent.
-- **Last.fm,** once you connect it: what you play.
-- **Discord,** unless you turn it off: what plays, sent to the Discord app
-  on your computer, which shows it on your profile.
-
-What it keeps on your computer:
-
-- Your settings and library (liked and disliked songs, mixes, history and
-  recent searches), in the folder Settings › About names.
-- The tracks you played, in the cache, as much as you allow in Settings ›
-  Playback, and how loud YouTube measured them.
-- The covers you saw, up to 256 MB.
-- The translations of lyrics you turned on, by track and language, and
-  the dictionary romaji reads kanji with, once you turned it on.
-- Your sign-ins, the YouTube Music session included, in the system's
-  keyring. On Windows, when the Credential Manager can't keep one, it goes
-  in a file encrypted for your Windows account; on Linux without a
-  keyring, in files only your user can read.
-- The log, without your sign-ins.
-
-The library's history page clears what you played, Settings › Playback
-clears the cache and the covers, and signing out of a service deletes its
-sign-in.
-
-On Windows, the visualizer hears the audio of Spotify playing on this
-computer, in MixMusic or in the Spotify app, through Windows' process
-loopback, which hears only that app. On macOS 14.2 and later, it hears
-Spotify playing in MixMusic through a process tap, once you allow it, as
-macOS asks. It analyzes the audio in memory and never records or sends
-it.
-
-## Credits
-
-MixMusic is built on these projects:
-
-- **[MyGo](https://github.com/egoist/mygo)**, the desktop framework MixMusic
-  is built with. MixMusic uses MyGo's native UI: MyGo draws every window
-  itself, in Go, without a webview, from the pages and the player bar to the
-  mini player. Its command line packages the app, with its installers and
-  the signed updates it updates itself from.
-- **[Go](https://go.dev)**, the language of the app, with
-  [purego](https://github.com/ebitengine/purego), which calls the system's
-  libraries without cgo, and [golang.org/x/image](https://pkg.go.dev/golang.org/x/image)
-  and [golang.org/x/text](https://pkg.go.dev/golang.org/x/text).
-- **[Sobek](https://github.com/grafana/sobek)**, the JavaScript engine each
-  plugin runs in.
-- **[Nix](https://nixos.org)**, which pins the tools releases are built
-  with, and builds MixMusic for Linux from source.
-- **[GoReleaser](https://goreleaser.com)**, which publishes the releases, and
-  its [nFPM](https://nfpm.goreleaser.com), which makes the RPM packages.
-- **[Bun](https://bun.sh)**, which runs the build, and
-  **[TypeScript](https://www.typescriptlang.org)**, which compiles the
-  plugins and checks the plugin SDK's types.
-- **[Zola](https://www.getzola.org)**, which builds the website.
-- **[NSIS](https://nsis.sourceforge.io)**, which makes the Windows
-  installers, and [appimagetool](https://github.com/AppImage/appimagetool),
-  the AppImages.
-- **[yt-dlp](https://github.com/yt-dlp/yt-dlp)**, which finds the audio of
-  the tracks MixMusic can't find itself.
-- **[Unison](https://unison.betterlyrics.org)**, the open, crowdsourced database of
-  lyrics, under the ODbL, and **[LRCLIB](https://lrclib.net)**, the open
-  database of synced lyrics.
-- **[kagome](https://github.com/ikawaha/kagome)**, the Japanese
-  morphological analyser that reads the kanji of lyrics for their romaji,
-  with the IPA dictionary of
-  [kagome-dict](https://github.com/ikawaha/kagome-dict), made from
-  mecab-ipadic, which MixMusic downloads the first time romaji is turned
-  on.
-- **[libopus](https://opus-codec.org)**, whose decoder the Opus decoder is a
-  port of, and **[SharpJaad](https://github.com/jimm98y/SharpJaad)**, the C#
-  port of [JAAD](https://sourceforge.net/projects/jaadec/) the AAC decoder
-  derives from.
-- **[FFmpeg](https://ffmpeg.org)**, which the decoders' tests compare with.
-- **[Selawik](https://github.com/microsoft/Selawik)**,
-  **[Quicksand](https://github.com/andrew-paglinawan/QuicksandFamily)**,
-  **[Roboto Flex](https://github.com/googlefonts/roboto-flex)** and
-  **[Archivo](https://github.com/Omnibus-Type/Archivo)**, the typefaces of
-  the windows.
-- **[Material Color Utilities](https://github.com/material-foundation/material-color-utilities)**,
-  whose HCT color science the Material themes' colors are a port of.
-- **[Kevin MacLeod](https://incompetech.com)**, whose music, under
-  [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), plays on the
-  website.
-
-## Contributing
-
-Fixes, features, themes, plugins and bug reports are all welcome.
-
-- **Report a problem** from Settings › About › report a problem. It opens a
-  new GitHub issue with your version, system, theme and plugins filled in.
-  Or [open an issue](https://github.com/fzn0x/mixmusic/issues/new) yourself.
-- **Send a change** as a pull request. [CONTRIBUTING.md](CONTRIBUTING.md)
-  explains the checks to run, the commit style, and the changelog entry
-  that a change people will notice needs.
-- **Share a theme or a plugin:** see [Community](#community).
-
-[CONTRIBUTORS.md](CONTRIBUTORS.md) thanks the people whose code, ideas and
-reports shaped MixMusic.
-
-## License
-
-MixMusic is dual-licensed: use it under the [MIT license](LICENSE-MIT) or
-the [GNU General Public License, version 3](LICENSE-GPL), whichever you
-prefer. Contributions are accepted under both. The typefaces in `fonts` are
-under the SIL Open Font License: [Selawik's](fonts/OFL.txt),
-[Quicksand's](fonts/quicksand-OFL.txt),
-[Roboto Flex's](fonts/robotoflex-OFL.txt) and
-[Archivo's](fonts/archivo-OFL.txt). The Opus decoder is a port of
-libopus, under [its BSD license](opus/LICENSE.libopus), the AAC decoder
-derives from SharpJaad, under [its MIT license](aac/LICENSE.sharpjaad), and
-the HCT color science is a port of Material Color Utilities, under
-[its Apache license](internal/hct/LICENSE.material-color-utilities).
-
-MixMusic is not affiliated with, endorsed by or sponsored by Spotify,
-Google or NetEase. It plays what these services offer their users, through
-the services' own interfaces; use it as their terms allow. Spotify, YouTube
-Music and NetEase Cloud Music (网易云音乐) are trademarks of their owners.
+可任选 [MIT](LICENSE-MIT) 或 [GPL-3.0](LICENSE-GPL) 使用，与原项目 MixMusic 相同。
