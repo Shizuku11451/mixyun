@@ -52,3 +52,4 @@ DESIGN.md
 
 # What wrangler keeps beside site/wrangler.jsonc.
 .wrangler/
+/mixmusic
