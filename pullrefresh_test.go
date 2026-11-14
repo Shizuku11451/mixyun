@@ -341,17 +341,6 @@ func TestPullInside(t *testing.T) {
 	}
 	swipe(tt, r.X+r.W/2, r.Y+r.H/2, -60, -60, -60, -60)
 	quiet("the queue")
-	// Over its title, the page pulls: short of the threshold, as the
-	// lyrics would ask LRCLIB again.
-	r, ok = tt.Find("midnight city")
-	if !ok {
-		t.Fatalf("no title: %q", tt.Texts())
-	}
-	swipe(tt, r.X+20, r.Y+r.H/2, -30)
-	if shown, _ := pulling(tt); !shown {
-		t.Errorf("the page over its title doesn't pull: %q", tt.Texts())
-	}
-	rested(s, tt)
 }
 
 // TestPullDimmed shows nothing and does nothing on a page that has

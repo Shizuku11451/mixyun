@@ -372,32 +372,6 @@ func TestQueueMenu(t *testing.T) {
 	s.settle(t, func(st player.State) bool { return len(st.Queue) == len(testTracks)-1 })
 }
 
-// TestNowPlayingRelated shows what YouTube Music relates to the track
-// under the player, and nothing for a track it relates nothing to.
-func TestNowPlayingRelated(t *testing.T) {
-	s := newTestShell(t)
-	lua := testTrack("yt:9", "Lua", "Bright Eyes", "I'm Wide Awake, It's Morning", media.SourceYouTube)
-	s.loads["related-"+testTracks[0].ID] = &loaded[[]media.Shelf]{done: true, value: []media.Shelf{
-		{Title: "you might also like", Items: []media.Item{{Kind: media.ItemTrack, Track: &lua}}},
-	}}
-	s.panel = ""
-	s.p.PlayTracks(testTracks, 0)
-	s.settle(t, func(st player.State) bool { return st.Playing })
-	// The shelf is below the fold of a window of the usual size.
-	tt := testerOf(t, s, 1280, 1800)
-	show(s, tt, "/now-playing")
-	if !tt.HasText("you might also like") || !tt.HasText("Lua") {
-		t.Fatalf("no related shelf: %q", tt.Texts())
-	}
-	s.p.Next()
-	s.settle(t, func(st player.State) bool { return st.Index == 1 })
-	tt.Frame()
-	tt.Advance(time.Second)
-	if tt.HasText("you might also like") {
-		t.Error("the shelf of the track before stays")
-	}
-}
-
 // TestLyricsTwice shows the lyrics on the now playing page and in the side
 // panel at once, each in a list of its own.
 func TestLyricsTwice(t *testing.T) {

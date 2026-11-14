@@ -1,51 +1,49 @@
 package main
 
 import (
-	"context"
-
 	"github.com/egoist/mygo/ui"
 
-	"github.com/fzn0x/mixmusic/internal/media"
 	"github.com/fzn0x/mixmusic/locales"
 )
 
 // nowPlayingPage gives the track playing the whole pane: its sleeve under
 // a visualizer, or the picture of a music video, with its credits under
-// it, its lyrics, and what relates to it.
+// it, and its lyrics.
 func (s *shell) nowPlayingPage(c *ui.Context) {
 	k := &s.lk
 	cur, ok := s.st.Current()
-	s.pageScroll(c, func() {
-		if !ok {
+	if !ok {
+		s.pageScroll(c, func() {
 			s.pageHeader(c, locales.NowPlayingTitle(), nil, nil)
 			ui.Text(c, k.words(locales.NowPlayingNothing())).FontSize(k.bigSize()).FontWeight(k.displayWeight()).Font(k.display).TextColor(k.accent)
 			ui.Text(c, locales.NowPlayingEmpty()).FontSize(k.subtitleSize()).FontWeight(k.leadWeight())
-			return
-		}
+		})
+		return
+	}
+	// The page fits the pane and doesn't scroll: only its lyrics do.
+	ui.Column(c).Grow(1).MinWidth(0).MinHeight(0).Padding(8, k.gutter, 24).Gap(24).Children(func() {
 		t := cur.Track
-		s.pageHeader(c, t.Title, nil, nil)
+		ui.Text(c, t.Title).FontSize(k.titleSize()).FontWeight(k.displayWeight()).Font(k.display).
+			LetterSpacing(k.tracking(-0.02, k.titleSize())).TextColor(k.text).SingleLine().MinWidth(0).Shrink(0)
 		pane := s.paneWidth(c) - 2*k.gutter
 		// The sleeve goes above the lyrics only where both can't sit side by side.
 		stack := pane < 640
-		grid := ui.Row(c.Key("now-grid")).Gap(48).AlignItems(ui.Start)
+		grid := ui.Row(c.Key("now-grid")).Gap(48).AlignItems(ui.Start).Grow(1).MinHeight(0)
 		if stack {
-			grid.Column()
+			grid.Column().AlignItems(ui.Stretch)
 		}
-		// Beside the sleeve, the lyrics fill the window's height under the
-		// head, however tall it is, and the sleeve grows with the room.
-		room := float32(420)
-		if top, _, ok := s.downPage(grid); ok && !stack {
-			room = max(room, s.here.view-top-32)
-		}
-		// Bounds are the frame before's: one more frame settles a resize.
+		// The grid takes the height under the title; the sleeve grows with
+		// it, leaving room for the credits under it. Bounds are the frame
+		// before's: one more frame settles a resize.
+		room := max(grid.LayoutBounds().H, 300)
 		if room != s.lyricsView.room {
 			s.lyricsView.room = room
 			c.Invalidate()
 		}
-		sleeve := min(max(260, pane*0.4), max(420, room-48))
-		if stack && s.here.view > 0 {
-			// Above the lyrics, it leaves them room in the window.
-			sleeve = min(sleeve, max(200, s.here.view*0.4))
+		sleeve := min(max(200, pane*0.4), room-48)
+		if stack {
+			// Above the lyrics, it leaves them room.
+			sleeve = min(pane, max(160, room*0.4))
 		}
 		// The transport is the player bar's: the pane keeps the lyrics room.
 		grid.Children(func() {
@@ -73,26 +71,12 @@ func (s *shell) nowPlayingPage(c *ui.Context) {
 					s.videoToggle(c)
 				})
 			})
-			ui.Column(c).Grow(1).MinWidth(0).Gap(24).Children(func() {
-				ui.Column(c).Height(room).Children(func() { s.lyrics(c, true) })
+			ui.Column(c).Grow(1).MinWidth(0).MinHeight(0).AlignSelf(ui.Stretch).Gap(24).Children(func() {
+				ui.Column(c).Grow(1).MinHeight(0).Children(func() { s.lyrics(c, true) })
 				s.pluginWidgets(c)
 			})
 		})
-		s.related(c, t)
 	})
-}
-
-// related shows what YouTube Music relates to the track, under the player:
-// songs, playlists and artists like it. When it fails, the page goes
-// without it.
-func (s *shell) related(c *ui.Context, t media.Track) {
-	res := fetch(s, "related-"+t.ID, func(ctx context.Context) ([]media.Shelf, error) {
-		return s.svc.Catalog.Related(ctx, t)
-	})
-	if !res.done || res.err != nil || len(res.value) == 0 {
-		return
-	}
-	ui.Column(c).Margin(48, 0, 0).Children(func() { s.shelves(c, "now-related", res.value) })
 }
 
 // visualizer draws the spectrum of what plays over the foot of the sleeve,
