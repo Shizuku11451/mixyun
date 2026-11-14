@@ -13136,11 +13136,11 @@ func (msgs Messages) TrackInfoEngineLive() string {
 	return Catalog.Format(msgs.locale, "trackInfoEngineLive", nil)
 }
 
-// TrackInfoEngineStreamed says "streamed from YouTube"
+// TrackInfoEngineStreamed says "streamed"
 // in the language the app shows.
 func TrackInfoEngineStreamed() string { return In(i18n.Locale()).TrackInfoEngineStreamed() }
 
-// TrackInfoEngineStreamed says "streamed from YouTube"
+// TrackInfoEngineStreamed says "streamed"
 // in the language of msgs.
 func (msgs Messages) TrackInfoEngineStreamed() string {
 	return Catalog.Format(msgs.locale, "trackInfoEngineStreamed", nil)
@@ -13192,11 +13192,11 @@ func (msgs Messages) TrackInfoMeasuredLeave(lkfs string, ceiling string) string 
 	return Catalog.Format(msgs.locale, "trackInfoMeasuredLeave", map[string]any{"lkfs": lkfs, "ceiling": ceiling})
 }
 
-// TrackInfoFileLoudness says "It plays at its own level: Even loudness turns tracks down from YouTube's measure of each, which a file on this compu…"
+// TrackInfoFileLoudness says "It plays at its own level: Even loudness turns tracks down from a measure of each, which a file on this computer hasn't."
 // in the language the app shows.
 func TrackInfoFileLoudness() string { return In(i18n.Locale()).TrackInfoFileLoudness() }
 
-// TrackInfoFileLoudness says "It plays at its own level: Even loudness turns tracks down from YouTube's measure of each, which a file on this compu…"
+// TrackInfoFileLoudness says "It plays at its own level: Even loudness turns tracks down from a measure of each, which a file on this computer hasn't."
 // in the language of msgs.
 func (msgs Messages) TrackInfoFileLoudness() string {
 	return Catalog.Format(msgs.locale, "trackInfoFileLoudness", nil)

@@ -114,7 +114,7 @@ func TestTrackInfoOfAFile(t *testing.T) {
 	s.showTrackInfo(track)
 	until(t, s, tt, "the dialog", func() bool { return tt.HasText("FLAC") })
 	if !hasAll(t, tt, "A file on this computer", "44.1 kHz", "16-bit", "Stereo", "3:31", path, "22 MB", "About 872 kbit/s, on average",
-		"its tags", "Low Water", "2011", "Even loudness turns tracks down from YouTube's measure of each") {
+		"its tags", "Low Water", "2011", "Even loudness turns tracks down from a measure of each") {
 		t.Fatalf("the dialog shows %q", tt.Texts())
 	}
 	click(t, s, tt, strings.ToLower(showInFolderLabel()))
@@ -170,7 +170,7 @@ func TestTrackInfoOfTheTrackPlaying(t *testing.T) {
 	tt.Advance(1100 * time.Millisecond)
 	until(t, s, tt, "what the engine plays", func() bool {
 		tt.Advance(100 * time.Millisecond)
-		return tt.HasText("In MixMusic's audio engine, streamed from YouTube, converted to 48 kHz")
+		return tt.HasText("In MixMusic's audio engine, streamed, converted to 48 kHz")
 	})
 	if !hasAll(t, tt, "AAC in MP4", "130 kbit/s", "44.1 kHz", "Stereo", "MixMusic has no measure of it yet: it plays at its own level.") {
 		t.Errorf("the dialog shows %q", tt.Texts())

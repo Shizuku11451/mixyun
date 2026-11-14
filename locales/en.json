@@ -3636,7 +3636,7 @@
   "trackInfoEngineDownload": "from its download",
   "trackInfoEngineCache": "from the offline cache",
   "trackInfoEngineLive": "live from YouTube",
-  "trackInfoEngineStreamed": "streamed from YouTube",
+  "trackInfoEngineStreamed": "streamed",
   "trackInfoEngineConverted": "{line}, converted to {rate}",
   "@trackInfoEngineConverted": {
     "placeholders": {
@@ -3678,7 +3678,7 @@
       }
     }
   },
-  "trackInfoFileLoudness": "It plays at its own level: Even loudness turns tracks down from YouTube's measure of each, which a file on this computer hasn't.",
+  "trackInfoFileLoudness": "It plays at its own level: Even loudness turns tracks down from a measure of each, which a file on this computer hasn't.",
   "trackInfoNoMeasure": "MixMusic has no measure of it yet: it plays at its own level.",
   "trackInfoLevelling": "{line} Volume levelling squeezes its loud and quiet moments closer together.",
   "@trackInfoLevelling": {
