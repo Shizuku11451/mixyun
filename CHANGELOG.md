@@ -6,6 +6,69 @@ All notable changes to MixMusic are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.7.2] - 2026-11-14
+
+### Changed
+
+- The Discord status's preview shows a Spotify song while nothing plays,
+  not one of YouTube Music.
+- Explore leaves the sidebar, and the home page no longer asks for yt-dlp;
+  Settings › Playback drops Even loudness, Skip songs made with AI and the
+  tools of yt-dlp, which served YouTube Music's tracks alone.
+- NetEase Cloud Music's lyrics light word by word as they are sung,
+  where NetEase has them timed so: they lit a line at a time.
+- The word being sung fills behind a soft edge, which fades from the
+  accent to the colour of the words to come, rather than a hard cut.
+- Now playing sets its lyrics semibold: light at that size read faint,
+  the more so in Chinese, Japanese and Korean.
+- Songs of NetEase Cloud Music download, as the MP3 or FLAC files they
+  come as, and Spotify tracks download again, through their recording
+  there: nothing but YouTube Music's audio did.
+- A song of NetEase Cloud Music the offline cache holds plays without
+  the network: it was looked for under another name.
+- NetEase Cloud Music plays in the quality Settings › Quality asks for:
+  lossless FLAC at best, where the account may have it, and 128 kbit/s
+  MP3 to save data. It played 320 kbit/s MP3 whatever the setting said.
+  Track info names the file, MP3 or FLAC.
+- The search box suggests again as you type: NetEase Cloud Music's
+  searches, and the songs, artists, albums and playlists it finds
+  first. It showed the recent searches alone.
+- Lyrics of NetEase Cloud Music translate into Chinese with NetEase's
+  own translation, where it has one: its listeners wrote it for the
+  song, line by line. Unison's translates the others, as before.
+- Now playing's lyrics fill the window's height beside the cover, and
+  the cover and the lyrics grow with a bigger window: they kept 420
+  pixels however big it was. In a narrow window the cover and the
+  lyrics stay side by side longer, and stacked, the cover leaves the
+  lyrics room.
+- Home's tiles, an album or playlist's cover and Stats' day chart grow
+  with a big window, and a narrow pane gives a track's title the album
+  column's room.
+- Now playing no longer scrolls: it fits the window, and only its lyrics
+  scroll. The song's title is smaller, and the songs related to it no
+  longer show under the page.
+- Roam goes on where its queue runs out, with more songs of the tag, or
+  after what you like, while autoplay is on: the radio of its last song
+  followed it.
+- Roam has a tile for what you like, once you signed in to NetEase Cloud
+  Music: it plays your liked songs and ones like them, as NetEase's
+  心动模式 picks them, rather than the hottest playlists of a tag.
+- Stats name each ring of the mix in a key under it, with its count:
+  the counts sat in the rings, unnamed, and ran into each other when
+  one service had few plays.
+
+### Fixed
+
+- Discord's status names NetEase Cloud Music for its songs, in {service}
+  and on the Listen button, which opens the song there.
+- Signing in to NetEase Cloud Music again works once its session ends:
+  the sign-in no longer finds the dead session and fails on it.
+- MixMusic no longer thinks it is offline where YouTube and Spotify are
+  blocked but NetEase Cloud Music answers.
+- The status bar lyrics button stays in the player bar however narrow
+  the window is: it was their only switch, and it went first when room
+  ran out. The output device button makes room for it now.
+
 ## [0.7.1] - 2026-11-13
 
 ### Changed
@@ -1818,7 +1881,8 @@ player, for macOS, Windows and Linux.
 - Apps for macOS 12 and later (Apple silicon and Intel), Windows 10 and 11,
   and Linux, on x64 and Arm64.
 
-[Unreleased]: https://github.com/fzn0x/mixmusic/compare/v0.7.1...HEAD
+[Unreleased]: https://github.com/fzn0x/mixmusic/compare/v0.7.2...HEAD
+[0.7.2]: https://github.com/fzn0x/mixmusic/compare/v0.7.1...v0.7.2
 [0.7.1]: https://github.com/fzn0x/mixmusic/compare/v0.7.0...v0.7.1
 [0.7.0]: https://github.com/fzn0x/mixmusic/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/fzn0x/mixmusic/compare/v0.5.11...v0.6.0
