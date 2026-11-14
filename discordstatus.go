@@ -114,7 +114,7 @@ func discordUnknownNote(names []string) string {
 
 // discordSample is the track the preview shows while nothing plays.
 func discordSample() media.Track {
-	return media.Track{ID: "yt:sample", Source: media.SourceYouTube, Title: locales.DiscordSampleTitle(),
+	return media.Track{ID: "sp:sample", Source: media.SourceSpotify, Title: locales.DiscordSampleTitle(),
 		Artists: []media.Ref{{Name: locales.DiscordSampleArtist()}}, Album: &media.Ref{Name: locales.DiscordSampleAlbum()}, DurationMs: 214000}
 }
 

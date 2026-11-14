@@ -43,7 +43,7 @@ func TestDiscordStatusRows(t *testing.T) {
 			t.Errorf("the preview doesn't show %q: %q", text, tt.Texts())
 		}
 	}
-	for _, text := range []string{"Listen on YouTube Music", "YouTube Music"} {
+	for _, text := range []string{"Listen on Spotify", "Spotify"} {
 		if _, ok := tt.Find(text); ok {
 			t.Errorf("a new install's preview shows %q", text)
 		}
@@ -60,7 +60,7 @@ func TestDiscordStatusRows(t *testing.T) {
 	if !s.svc.Preferences.Get().DiscordListenButton {
 		t.Error("the switch didn't save discordListenButton")
 	}
-	if _, ok := tt.Find("Listen on YouTube Music"); !ok {
+	if _, ok := tt.Find("Listen on Spotify"); !ok {
 		t.Errorf("the preview has no button: %q", tt.Texts())
 	}
 	// The sample has no cover: its badge takes the cover's place.
@@ -68,7 +68,7 @@ func TestDiscordStatusRows(t *testing.T) {
 	if !s.svc.Preferences.Get().DiscordServiceBadge {
 		t.Error("the switch didn't save discordServiceBadge")
 	}
-	if _, ok := tt.Find("YouTube Music"); !ok {
+	if _, ok := tt.Find("Spotify"); !ok {
 		t.Errorf("the preview has no badge: %q", tt.Texts())
 	}
 	discordSwitch(t, s, tt, "Show the cover on Discord")
