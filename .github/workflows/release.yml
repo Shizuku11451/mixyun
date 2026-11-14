@@ -499,6 +499,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GORELEASER_CURRENT_TAG: ${{ env.TAG }}
+          REPOSITORY_NAME: ${{ github.event.repository.name }}
         run: nix develop --command goreleaser release --clean --release-notes "$RUNNER_TEMP/notes.md"
       # The Homebrew cask, Casks/mixmusic.rb of fzn0x/homebrew-tap, for
       # `brew install --cask fzn0x/tap/mixmusic`: tools/cask writes it for

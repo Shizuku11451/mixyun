@@ -21,9 +21,10 @@ checksum:
 
 release:
   github:
-    # The repository the workflow runs in: a fork releases on its own.
+    # The repository the workflow runs in, by its current name: a fork, or
+    # a renamed repository, releases on its own.
     owner: "{{ .Env.GITHUB_REPOSITORY_OWNER }}"
-    name: mixmusic
+    name: "{{ .Env.REPOSITORY_NAME }}"
   name_template: "Mixyun {{ .Tag }}"
   make_latest: true
   # release.yml run by hand builds an existing tag again: its release
