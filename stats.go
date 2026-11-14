@@ -317,12 +317,12 @@ func disclosure(c *ui.Context, deg float32, ink ui.Color) {
 // overlapping as the icon's, over a key that names each ring and its
 // count: counts in the rings would collide, and the overlap alone would
 // read as plays the two share.
-func (s *shell) venn(c *ui.Context, spotify, youtube int) {
+func (s *shell) venn(c *ui.Context, spotify, netease int) {
 	k := &s.lk
-	most := float64(max(spotify, youtube, 1))
+	most := float64(max(spotify, netease, 1))
 	rs := float32(20 + 70*math.Sqrt(float64(spotify)/most))
-	ry := float32(20 + 70*math.Sqrt(float64(youtube)/most))
-	ui.Box(c).Size(300, 200).Label(locales.StatsVennLabel(strconv.Itoa(spotify), strconv.Itoa(youtube))).
+	ry := float32(20 + 70*math.Sqrt(float64(netease)/most))
+	ui.Box(c).Size(300, 200).Label(locales.StatsVennLabel(strconv.Itoa(spotify), strconv.Itoa(netease))).
 		Draw(func(p *ui.Painter, r ui.Rect) {
 			cy := r.Y + 100
 			sx, yx := r.X+150-rs*0.55, r.X+150+ry*0.55
@@ -336,7 +336,7 @@ func (s *shell) venn(c *ui.Context, spotify, youtube int) {
 		for _, e := range []struct {
 			source media.Source
 			n      int
-		}{{media.SourceSpotify, spotify}, {media.SourceNetEase, youtube}} {
+		}{{media.SourceSpotify, spotify}, {media.SourceNetEase, netease}} {
 			ui.Row(c).Gap(8).AlignItems(ui.Center).Children(func() {
 				s.sourceMark(c, e.source, false)
 				ui.Text(c, sourceName(e.source)).FontSize(k.smallSize()).TextColor(k.muted)

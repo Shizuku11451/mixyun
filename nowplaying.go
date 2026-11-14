@@ -35,12 +35,15 @@ func (s *shell) nowPlayingPage(c *ui.Context) {
 		// The grid takes the height under the title; the sleeve grows with
 		// it, leaving room for the credits under it. Bounds are the frame
 		// before's: one more frame settles a resize.
-		room := max(grid.LayoutBounds().H, 300)
+		room := grid.LayoutBounds().H
+		if room <= 0 {
+			room = 300 // the first frame has no bounds yet
+		}
 		if room != s.lyricsView.room {
 			s.lyricsView.room = room
 			c.Invalidate()
 		}
-		sleeve := min(max(200, pane*0.4), room-48)
+		sleeve := max(0, min(max(200, pane*0.4), room-48))
 		if stack {
 			// Above the lyrics, it leaves them room.
 			sleeve = min(pane, max(160, room*0.4))
