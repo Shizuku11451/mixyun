@@ -92,7 +92,8 @@ func (s *shell) toolProblems(c *ui.Context) {
 	}
 }
 
-func init() { addSettings("playback", 90, (*shell).toolSettings) }
+// The row is not shown: it serves YouTube Music's tracks alone, which
+// NetEase Cloud Music took the place of in the interface.
 
 // toolSettings show the tools MixMusic runs, and install yt-dlp.
 func (s *shell) toolSettings(c *ui.Context) {

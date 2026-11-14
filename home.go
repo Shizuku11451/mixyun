@@ -34,7 +34,6 @@ func (s *shell) homePage(c *ui.Context) {
 			return
 		}
 		s.pageHeader(c, locales.HomeTitle(), homeFilterLabels(), &s.homeFilter)
-		s.toolProblems(c)
 		accounts := fetch(s, "accounts", func(ctx context.Context) (app.AccountsStatus, error) { return s.svc.Accounts.Status(ctx), nil })
 
 		// The track played last, as the library has it now.

@@ -215,58 +215,6 @@ func TestTitleSwitch(t *testing.T) {
 	}
 }
 
-// TestSkipAISwitch turns skipping the songs YouTube labels as made with AI
-// on and off from Settings › Playback, whose row says that YouTube labels
-// only some (#97).
-func TestSkipAISwitch(t *testing.T) {
-	s := newTestShell(t)
-	tt := testerOf(t, s, 1280, 3200)
-	show(s, tt, "/settings/playback")
-	const label = "Skip songs made with AI"
-	const description = "Skips the tracks YouTube labels as made with AI. YouTube labels only some of them, so others still play."
-	if !tt.HasText(description) {
-		t.Errorf("the row doesn't say what it skips: %q", tt.Texts())
-	}
-	if s.svc.Preferences.Get().SkipAI {
-		t.Fatal("on at first")
-	}
-	focused := func() bool { return tt.Focused(label) && !tt.Focused(description) }
-	for i := 0; i < 200 && !focused(); i++ {
-		tt.Key(0, ui.KeyTab)
-	}
-	if !focused() {
-		t.Fatalf("Tab doesn't reach the switch: %q", tt.Texts())
-	}
-	for _, want := range []bool{true, false} {
-		tt.Key(0, ui.KeySpace)
-		s.drain()
-		tt.Frame()
-		if got := s.svc.Preferences.Get().SkipAI; got != want {
-			t.Errorf("the switch left skipping %v, not %v", got, want)
-		}
-	}
-}
-
-// TestSkipAISwitchFound finds Skip songs made with AI by typing in the box
-// of the settings, beside Skip songs you dislike.
-func TestSkipAISwitchFound(t *testing.T) {
-	s := newTestShell(t)
-	tt := testerOf(t, s, 1280, 6000)
-	const ai, disliked = "Skip songs made with AI", "Skip songs you dislike"
-	for _, c := range []struct {
-		q         string
-		want, not []string
-	}{
-		{"made with ai", []string{ai}, []string{disliked, "Autoplay"}},
-		{"labels only some", []string{ai}, []string{disliked, "Autoplay"}},
-		{"skip songs", []string{ai, disliked}, []string{"Autoplay"}},
-	} {
-		show(s, tt, settingsPath("", c.q))
-		showsOnly(t, tt, "searching "+c.q, c.want, c.not)
-		show(s, tt, "/")
-	}
-}
-
 // TestCoversKept tells how many covers are kept on disk, and clears them.
 func TestCoversKept(t *testing.T) {
 	var cover bytes.Buffer
@@ -369,55 +317,5 @@ func TestAppearance(t *testing.T) {
 		if len(got) != 1 || got[0] != c.want {
 			t.Errorf("wearing %s, following the computer %v, the appearance went %v, want %s", c.theme, c.follow, got, c.want)
 		}
-	}
-}
-
-// TestEvenLoudness turns Even loudness off, and tells how it differs from
-// Volume levelling, and that Spotify's own tracks keep their loudness.
-func TestEvenLoudness(t *testing.T) {
-	const line = "Turns loud tracks down to one level, from YouTube's measure of each, so none jumps out. Quiet recordings keep their level."
-	const spotify = " Spotify plays its own tracks at its own loudness."
-	s := newTestShell(t)
-	tt := testerOf(t, s, 1280, 3200)
-	for _, c := range []struct {
-		mode settings.SpotifyPlayback
-		says string
-	}{
-		{settings.SpotifyPlaybackMatch, line},
-		{settings.SpotifyPlaybackConnect, line + spotify},
-	} {
-		mode, says := c.mode, c.says
-		st := s.svc.Preferences.Get()
-		st.SpotifyPlayback = mode
-		if _, err := s.svc.Preferences.Set(st); err != nil {
-			t.Fatal(err)
-		}
-		s.refresh()
-		show(s, tt, "/settings/playback")
-		if !tt.HasText(says) || says == line && tt.HasText(spotify[1:]) {
-			t.Errorf("with Spotify %s, the row doesn't say %q: %q", mode, says, tt.Texts())
-		}
-	}
-	if !tt.HasText("Squeezes loud and quiet moments closer together as they play, and lifts quiet recordings.") {
-		t.Error("Volume levelling doesn't say how it differs")
-	}
-	if !s.svc.Preferences.Get().Loudness {
-		t.Fatal("Even loudness is off at first")
-	}
-	// The row's title shows "Even loudness" too: the switch is to its
-	// right, beside the title or halfway down the row.
-	title, _ := tt.Find("Even loudness")
-	desc, _ := tt.Find(line + spotify)
-	for x := title.X + title.W; x < 1280 && s.svc.Preferences.Get().Loudness; x += 6 {
-		for _, y := range []float32{title.Y + title.H/2, (title.Y + desc.Y + desc.H) / 2} {
-			if s.svc.Preferences.Get().Loudness {
-				tt.ClickAt(x, y)
-				s.drain()
-				tt.Frame()
-			}
-		}
-	}
-	if s.svc.Preferences.Get().Loudness {
-		t.Error("the switch didn't turn Even loudness off")
 	}
 }

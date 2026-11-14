@@ -6,7 +6,8 @@ import (
 	"github.com/fzn0x/mixmusic/locales"
 )
 
-func init() { addSettings(soundRows, 70, (*shell).skipAIRow) }
+// The row is not shown: it serves YouTube Music's tracks alone, which
+// NetEase Cloud Music took the place of in the interface.
 
 // skipAIRow skips the tracks YouTube labels as made with AI, in Settings ›
 // Playback › Sound.

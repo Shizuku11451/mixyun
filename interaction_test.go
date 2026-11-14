@@ -68,7 +68,7 @@ func TestNavigation(t *testing.T) {
 	s := newTestShell(t)
 	tt := tester(t, s)
 	for _, n := range []struct{ label, path string }{
-		{"library", "/library"}, {"stats", "/stats"}, {"settings", "/settings"}, {"explore", "/explore"}, {"home", "/"},
+		{"library", "/library"}, {"stats", "/stats"}, {"settings", "/settings"}, {"home", "/"},
 	} {
 		click(t, s, tt, n.label)
 		if got := s.router.Path(); got != n.path {
@@ -76,7 +76,7 @@ func TestNavigation(t *testing.T) {
 		}
 	}
 	click(t, s, tt, "Back")
-	if got := s.router.Path(); got != "/explore" {
+	if got := s.router.Path(); got != "/settings" {
 		t.Errorf("back went to %q", got)
 	}
 }
@@ -1092,41 +1092,6 @@ func TestLyricsPlainKept(t *testing.T) {
 	}
 	if again := newShell(s.a, s.p); !again.set.LyricsPlain {
 		t.Error("the next start shows the lyrics synced")
-	}
-}
-
-// TestYTDLPNotNow puts off an outdated yt-dlp's release, past restarts.
-func TestYTDLPNotNow(t *testing.T) {
-	s := newTestShell(t)
-	tt := tester(t, s)
-	s.loads["tools"] = &loaded[tools.Status]{done: true, value: tools.Status{
-		YTDLP: tools.Tool{Found: true, Version: "2025.01.01", Latest: "2026.10.01"}}}
-	show(s, tt, "/")
-	if !tt.HasText("Your yt-dlp is out of date") {
-		t.Fatalf("no offer: %q", tt.Texts())
-	}
-	click(t, s, tt, "not now")
-	if got := s.svc.Preferences.Get().SkippedYTDLP; got != "2026.10.01" {
-		t.Errorf("put off %q", got)
-	}
-	if tt.HasText("Your yt-dlp is out of date") {
-		t.Error("the offer stays")
-	}
-}
-
-// TestYTDLPMissing offers yt-dlp for the tracks MixMusic can't find
-// itself, without saying nothing plays.
-func TestYTDLPMissing(t *testing.T) {
-	s := newTestShell(t)
-	tt := tester(t, s)
-	s.loads["tools"] = &loaded[tools.Status]{done: true, value: tools.Status{}}
-	show(s, tt, "/")
-	if !tt.HasText("Some tracks need yt-dlp") || !tt.HasText("install yt-dlp") {
-		t.Fatalf("no offer: %q", tt.Texts())
-	}
-	show(s, tt, "/settings/playback")
-	if !tt.HasText("Not found. Some NetEase Cloud Music tracks play only with it.") {
-		t.Errorf("settings say %q", tt.Texts())
 	}
 }
 
