@@ -148,24 +148,25 @@ func (a *App) neteaseSignIn(ctx context.Context, musicU string) (AccountsStatus,
 	return a.accountsStatus(ctx), nil
 }
 
-// NetEaseLogout signs out of NetEase Cloud Music, in the sign-in window's
-// cookies too, so that signing in again shows the QR code.
+// NetEaseLogout signs out of NetEase Cloud Music.
 func (s *Accounts) NetEaseLogout(ctx context.Context) error {
-	err := s.a.signOutNetEase()
-	if list, lerr := mygo.Cookies.List(mygo.CookieFilter{Domain: "music.163.com"}); lerr == nil {
-		for _, c := range list {
-			err = errors.Join(err, mygo.Cookies.Delete(c))
-		}
-	}
-	return err
+	return s.a.signOutNetEase()
 }
 
+// signOutNetEase forgets the session, in the sign-in window's cookies too:
+// signing in again shows the QR code, not the dead session, which the
+// sign-in would find there and NetEase refuse.
 func (a *App) signOutNetEase() error {
 	a.netease.SetSession("")
 	a.mu.Lock()
 	a.neteaseMe = nil
 	a.mu.Unlock()
 	err := a.neteaseStore.Clear()
+	if list, lerr := mygo.Cookies.List(mygo.CookieFilter{Domain: "music.163.com"}); lerr == nil {
+		for _, c := range list {
+			err = errors.Join(err, mygo.Cookies.Delete(c))
+		}
+	}
 	notify()
 	return err
 }
