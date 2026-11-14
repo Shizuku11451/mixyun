@@ -49,3 +49,21 @@ func TestNowPlayingFillsTheWindow(t *testing.T) {
 		t.Errorf("lyrics took %v in a window 820 high, %v in one 1220 high", short, tall)
 	}
 }
+
+// TestNowPlayingShortWindow keeps the lyrics room to the window's real
+// height, however short: held at 300, the sleeve and its credits
+// overflowed a page that doesn't scroll.
+func TestNowPlayingShortWindow(t *testing.T) {
+	s := newTestShell(t)
+	s.p.PlayTracks(testTracks, 0)
+	s.settle(t, func(st player.State) bool { return st.Playing })
+	s.navigate("/now-playing")
+	s.panel = ""
+	tt := ui.NewTester(s.view, 1280, 480)
+	for range 4 {
+		tt.Frame()
+	}
+	if room := s.lyricsView.room; room <= 0 || room >= 300 {
+		t.Errorf("lyrics took %v in a window 480 high", room)
+	}
+}
