@@ -6,7 +6,7 @@ All notable changes to MixMusic are documented here. The format follows
 
 ## [Unreleased]
 
-## [0.7.3] - 2026-11-14
+## [0.7.4] - 2026-11-14
 
 ### Changed
 
@@ -1890,8 +1890,8 @@ player, for macOS, Windows and Linux.
 - Apps for macOS 12 and later (Apple silicon and Intel), Windows 10 and 11,
   and Linux, on x64 and Arm64.
 
-[Unreleased]: https://github.com/fzn0x/mixmusic/compare/v0.7.3...HEAD
-[0.7.3]: https://github.com/fzn0x/mixmusic/compare/v0.7.2...v0.7.3
+[Unreleased]: https://github.com/fzn0x/mixmusic/compare/v0.7.4...HEAD
+[0.7.4]: https://github.com/fzn0x/mixmusic/compare/v0.7.2...v0.7.4
 [0.7.2]: https://github.com/fzn0x/mixmusic/compare/v0.7.1...v0.7.2
 [0.7.1]: https://github.com/fzn0x/mixmusic/compare/v0.7.0...v0.7.1
 [0.7.0]: https://github.com/fzn0x/mixmusic/compare/v0.6.0...v0.7.0
