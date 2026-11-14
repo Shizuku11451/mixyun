@@ -6,6 +6,15 @@ All notable changes to MixMusic are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.7.3] - 2026-11-14
+
+### Changed
+
+- MixMusic is Mixyun now, 混云 in Chinese: the app, its windows, menus and
+  words take the new name. It keeps its data folder's place, so a fresh
+  name starts with fresh settings: move the MixMusic folder to Mixyun to
+  keep yours.
+
 ## [0.7.2] - 2026-11-14
 
 ### Changed
@@ -1881,7 +1890,8 @@ player, for macOS, Windows and Linux.
 - Apps for macOS 12 and later (Apple silicon and Intel), Windows 10 and 11,
   and Linux, on x64 and Arm64.
 
-[Unreleased]: https://github.com/fzn0x/mixmusic/compare/v0.7.2...HEAD
+[Unreleased]: https://github.com/fzn0x/mixmusic/compare/v0.7.3...HEAD
+[0.7.3]: https://github.com/fzn0x/mixmusic/compare/v0.7.2...v0.7.3
 [0.7.2]: https://github.com/fzn0x/mixmusic/compare/v0.7.1...v0.7.2
 [0.7.1]: https://github.com/fzn0x/mixmusic/compare/v0.7.0...v0.7.1
 [0.7.0]: https://github.com/fzn0x/mixmusic/compare/v0.6.0...v0.7.0
