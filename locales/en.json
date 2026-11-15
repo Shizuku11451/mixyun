@@ -5392,7 +5392,6 @@
   "searchPivotArtists": "artists",
   "searchPivotPlaylists": "playlists",
   "searchPivotPodcasts": "podcasts",
-  "searchScopeBoth": "both",
   "searchServices": "Services",
   "searchNetEaseOnly": "Searching NetEase Cloud Music and YouTube Music only. ",
   "searchSignInSpotify": "Sign in to Spotify",
@@ -5744,5 +5743,33 @@
         "type": "String"
       }
     }
-  }
+  },
+  "aboutNoticeAac": "SharpJaad, which decodes AAC audio",
+  "aboutNoticeIpadic": "The IPA dictionary (mecab-ipadic), which romaji downloads the first time it's turned on",
+  "aboutNoticeKagome": "kagome, which reads the kanji of Japanese lyrics for their romaji",
+  "aboutNoticeMaterialColor": "Material Color Utilities, which make the Material themes' colours",
+  "aboutNoticeMp3": "go-mp3, which decodes the MP3 files on this computer",
+  "aboutNoticeOpus": "libopus, which decodes Opus audio",
+  "aboutNoticePinyin": "pinyin-data and phrase-pinyin-data, the readings of Chinese characters and words in pinyin",
+  "aboutNoticeUnihan": "Unihan, whose readings of Chinese characters write Chinese lyrics in pinyin",
+  "aboutNoticeVorbis": "jfreymuth/vorbis, which decodes the Vorbis files on this computer",
+  "aboutNoticeWebAudio": "Chromium's Web Audio, which shapes the sound",
+  "themeOptionAnimeScreentone": "Screentone",
+  "themeOptionAnimeSpeedlines": "Speed lines",
+  "themeOptionAuroraBlur": "Glass blur",
+  "themeOptionAuroraMotion": "Drifting lights",
+  "themeOptionAuroraTint": "Light color",
+  "themeOptionGlasshouseBlur": "Glass blur",
+  "themeOptionGlasshouseCover": "Colours of the cover",
+  "themeOptionGreenroomWash": "Colour of the cover",
+  "themeOptionMixTexture": "Tile texture",
+  "themeOptionMixTextureDots": "Dot matrix",
+  "themeOptionMixTextureNone": "None",
+  "themeOptionMixTextureSlashes": "Slashes",
+  "themeOptionMixTextureStripes": "Pinstripes",
+  "themeOptionMixWhiteTiles": "White text on tiles",
+  "themeOptionMochiSparkles": "Drifting sparkles",
+  "themeOptionSakuraPetals": "Petal pattern",
+  "themeOptionTerminalGlow": "Text glow",
+  "themeOptionTerminalScanlines": "Scanlines"
 }

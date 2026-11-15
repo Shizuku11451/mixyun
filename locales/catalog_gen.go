@@ -18008,16 +18008,6 @@ func (msgs Messages) SearchPivotPodcasts() string {
 	return Catalog.Format(msgs.locale, "searchPivotPodcasts", nil)
 }
 
-// SearchScopeBoth says "both"
-// in the language the app shows.
-func SearchScopeBoth() string { return In(i18n.Locale()).SearchScopeBoth() }
-
-// SearchScopeBoth says "both"
-// in the language of msgs.
-func (msgs Messages) SearchScopeBoth() string {
-	return Catalog.Format(msgs.locale, "searchScopeBoth", nil)
-}
-
 // SearchServices says "Services"
 // in the language the app shows.
 func SearchServices() string { return In(i18n.Locale()).SearchServices() }
@@ -19364,4 +19354,284 @@ func PlaylistShort(n string, noun string, count string) string {
 // in the language of msgs.
 func (msgs Messages) PlaylistShort(n string, noun string, count string) string {
 	return Catalog.Format(msgs.locale, "playlistShort", map[string]any{"n": n, "noun": noun, "count": count})
+}
+
+// AboutNoticeAac says "SharpJaad, which decodes AAC audio"
+// in the language the app shows.
+func AboutNoticeAac() string { return In(i18n.Locale()).AboutNoticeAac() }
+
+// AboutNoticeAac says "SharpJaad, which decodes AAC audio"
+// in the language of msgs.
+func (msgs Messages) AboutNoticeAac() string {
+	return Catalog.Format(msgs.locale, "aboutNoticeAac", nil)
+}
+
+// AboutNoticeIpadic says "The IPA dictionary (mecab-ipadic), which romaji downloads the first time it's turned on"
+// in the language the app shows.
+func AboutNoticeIpadic() string { return In(i18n.Locale()).AboutNoticeIpadic() }
+
+// AboutNoticeIpadic says "The IPA dictionary (mecab-ipadic), which romaji downloads the first time it's turned on"
+// in the language of msgs.
+func (msgs Messages) AboutNoticeIpadic() string {
+	return Catalog.Format(msgs.locale, "aboutNoticeIpadic", nil)
+}
+
+// AboutNoticeKagome says "kagome, which reads the kanji of Japanese lyrics for their romaji"
+// in the language the app shows.
+func AboutNoticeKagome() string { return In(i18n.Locale()).AboutNoticeKagome() }
+
+// AboutNoticeKagome says "kagome, which reads the kanji of Japanese lyrics for their romaji"
+// in the language of msgs.
+func (msgs Messages) AboutNoticeKagome() string {
+	return Catalog.Format(msgs.locale, "aboutNoticeKagome", nil)
+}
+
+// AboutNoticeMaterialColor says "Material Color Utilities, which make the Material themes' colours"
+// in the language the app shows.
+func AboutNoticeMaterialColor() string { return In(i18n.Locale()).AboutNoticeMaterialColor() }
+
+// AboutNoticeMaterialColor says "Material Color Utilities, which make the Material themes' colours"
+// in the language of msgs.
+func (msgs Messages) AboutNoticeMaterialColor() string {
+	return Catalog.Format(msgs.locale, "aboutNoticeMaterialColor", nil)
+}
+
+// AboutNoticeMp3 says "go-mp3, which decodes the MP3 files on this computer"
+// in the language the app shows.
+func AboutNoticeMp3() string { return In(i18n.Locale()).AboutNoticeMp3() }
+
+// AboutNoticeMp3 says "go-mp3, which decodes the MP3 files on this computer"
+// in the language of msgs.
+func (msgs Messages) AboutNoticeMp3() string {
+	return Catalog.Format(msgs.locale, "aboutNoticeMp3", nil)
+}
+
+// AboutNoticeOpus says "libopus, which decodes Opus audio"
+// in the language the app shows.
+func AboutNoticeOpus() string { return In(i18n.Locale()).AboutNoticeOpus() }
+
+// AboutNoticeOpus says "libopus, which decodes Opus audio"
+// in the language of msgs.
+func (msgs Messages) AboutNoticeOpus() string {
+	return Catalog.Format(msgs.locale, "aboutNoticeOpus", nil)
+}
+
+// AboutNoticePinyin says "pinyin-data and phrase-pinyin-data, the readings of Chinese characters and words in pinyin"
+// in the language the app shows.
+func AboutNoticePinyin() string { return In(i18n.Locale()).AboutNoticePinyin() }
+
+// AboutNoticePinyin says "pinyin-data and phrase-pinyin-data, the readings of Chinese characters and words in pinyin"
+// in the language of msgs.
+func (msgs Messages) AboutNoticePinyin() string {
+	return Catalog.Format(msgs.locale, "aboutNoticePinyin", nil)
+}
+
+// AboutNoticeUnihan says "Unihan, whose readings of Chinese characters write Chinese lyrics in pinyin"
+// in the language the app shows.
+func AboutNoticeUnihan() string { return In(i18n.Locale()).AboutNoticeUnihan() }
+
+// AboutNoticeUnihan says "Unihan, whose readings of Chinese characters write Chinese lyrics in pinyin"
+// in the language of msgs.
+func (msgs Messages) AboutNoticeUnihan() string {
+	return Catalog.Format(msgs.locale, "aboutNoticeUnihan", nil)
+}
+
+// AboutNoticeVorbis says "jfreymuth/vorbis, which decodes the Vorbis files on this computer"
+// in the language the app shows.
+func AboutNoticeVorbis() string { return In(i18n.Locale()).AboutNoticeVorbis() }
+
+// AboutNoticeVorbis says "jfreymuth/vorbis, which decodes the Vorbis files on this computer"
+// in the language of msgs.
+func (msgs Messages) AboutNoticeVorbis() string {
+	return Catalog.Format(msgs.locale, "aboutNoticeVorbis", nil)
+}
+
+// AboutNoticeWebAudio says "Chromium's Web Audio, which shapes the sound"
+// in the language the app shows.
+func AboutNoticeWebAudio() string { return In(i18n.Locale()).AboutNoticeWebAudio() }
+
+// AboutNoticeWebAudio says "Chromium's Web Audio, which shapes the sound"
+// in the language of msgs.
+func (msgs Messages) AboutNoticeWebAudio() string {
+	return Catalog.Format(msgs.locale, "aboutNoticeWebAudio", nil)
+}
+
+// ThemeOptionAnimeScreentone says "Screentone"
+// in the language the app shows.
+func ThemeOptionAnimeScreentone() string { return In(i18n.Locale()).ThemeOptionAnimeScreentone() }
+
+// ThemeOptionAnimeScreentone says "Screentone"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionAnimeScreentone() string {
+	return Catalog.Format(msgs.locale, "themeOptionAnimeScreentone", nil)
+}
+
+// ThemeOptionAnimeSpeedlines says "Speed lines"
+// in the language the app shows.
+func ThemeOptionAnimeSpeedlines() string { return In(i18n.Locale()).ThemeOptionAnimeSpeedlines() }
+
+// ThemeOptionAnimeSpeedlines says "Speed lines"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionAnimeSpeedlines() string {
+	return Catalog.Format(msgs.locale, "themeOptionAnimeSpeedlines", nil)
+}
+
+// ThemeOptionAuroraBlur says "Glass blur"
+// in the language the app shows.
+func ThemeOptionAuroraBlur() string { return In(i18n.Locale()).ThemeOptionAuroraBlur() }
+
+// ThemeOptionAuroraBlur says "Glass blur"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionAuroraBlur() string {
+	return Catalog.Format(msgs.locale, "themeOptionAuroraBlur", nil)
+}
+
+// ThemeOptionAuroraMotion says "Drifting lights"
+// in the language the app shows.
+func ThemeOptionAuroraMotion() string { return In(i18n.Locale()).ThemeOptionAuroraMotion() }
+
+// ThemeOptionAuroraMotion says "Drifting lights"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionAuroraMotion() string {
+	return Catalog.Format(msgs.locale, "themeOptionAuroraMotion", nil)
+}
+
+// ThemeOptionAuroraTint says "Light color"
+// in the language the app shows.
+func ThemeOptionAuroraTint() string { return In(i18n.Locale()).ThemeOptionAuroraTint() }
+
+// ThemeOptionAuroraTint says "Light color"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionAuroraTint() string {
+	return Catalog.Format(msgs.locale, "themeOptionAuroraTint", nil)
+}
+
+// ThemeOptionGlasshouseBlur says "Glass blur"
+// in the language the app shows.
+func ThemeOptionGlasshouseBlur() string { return In(i18n.Locale()).ThemeOptionGlasshouseBlur() }
+
+// ThemeOptionGlasshouseBlur says "Glass blur"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionGlasshouseBlur() string {
+	return Catalog.Format(msgs.locale, "themeOptionGlasshouseBlur", nil)
+}
+
+// ThemeOptionGlasshouseCover says "Colours of the cover"
+// in the language the app shows.
+func ThemeOptionGlasshouseCover() string { return In(i18n.Locale()).ThemeOptionGlasshouseCover() }
+
+// ThemeOptionGlasshouseCover says "Colours of the cover"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionGlasshouseCover() string {
+	return Catalog.Format(msgs.locale, "themeOptionGlasshouseCover", nil)
+}
+
+// ThemeOptionGreenroomWash says "Colour of the cover"
+// in the language the app shows.
+func ThemeOptionGreenroomWash() string { return In(i18n.Locale()).ThemeOptionGreenroomWash() }
+
+// ThemeOptionGreenroomWash says "Colour of the cover"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionGreenroomWash() string {
+	return Catalog.Format(msgs.locale, "themeOptionGreenroomWash", nil)
+}
+
+// ThemeOptionMixTexture says "Tile texture"
+// in the language the app shows.
+func ThemeOptionMixTexture() string { return In(i18n.Locale()).ThemeOptionMixTexture() }
+
+// ThemeOptionMixTexture says "Tile texture"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionMixTexture() string {
+	return Catalog.Format(msgs.locale, "themeOptionMixTexture", nil)
+}
+
+// ThemeOptionMixTextureDots says "Dot matrix"
+// in the language the app shows.
+func ThemeOptionMixTextureDots() string { return In(i18n.Locale()).ThemeOptionMixTextureDots() }
+
+// ThemeOptionMixTextureDots says "Dot matrix"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionMixTextureDots() string {
+	return Catalog.Format(msgs.locale, "themeOptionMixTextureDots", nil)
+}
+
+// ThemeOptionMixTextureNone says "None"
+// in the language the app shows.
+func ThemeOptionMixTextureNone() string { return In(i18n.Locale()).ThemeOptionMixTextureNone() }
+
+// ThemeOptionMixTextureNone says "None"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionMixTextureNone() string {
+	return Catalog.Format(msgs.locale, "themeOptionMixTextureNone", nil)
+}
+
+// ThemeOptionMixTextureSlashes says "Slashes"
+// in the language the app shows.
+func ThemeOptionMixTextureSlashes() string { return In(i18n.Locale()).ThemeOptionMixTextureSlashes() }
+
+// ThemeOptionMixTextureSlashes says "Slashes"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionMixTextureSlashes() string {
+	return Catalog.Format(msgs.locale, "themeOptionMixTextureSlashes", nil)
+}
+
+// ThemeOptionMixTextureStripes says "Pinstripes"
+// in the language the app shows.
+func ThemeOptionMixTextureStripes() string { return In(i18n.Locale()).ThemeOptionMixTextureStripes() }
+
+// ThemeOptionMixTextureStripes says "Pinstripes"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionMixTextureStripes() string {
+	return Catalog.Format(msgs.locale, "themeOptionMixTextureStripes", nil)
+}
+
+// ThemeOptionMixWhiteTiles says "White text on tiles"
+// in the language the app shows.
+func ThemeOptionMixWhiteTiles() string { return In(i18n.Locale()).ThemeOptionMixWhiteTiles() }
+
+// ThemeOptionMixWhiteTiles says "White text on tiles"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionMixWhiteTiles() string {
+	return Catalog.Format(msgs.locale, "themeOptionMixWhiteTiles", nil)
+}
+
+// ThemeOptionMochiSparkles says "Drifting sparkles"
+// in the language the app shows.
+func ThemeOptionMochiSparkles() string { return In(i18n.Locale()).ThemeOptionMochiSparkles() }
+
+// ThemeOptionMochiSparkles says "Drifting sparkles"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionMochiSparkles() string {
+	return Catalog.Format(msgs.locale, "themeOptionMochiSparkles", nil)
+}
+
+// ThemeOptionSakuraPetals says "Petal pattern"
+// in the language the app shows.
+func ThemeOptionSakuraPetals() string { return In(i18n.Locale()).ThemeOptionSakuraPetals() }
+
+// ThemeOptionSakuraPetals says "Petal pattern"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionSakuraPetals() string {
+	return Catalog.Format(msgs.locale, "themeOptionSakuraPetals", nil)
+}
+
+// ThemeOptionTerminalGlow says "Text glow"
+// in the language the app shows.
+func ThemeOptionTerminalGlow() string { return In(i18n.Locale()).ThemeOptionTerminalGlow() }
+
+// ThemeOptionTerminalGlow says "Text glow"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionTerminalGlow() string {
+	return Catalog.Format(msgs.locale, "themeOptionTerminalGlow", nil)
+}
+
+// ThemeOptionTerminalScanlines says "Scanlines"
+// in the language the app shows.
+func ThemeOptionTerminalScanlines() string { return In(i18n.Locale()).ThemeOptionTerminalScanlines() }
+
+// ThemeOptionTerminalScanlines says "Scanlines"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionTerminalScanlines() string {
+	return Catalog.Format(msgs.locale, "themeOptionTerminalScanlines", nil)
 }
