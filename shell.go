@@ -36,26 +36,41 @@ func (s *shell) view(c *ui.Context) {
 	root := ui.Column(c).Fill().Background(k.bg).TextColor(k.text).Font(k.body)
 	s.ground(c, root)
 	root.Children(func() {
-		ui.Row(c).Grow(1).MinHeight(0).AlignItems(ui.Stretch).Children(func() {
-			s.rail(c)
-			ui.Column(c).Grow(1).MinWidth(0).Children(func() {
-				s.topBar(c)
-				ui.Row(c).Grow(1).MinHeight(0).AlignItems(ui.Stretch).Children(func() {
-					s.mainPane(c)
-					if s.panel != "" {
-						// The panel's lyrics refresh with the page.
-						s.collecting = true
-						s.sidePanel(c)
-						s.collecting = false
-					}
-				})
-			})
-		})
-		s.playerBar(c)
-		s.picksBar(c)
-		s.overlay(c)
+		// Absolute elements paint above their siblings: the window's
+		// content is one too, keyed, placed after the backdrop to paint
+		// above it.
+		s.coverBackdrop(c)
+		ui.Column(c.Key("window")).Absolute().Top(0).Right(0).Bottom(0).Left(0).Children(func() { s.windowContent(c) })
 	})
 	s.lyricStage(c)
+	s.dialogs(c)
+}
+
+// windowContent is the window's rail, top bar, page, panel and player bar.
+func (s *shell) windowContent(c *ui.Context) {
+	ui.Row(c).Grow(1).MinHeight(0).AlignItems(ui.Stretch).Children(func() {
+		s.rail(c)
+		ui.Column(c).Grow(1).MinWidth(0).Children(func() {
+			s.topBar(c)
+			ui.Row(c).Grow(1).MinHeight(0).AlignItems(ui.Stretch).Children(func() {
+				s.mainPane(c)
+				if s.panel != "" {
+					// The panel's lyrics refresh with the page.
+					s.collecting = true
+					s.sidePanel(c)
+					s.collecting = false
+				}
+			})
+		})
+	})
+	s.playerBar(c)
+	s.picksBar(c)
+	s.overlay(c)
+}
+
+// dialogs are the window's palette and dialogs, and what follows the
+// frame.
+func (s *shell) dialogs(c *ui.Context) {
 	s.palette(c)
 	s.coverDialog(c)
 	s.updateOffer(c)

@@ -183,6 +183,23 @@ func TestTrackInfoOfAStream(t *testing.T) {
 	}
 }
 
+// TestTrackInfoOfANetEaseStream tells the stream of a NetEase song: its
+// codec and bitrate.
+func TestTrackInfoOfANetEaseStream(t *testing.T) {
+	a := newQuietApp(t, nil)
+	a.resolver.NetEase = func(context.Context, string, stream.Quality) (stream.Stream, error) {
+		return stream.Stream{URL: "https://example.com/a.flac", MimeType: "audio/flac", Bitrate: 1411.2,
+			Expires: time.Now().Add(time.Hour)}, nil
+	}
+	if _, err := a.resolver.Resolve(context.Background(), stream.NetEaseKey("123")); err != nil {
+		t.Fatal(err)
+	}
+	info := infoOf(t, a, media.Track{ID: "ne:123", Source: media.SourceNetEase}, nil)
+	if st := info.Stream; st == nil || st.Codec != "FLAC" || st.Bitrate != 1411.2 {
+		t.Errorf("the stream of a NetEase song: %+v", st)
+	}
+}
+
 // ytFormatOf is the format selector yt-dlp asks for the best quality.
 func ytFormatOf(t *testing.T) string {
 	t.Helper()

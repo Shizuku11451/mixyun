@@ -82,6 +82,10 @@ func (s *shell) searchField(c *ui.Context) {
 	if focused && k.tonal {
 		box.Background(k.surface2)
 	}
+	if s.onBackdrop() {
+		// Over the cover's backdrop, the field is a shade of it, as the player bar.
+		box.Background(withAlpha(k.bg, 0.3))
+	}
 	search := func(q string) {
 		if q = strings.TrimSpace(q); q != "" {
 			s.query = q

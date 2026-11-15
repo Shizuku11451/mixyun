@@ -160,6 +160,7 @@ type App struct {
 	labels       *labelCache
 	lyrics       *lyrics.Client
 	unison       *lyrics.Unison
+	llm          llmKeyStore
 	betterLyrics *lyrics.BetterLyrics
 	translations *translations
 	romaji       *romaji.Dictionary
@@ -366,6 +367,7 @@ func New(opts Options) (*App, error) {
 	a.unison = lyrics.NewUnison(userAgent)
 	a.betterLyrics = lyrics.NewBetterLyrics(userAgent)
 	a.translations = newTranslations(filepath.Join(opts.CacheDir, "lyrics-translations"))
+	a.llm.key = jsonSecret[string]{newSecretStore(opts.DataDir, llmSecret, "lyrics-llm-key.json", "lyrics-llm-key.dpapi")}
 	a.romaji = newRomaji(opts, userAgent)
 	a.lyricsMemo = newMemo[lyrics.Lyrics](200)
 	a.related = newMemo[[]media.Shelf](100)

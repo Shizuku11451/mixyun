@@ -181,15 +181,28 @@ func (c *Catalog) TranslateLyrics(ctx context.Context, track media.Track, l lyri
 	if tr, ok := c.neteaseTranslation(ctx, track, l, to); ok {
 		return tr, nil
 	}
+	// The user's language model, when they chose one, in place of Unison:
+	// its translations are kept apart, by its server and model.
+	set := c.a.settings.Get().Clean()
 	key := translationKey(track.ID, to, lines)
+	if set.LLM() {
+		key = translationKey(track.ID, to+"\x00"+set.LyricsLLMURL+"\x00"+set.LyricsLLMModel, lines)
+	}
 	if tr, ok := c.a.translations.get(key, len(lines)); ok {
 		return tr, nil
 	}
-	if !c.a.translations.ready() {
-		return lyrics.Translation{}, translationError{errHeldOff}
+	var tr lyrics.Translation
+	var err error
+	if set.LLM() {
+		llm := lyrics.LLM{URL: set.LyricsLLMURL, Model: set.LyricsLLMModel, Key: c.a.llm.load()}
+		tr, err = llm.Translate(ctx, lines, to, l.Language)
+	} else {
+		if !c.a.translations.ready() {
+			return lyrics.Translation{}, translationError{errHeldOff}
+		}
+		tr, err = c.a.unison.Translate(ctx, lines, to, l.Language, c.videoID(track))
+		c.a.translations.answered(err)
 	}
-	tr, err := c.a.unison.Translate(ctx, lines, to, l.Language, c.videoID(track))
-	c.a.translations.answered(err)
 	if err != nil {
 		log.Printf("mixmusic: the translation of the lyrics of %s: %v", track.ID, err)
 		return lyrics.Translation{}, translationError{err}

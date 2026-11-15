@@ -29,6 +29,10 @@ func (s *shell) playerBar(c *ui.Context) {
 	} else {
 		bar.Background(k.surface).BorderWidth(1, 0, 0, 0).BorderColor(k.border)
 	}
+	if s.onBackdrop() {
+		// Over the cover's backdrop, the bar is a shade of it.
+		bar.Background(withAlpha(k.bg, 0.3))
+	}
 	bar.Children(func() {
 		ui.Row(c).Grow(1).Basis(0).MinWidth(220).Gap(12).Children(func() { s.nowPlayingInfo(c) })
 		ui.Column(c).Grow(1.6).Basis(0).MinWidth(320).Gap(6).AlignItems(ui.Center).Children(func() {

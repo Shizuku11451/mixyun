@@ -105,7 +105,11 @@ func (s *shell) rail(c *ui.Context) {
 	items := s.plugins.SidebarItems()
 	entries := float32(len(nav) + len(items))
 	navLeast := entries*s.leastEntry() + (entries-1)*4
-	ui.Column(c).Width(s.railWidth()).Shrink(0).Padding(0, pad, railFoot).Gap(railGap).Background(k.bg).Clip().Children(func() {
+	railGround := k.bg
+	if s.onBackdrop() {
+		railGround = ui.Color{} // the cover's backdrop shows through
+	}
+	ui.Column(c).Width(s.railWidth()).Shrink(0).Padding(0, pad, railFoot).Gap(railGap).Background(railGround).Clip().Children(func() {
 		least := s.brand(c, collapsed, s.railWidth()-2*pad) + railGap + navLeast + railGap + railFoot
 		// Where the rail is short, and only there, as the mixes grow from
 		// nothing into the rest, the entries give some of their height.

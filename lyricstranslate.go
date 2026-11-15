@@ -204,7 +204,7 @@ func (s *shell) lyricsChoicesWith(c *ui.Context, t media.Track, ly lyrics.Lyrics
 			ui.Text(c, failed).FontSize(k.smallSize()).TextColor(k.muted)
 			if s.link(c, "lyrics-translate-again-"+where, locales.WidgetsTryAgain()) {
 				s.svc.Catalog.TranslateAgain()
-				s.forget(translationKey(t, translationInto(ly, to, x.translate)))
+				s.forget(s.translationKey(t, translationInto(ly, to, x.translate)))
 			}
 		})
 	}
@@ -215,7 +215,7 @@ func (s *shell) lyricsChoicesWith(c *ui.Context, t media.Track, ly lyrics.Lyrics
 // language to, as translationInto has it.
 func (s *shell) translation(t media.Track, ly lyrics.Lyrics, to string, translate bool) *loaded[translated] {
 	to = translationInto(ly, to, translate)
-	return fetch(s, translationKey(t, to), func(ctx context.Context) (translated, error) {
+	return fetch(s, s.translationKey(t, to), func(ctx context.Context) (translated, error) {
 		tr, err := s.svc.Catalog.TranslateLyrics(ctx, t, ly, to)
 		return translated{tr, slices.ContainsFunc(tr.Lines, func(l lyrics.TranslatedLine) bool { return l.Romanized != "" })}, err
 	})
@@ -234,8 +234,13 @@ func translationInto(ly lyrics.Lyrics, to string, translate bool) string {
 
 // translationKey is the key translation fetches the translation of a
 // track's lyrics into the language into under.
-func translationKey(t media.Track, into string) string {
-	return "lyrics-translation:" + t.ID + ":" + into
+func (s *shell) translationKey(t media.Track, into string) string {
+	key := "lyrics-translation:" + t.ID + ":" + into
+	// Another language model translates anew.
+	if s.set.LLM() {
+		key += ":" + s.set.LyricsLLMURL + " " + s.set.LyricsLLMModel
+	}
+	return key
 }
 
 // lyricsSwitches shows the choices above lyrics in the language lang:
@@ -375,6 +380,39 @@ func (s *shell) lyricsSettings(c *ui.Context) {
 					s.set.LyricsTranslateTo = translateLanguages[i-1].code
 				}
 				s.save()
+			}
+		})
+		s.row(c, locales.LyricsSettingsLLMURL(), locales.LyricsSettingsLLMDesc(), func() {
+			in, _ := s.settingInput(c, "lyrics-llm-url", s.set.LyricsLLMURL, func(v string) {
+				s.set.LyricsLLMURL = v
+				s.save()
+			})
+			in.Placeholder("https://api.openai.com/v1").Width(260).Label(locales.LyricsSettingsLLMURL())
+		})
+		s.row(c, locales.LyricsSettingsLLMModel(), "", func() {
+			in, _ := s.settingInput(c, "lyrics-llm-model", s.set.LyricsLLMModel, func(v string) {
+				s.set.LyricsLLMModel = v
+				s.save()
+			})
+			in.Placeholder("gpt-4o-mini").Width(260).Label(locales.LyricsSettingsLLMModel())
+		})
+		s.row(c, locales.LyricsSettingsLLMKey(), "", func() {
+			// The key never shows: the input stays empty, and says whether one is kept.
+			placeholder := locales.LyricsSettingsLLMKeyNone()
+			if s.svc.System.HasLyricsLLMKey() {
+				placeholder = locales.LyricsSettingsLLMKeyKept()
+			}
+			in, d := s.settingInput(c, "lyrics-llm-key", "", func(v string) {
+				if err := s.svc.System.SetLyricsLLMKey(v); err != nil {
+					s.notes = append(s.notes, noticeOf(err))
+				}
+			})
+			in.Password().Placeholder(placeholder).Width(260).Label(locales.LyricsSettingsLLMKey())
+			if s.svc.System.HasLyricsLLMKey() && s.link(c, "lyrics-llm-key-forget", locales.LyricsSettingsLLMKeyForget()) {
+				d.text = ""
+				if err := s.svc.System.SetLyricsLLMKey(""); err != nil {
+					s.notes = append(s.notes, noticeOf(err))
+				}
 			}
 		})
 	})

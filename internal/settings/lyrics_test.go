@@ -40,3 +40,22 @@ func TestLyricsTranslation(t *testing.T) {
 		t.Errorf("settings from before: %+v", c)
 	}
 }
+
+// TestLyricsLLM keeps the server of a language model only when it is a
+// URL of the web, and translates with it only with a model too.
+func TestLyricsLLM(t *testing.T) {
+	for url, want := range map[string]string{
+		" https://api.openai.com/v1 ": "https://api.openai.com/v1",
+		"http://localhost:11434/v1":   "http://localhost:11434/v1",
+		"api.openai.com/v1":           "",
+		"file:///etc/passwd":          "",
+		"https://":                    "",
+	} {
+		if got := (Settings{Translation: Translation{LyricsLLMURL: url}}).Clean().LyricsLLMURL; got != want {
+			t.Errorf("%q kept as %q", url, got)
+		}
+	}
+	if (Translation{LyricsLLMURL: "https://x"}).LLM() || !(Translation{LyricsLLMURL: "https://x", LyricsLLMModel: "m"}).LLM() {
+		t.Error("LLM wrong")
+	}
+}

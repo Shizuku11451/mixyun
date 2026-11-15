@@ -188,7 +188,7 @@ func (a *App) neteaseStream(ctx context.Context, songID string, quality stream.Q
 	if au.Type == "flac" {
 		mime = "audio/flac"
 	}
-	return stream.Stream{URL: au.URL, MimeType: mime, Size: au.Size, Expires: au.Expires}, nil
+	return stream.Stream{URL: au.URL, MimeType: mime, Size: au.Size, Bitrate: float64(au.Bitrate) / 1000, Expires: au.Expires}, nil
 }
 
 // neteaseSearcher is NetEase as the matcher searches it, in YouTube Music's

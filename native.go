@@ -343,6 +343,9 @@ type shell struct {
 	licenseOpen int
 	// trackInfo is the dialog of a track's Track info (trackinfo.go).
 	trackInfo trackInfoView
+	// nowQuality is when the now playing page started, and last asked
+	// for, what the track playing's audio is (nowquality.go).
+	nowQuality nowQualityView
 	// tagDialogs edit the tags of the music on this computer
 	// (localtags.go).
 	tagDialogs tagDialogs

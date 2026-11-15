@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"github.com/fzn0x/mixmusic/internal/media"
+	"github.com/fzn0x/mixmusic/internal/settings"
 	"github.com/fzn0x/mixmusic/lyrics"
 )
 
@@ -56,7 +57,7 @@ func newTranslationCatalog(t *testing.T, dir string) (*Catalog, *translationServ
 		json.NewEncoder(w).Encode(map[string]any{"lines": out, "detectedLang": "ja"})
 	}))
 	t.Cleanup(srv.Close)
-	a := &App{unison: lyrics.NewUnison("test"), translations: newTranslations(dir)}
+	a := &App{unison: lyrics.NewUnison("test"), translations: newTranslations(dir), settings: testSettings(t)}
 	a.unison.BaseURL = srv.URL
 	return &Catalog{a: a}, ts
 }
@@ -190,5 +191,34 @@ func TestTranslationLanguage(t *testing.T) {
 		if got := translationLanguage(tag); got != want {
 			t.Errorf("%q: %q, want %q", tag, got, want)
 		}
+	}
+}
+
+// TestTranslateLyricsLLM translates with the user's language model in
+// place of Unison, and keeps its translation apart from Unison's.
+func TestTranslateLyricsLLM(t *testing.T) {
+	var asks atomic.Int32
+	llm := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		asks.Add(1)
+		json.NewEncoder(w).Encode(map[string]any{"choices": []any{map[string]any{"message": map[string]string{
+			"content": `{"lines":[{"t":"paper kite","r":"kami no tako"},{"t":"to the sky","r":"sora e"}]}`}}}})
+	}))
+	t.Cleanup(llm.Close)
+	c, ts := newTranslationCatalog(t, t.TempDir())
+	c.a.llm.loaded = true // no credential store in tests
+	c.a.settings = testSettings(t, func(s *settings.Settings) { s.LyricsLLMURL, s.LyricsLLMModel = llm.URL, "m" })
+	for range 2 {
+		tr, err := c.TranslateLyrics(context.Background(), kites, kiteLyrics, "en")
+		if err != nil || tr.Lines[0] != (lyrics.TranslatedLine{Text: "paper kite", Romanized: "kami no tako"}) {
+			t.Fatalf("translation = %+v, %v", tr, err)
+		}
+	}
+	if asks.Load() != 1 || ts.asks.Load() != 0 {
+		t.Errorf("the model asked %d times, Unison %d", asks.Load(), ts.asks.Load())
+	}
+	// Without the model, Unison translates, not reading the model's.
+	c.a.settings = testSettings(t)
+	if tr, err := c.TranslateLyrics(context.Background(), kites, kiteLyrics, "en"); err != nil || tr.Lines[0].Text != "en: 紙の凧" {
+		t.Errorf("Unison's translation = %+v, %v", tr, err)
 	}
 }

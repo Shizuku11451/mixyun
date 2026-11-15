@@ -444,11 +444,11 @@ func (msgs Messages) TopbarPalette() string {
 	return Catalog.Format(msgs.locale, "topbarPalette", nil)
 }
 
-// TopbarSearchPlaceholder says "Search Spotify and NetEase Cloud Music"
+// TopbarSearchPlaceholder says "Search Spotify, NetEase Cloud Music and YouTube Music"
 // in the language the app shows.
 func TopbarSearchPlaceholder() string { return In(i18n.Locale()).TopbarSearchPlaceholder() }
 
-// TopbarSearchPlaceholder says "Search Spotify and NetEase Cloud Music"
+// TopbarSearchPlaceholder says "Search Spotify, NetEase Cloud Music and YouTube Music"
 // in the language of msgs.
 func (msgs Messages) TopbarSearchPlaceholder() string {
 	return Catalog.Format(msgs.locale, "topbarSearchPlaceholder", nil)
@@ -1940,6 +1940,46 @@ func WavyProgressDescription() string { return In(i18n.Locale()).WavyProgressDes
 // in the language of msgs.
 func (msgs Messages) WavyProgressDescription() string {
 	return Catalog.Format(msgs.locale, "wavyProgressDescription", nil)
+}
+
+// CoverBackdropTitle says "Cover backdrop"
+// in the language the app shows.
+func CoverBackdropTitle() string { return In(i18n.Locale()).CoverBackdropTitle() }
+
+// CoverBackdropTitle says "Cover backdrop"
+// in the language of msgs.
+func (msgs Messages) CoverBackdropTitle() string {
+	return Catalog.Format(msgs.locale, "coverBackdropTitle", nil)
+}
+
+// CoverBackdropDescription says "On the now playing page, the cover of what plays fills the whole window, blurred to a wash of its colours."
+// in the language the app shows.
+func CoverBackdropDescription() string { return In(i18n.Locale()).CoverBackdropDescription() }
+
+// CoverBackdropDescription says "On the now playing page, the cover of what plays fills the whole window, blurred to a wash of its colours."
+// in the language of msgs.
+func (msgs Messages) CoverBackdropDescription() string {
+	return Catalog.Format(msgs.locale, "coverBackdropDescription", nil)
+}
+
+// CoverBackdropVeilTitle says "Backdrop veil"
+// in the language the app shows.
+func CoverBackdropVeilTitle() string { return In(i18n.Locale()).CoverBackdropVeilTitle() }
+
+// CoverBackdropVeilTitle says "Backdrop veil"
+// in the language of msgs.
+func (msgs Messages) CoverBackdropVeilTitle() string {
+	return Catalog.Format(msgs.locale, "coverBackdropVeilTitle", nil)
+}
+
+// CoverBackdropVeilDescription says "How much of the ground lies over the cover's backdrop: more keeps the text clearer, less makes the cover's colours st…"
+// in the language the app shows.
+func CoverBackdropVeilDescription() string { return In(i18n.Locale()).CoverBackdropVeilDescription() }
+
+// CoverBackdropVeilDescription says "How much of the ground lies over the cover's backdrop: more keeps the text clearer, less makes the cover's colours st…"
+// in the language of msgs.
+func (msgs Messages) CoverBackdropVeilDescription() string {
+	return Catalog.Format(msgs.locale, "coverBackdropVeilDescription", nil)
 }
 
 // NotchTitle says "Player around the notch"
@@ -3502,6 +3542,76 @@ func LyricsSettingsDesc() string { return In(i18n.Locale()).LyricsSettingsDesc()
 // in the language of msgs.
 func (msgs Messages) LyricsSettingsDesc() string {
 	return Catalog.Format(msgs.locale, "lyricsSettingsDesc", nil)
+}
+
+// LyricsSettingsLLMURL says "Translate with a language model"
+// in the language the app shows.
+func LyricsSettingsLLMURL() string { return In(i18n.Locale()).LyricsSettingsLLMURL() }
+
+// LyricsSettingsLLMURL says "Translate with a language model"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMURL() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMURL", nil)
+}
+
+// LyricsSettingsLLMDesc says "Lyrics without a translation of their own (NetEase Cloud Music's) are translated by the language model you choose, in…"
+// in the language the app shows.
+func LyricsSettingsLLMDesc() string { return In(i18n.Locale()).LyricsSettingsLLMDesc() }
+
+// LyricsSettingsLLMDesc says "Lyrics without a translation of their own (NetEase Cloud Music's) are translated by the language model you choose, in…"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMDesc() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMDesc", nil)
+}
+
+// LyricsSettingsLLMModel says "Model"
+// in the language the app shows.
+func LyricsSettingsLLMModel() string { return In(i18n.Locale()).LyricsSettingsLLMModel() }
+
+// LyricsSettingsLLMModel says "Model"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMModel() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMModel", nil)
+}
+
+// LyricsSettingsLLMKey says "API key"
+// in the language the app shows.
+func LyricsSettingsLLMKey() string { return In(i18n.Locale()).LyricsSettingsLLMKey() }
+
+// LyricsSettingsLLMKey says "API key"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMKey() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMKey", nil)
+}
+
+// LyricsSettingsLLMKeyNone says "None, as for Ollama"
+// in the language the app shows.
+func LyricsSettingsLLMKeyNone() string { return In(i18n.Locale()).LyricsSettingsLLMKeyNone() }
+
+// LyricsSettingsLLMKeyNone says "None, as for Ollama"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMKeyNone() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMKeyNone", nil)
+}
+
+// LyricsSettingsLLMKeyKept says "Kept — type to replace it"
+// in the language the app shows.
+func LyricsSettingsLLMKeyKept() string { return In(i18n.Locale()).LyricsSettingsLLMKeyKept() }
+
+// LyricsSettingsLLMKeyKept says "Kept — type to replace it"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMKeyKept() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMKeyKept", nil)
+}
+
+// LyricsSettingsLLMKeyForget says "Forget"
+// in the language the app shows.
+func LyricsSettingsLLMKeyForget() string { return In(i18n.Locale()).LyricsSettingsLLMKeyForget() }
+
+// LyricsSettingsLLMKeyForget says "Forget"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMKeyForget() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMKeyForget", nil)
 }
 
 // LyricsSettingsSystemLanguage says "System language ({language})"

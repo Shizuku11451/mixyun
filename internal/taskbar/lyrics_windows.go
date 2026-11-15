@@ -18,6 +18,7 @@ import (
 	"slices"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"syscall"
 	"time"
 	"unicode/utf16"
@@ -34,6 +35,7 @@ const (
 	wmLButtonUp    = 0x0202
 	wmMouseLeave   = 0x02A3
 	wmLyricsUpdate = 0x8000 + 0x4C // WM_APP + 'L'
+	wmLyricsFrame  = 0x8000 + 0x46 // WM_APP + 'F'
 
 	wsPopup        = 0x80000000
 	wsExLayered    = 0x00080000
@@ -67,11 +69,7 @@ const (
 	// lyricsReplace is how often, in milliseconds, the window takes its
 	// place again, as the notification area grows or the taskbar moves.
 	lyricsReplace = 1000
-	// timerFrame is the timer of the frames of a glide, and of words
-	// being sung, frameMs how often, in milliseconds, it draws them, and
-	// lyricsGlide how long a glide takes.
-	timerFrame  = 2
-	frameMs     = 15
+	// lyricsGlide is how long a glide takes.
 	lyricsGlide = 250 * time.Millisecond
 )
 
@@ -88,7 +86,6 @@ var (
 	procShowWindow          = user32.NewProc("ShowWindow")
 	procIsWindowVisible     = user32.NewProc("IsWindowVisible")
 	procSetTimer            = user32.NewProc("SetTimer")
-	procKillTimer           = user32.NewProc("KillTimer")
 	procTrackMouseEvent     = user32.NewProc("TrackMouseEvent")
 	procLoadCursorW         = user32.NewProc("LoadCursorW")
 	procSetCursor           = user32.NewProc("SetCursor")
@@ -107,6 +104,8 @@ var (
 	procGdiFlush           = gdi32.NewProc("GdiFlush")
 
 	procGetModuleHandleW = kernel32.NewProc("GetModuleHandleW")
+
+	procDwmFlush = syscall.NewLazyDLL("dwmapi.dll").NewProc("DwmFlush")
 )
 
 // errNoTaskbar is returned where the taskbar takes no window: there is
@@ -188,10 +187,15 @@ type lyricsWin struct {
 		ok    bool
 	}
 	// The glide from the view drawn before, on its thread: started at
-	// glideStart, zero without one. framing is set while timerFrame runs.
+	// glideStart, zero without one. framing is set while frames are
+	// asked for, on its thread.
 	glideFrom  LyricsView
 	glideStart time.Time
 	framing    bool
+	// frameGen ends the goroutine pacing the frames as it changes, and
+	// framePending is set while a frame is posted and not yet drawn.
+	frameGen     atomic.Uint32
+	framePending atomic.Bool
 	// spans are where the words of the line text, px tall, are; its
 	// thread's.
 	spans struct {
@@ -254,6 +258,7 @@ func (l *lyricsWin) run(ready chan<- error) {
 		procTranslateMessage.Call(uintptr(unsafe.Pointer(&m)))
 		procDispatchMessageW.Call(uintptr(unsafe.Pointer(&m)))
 	}
+	l.frameGen.Add(1)
 	l.mu.Lock()
 	l.closed = true
 	l.mu.Unlock()
@@ -274,6 +279,12 @@ func lyricsProc(hwnd, msg, wp, lp uintptr) uintptr {
 	l := lyricsWindows[hwnd]
 	lyricsMu.Unlock()
 	switch msg {
+	case wmLyricsFrame:
+		if l != nil {
+			l.framePending.Store(false)
+			l.update()
+		}
+		return 0
 	case wmLyricsUpdate, wmTimer:
 		if l != nil {
 			l.update()
@@ -415,17 +426,33 @@ func (l *lyricsWin) update() {
 // stopGlide ends the glide, if any. The window's thread.
 func (l *lyricsWin) stopGlide() { l.glideStart, l.glideFrom = time.Time{}, LyricsView{} }
 
-// frames starts or stops the timer of the frames. The window's thread.
+// frames starts or stops the frames, one each time the desktop composes,
+// at the display's refresh rate: a timer's, rounded to the system's tick
+// of 15.6 ms, gives 64 at most. The window's thread.
 func (l *lyricsWin) frames(on bool) {
 	if on == l.framing {
 		return
 	}
-	if on {
-		procSetTimer.Call(l.hwnd, timerFrame, frameMs, 0)
-	} else {
-		procKillTimer.Call(l.hwnd, timerFrame)
-	}
 	l.framing = on
+	gen := l.frameGen.Add(1)
+	if !on {
+		return
+	}
+	hwnd := l.hwnd
+	go func() {
+		for l.frameGen.Load() == gen {
+			if hr, _, _ := procDwmFlush.Call(); hr != 0 {
+				time.Sleep(time.Second / 60) // composition is off
+			}
+			// One frame posted at a time: the thread handles the pointer
+			// between them, and never falls behind.
+			if l.frameGen.Load() == gen && !l.framePending.Swap(true) {
+				if ok, _, _ := procPostMessageW.Call(hwnd, wmLyricsFrame, 0, 0); ok == 0 {
+					l.framePending.Store(false)
+				}
+			}
+		}
+	}()
 }
 
 // draw draws v in the window w by h pixels, e of the way from the lines of

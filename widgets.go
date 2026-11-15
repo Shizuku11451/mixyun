@@ -730,6 +730,10 @@ func (s *shell) segmented(c *ui.Context, key, label string, selected *int, label
 	} else {
 		seg.Track.Border(2, k.outline)
 	}
+	if k.tonal && s.onBackdrop() {
+		// Over the cover's backdrop, the track is a shade of it, as the search field.
+		seg.Track.Background(withAlpha(k.bg, 0.3))
+	}
 	seg.Track.Children(func() {
 		for i, l := range labels {
 			l := k.words(l)

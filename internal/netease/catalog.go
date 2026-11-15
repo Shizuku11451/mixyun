@@ -596,6 +596,8 @@ type Audio struct {
 	Size int64
 	// Type is the file's kind, as "mp3" or "flac".
 	Type string
+	// Bitrate is in bit/s, 0 when NetEase doesn't tell.
+	Bitrate int
 	// Expires is when the URL stops working.
 	Expires time.Time
 }
@@ -610,6 +612,7 @@ func (c *Client) SongAudio(ctx context.Context, native, level string) (Audio, er
 			URL           string          `json:"url"`
 			Size          int64           `json:"size"`
 			Type          string          `json:"type"`
+			Br            int             `json:"br"`
 			Expi          int             `json:"expi"`
 			FreeTrialInfo json.RawMessage `json:"freeTrialInfo"`
 		} `json:"data"`
@@ -628,7 +631,7 @@ func (c *Client) SongAudio(ctx context.Context, native, level string) (Audio, er
 	if expi <= 0 {
 		expi = 1200
 	}
-	return Audio{URL: d.URL, Size: d.Size, Type: d.Type, Expires: time.Now().Add(time.Duration(expi) * time.Second)}, nil
+	return Audio{URL: d.URL, Size: d.Size, Type: d.Type, Bitrate: d.Br, Expires: time.Now().Add(time.Duration(expi) * time.Second)}, nil
 }
 
 // RoamTags are the tags of NetEase's playlist catalogue to roam by, as

@@ -2,8 +2,10 @@ package settings
 
 import (
 	"math"
+	"net/url"
 	"regexp"
 	"slices"
+	"strings"
 )
 
 // The ways of showing lyrics in Latin letters (LyricsRomanize).
@@ -162,12 +164,29 @@ type Translation struct {
 	// LyricsTranslateTo is the language lyrics translate to, a code of ISO
 	// 639-1; "" is the system's.
 	LyricsTranslateTo string `json:"lyricsTranslateTo"`
+	// LyricsLLMURL is the server of the language model that translates
+	// lyrics without a translation of their own, in place of Unison: its
+	// base URL, as "https://api.openai.com/v1", of a server that speaks
+	// OpenAI's chat completions; "" leaves translations to Unison. Its API
+	// key is kept in the system's credential store.
+	LyricsLLMURL string `json:"lyricsLlmUrl"`
+	// LyricsLLMModel is the model LyricsLLMURL translates with, as
+	// "gpt-4o-mini".
+	LyricsLLMModel string `json:"lyricsLlmModel"`
 }
+
+// LLM tells whether a language model translates lyrics.
+func (t Translation) LLM() bool { return t.LyricsLLMURL != "" && t.LyricsLLMModel != "" }
 
 // clean is t with the system's language in place of one that isn't one.
 func (t Translation) clean() Translation {
 	if !languageRe.MatchString(t.LyricsTranslateTo) {
 		t.LyricsTranslateTo = ""
 	}
+	t.LyricsLLMURL = strings.TrimSpace(t.LyricsLLMURL)
+	if u, err := url.Parse(t.LyricsLLMURL); err != nil || (u.Scheme != "http" && u.Scheme != "https") || u.Host == "" {
+		t.LyricsLLMURL = ""
+	}
+	t.LyricsLLMModel = strings.TrimSpace(t.LyricsLLMModel)
 	return t
 }
