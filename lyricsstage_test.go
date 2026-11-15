@@ -106,7 +106,7 @@ func TestLyricStylesTable(t *testing.T) {
 		if st.id != settings.LyricStyles[i] {
 			t.Errorf("style %d is %q, the settings' is %q", i, st.id, settings.LyricStyles[i])
 		}
-		if st.name == "" || st.about == "" {
+		if st.name == "" || st.about() == "" {
 			t.Errorf("%q has no name or no description", st.id)
 		}
 		if !slices.Contains([]string{face, faceRound, faceMaterial, faceArchivo}, st.family) {

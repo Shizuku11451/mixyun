@@ -61,6 +61,7 @@ type playlist struct {
 	PicURL      string `json:"picUrl"` // of recommended playlists
 	Description string `json:"description"`
 	TrackCount  int    `json:"trackCount"`
+	PlayCount   int64  `json:"playCount"`
 	Creator     *struct {
 		UserID   int64  `json:"userId"`
 		Nickname string `json:"nickname"`
@@ -214,6 +215,7 @@ func toPlaylist(p playlist, userID string) media.Playlist {
 		Description: p.Description,
 		Artwork:     artwork(pic),
 		TrackCount:  p.TrackCount,
+		Views:       p.PlayCount,
 		Tracks:      []media.Track{},
 		Saved:       p.Subscribed,
 		URL:         origin + "/#/playlist?id=" + strconv.FormatInt(p.ID, 10),

@@ -13,8 +13,9 @@ import (
 	"github.com/fzn0x/mixmusic/locales"
 )
 
-// The orders of a search's results (#630). Best match is the services'
-// own; Most played counts what YouTube Music says of a song, a video or a
+// The orders of a search's results (#630), by id: sortLabel names them.
+// Best match is the services' own; Most played counts what YouTube Music
+// says of a song, a video or a playlist, and NetEase Cloud Music of a
 // playlist; Newest orders albums by their year.
 const (
 	sortBestMatch  = "Best match"
@@ -30,16 +31,32 @@ type searchSorting struct {
 	general, albums string
 }
 
+// sortLabel is what the Sort by select calls the order id.
+func sortLabel(id string) string {
+	switch id {
+	case sortMostPlayed:
+		return locales.SearchSortPlayed()
+	case sortNewest:
+		return locales.SearchSortNewest()
+	}
+	return locales.SearchSortBest()
+}
+
 // searchSortOptions are the orders the pivot offers, or none where only
 // the services' own is there: Spotify gives apps no play counts, so with
-// only Spotify chosen, Most played isn't offered. Artists and podcasts
-// have no order to choose.
+// only Spotify chosen, Most played isn't offered, and NetEase Cloud Music
+// counts only its playlists' plays. Artists and podcasts have no order to
+// choose.
 func searchSortOptions(pivot string, scope int) []string {
 	switch pivot {
 	case "albums":
 		return []string{sortBestMatch, sortNewest}
-	case "all", "songs", "videos", "playlists":
+	case "playlists":
 		if scope != spotifyScope {
+			return []string{sortBestMatch, sortMostPlayed}
+		}
+	case "all", "songs", "videos":
+		if scope != spotifyScope && scope != neteaseScope {
 			return []string{sortBestMatch, sortMostPlayed}
 		}
 	}
@@ -58,7 +75,7 @@ func (s *shell) sortSelect(c *ui.Context, q, pivot string, scope int) string {
 	}
 	options := searchSortOptions(pivot, scope)
 	if len(options) == 0 {
-		if scope == spotifyScope {
+		if scope == spotifyScope || scope == neteaseScope {
 			st.general = sortBestMatch
 		}
 		return sortBestMatch
@@ -70,7 +87,14 @@ func (s *shell) sortSelect(c *ui.Context, q, pivot string, scope int) string {
 	if !slices.Contains(options, *chosen) {
 		*chosen = sortBestMatch
 	}
-	s.selectOf(c.Key("sort"), chosen, options).Width(170).Label(locales.SearchSortBy())
+	labels := make([]string, len(options))
+	for i, o := range options {
+		labels[i] = sortLabel(o)
+	}
+	label := sortLabel(*chosen)
+	if s.selectOf(c.Key("sort"), &label, labels).Width(170).Label(locales.SearchSortBy()).Changed() {
+		*chosen = options[slices.Index(labels, label)]
+	}
 	return *chosen
 }
 
@@ -112,15 +136,15 @@ func newestFirst(albums []media.Album) []media.Album {
 }
 
 // playedResults are the results of the services of scope, for the order
-// of Most played: with all of them, NetEase Cloud Music's and YouTube
-// Music's first, as Spotify has no counts and goes after those that have,
+// of Most played: with all of them, YouTube Music's first, then NetEase
+// Cloud Music's, whose songs have no counts, then Spotify's, which has none,
 // then each sorted by its count.
 func playedResults(r app.SearchResponse, scope int, shown func(media.SearchResults) media.SearchResults) media.SearchResults {
 	out := mergeResults(r, scope)
 	if scope == allScope {
-		out.Tracks = slices.Concat(r.NetEase.Tracks, r.YouTube.Tracks, r.Spotify.Tracks)
-		out.Videos = slices.Concat(r.NetEase.Videos, r.YouTube.Videos, r.Spotify.Videos)
-		out.Playlists = slices.Concat(r.NetEase.Playlists, r.YouTube.Playlists, r.Spotify.Playlists)
+		out.Tracks = slices.Concat(r.YouTube.Tracks, r.NetEase.Tracks, r.Spotify.Tracks)
+		out.Videos = slices.Concat(r.YouTube.Videos, r.NetEase.Videos, r.Spotify.Videos)
+		out.Playlists = slices.Concat(r.YouTube.Playlists, r.NetEase.Playlists, r.Spotify.Playlists)
 	}
 	out = shown(out)
 	out.Tracks = sortTracks(out.Tracks)
@@ -148,9 +172,9 @@ func (s *shell) newestAlbumTiles(c *ui.Context, key string, albums []media.Album
 	}
 }
 
-// sortNote tells, while Most played orders the results of both services,
-// where Spotify's go.
+// sortNote tells, while Most played orders the results of all services,
+// where those with no counts go.
 func (s *shell) sortNote(c *ui.Context) {
-	ui.Text(c, "Spotify gives apps no play counts, so its results come after YouTube Music's.").
+	ui.Text(c, locales.SearchSortNote()).
 		FontSize(s.lk.smallSize()).TextColor(s.lk.muted).Margin(0, 0, 16)
 }

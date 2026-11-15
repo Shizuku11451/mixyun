@@ -8,6 +8,7 @@ import (
 	"github.com/egoist/mygo/ui"
 
 	"github.com/fzn0x/mixmusic/internal/player"
+	"github.com/fzn0x/mixmusic/locales"
 	"github.com/fzn0x/mixmusic/lyrics"
 )
 
@@ -72,7 +73,7 @@ func previewWordsOf(line int) []lyrics.Word {
 func (s *shell) lyricPreview(c *ui.Context) {
 	k := &s.lk
 	style := lyricStyleOf(s.set.LyricsStyle)
-	box := ui.Box(c.Key("lyric-preview")).Height(previewHeight).MaxWidth(560).Margin(14, 0).Radius(14).Clip().Label("Preview of the full-screen lyrics")
+	box := ui.Box(c.Key("lyric-preview")).Height(previewHeight).MaxWidth(560).Margin(14, 0).Radius(14).Clip().Label(locales.LyricStylePreviewLabel())
 	var b *ui.Bitmap
 	if cur, ok := s.st.Current(); ok && len(cur.Track.Artwork) > 0 {
 		b = s.art.get(c, artworkURL(cur.Track.Artwork, 64), 64)

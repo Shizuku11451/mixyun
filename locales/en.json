@@ -5615,5 +5615,123 @@
       }
     }
   },
-  "statsComma": ", "
+  "statsComma": ", ",
+  "lyricsStageTitle": "Full-screen lyrics",
+  "lyricsStageClose": "Close full-screen lyrics",
+  "lyricsStageCloseTip": "Close",
+  "lyricsStageNoEpisode": "Podcast episodes have no lyrics",
+  "lyricsStageControls": "Player controls",
+  "cmdLyricsStyle": "Lyrics style: {name}",
+  "@cmdLyricsStyle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "lyricStyleSpotlightAbout": "Very big letters. Only the line sung is sharp: the others blur.",
+  "lyricStyleGlowAbout": "Round, bold letters with a soft glow on the words as they are sung. The other lines blur.",
+  "lyricStyleFocusAbout": "Bold, even letters. The farther a line is from the one sung, the more it fades and blurs.",
+  "lyricStyleSimpleAbout": "Plain letters, as in the rest of Mixyun. No blur: the other lines only fade.",
+  "lyricStyleBoldAbout": "Big, heavy, tight letters, like a poster.",
+  "lyricStyleCalmAbout": "Small, quiet letters, with a light fade and almost no blur, for a relaxed mood.",
+  "lyricBallMix": "Mix",
+  "lyricBallMixAbout": "A different motion for each line, in turn.",
+  "lyricBallHop": "Hop",
+  "lyricBallHopAbout": "One arc, as the hops between words are.",
+  "lyricBallBoomerang": "Boomerang",
+  "lyricBallBoomerangAbout": "Thrown out past the end of the line, it curves back to the next.",
+  "lyricBallLoop": "Loop",
+  "lyricBallLoopAbout": "A loop over the last word, then a swoop to the next line.",
+  "lyricBallDive": "Dive",
+  "lyricBallDiveAbout": "It rises a little, as to gather itself, and drops to the next line.",
+  "lyricBallRicochet": "Ricochet",
+  "lyricBallRicochetAbout": "It bounces off the right edge of the lyrics and their floor.",
+  "lyricStyleGroup": "Lyrics style",
+  "lyricStylePreview": "Preview of the lyrics",
+  "lyricStylePreviewFind": "how the full-screen lyrics look in the style, size and ball set",
+  "lyricStylePreviewLabel": "Preview of the full-screen lyrics",
+  "lyricStyleSize": "Lyrics text size",
+  "lyricStyleBall": "Bouncing ball",
+  "lyricStyleBallDesc": "A ball hops from word to word over the line sung, as its words are sung, and flies to the next line. Only for lyrics timed word by word.",
+  "lyricStyleBallSwitch": "Show the bouncing ball",
+  "lyricStyleBallMotion": "Ball between lines",
+  "lyricStyleBallMotionLabel": "Motion between lines",
+  "lyricStyleStageDesc": "Cover the window with the lyrics of what plays, over its blurred cover.",
+  "searchSortBest": "Best match",
+  "searchSortPlayed": "Most played",
+  "searchSortNewest": "Newest",
+  "searchSortNote": "Spotify gives apps no play counts, nor NetEase Cloud Music for songs, so their results come after YouTube Music's.",
+  "playlistGapItems": "{n} of this {noun, select, mix {mix} playlist {playlist} other {list}}'s items can't play here: {kinds}.",
+  "@playlistGapItems": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "noun": {
+        "type": "String"
+      },
+      "kinds": {
+        "type": "String"
+      }
+    }
+  },
+  "playlistGapLocal": "{count, plural, one {{n} local file} other {{n} local files}}",
+  "@playlistGapLocal": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "playlistGapEpisodes": "{count, plural, one {{n} episode} other {{n} episodes}}",
+  "@playlistGapEpisodes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "playlistGapGone": "{count, plural, one {{n} removed or unavailable item} other {{n} removed or unavailable items}}",
+  "@playlistGapGone": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "playlistGapHidden": "{count, plural, one {{n} explicit song is hidden by your settings.} other {{n} explicit songs are hidden by your settings.}}",
+  "@playlistGapHidden": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "playlistShort": "Only {n} of this {noun, select, mix {mix} playlist {playlist} other {list}}'s {count} tracks came from YouTube Music.",
+  "@playlistShort": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "noun": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  }
 }

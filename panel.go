@@ -212,7 +212,7 @@ func (s *shell) lyricsPanel(c *ui.Context) {
 	var actions func()
 	if cur, ok := s.st.Current(); ok && !cur.Track.IsEpisode() {
 		actions = func() {
-			if s.iconButton(c, "lyrics-stage", "expand", "Full-screen lyrics", false, 16).Clicked() {
+			if s.iconButton(c, "lyrics-stage", "expand", locales.LyricsStageTitle(), false, 16).Clicked() {
 				s.toggleStage()
 			}
 		}

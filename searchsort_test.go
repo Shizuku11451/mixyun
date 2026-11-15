@@ -96,4 +96,11 @@ func TestSearchSortOptions(t *testing.T) {
 	if got := searchSortOptions("albums", 1); len(got) != 2 {
 		t.Errorf("Spotify's albums offer %v, want Newest too", got)
 	}
+	// NetEase Cloud Music counts the plays of its playlists, not its songs.
+	if got := searchSortOptions("songs", neteaseScope); got != nil {
+		t.Errorf("NetEase Cloud Music's songs offer %v: they have no play counts", got)
+	}
+	if got := searchSortOptions("playlists", neteaseScope); !slices.Contains(got, sortMostPlayed) {
+		t.Errorf("NetEase Cloud Music's playlists offer %v, want Most played", got)
+	}
 }

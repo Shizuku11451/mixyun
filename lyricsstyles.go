@@ -5,6 +5,7 @@ import (
 	"slices"
 
 	"github.com/fzn0x/mixmusic/internal/settings"
+	"github.com/fzn0x/mixmusic/locales"
 )
 
 // lyricStyle is how the full-screen lyrics (lyricsstage.go) look in one
@@ -14,8 +15,10 @@ import (
 // the stage draws all of them the same way.
 type lyricStyle struct {
 	id settings.LyricStyle
-	// name and about are what Settings and the command palette call it.
-	name, about string
+	// name and about are what Settings and the command palette call it:
+	// the name stays as it is, as the layouts' do; about follows the language.
+	name  string
+	about func() string
 	// family, weight and size set the line sung now, size in rem, as
 	// look.size takes it, and leading its line height, a multiple of its
 	// size. There is no letter spacing: the words sung are painted from a
@@ -44,32 +47,32 @@ type lyricStyle struct {
 // keeps the two the same.
 var lyricStyles = []lyricStyle{
 	{
-		id: settings.LyricStyleSpotlight, name: "Spotlight", about: "Very big letters. Only the line sung is sharp: the others blur.",
+		id: settings.LyricStyleSpotlight, name: "Spotlight", about: locales.LyricStyleSpotlightAbout,
 		family: face, weight: 700, size: 3.2, leading: 1.1,
 		dim: 0.38, fade: 0.06, floor: 0.14, blur: 2.5, maxBlur: 10, cover: 16, scrim: 0.64,
 	},
 	{
-		id: settings.LyricStyleGlow, name: "Glow", about: "Round, bold letters with a soft glow on the words as they are sung. The other lines blur.",
+		id: settings.LyricStyleGlow, name: "Glow", about: locales.LyricStyleGlowAbout,
 		family: faceRound, weight: 700, size: 2.1, leading: 1.25,
 		dim: 0.42, fade: 0.06, floor: 0.16, blur: 1.5, maxBlur: 6, glow: 9, cover: 12, scrim: 0.62,
 	},
 	{
-		id: settings.LyricStyleFocus, name: "Focus", about: "Bold, even letters. The farther a line is from the one sung, the more it fades and blurs.",
+		id: settings.LyricStyleFocus, name: "Focus", about: locales.LyricStyleFocusAbout,
 		family: faceMaterial, weight: 700, size: 2, leading: 1.2,
 		dim: 0.45, fade: 0.07, floor: 0.16, blur: 1, maxBlur: 5, cover: 6, scrim: 0.64,
 	},
 	{
-		id: settings.LyricStyleSimple, name: "Simple", about: "Plain letters, as in the rest of MixMusic. No blur: the other lines only fade.",
+		id: settings.LyricStyleSimple, name: "Simple", about: locales.LyricStyleSimpleAbout,
 		family: face, weight: 600, size: 1.9, leading: 1.3,
 		dim: 0.4, fade: 0.08, floor: 0.2, cover: 4, scrim: 0.62,
 	},
 	{
-		id: settings.LyricStyleBold, name: "Bold", about: "Big, heavy, tight letters, like a poster.",
+		id: settings.LyricStyleBold, name: "Bold", about: locales.LyricStyleBoldAbout,
 		family: faceArchivo, weight: 800, size: 2.9, leading: 1.02,
 		dim: 0.32, fade: 0.05, floor: 0.12, cover: 0, scrim: 0.68,
 	},
 	{
-		id: settings.LyricStyleCalm, name: "Calm", about: "Small, quiet letters, with a light fade and almost no blur, for a relaxed mood.",
+		id: settings.LyricStyleCalm, name: "Calm", about: locales.LyricStyleCalmAbout,
 		family: faceMaterial, weight: 500, size: 1.5, leading: 1.4,
 		dim: 0.5, fade: 0.05, floor: 0.25, blur: 0.5, maxBlur: 2, cover: 14, scrim: 0.62,
 	},

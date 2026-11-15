@@ -18795,3 +18795,463 @@ func StatsComma() string { return In(i18n.Locale()).StatsComma() }
 func (msgs Messages) StatsComma() string {
 	return Catalog.Format(msgs.locale, "statsComma", nil)
 }
+
+// LyricsStageTitle says "Full-screen lyrics"
+// in the language the app shows.
+func LyricsStageTitle() string { return In(i18n.Locale()).LyricsStageTitle() }
+
+// LyricsStageTitle says "Full-screen lyrics"
+// in the language of msgs.
+func (msgs Messages) LyricsStageTitle() string {
+	return Catalog.Format(msgs.locale, "lyricsStageTitle", nil)
+}
+
+// LyricsStageClose says "Close full-screen lyrics"
+// in the language the app shows.
+func LyricsStageClose() string { return In(i18n.Locale()).LyricsStageClose() }
+
+// LyricsStageClose says "Close full-screen lyrics"
+// in the language of msgs.
+func (msgs Messages) LyricsStageClose() string {
+	return Catalog.Format(msgs.locale, "lyricsStageClose", nil)
+}
+
+// LyricsStageCloseTip says "Close"
+// in the language the app shows.
+func LyricsStageCloseTip() string { return In(i18n.Locale()).LyricsStageCloseTip() }
+
+// LyricsStageCloseTip says "Close"
+// in the language of msgs.
+func (msgs Messages) LyricsStageCloseTip() string {
+	return Catalog.Format(msgs.locale, "lyricsStageCloseTip", nil)
+}
+
+// LyricsStageNoEpisode says "Podcast episodes have no lyrics"
+// in the language the app shows.
+func LyricsStageNoEpisode() string { return In(i18n.Locale()).LyricsStageNoEpisode() }
+
+// LyricsStageNoEpisode says "Podcast episodes have no lyrics"
+// in the language of msgs.
+func (msgs Messages) LyricsStageNoEpisode() string {
+	return Catalog.Format(msgs.locale, "lyricsStageNoEpisode", nil)
+}
+
+// LyricsStageControls says "Player controls"
+// in the language the app shows.
+func LyricsStageControls() string { return In(i18n.Locale()).LyricsStageControls() }
+
+// LyricsStageControls says "Player controls"
+// in the language of msgs.
+func (msgs Messages) LyricsStageControls() string {
+	return Catalog.Format(msgs.locale, "lyricsStageControls", nil)
+}
+
+// CmdLyricsStyle says "Lyrics style: {name}"
+// in the language the app shows.
+func CmdLyricsStyle(name string) string { return In(i18n.Locale()).CmdLyricsStyle(name) }
+
+// CmdLyricsStyle says "Lyrics style: {name}"
+// in the language of msgs.
+func (msgs Messages) CmdLyricsStyle(name string) string {
+	return Catalog.Format(msgs.locale, "cmdLyricsStyle", map[string]any{"name": name})
+}
+
+// LyricStyleSpotlightAbout says "Very big letters. Only the line sung is sharp: the others blur."
+// in the language the app shows.
+func LyricStyleSpotlightAbout() string { return In(i18n.Locale()).LyricStyleSpotlightAbout() }
+
+// LyricStyleSpotlightAbout says "Very big letters. Only the line sung is sharp: the others blur."
+// in the language of msgs.
+func (msgs Messages) LyricStyleSpotlightAbout() string {
+	return Catalog.Format(msgs.locale, "lyricStyleSpotlightAbout", nil)
+}
+
+// LyricStyleGlowAbout says "Round, bold letters with a soft glow on the words as they are sung. The other lines blur."
+// in the language the app shows.
+func LyricStyleGlowAbout() string { return In(i18n.Locale()).LyricStyleGlowAbout() }
+
+// LyricStyleGlowAbout says "Round, bold letters with a soft glow on the words as they are sung. The other lines blur."
+// in the language of msgs.
+func (msgs Messages) LyricStyleGlowAbout() string {
+	return Catalog.Format(msgs.locale, "lyricStyleGlowAbout", nil)
+}
+
+// LyricStyleFocusAbout says "Bold, even letters. The farther a line is from the one sung, the more it fades and blurs."
+// in the language the app shows.
+func LyricStyleFocusAbout() string { return In(i18n.Locale()).LyricStyleFocusAbout() }
+
+// LyricStyleFocusAbout says "Bold, even letters. The farther a line is from the one sung, the more it fades and blurs."
+// in the language of msgs.
+func (msgs Messages) LyricStyleFocusAbout() string {
+	return Catalog.Format(msgs.locale, "lyricStyleFocusAbout", nil)
+}
+
+// LyricStyleSimpleAbout says "Plain letters, as in the rest of Mixyun. No blur: the other lines only fade."
+// in the language the app shows.
+func LyricStyleSimpleAbout() string { return In(i18n.Locale()).LyricStyleSimpleAbout() }
+
+// LyricStyleSimpleAbout says "Plain letters, as in the rest of Mixyun. No blur: the other lines only fade."
+// in the language of msgs.
+func (msgs Messages) LyricStyleSimpleAbout() string {
+	return Catalog.Format(msgs.locale, "lyricStyleSimpleAbout", nil)
+}
+
+// LyricStyleBoldAbout says "Big, heavy, tight letters, like a poster."
+// in the language the app shows.
+func LyricStyleBoldAbout() string { return In(i18n.Locale()).LyricStyleBoldAbout() }
+
+// LyricStyleBoldAbout says "Big, heavy, tight letters, like a poster."
+// in the language of msgs.
+func (msgs Messages) LyricStyleBoldAbout() string {
+	return Catalog.Format(msgs.locale, "lyricStyleBoldAbout", nil)
+}
+
+// LyricStyleCalmAbout says "Small, quiet letters, with a light fade and almost no blur, for a relaxed mood."
+// in the language the app shows.
+func LyricStyleCalmAbout() string { return In(i18n.Locale()).LyricStyleCalmAbout() }
+
+// LyricStyleCalmAbout says "Small, quiet letters, with a light fade and almost no blur, for a relaxed mood."
+// in the language of msgs.
+func (msgs Messages) LyricStyleCalmAbout() string {
+	return Catalog.Format(msgs.locale, "lyricStyleCalmAbout", nil)
+}
+
+// LyricBallMix says "Mix"
+// in the language the app shows.
+func LyricBallMix() string { return In(i18n.Locale()).LyricBallMix() }
+
+// LyricBallMix says "Mix"
+// in the language of msgs.
+func (msgs Messages) LyricBallMix() string {
+	return Catalog.Format(msgs.locale, "lyricBallMix", nil)
+}
+
+// LyricBallMixAbout says "A different motion for each line, in turn."
+// in the language the app shows.
+func LyricBallMixAbout() string { return In(i18n.Locale()).LyricBallMixAbout() }
+
+// LyricBallMixAbout says "A different motion for each line, in turn."
+// in the language of msgs.
+func (msgs Messages) LyricBallMixAbout() string {
+	return Catalog.Format(msgs.locale, "lyricBallMixAbout", nil)
+}
+
+// LyricBallHop says "Hop"
+// in the language the app shows.
+func LyricBallHop() string { return In(i18n.Locale()).LyricBallHop() }
+
+// LyricBallHop says "Hop"
+// in the language of msgs.
+func (msgs Messages) LyricBallHop() string {
+	return Catalog.Format(msgs.locale, "lyricBallHop", nil)
+}
+
+// LyricBallHopAbout says "One arc, as the hops between words are."
+// in the language the app shows.
+func LyricBallHopAbout() string { return In(i18n.Locale()).LyricBallHopAbout() }
+
+// LyricBallHopAbout says "One arc, as the hops between words are."
+// in the language of msgs.
+func (msgs Messages) LyricBallHopAbout() string {
+	return Catalog.Format(msgs.locale, "lyricBallHopAbout", nil)
+}
+
+// LyricBallBoomerang says "Boomerang"
+// in the language the app shows.
+func LyricBallBoomerang() string { return In(i18n.Locale()).LyricBallBoomerang() }
+
+// LyricBallBoomerang says "Boomerang"
+// in the language of msgs.
+func (msgs Messages) LyricBallBoomerang() string {
+	return Catalog.Format(msgs.locale, "lyricBallBoomerang", nil)
+}
+
+// LyricBallBoomerangAbout says "Thrown out past the end of the line, it curves back to the next."
+// in the language the app shows.
+func LyricBallBoomerangAbout() string { return In(i18n.Locale()).LyricBallBoomerangAbout() }
+
+// LyricBallBoomerangAbout says "Thrown out past the end of the line, it curves back to the next."
+// in the language of msgs.
+func (msgs Messages) LyricBallBoomerangAbout() string {
+	return Catalog.Format(msgs.locale, "lyricBallBoomerangAbout", nil)
+}
+
+// LyricBallLoop says "Loop"
+// in the language the app shows.
+func LyricBallLoop() string { return In(i18n.Locale()).LyricBallLoop() }
+
+// LyricBallLoop says "Loop"
+// in the language of msgs.
+func (msgs Messages) LyricBallLoop() string {
+	return Catalog.Format(msgs.locale, "lyricBallLoop", nil)
+}
+
+// LyricBallLoopAbout says "A loop over the last word, then a swoop to the next line."
+// in the language the app shows.
+func LyricBallLoopAbout() string { return In(i18n.Locale()).LyricBallLoopAbout() }
+
+// LyricBallLoopAbout says "A loop over the last word, then a swoop to the next line."
+// in the language of msgs.
+func (msgs Messages) LyricBallLoopAbout() string {
+	return Catalog.Format(msgs.locale, "lyricBallLoopAbout", nil)
+}
+
+// LyricBallDive says "Dive"
+// in the language the app shows.
+func LyricBallDive() string { return In(i18n.Locale()).LyricBallDive() }
+
+// LyricBallDive says "Dive"
+// in the language of msgs.
+func (msgs Messages) LyricBallDive() string {
+	return Catalog.Format(msgs.locale, "lyricBallDive", nil)
+}
+
+// LyricBallDiveAbout says "It rises a little, as to gather itself, and drops to the next line."
+// in the language the app shows.
+func LyricBallDiveAbout() string { return In(i18n.Locale()).LyricBallDiveAbout() }
+
+// LyricBallDiveAbout says "It rises a little, as to gather itself, and drops to the next line."
+// in the language of msgs.
+func (msgs Messages) LyricBallDiveAbout() string {
+	return Catalog.Format(msgs.locale, "lyricBallDiveAbout", nil)
+}
+
+// LyricBallRicochet says "Ricochet"
+// in the language the app shows.
+func LyricBallRicochet() string { return In(i18n.Locale()).LyricBallRicochet() }
+
+// LyricBallRicochet says "Ricochet"
+// in the language of msgs.
+func (msgs Messages) LyricBallRicochet() string {
+	return Catalog.Format(msgs.locale, "lyricBallRicochet", nil)
+}
+
+// LyricBallRicochetAbout says "It bounces off the right edge of the lyrics and their floor."
+// in the language the app shows.
+func LyricBallRicochetAbout() string { return In(i18n.Locale()).LyricBallRicochetAbout() }
+
+// LyricBallRicochetAbout says "It bounces off the right edge of the lyrics and their floor."
+// in the language of msgs.
+func (msgs Messages) LyricBallRicochetAbout() string {
+	return Catalog.Format(msgs.locale, "lyricBallRicochetAbout", nil)
+}
+
+// LyricStyleGroup says "Lyrics style"
+// in the language the app shows.
+func LyricStyleGroup() string { return In(i18n.Locale()).LyricStyleGroup() }
+
+// LyricStyleGroup says "Lyrics style"
+// in the language of msgs.
+func (msgs Messages) LyricStyleGroup() string {
+	return Catalog.Format(msgs.locale, "lyricStyleGroup", nil)
+}
+
+// LyricStylePreview says "Preview of the lyrics"
+// in the language the app shows.
+func LyricStylePreview() string { return In(i18n.Locale()).LyricStylePreview() }
+
+// LyricStylePreview says "Preview of the lyrics"
+// in the language of msgs.
+func (msgs Messages) LyricStylePreview() string {
+	return Catalog.Format(msgs.locale, "lyricStylePreview", nil)
+}
+
+// LyricStylePreviewFind says "how the full-screen lyrics look in the style, size and ball set"
+// in the language the app shows.
+func LyricStylePreviewFind() string { return In(i18n.Locale()).LyricStylePreviewFind() }
+
+// LyricStylePreviewFind says "how the full-screen lyrics look in the style, size and ball set"
+// in the language of msgs.
+func (msgs Messages) LyricStylePreviewFind() string {
+	return Catalog.Format(msgs.locale, "lyricStylePreviewFind", nil)
+}
+
+// LyricStylePreviewLabel says "Preview of the full-screen lyrics"
+// in the language the app shows.
+func LyricStylePreviewLabel() string { return In(i18n.Locale()).LyricStylePreviewLabel() }
+
+// LyricStylePreviewLabel says "Preview of the full-screen lyrics"
+// in the language of msgs.
+func (msgs Messages) LyricStylePreviewLabel() string {
+	return Catalog.Format(msgs.locale, "lyricStylePreviewLabel", nil)
+}
+
+// LyricStyleSize says "Lyrics text size"
+// in the language the app shows.
+func LyricStyleSize() string { return In(i18n.Locale()).LyricStyleSize() }
+
+// LyricStyleSize says "Lyrics text size"
+// in the language of msgs.
+func (msgs Messages) LyricStyleSize() string {
+	return Catalog.Format(msgs.locale, "lyricStyleSize", nil)
+}
+
+// LyricStyleBall says "Bouncing ball"
+// in the language the app shows.
+func LyricStyleBall() string { return In(i18n.Locale()).LyricStyleBall() }
+
+// LyricStyleBall says "Bouncing ball"
+// in the language of msgs.
+func (msgs Messages) LyricStyleBall() string {
+	return Catalog.Format(msgs.locale, "lyricStyleBall", nil)
+}
+
+// LyricStyleBallDesc says "A ball hops from word to word over the line sung, as its words are sung, and flies to the next line. Only for lyrics …"
+// in the language the app shows.
+func LyricStyleBallDesc() string { return In(i18n.Locale()).LyricStyleBallDesc() }
+
+// LyricStyleBallDesc says "A ball hops from word to word over the line sung, as its words are sung, and flies to the next line. Only for lyrics …"
+// in the language of msgs.
+func (msgs Messages) LyricStyleBallDesc() string {
+	return Catalog.Format(msgs.locale, "lyricStyleBallDesc", nil)
+}
+
+// LyricStyleBallSwitch says "Show the bouncing ball"
+// in the language the app shows.
+func LyricStyleBallSwitch() string { return In(i18n.Locale()).LyricStyleBallSwitch() }
+
+// LyricStyleBallSwitch says "Show the bouncing ball"
+// in the language of msgs.
+func (msgs Messages) LyricStyleBallSwitch() string {
+	return Catalog.Format(msgs.locale, "lyricStyleBallSwitch", nil)
+}
+
+// LyricStyleBallMotion says "Ball between lines"
+// in the language the app shows.
+func LyricStyleBallMotion() string { return In(i18n.Locale()).LyricStyleBallMotion() }
+
+// LyricStyleBallMotion says "Ball between lines"
+// in the language of msgs.
+func (msgs Messages) LyricStyleBallMotion() string {
+	return Catalog.Format(msgs.locale, "lyricStyleBallMotion", nil)
+}
+
+// LyricStyleBallMotionLabel says "Motion between lines"
+// in the language the app shows.
+func LyricStyleBallMotionLabel() string { return In(i18n.Locale()).LyricStyleBallMotionLabel() }
+
+// LyricStyleBallMotionLabel says "Motion between lines"
+// in the language of msgs.
+func (msgs Messages) LyricStyleBallMotionLabel() string {
+	return Catalog.Format(msgs.locale, "lyricStyleBallMotionLabel", nil)
+}
+
+// LyricStyleStageDesc says "Cover the window with the lyrics of what plays, over its blurred cover."
+// in the language the app shows.
+func LyricStyleStageDesc() string { return In(i18n.Locale()).LyricStyleStageDesc() }
+
+// LyricStyleStageDesc says "Cover the window with the lyrics of what plays, over its blurred cover."
+// in the language of msgs.
+func (msgs Messages) LyricStyleStageDesc() string {
+	return Catalog.Format(msgs.locale, "lyricStyleStageDesc", nil)
+}
+
+// SearchSortBest says "Best match"
+// in the language the app shows.
+func SearchSortBest() string { return In(i18n.Locale()).SearchSortBest() }
+
+// SearchSortBest says "Best match"
+// in the language of msgs.
+func (msgs Messages) SearchSortBest() string {
+	return Catalog.Format(msgs.locale, "searchSortBest", nil)
+}
+
+// SearchSortPlayed says "Most played"
+// in the language the app shows.
+func SearchSortPlayed() string { return In(i18n.Locale()).SearchSortPlayed() }
+
+// SearchSortPlayed says "Most played"
+// in the language of msgs.
+func (msgs Messages) SearchSortPlayed() string {
+	return Catalog.Format(msgs.locale, "searchSortPlayed", nil)
+}
+
+// SearchSortNewest says "Newest"
+// in the language the app shows.
+func SearchSortNewest() string { return In(i18n.Locale()).SearchSortNewest() }
+
+// SearchSortNewest says "Newest"
+// in the language of msgs.
+func (msgs Messages) SearchSortNewest() string {
+	return Catalog.Format(msgs.locale, "searchSortNewest", nil)
+}
+
+// SearchSortNote says "Spotify gives apps no play counts, nor NetEase Cloud Music for songs, so their results come after YouTube Music's."
+// in the language the app shows.
+func SearchSortNote() string { return In(i18n.Locale()).SearchSortNote() }
+
+// SearchSortNote says "Spotify gives apps no play counts, nor NetEase Cloud Music for songs, so their results come after YouTube Music's."
+// in the language of msgs.
+func (msgs Messages) SearchSortNote() string {
+	return Catalog.Format(msgs.locale, "searchSortNote", nil)
+}
+
+// PlaylistGapItems says "{n} of this {noun, select, mix {mix} playlist {playlist} other {list}}'s items can't play here: {kinds}."
+// in the language the app shows.
+func PlaylistGapItems(n string, noun string, kinds string) string {
+	return In(i18n.Locale()).PlaylistGapItems(n, noun, kinds)
+}
+
+// PlaylistGapItems says "{n} of this {noun, select, mix {mix} playlist {playlist} other {list}}'s items can't play here: {kinds}."
+// in the language of msgs.
+func (msgs Messages) PlaylistGapItems(n string, noun string, kinds string) string {
+	return Catalog.Format(msgs.locale, "playlistGapItems", map[string]any{"n": n, "noun": noun, "kinds": kinds})
+}
+
+// PlaylistGapLocal says "{count, plural, one {{n} local file} other {{n} local files}}"
+// in the language the app shows.
+func PlaylistGapLocal(count int, n string) string {
+	return In(i18n.Locale()).PlaylistGapLocal(count, n)
+}
+
+// PlaylistGapLocal says "{count, plural, one {{n} local file} other {{n} local files}}"
+// in the language of msgs.
+func (msgs Messages) PlaylistGapLocal(count int, n string) string {
+	return Catalog.Format(msgs.locale, "playlistGapLocal", map[string]any{"count": count, "n": n})
+}
+
+// PlaylistGapEpisodes says "{count, plural, one {{n} episode} other {{n} episodes}}"
+// in the language the app shows.
+func PlaylistGapEpisodes(count int, n string) string {
+	return In(i18n.Locale()).PlaylistGapEpisodes(count, n)
+}
+
+// PlaylistGapEpisodes says "{count, plural, one {{n} episode} other {{n} episodes}}"
+// in the language of msgs.
+func (msgs Messages) PlaylistGapEpisodes(count int, n string) string {
+	return Catalog.Format(msgs.locale, "playlistGapEpisodes", map[string]any{"count": count, "n": n})
+}
+
+// PlaylistGapGone says "{count, plural, one {{n} removed or unavailable item} other {{n} removed or unavailable items}}"
+// in the language the app shows.
+func PlaylistGapGone(count int, n string) string { return In(i18n.Locale()).PlaylistGapGone(count, n) }
+
+// PlaylistGapGone says "{count, plural, one {{n} removed or unavailable item} other {{n} removed or unavailable items}}"
+// in the language of msgs.
+func (msgs Messages) PlaylistGapGone(count int, n string) string {
+	return Catalog.Format(msgs.locale, "playlistGapGone", map[string]any{"count": count, "n": n})
+}
+
+// PlaylistGapHidden says "{count, plural, one {{n} explicit song is hidden by your settings.} other {{n} explicit songs are hidden by your sett…"
+// in the language the app shows.
+func PlaylistGapHidden(count int, n string) string {
+	return In(i18n.Locale()).PlaylistGapHidden(count, n)
+}
+
+// PlaylistGapHidden says "{count, plural, one {{n} explicit song is hidden by your settings.} other {{n} explicit songs are hidden by your sett…"
+// in the language of msgs.
+func (msgs Messages) PlaylistGapHidden(count int, n string) string {
+	return Catalog.Format(msgs.locale, "playlistGapHidden", map[string]any{"count": count, "n": n})
+}
+
+// PlaylistShort says "Only {n} of this {noun, select, mix {mix} playlist {playlist} other {list}}'s {count} tracks came from YouTube Music."
+// in the language the app shows.
+func PlaylistShort(n string, noun string, count string) string {
+	return In(i18n.Locale()).PlaylistShort(n, noun, count)
+}
+
+// PlaylistShort says "Only {n} of this {noun, select, mix {mix} playlist {playlist} other {list}}'s {count} tracks came from YouTube Music."
+// in the language of msgs.
+func (msgs Messages) PlaylistShort(n string, noun string, count string) string {
+	return Catalog.Format(msgs.locale, "playlistShort", map[string]any{"n": n, "noun": noun, "count": count})
+}

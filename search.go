@@ -139,7 +139,9 @@ func (s *shell) searchPage(c *ui.Context, q string) {
 		r := s.shownResults(mergeResults(res.value, s.searchScope))
 		if order == sortMostPlayed {
 			r = playedResults(res.value, s.searchScope, s.shownResults)
-			if s.searchScope == allScope && res.value.SpotifySignedIn {
+			// NetEase Cloud Music's songs have no counts either, signed in to
+			// Spotify or not.
+			if s.searchScope == allScope {
 				s.sortNote(c)
 			}
 		}

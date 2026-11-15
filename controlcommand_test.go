@@ -18,7 +18,7 @@ func TestControlRunning(t *testing.T) {
 		out     string
 	}{
 		{"handed over", []string{"--next"}, true, true, 0, ""},
-		{"not running", []string{"--volume-up"}, false, true, 1, "MixMusic isn't running\n"},
+		{"not running", []string{"--volume-up"}, false, true, 1, "Mixyun isn't running\n"},
 		{"among others", []string{"--some-flag", "--pause"}, true, true, 0, ""},
 		{"a plain start", nil, true, false, 0, ""},
 		{"a link", []string{"mixmusic://next"}, true, false, 0, ""},
