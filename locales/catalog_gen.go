@@ -3554,6 +3554,16 @@ func (msgs Messages) LyricsSettingsLLMURL() string {
 	return Catalog.Format(msgs.locale, "lyricsSettingsLLMURL", nil)
 }
 
+// LyricsSettingsLLMURLInvalid says "That isn't a server Mixyun can send the key to: give a URL of https, or of http on this computer, as http://localhost…"
+// in the language the app shows.
+func LyricsSettingsLLMURLInvalid() string { return In(i18n.Locale()).LyricsSettingsLLMURLInvalid() }
+
+// LyricsSettingsLLMURLInvalid says "That isn't a server Mixyun can send the key to: give a URL of https, or of http on this computer, as http://localhost…"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMURLInvalid() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMURLInvalid", nil)
+}
+
 // LyricsSettingsLLMDesc says "Lyrics without a translation of their own (NetEase Cloud Music's) are translated by the language model you choose, in…"
 // in the language the app shows.
 func LyricsSettingsLLMDesc() string { return In(i18n.Locale()).LyricsSettingsLLMDesc() }

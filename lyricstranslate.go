@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"maps"
 	"slices"
 
@@ -384,6 +385,11 @@ func (s *shell) lyricsSettings(c *ui.Context) {
 		})
 		s.row(c, locales.LyricsSettingsLLMURL(), locales.LyricsSettingsLLMDesc(), func() {
 			in, _ := s.settingInput(c, "lyrics-llm-url", s.set.LyricsLLMURL, func(v string) {
+				if v != "" && !settings.LLMURL(v) {
+					// Kept, it would be dropped unseen, and Unison would translate.
+					s.notes = append(s.notes, noticeOf(errors.New(locales.LyricsSettingsLLMURLInvalid())))
+					return
+				}
 				s.set.LyricsLLMURL = v
 				s.save()
 			})

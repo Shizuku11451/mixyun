@@ -47,6 +47,9 @@ func TestLyricsLLM(t *testing.T) {
 	for url, want := range map[string]string{
 		" https://api.openai.com/v1 ": "https://api.openai.com/v1",
 		"http://localhost:11434/v1":   "http://localhost:11434/v1",
+		"http://127.0.0.1:1234/v1":    "http://127.0.0.1:1234/v1",
+		"http://[::1]:1234/v1":        "http://[::1]:1234/v1",
+		"http://api.example.com/v1":   "",
 		"api.openai.com/v1":           "",
 		"file:///etc/passwd":          "",
 		"https://":                    "",

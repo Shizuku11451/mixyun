@@ -2,6 +2,7 @@ package settings
 
 import (
 	"math"
+	"net"
 	"net/url"
 	"regexp"
 	"slices"
@@ -178,13 +179,32 @@ type Translation struct {
 // LLM tells whether a language model translates lyrics.
 func (t Translation) LLM() bool { return t.LyricsLLMURL != "" && t.LyricsLLMModel != "" }
 
+// LLMURL tells whether raw can be the server of a language model: a URL
+// of https, or of http on this computer only (as Ollama's), since the API
+// key goes with each request.
+func LLMURL(raw string) bool {
+	u, err := url.Parse(raw)
+	if err != nil || u.Host == "" {
+		return false
+	}
+	switch u.Scheme {
+	case "https":
+		return true
+	case "http":
+		h := u.Hostname()
+		ip := net.ParseIP(h)
+		return h == "localhost" || ip != nil && ip.IsLoopback()
+	}
+	return false
+}
+
 // clean is t with the system's language in place of one that isn't one.
 func (t Translation) clean() Translation {
 	if !languageRe.MatchString(t.LyricsTranslateTo) {
 		t.LyricsTranslateTo = ""
 	}
 	t.LyricsLLMURL = strings.TrimSpace(t.LyricsLLMURL)
-	if u, err := url.Parse(t.LyricsLLMURL); err != nil || (u.Scheme != "http" && u.Scheme != "https") || u.Host == "" {
+	if !LLMURL(t.LyricsLLMURL) {
 		t.LyricsLLMURL = ""
 	}
 	t.LyricsLLMModel = strings.TrimSpace(t.LyricsLLMModel)

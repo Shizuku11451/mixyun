@@ -346,6 +346,7 @@
   "lyricsSettingsTranslate": "将歌词翻译为",
   "lyricsSettingsDesc": "歌词旁的翻译开关会以此语言显示歌词。开启时，正在播放的歌曲的歌词及其视频 ID 会发送至 Unison，由 Google 翻译；关闭时不会发送任何内容。其他文字的歌词会以在本机生成的拉丁字母显示，不发送任何内容：日语使用罗马字，其他语言则依各自语言的标准。只有阿拉伯语的歌词会发送至 Unison，由其补充阿拉伯语书写中省略的元音进行罗马化。",
   "lyricsSettingsLLMURL": "使用大语言模型翻译",
+  "lyricsSettingsLLMURLInvalid": "混云不能把密钥发往这个地址：请填写 https 地址，或本机的 http 地址，如 http://localhost:11434/v1。",
   "lyricsSettingsLLMDesc": "没有官方翻译（网易云音乐的翻译）的歌词，会改由你选择的大语言模型翻译，而不是 Unison：填写兼容 OpenAI Chat Completions 接口的服务地址，如 OpenAI、DeepSeek、OpenRouter 或 Ollama。设置后，你翻译的歌词会发送至该服务。留空则使用 Unison 翻译。",
   "lyricsSettingsLLMModel": "模型",
   "lyricsSettingsLLMKey": "API 密钥",
