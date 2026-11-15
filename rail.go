@@ -25,6 +25,7 @@ type navItem struct {
 var nav = []navItem{
 	{"home", locales.RailHome, "home", "/"},
 	{"search", locales.RailSearch, "search", "/search"},
+	{"explore", locales.RailExplore, "compass", "/explore"},
 	{"roam", locales.RoamTitle, "shuffle", "/roam"},
 	{"library", locales.RailLibrary, "library", "/library"},
 	{"stats", locales.RailStats, "stats", "/stats"},

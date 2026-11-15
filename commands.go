@@ -79,6 +79,7 @@ func (s *shell) commands() []command {
 		{"player.openFiles", locales.CmdPlayerOpenFiles(), "Mod+O", "playback", s.openMusicFiles},
 		{"go.home", locales.CmdGoHome(), "Alt+1", "go to", func() { s.navigate("/") }},
 		{"go.search", locales.RailSearch(), "Mod+F", "go to", func() { s.searchBox.Focus() }},
+		{"go.explore", locales.RailExplore(), "Alt+5", "go to", func() { s.navigate("/explore") }},
 		{"go.library", locales.RailLibrary(), "Alt+2", "go to", func() { s.navigate("/library") }},
 		{"go.liked", locales.RailLikedSongs(), "Alt+3", "go to", func() { s.navigate("/library/liked") }},
 		{"go.downloads", locales.RailDownloads(), "", "go to", func() { s.navigate("/library/downloads") }},
