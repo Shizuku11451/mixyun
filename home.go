@@ -12,10 +12,10 @@ import (
 
 // homeFilters are the home page's pivots, and the sources they keep;
 // homeFilterLabels are their names, in the language the app shows.
-var homeFilters = []media.Source{"", media.SourceLocal, media.SourceSpotify, media.SourceNetEase}
+var homeFilters = []media.Source{"", media.SourceLocal, media.SourceSpotify, media.SourceNetEase, media.SourceYouTube}
 
 func homeFilterLabels() []string {
-	return []string{locales.HomeFilterEverything(), locales.HomeFilterYours(), "Spotify", "网易云音乐"}
+	return []string{locales.HomeFilterEverything(), locales.HomeFilterYours(), "Spotify", "网易云音乐", "YouTube Music"}
 }
 
 // networkOnline tells whether the network answers, as last checked; tests

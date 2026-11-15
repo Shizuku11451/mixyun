@@ -41,7 +41,7 @@ func TestBundledYTDLPRow(t *testing.T) {
 	s.loads["tools"] = &loaded[tools.Status]{done: true, value: tools.Status{YTDLP: y}}
 	tt := testerOf(t, s, 1280, 2400)
 	show(s, tt, "/settings/playback")
-	if want := "yt-dlp 2026.10.26 at /app/bin/yt-dlp, which comes with MixMusic and updates with it"; !tt.HasText(want) {
+	if want := "yt-dlp 2026.10.26 at /app/bin/yt-dlp, which comes with Mixyun and updates with it"; !tt.HasText(want) {
 		t.Errorf("Settings doesn't say %q: %q", want, tt.Texts())
 	}
 	for _, label := range []string{"install yt-dlp", "update yt-dlp", "use MixMusic's yt-dlp"} {

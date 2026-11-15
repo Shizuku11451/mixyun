@@ -467,8 +467,9 @@ func (s *shell) alert(c *ui.Context, title, message string, actions func()) ui.E
 }
 
 // sourceMark tells where a track comes from by a shape: a disc for
-// Spotify, a square for YouTube Music, a ring and its hole for the music
-// on this computer, two rings for MixMusic's own mixes.
+// Spotify, a square for YouTube Music, a diamond for NetEase Cloud Music,
+// a ring and its hole for the music on this computer, two rings for
+// MixMusic's own mixes.
 func (s *shell) sourceMark(c *ui.Context, source media.Source, on bool) {
 	k := &s.lk
 	ink := k.muted
@@ -486,8 +487,13 @@ func (s *shell) sourceMark(c *ui.Context, source media.Source, on bool) {
 		switch source {
 		case media.SourceSpotify:
 			p.Fill(ui.Rect{X: r.X + 0.8, Y: r.Y + 0.8, W: 8.4, H: 8.4}, ink, 4.2)
-		case media.SourceYouTube, media.SourceNetEase:
+		case media.SourceYouTube:
 			p.Fill(ui.Rect{X: r.X + 1, Y: r.Y + 1, W: 8, H: 8}, ink, 0)
+		case media.SourceNetEase:
+			// A diamond, to tell it from YouTube Music's square.
+			var d ui.Path
+			d.MoveTo(r.X+5, r.Y).LineTo(r.X+10, r.Y+5).LineTo(r.X+5, r.Y+10).LineTo(r.X, r.Y+5).Close()
+			p.FillPath(&d, ink)
 		case media.SourceFile:
 			// A disc of a record, with its hole, for the music on the
 			// computer.

@@ -72,6 +72,10 @@ func (s *shell) nowPlayingPage(c *ui.Context) {
 						ui.Text(c, k.sentence(locales.NowPlayingWaiting())).FontSize(k.smallSize()).TextColor(k.muted)
 					}
 					s.videoToggle(c)
+					// An episode has details, not lyrics: nothing to show full screen.
+					if !t.IsEpisode() && s.iconButton(c, "now-stage", "expand", "Full-screen lyrics", false, 18).Clicked() {
+						s.toggleStage()
+					}
 				})
 			})
 			ui.Column(c).Grow(1).MinWidth(0).MinHeight(0).AlignSelf(ui.Stretch).Gap(24).Children(func() {

@@ -422,7 +422,7 @@ func TestHomeOfflineDownloads(t *testing.T) {
 	t.Cleanup(func() { networkOnline = was })
 	s, _ := newKeptShell(t, keptTracks...)
 	tt := testerOf(t, s, 1280, 1600)
-	for _, key := range []string{"home:spotify", "home:netease"} {
+	for _, key := range []string{"home:spotify", "home:netease", "home:youtube"} {
 		s.loads[key] = &loaded[[]media.Shelf]{done: true, err: errors.New("no network")}
 	}
 	// A button reads as two texts, its label and its own.

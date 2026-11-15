@@ -7,11 +7,19 @@
   `Playlist.ReadOn` reads on a page at a time, asks again after 1, 2 and
   4 seconds for a page that fails, and stops at `MaxTracks`, 20,000, past
   which the playlist is `Cut`. `Catalog.Playlist` reads one whole, for
-  what takes all of it, as a download or a plugin.
+  what takes all of it, as a download or a plugin. A service that leaves
+  items out of a page, as Spotify's local files, tells how many by kind
+  in `Playlist.Unplayable` (`ReadOnCounting` adds the pages up), and
+  `playlistgap.go` shows them under the header with the explicit songs
+  the settings hide, for a playlist of any service.
 - **`internal/youtube`** reads YouTube Music through the API its website uses:
   search, suggestions (searches, then songs, albums, artists and
   playlists), the home and explore pages, charts, moods and genres, albums,
-  artists, playlists, related tracks, radios and plain lyrics. Below a
+  artists, playlists, related tracks, radios and plain lyrics. A page of
+  a list that has more ends in an item with the token of the next: a
+  playlist sorted by Top voted wraps it in a `commandExecutorCommand`,
+  beside a command that refreshes the votes, and `continuationToken`
+  reads either (#626). Below a
   playlist the user owns, YouTube Music suggests songs to add, five at a
   time: the playlist's `Suggest` is the token of the first, and each
   answer has the token of a refresh, for the next (`PlaylistSuggestions`).
@@ -86,6 +94,11 @@
   with `DELETE /playlists/{id}/followers`. Spotify lists that route as
   removed in February 2026, with `DELETE /me/library` in its place; it
   still answered for that app's Client ID, made before then.
+  A 429 waits for its Retry-After once, if it is 5 seconds or less. A
+  background read of a long list (`media.WithPageWait`, as the playlist
+  page does) waits up to `media.MaxPageWait`, 60 seconds, once for each
+  page, tells the time left, and stops with its context. `APIError.RetryAfter`
+  keeps what Spotify asked. A 403 in plain text is a refusal, never a wait.
 - **`internal/sysproxy`** picks the proxy of every request MixMusic makes,
   as the `Proxy` of `http.DefaultTransport`, which the clients use or
   clone: the environment's (`HTTPS_PROXY` and the like) when it names

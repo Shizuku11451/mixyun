@@ -56,8 +56,10 @@ func (s *shell) statsPage(c *ui.Context) {
 			ui.Span{Text: spent, Size: size, Weight: 400},
 			ui.Span{Text: locales.StatsColon(), Size: size, Weight: 300},
 			ui.Span{Text: locales.StatsFromSpotify(strconv.Itoa(st.Spotify)), Size: size, Weight: 300, Color: k.spotify},
+			ui.Span{Text: locales.StatsComma(), Size: size, Weight: 300},
+			ui.Span{Text: locales.StatsFromNetEase(strconv.Itoa(st.NetEase)), Size: size, Weight: 300, Color: k.accent},
 			ui.Span{Text: locales.StatsAnd(), Size: size, Weight: 300},
-			ui.Span{Text: locales.StatsFromYouTube(strconv.Itoa(st.NetEase)), Size: size, Weight: 300, Color: k.youtube},
+			ui.Span{Text: locales.StatsFromYouTube(strconv.Itoa(st.YouTube)), Size: size, Weight: 300, Color: k.youtube},
 			ui.Span{Text: locales.StatsEnd(), Size: size, Weight: 300},
 		).MaxWidth(760).Margin(0, 0, 48)
 		s.dayChart(c, st.Daily)
@@ -65,7 +67,7 @@ func (s *shell) statsPage(c *ui.Context) {
 		ui.Row(c).Gap(48).Wrap().AlignItems(ui.Start).Margin(0, 0, 48).Children(func() {
 			ui.Column(c).Width(320).Children(func() {
 				s.sectionTitle(c, locales.StatsTheMix())
-				s.venn(c, st.Spotify, st.NetEase)
+				s.venn(c, st.Spotify, st.NetEase, st.YouTube)
 			})
 			ui.Column(c).Grow(1).Basis(320).Children(func() {
 				s.sectionTitle(c, locales.StatsTopArtists())
@@ -317,26 +319,31 @@ func disclosure(c *ui.Context, deg float32, ink ui.Color) {
 // overlapping as the icon's, over a key that names each ring and its
 // count: counts in the rings would collide, and the overlap alone would
 // read as plays the two share.
-func (s *shell) venn(c *ui.Context, spotify, netease int) {
+func (s *shell) venn(c *ui.Context, spotify, netease, youtube int) {
 	k := &s.lk
-	most := float64(max(spotify, netease, 1))
-	rs := float32(20 + 70*math.Sqrt(float64(spotify)/most))
-	ry := float32(20 + 70*math.Sqrt(float64(netease)/most))
-	ui.Box(c).Size(300, 200).Label(locales.StatsVennLabel(strconv.Itoa(spotify), strconv.Itoa(netease))).
+	rings := []struct {
+		source media.Source
+		n      int
+		ink    ui.Color
+		// dx and dy place the ring's centre from the box's, as a corner of
+		// a triangle.
+		dx, dy float32
+	}{
+		{media.SourceSpotify, spotify, k.spotify, -38, 22},
+		{media.SourceNetEase, netease, k.accent, 38, 22},
+		{media.SourceYouTube, youtube, k.youtube, 0, -30},
+	}
+	most := float64(max(spotify, netease, youtube, 1))
+	ui.Box(c).Size(300, 200).Label(locales.StatsVennLabel(strconv.Itoa(spotify), strconv.Itoa(netease), strconv.Itoa(youtube))).
 		Draw(func(p *ui.Painter, r ui.Rect) {
-			cy := r.Y + 100
-			sx, yx := r.X+150-rs*0.55, r.X+150+ry*0.55
-			var a, b ui.Path
-			a.Circle(sx, cy, rs)
-			b.Circle(yx, cy, ry)
-			p.StrokePath(&a, 2, k.spotify)
-			p.StrokePath(&b, 2, k.youtube)
+			for _, e := range rings {
+				var a ui.Path
+				a.Circle(r.X+150+e.dx, r.Y+100+e.dy, float32(16+52*math.Sqrt(float64(e.n)/most)))
+				p.StrokePath(&a, 2, e.ink)
+			}
 		})
 	ui.Row(c).Gap(24).Wrap().Justify(ui.Center).Width(300).Children(func() {
-		for _, e := range []struct {
-			source media.Source
-			n      int
-		}{{media.SourceSpotify, spotify}, {media.SourceNetEase, netease}} {
+		for _, e := range rings {
 			ui.Row(c).Gap(8).AlignItems(ui.Center).Children(func() {
 				s.sourceMark(c, e.source, false)
 				ui.Text(c, sourceName(e.source)).FontSize(k.smallSize()).TextColor(k.muted)

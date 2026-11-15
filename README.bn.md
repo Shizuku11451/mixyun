@@ -233,9 +233,11 @@ Flatpak MixMusic-কে একটি স্যান্ডবক্সে চা
 তার সেটিংস ও লাইব্রেরি রাখে `~/.var/app/io.github.fzn0x.mixmusic`-এ,
 `.deb`, `.rpm`, AppImage বা আর্কাইভ কপি থেকে আলাদাভাবে, আর দুটিই একসঙ্গে
 চলতে পারে। কোনো কপির সেটিংস ও লাইব্রেরি নিয়ে আসতে, দুটিই বন্ধ করুন,
-`~/.config/MixMusic` থেকে `settings.json`, `library.json`, `queue.json` ও
-`addons` ফোল্ডার কপি করে
-`~/.var/app/io.github.fzn0x.mixmusic/config/MixMusic`-এ রাখুন, এবং আপনার
+`~/.config/MixMusic` থেকে `settings.json`, `library.json`, `queue.json`,
+`positions.json` এবং `addons` ও `mix-covers` ফোল্ডার কপি করে
+`~/.var/app/io.github.fzn0x.mixmusic/config/MixMusic`-এ রাখুন। আগে দুটিই বন্ধ
+করুন: চলমান MixMusic `library.json` ও বেশিরভাগ ফাইল মেমরিতে রাখে এবং পরের সেভে
+কপি করা ফাইল ওভাররাইট করে দেয়। তারপর আপনার
 অ্যাকাউন্টগুলোতে আবার সাইন ইন করুন: সাইন-ইন থাকে অন্য কপির কীরিংয়ে।
 
 Flatpak-এ লগইনের সময় চালু হওয়া আপনার ডেস্কটপের মাধ্যমে যায়, যা আগে
@@ -412,7 +414,7 @@ ac3/                 an AC-3 and E-AC-3 decoder in pure Go, written from ATSC A/
 webm/                the audio of WebM files: packets, times and seeking
 mp4/                 the audio of MP4 files: packets, times and seeking
 resample/            sample rate conversion, with Kaiser-windowed sincs
-lyrics/              synced lyrics from Unison and LRCLIB, and translations
+lyrics/              synced lyrics from Better Lyrics, Unison and LRCLIB, and translations
 brand/               MixMusic's logo, for code that draws it
 ```
 
@@ -534,8 +536,9 @@ MixMusic এই প্রজেক্টগুলোর ওপর দাঁড�
   [appimagetool](https://github.com/AppImage/appimagetool), AppImage-গুলো।
 - **[yt-dlp](https://github.com/yt-dlp/yt-dlp),** যা সেসব গানের অডিও খুঁজে
   দেয় যা MixMusic নিজে খুঁজে পায় না।
+- **[Better Lyrics](https://betterlyrics.org)**.
 - **[Unison](https://unison.betterlyrics.org),** লিরিক্সের ওপেন, ক্রাউডসোর্সড
-  ডেটাবেস, ODbL-এর অধীনে, এবং **[LRCLIB](https://lrclib.net),** সিঙ্ক করা
+  ডেটাবেস, Unison Community License-এর অধীনে, এবং **[LRCLIB](https://lrclib.net),** সিঙ্ক করা
   লিরিক্সের ওপেন ডেটাবেস।
 - **[kagome](https://github.com/ikawaha/kagome),** জাপানি মর্ফোলজিক্যাল
   অ্যানালাইজার, যা লিরিক্সের কানজি পড়ে তার romaji-র জন্য, সঙ্গে

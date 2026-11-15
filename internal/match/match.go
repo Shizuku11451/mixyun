@@ -36,6 +36,9 @@ type Searcher interface {
 // Matcher matches tracks, remembering the matches it found.
 type Matcher struct {
 	YouTube Searcher
+	// Fallback, when set, is searched when YouTube found no match, or
+	// failed: NetEase Cloud Music first, then YouTube Music itself.
+	Fallback Searcher
 	// Known keeps the matches found, by the ID of the matched track.
 	Known *store.File[map[string]media.Track]
 
@@ -133,15 +136,31 @@ func (m *Matcher) known(id string) (media.Track, bool) {
 	return found, ok
 }
 
-// search looks for t among songs, then among videos.
+// search looks for t with the searcher, then with the fallback.
 func (m *Matcher) search(ctx context.Context, t media.Track) (media.Track, error) {
+	found, err := m.searchIn(ctx, m.YouTube, t)
+	if err == nil || m.Fallback == nil || ctx.Err() != nil {
+		return found, err
+	}
+	found, fbErr := m.searchIn(ctx, m.Fallback, t)
+	if fbErr == nil || errors.Is(err, ErrNoMatch) {
+		return found, fbErr
+	}
+	if errors.Is(fbErr, ErrNoMatch) {
+		return found, err
+	}
+	return found, errors.Join(err, fbErr)
+}
+
+// searchIn looks for t with one searcher, among songs, then among videos.
+func (m *Matcher) searchIn(ctx context.Context, searcher Searcher, t media.Track) (media.Track, error) {
 	query := t.Title
 	if len(t.Artists) > 0 {
 		query += " " + t.Artists[0].Name
 	}
 	var errs []error
 	for _, filter := range []youtube.Filter{youtube.FilterSongs, youtube.FilterVideos} {
-		items, err := m.YouTube.Search(ctx, query, filter)
+		items, err := searcher.Search(ctx, query, filter)
 		if err != nil {
 			errs = append(errs, err)
 			continue

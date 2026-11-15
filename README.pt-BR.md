@@ -244,9 +244,12 @@ configurações e sua biblioteca em `~/.var/app/io.github.fzn0x.mixmusic`,
 separado de uma cópia em `.deb`, `.rpm`, AppImage ou arquivo compactado, e
 as duas podem rodar ao mesmo tempo. Para trazer as configurações e a
 biblioteca de uma cópia, feche as duas, copie `settings.json`,
-`library.json`, `queue.json` e a pasta `addons` de `~/.config/MixMusic` para
-`~/.var/app/io.github.fzn0x.mixmusic/config/MixMusic` e entre nas suas
-contas de novo: as contas ficam no chaveiro da outra cópia.
+`library.json`, `queue.json`, `positions.json` e as pastas `addons` e
+`mix-covers` de `~/.config/MixMusic` para
+`~/.var/app/io.github.fzn0x.mixmusic/config/MixMusic`. Feche as duas antes:
+um MixMusic em execução mantém `library.json` e a maioria dos outros
+arquivos na memória e sobrescreve o arquivo copiado no próximo salvamento.
+Depois entre nas suas contas de novo: as contas ficam no chaveiro da outra cópia.
 
 No Flatpak, o início junto com o sistema passa pelo seu desktop, que pode
 perguntar antes, e um yt-dlp seu precisa estar em
@@ -422,7 +425,7 @@ ac3/                 an AC-3 and E-AC-3 decoder in pure Go, written from ATSC A/
 webm/                the audio of WebM files: packets, times and seeking
 mp4/                 the audio of MP4 files: packets, times and seeking
 resample/            sample rate conversion, with Kaiser-windowed sincs
-lyrics/              synced lyrics from Unison and LRCLIB, and translations
+lyrics/              synced lyrics from Better Lyrics, Unison and LRCLIB, and translations
 brand/               MixMusic's logo, for code that draws it
 ```
 
@@ -549,8 +552,9 @@ O MixMusic é construído sobre estes projetos:
   AppImages.
 - **[yt-dlp](https://github.com/yt-dlp/yt-dlp)**, que encontra o áudio das
   faixas que o MixMusic não consegue encontrar sozinho.
+- **[Better Lyrics](https://betterlyrics.org)**, serviço que guarda letras sincronizadas palavra por palavra.
 - **[Unison](https://unison.betterlyrics.org)**, o banco de dados aberto e
-  colaborativo de letras, sob a ODbL, e **[LRCLIB](https://lrclib.net)**, o
+  colaborativo de letras, sob a Unison Community License, e **[LRCLIB](https://lrclib.net)**, o
   banco de dados aberto de letras sincronizadas.
 - **[kagome](https://github.com/ikawaha/kagome)**, o analisador morfológico
   de japonês que lê os kanji das letras para gerar o romaji, com o

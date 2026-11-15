@@ -55,6 +55,7 @@ func (s *shell) view(c *ui.Context) {
 		s.picksBar(c)
 		s.overlay(c)
 	})
+	s.lyricStage(c)
 	s.palette(c)
 	s.coverDialog(c)
 	s.updateOffer(c)

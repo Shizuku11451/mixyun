@@ -83,7 +83,7 @@ func (s *shell) nowPlayingInfo(c *ui.Context) {
 			if src := s.st.Source; src != nil {
 				switch {
 				case src.Mode == player.ModeStream && src.Track.ID != t.ID:
-					line = locales.PlayerViaYouTube(line)
+					line = locales.PlayerViaYouTube(line, sourceName(src.Track.Source))
 				case src.Mode == player.ModeConnect:
 					line = locales.PlayerOnSpotify(line)
 				}

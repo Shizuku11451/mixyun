@@ -269,7 +269,7 @@ func TestTrackInfoTellsHowAStreamWasFound(t *testing.T) {
 		{"player API", app.TrackStream{Route: stream.RoutePlayerAPI, URL: address},
 			[]string{"through YouTube's player API, with no yt-dlp", "No: asked for signed out"}, []string{"yt-dlp ran"}, ""},
 		{"account", app.TrackStream{Route: stream.RouteAccount, AsAccount: true, Command: "yt-dlp -J", URL: address},
-			[]string{"session of your NetEase Cloud Music account", "Yes: asked for as your NetEase Cloud Music account"}, []string{"No: asked"}, ""},
+			[]string{"session of your YouTube Music account", "Yes: asked for as your NetEase Cloud Music account"}, []string{"No: asked"}, ""},
 	} {
 		t.Run(c.name, func(t *testing.T) {
 			s := newTestShell(t)

@@ -22,41 +22,58 @@ func searchPivotLabels() []string {
 	}
 }
 
-// searchScopeLabels are the names of the services a search covers: both,
-// Spotify, NetEase Cloud Music.
+// Scopes of the search, by their index in searchScopeLabels.
+const (
+	allScope = iota
+	spotifyScope
+	neteaseScope
+	youtubeMusicScope
+	// youtubeScope is YouTube's own search: the website's videos, which
+	// YouTube Music doesn't list.
+	youtubeScope
+)
+
+// searchScopeLabels are the names of the services a search covers: all of
+// them, Spotify, NetEase Cloud Music, YouTube Music, and YouTube itself.
 func searchScopeLabels() []string {
-	return []string{locales.SearchScopeBoth(), "Spotify", "网易云音乐"}
+	return []string{locales.SearchScopeAll(), "Spotify", "网易云音乐", "YouTube Music", "YouTube"}
 }
 
-// interleave alternates the items of two lists, so both services lead.
-func interleave[T any](a, b []T) []T {
-	out := make([]T, 0, len(a)+len(b))
-	for i := 0; i < max(len(a), len(b)); i++ {
-		if i < len(a) {
-			out = append(out, a[i])
-		}
-		if i < len(b) {
-			out = append(out, b[i])
+// interleave alternates the items of lists, so each service leads.
+func interleave[T any](lists ...[]T) []T {
+	n, longest := 0, 0
+	for _, l := range lists {
+		n, longest = n+len(l), max(longest, len(l))
+	}
+	out := make([]T, 0, n)
+	for i := range longest {
+		for _, l := range lists {
+			if i < len(l) {
+				out = append(out, l[i])
+			}
 		}
 	}
 	return out
 }
 
 // mergeResults are the results of the services of scope: 0 both, 1
-// Spotify, 2 NetEase Cloud Music.
+// Spotify, 2 NetEase Cloud Music, 3 YouTube Music. YouTube's own search
+// is asked apart, by youtubeResults.
 func mergeResults(r app.SearchResponse, scope int) media.SearchResults {
 	switch scope {
-	case 1:
+	case spotifyScope:
 		return r.Spotify
-	case 2:
+	case neteaseScope:
 		return r.NetEase
+	case youtubeMusicScope:
+		return r.YouTube
 	}
 	return media.SearchResults{
-		Tracks:    interleave(r.Spotify.Tracks, r.NetEase.Tracks),
-		Videos:    interleave(r.Spotify.Videos, r.NetEase.Videos),
-		Albums:    interleave(r.Spotify.Albums, r.NetEase.Albums),
-		Artists:   interleave(r.Spotify.Artists, r.NetEase.Artists),
-		Playlists: interleave(r.Spotify.Playlists, r.NetEase.Playlists),
+		Tracks:    interleave(r.Spotify.Tracks, r.NetEase.Tracks, r.YouTube.Tracks),
+		Videos:    interleave(r.Spotify.Videos, r.NetEase.Videos, r.YouTube.Videos),
+		Albums:    interleave(r.Spotify.Albums, r.NetEase.Albums, r.YouTube.Albums),
+		Artists:   interleave(r.Spotify.Artists, r.NetEase.Artists, r.YouTube.Artists),
+		Playlists: interleave(r.Spotify.Playlists, r.NetEase.Playlists, r.YouTube.Playlists),
 	}
 }
 
@@ -72,17 +89,33 @@ func (s *shell) searchPage(c *ui.Context, q string) {
 		}
 		res := fetch(s, "search:"+q, func(ctx context.Context) (app.SearchResponse, error) { return s.svc.Catalog.Search(ctx, q) })
 		var counts []int
-		if res.done && res.err == nil {
+		if res.done && res.err == nil && s.searchScope != youtubeScope {
 			r := s.shownResults(mergeResults(res.value, s.searchScope))
 			// An album counts once, however many versions it has.
 			albums := len(s.albumGroups("album", r.Albums))
 			counts = []int{-1, len(r.Tracks), len(r.Videos), albums, len(r.Artists), len(r.Playlists), s.podcastCount(q)}
 		}
-		s.pageHeaderCounts(c, q, searchPivotLabels(), counts, &s.searchPivot)
-		ui.Row(c).Margin(0, 0, 24).Children(func() {
+		// YouTube's own search lists videos only, so it has no pivots.
+		pivots, pivotSel := searchPivotLabels(), &s.searchPivot
+		if s.searchScope == youtubeScope {
+			pivots, pivotSel = nil, nil
+		}
+		s.pageHeaderCounts(c, q, pivots, counts, pivotSel)
+		// YouTube's own search lists videos, so it orders them as the Videos pivot does.
+		sortPivot := searchPivots[s.searchPivot]
+		if s.searchScope == youtubeScope {
+			sortPivot = "videos"
+		}
+		order := sortBestMatch
+		ui.Row(c).Margin(0, 0, 24).Wrap().GapX(16).GapY(12).AlignItems(ui.Center).Children(func() {
 			s.segmented(c, "scope", locales.SearchServices(), &s.searchScope, searchScopeLabels()...)
+			order = s.sortSelect(c, q, sortPivot, s.searchScope)
 		})
-		if s.searchScope == 0 {
+		if s.searchScope == youtubeScope {
+			s.youtubeResults(c, q, order)
+			return
+		}
+		if s.searchScope == allScope {
 			s.computerResults(c, q, searchPivots[s.searchPivot])
 		}
 		switch {
@@ -93,7 +126,7 @@ func (s *shell) searchPage(c *ui.Context, q string) {
 			s.problem(c, res.err, func() { s.forget("search:" + q) })
 			return
 		}
-		if !res.value.SpotifySignedIn && s.searchScope != 2 {
+		if !res.value.SpotifySignedIn && (s.searchScope == allScope || s.searchScope == spotifyScope) {
 			ui.RichText(c).FontSize(k.smallSize()).TextColor(k.muted).Margin(0, 0, 16).Children(func() {
 				ui.Text(c, locales.SearchNetEaseOnly())
 				s.linkOf(c, locales.SearchSignInSpotify(), "/settings/accounts")
@@ -104,6 +137,12 @@ func (s *shell) searchPage(c *ui.Context, q string) {
 			ui.Text(c, strings.Join(res.value.Errors, " · ")).FontSize(k.smallSize()).TextColor(k.danger).Margin(0, 0, 16)
 		}
 		r := s.shownResults(mergeResults(res.value, s.searchScope))
+		if order == sortMostPlayed {
+			r = playedResults(res.value, s.searchScope, s.shownResults)
+			if s.searchScope == allScope && res.value.SpotifySignedIn {
+				s.sortNote(c)
+			}
+		}
 		pivot := searchPivots[s.searchPivot]
 		if pivot == "all" || pivot == "songs" {
 			tracks := r.Tracks
@@ -149,7 +188,13 @@ func (s *shell) searchPage(c *ui.Context, q string) {
 				})
 			}
 		case "albums":
-			s.tileWrap(c, func() { s.albumTiles(c, "album", r.Albums) })
+			s.tileWrap(c, func() {
+				if s.searchSort.albums == sortNewest {
+					s.newestAlbumTiles(c, "album", r.Albums)
+					return
+				}
+				s.albumTiles(c, "album", r.Albums)
+			})
 		case "artists":
 			s.tileWrap(c, func() {
 				for i, a := range r.Artists {
@@ -159,7 +204,7 @@ func (s *shell) searchPage(c *ui.Context, q string) {
 		case "playlists":
 			// Spotify's search lists the playlists of others too, whose
 			// tracks it shows apps none of: they're left out (#530).
-			if s.searchScope == 1 && res.value.SpotifySignedIn {
+			if s.searchScope == spotifyScope && res.value.SpotifySignedIn {
 				ui.Text(c, locales.SearchSpotifyPlaylists()).
 					FontSize(k.smallSize()).TextColor(k.muted).Margin(0, 0, 16)
 			}
@@ -171,6 +216,30 @@ func (s *shell) searchPage(c *ui.Context, q string) {
 		case "podcasts":
 			s.podcastSearch(c, q)
 		}
+	})
+}
+
+// youtubeResults shows what YouTube's own search found: videos only, in
+// the order it ranks them. It is asked apart from the music catalog's
+// search, so that a slow or blocked youtube.com never holds that one up.
+func (s *shell) youtubeResults(c *ui.Context, q, order string) {
+	res := fetch(s, "searchweb:"+q, func(ctx context.Context) (media.SearchResults, error) {
+		return s.svc.Catalog.SearchYouTube(ctx, q)
+	})
+	switch {
+	case !res.done:
+		s.loading(c)
+		return
+	case res.err != nil:
+		s.problem(c, res.err, func() { s.forget("searchweb:" + q) })
+		return
+	}
+	videos := s.shownResults(res.value).Videos
+	if order == sortMostPlayed {
+		videos = sortTracks(videos)
+	}
+	ui.Column(c).Margin(0, 0, 48).Children(func() {
+		s.trackList(c, "youtube-results", videos, trackListOptions{art: true, plays: true, empty: locales.SearchNoVideos()})
 	})
 }
 

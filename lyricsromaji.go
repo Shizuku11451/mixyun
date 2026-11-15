@@ -50,13 +50,17 @@ func romajiKey(t media.Track) string { return "lyrics-romaji:" + t.ID }
 
 // lyricsRomaji returns the lines of Japanese lyrics in romaji, made once,
 // nil until they are; and says, above the lyrics, while the readings of
-// their kanji download, or that they couldn't, with try again.
-func (s *shell) lyricsRomaji(c *ui.Context, t media.Track, ly lyrics.Lyrics, where string) []string {
+// their kanji download, or that they couldn't, with try again. Where quiet is
+// set, as for the full-screen lyrics, it says nothing: kanji show as they
+// are until the readings come.
+func (s *shell) lyricsRomaji(c *ui.Context, t media.Track, ly lyrics.Lyrics, where string, quiet bool) []string {
 	key := romajiKey(t)
 	r := fetch(s, key, func(ctx context.Context) (romaji.Lines, error) { return s.svc.Catalog.LyricsRomaji(ctx, ly) })
 	switch {
 	case !r.done:
-		s.lyricsNote(c, locales.LyricsRomajiWaiting())
+		if !quiet {
+			s.lyricsNote(c, locales.LyricsRomajiWaiting())
+		}
 		return nil
 	case r.err != nil || len(r.value.Romaji) != len(ly.Lines):
 		// The romaji of other lyrics of the track.
@@ -70,9 +74,14 @@ func (s *shell) lyricsRomaji(c *ui.Context, t media.Track, ly lyrics.Lyrics, whe
 	}
 	switch r.value.Readings {
 	case romaji.Downloading:
-		s.lyricsNote(c, locales.LyricsKanjiDownloading())
+		if !quiet {
+			s.lyricsNote(c, locales.LyricsKanjiDownloading())
+		}
 		s.awaitRomaji(key)
 	case romaji.Unavailable:
+		if quiet {
+			break
+		}
 		k := &s.lk
 		ui.Row(c).Padding(0, 24, 8).Gap(12).AlignItems(ui.Center).Shrink(0).Children(func() {
 			ui.Text(c, locales.LyricsKanjiUnavailable()).FontSize(k.smallSize()).TextColor(k.muted)

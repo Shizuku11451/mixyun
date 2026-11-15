@@ -652,7 +652,7 @@ func TestYouTubeCollaboration(t *testing.T) {
 	addsFor(t, f)
 	s.loads["album:al-x"] = &loaded[media.Album]{done: true, value: media.Album{ID: "al-x", Title: "Mezzanine", Tracks: testTracks[:2]}}
 	show(s, tt, "/album/al-x")
-	if err := trackMenuChoice(t, tt, "Add to NetEase Cloud Music playlist", "Tide songs · Ana Testwood"); err != nil {
+	if err := trackMenuChoice(t, tt, "Add to YouTube Music playlist", "Tide songs · Ana Testwood"); err != nil {
 		t.Fatal(err)
 	}
 	if !toasted(t, s, tt, "Added "+testTracks[0].Title+" to Tide songs") {
@@ -661,7 +661,7 @@ func TestYouTubeCollaboration(t *testing.T) {
 	if adds, _ := f.made(); !slices.Equal(adds, []string{"yt:PLtide " + testTracks[0].ID}) {
 		t.Errorf("added %q", adds)
 	}
-	if err := trackMenuChoice(t, tt, "Add to NetEase Cloud Music playlist", lanternList.Title); err != nil {
+	if err := trackMenuChoice(t, tt, "Add to YouTube Music playlist", lanternList.Title); err != nil {
 		t.Errorf("the user's own playlist isn't listed by its title alone: %v", err)
 	}
 }

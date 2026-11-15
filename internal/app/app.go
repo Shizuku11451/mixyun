@@ -354,6 +354,8 @@ func New(opts Options) (*App, error) {
 	a.openYouTube()
 	a.proxy.Cache = a.cache
 	a.matcher = match.New(neteaseSearcher{a.netease}, matches)
+	// A track NetEase Cloud Music doesn't have plays from YouTube Music.
+	a.matcher.Fallback = a.youtube
 	a.labels = newLabelCache(a.youtube.MadeWithAI, aiLabels, time.Now)
 	userAgent := "Mixyun/" + opts.Version + " (https://github.com/fzn0x/mixmusic)"
 	a.lyrics = lyrics.New(userAgent)

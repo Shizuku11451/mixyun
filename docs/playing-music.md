@@ -15,6 +15,7 @@ The search box at the top of the window, "Search Spotify and YouTube Music", sea
 - **On this computer:** with both services chosen, the [music on this
   computer](local-music.md#search) that matches shows first, in its own
   section, without the network too.
+- **Sort by,** beside the services, orders the results of the All, Songs, Videos, Albums and Playlists pivots, and of YouTube's own videos. Best match, the default, is the services' own order. **Most played** puts the songs, videos and playlists with the most plays or views first, as YouTube Music and YouTube say them (a playlist's views show after its owner's name in YouTube Music's results); ties keep the services' order, and results with no count come after those with one, in their own order. On All it orders before the cut to ten songs and five videos, so the most played version shows. Spotify gives apps no counts, so with both services chosen its results come after YouTube Music's, as a line under the select says, and with only Spotify chosen Most played isn't offered. On the Albums pivot the select offers **Newest** instead: the newest year first, and albums with no year last; an album of several versions is placed by the year of the version its tile shows. The Albums pivot keeps its own choice, the others share one, and each new search goes back to Best match. It orders what MixMusic loaded, the first page of each kind. It isn't the Plays sort of your [library's](library.md) track lists, which counts your own listening.
 - **Each result** has a mark of its service. YouTube Music's songs say how many times they played, or how many views a video has, as "1.2B plays" or "905M views", so that the original stands out from covers. Spotify gives apps no such count.
 - **Without Spotify,** the page says it searches YouTube Music only, with a link to [sign in](spotify.md#sign-in). Spotify gives an app in [development mode](spotify.md#what-spotify-allows-apps), as your Spotify app is, ten results of each kind.
 
@@ -94,7 +95,7 @@ What counts as explicit is what marks it so. Spotify marks its tracks, and YouTu
 
 The Queue button by the player, or Ctrl+J (⌘J), shows Up next at the right of the window: the track playing, then what plays after it.
 
-- **Play next,** in a track's or a list's menu, puts it right after the track playing. **Add to queue** puts it after the tracks you added, and before those of the radio.
+- **Play next,** in a track's or a list's menu, puts it right after the track playing. **Add to queue** puts it after the tracks you added, and before those of the radio. During an album or a playlist, that is after the rest of the list too. To bring a track already in Up next forward, use **Play next** in its menu: it moves the track right after the one playing, and a radio track moved so counts as one you added.
 - **Drag** a track in Up next to move it, and use the × on its row to take it out. Clear takes out every track after the one playing. Double-click a track to play it.
 - **Marks** after the artists tell what a track is: "radio" for those a radio added, "skipped" for a song the queue passes over as you dislike it, and "made with AI" for one it passes over as YouTube labels it so. Clicking a skipped track's cover still plays it.
 - **In a wide window,** the player bar shows the track that plays next under the one playing, while Up next is closed.
@@ -120,6 +121,7 @@ A radio plays tracks like one you choose, from YouTube Music.
 - **Crossfade,** in Settings › Playback › Sound: tracks overlap by 0 to 12 seconds, the next fading in as the one before fades out. It's off by default.
 - **With Crossfade off,** the next track starts as the one before ends: MixMusic finds the next track a second into the one playing and loads it ahead, so skipping ahead is quick too.
 - **A pause in a song's last seconds** holds, with Crossfade on: the next song doesn't fade in a moment later.
+- **A next song that loads late** holds the fade: the song playing keeps its volume until the next one's audio comes, and the next fades in from silence then, or starts at full volume with under half a second of the one before left. A pause during the fade holds it too, however long.
 - **Spotify songs that play in MixMusic itself** follow one another without a gap, as Spotify goes on to the next by itself, and a YouTube Music song after them starts without a wait.
 - Podcast episodes never crossfade, and tracks don't crossfade on a [cast device](casting.md).
 

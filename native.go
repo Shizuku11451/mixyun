@@ -216,6 +216,8 @@ type shell struct {
 	artistPivot int
 	artistOf    string
 	searchScope int
+	// searchSort is the order chosen for the search results (searchsort.go).
+	searchSort  searchSorting
 	libraryTab  int
 	settingsTab int
 	statsRange  int
@@ -234,6 +236,8 @@ type shell struct {
 	paletteAt    int
 	paletteMoved bool
 	lyricsView   lyricsState
+	// stage is the full-screen lyrics' (lyricsstage.go).
+	stage stageState
 	// pagePath is the path of the page being built.
 	pagePath string
 	// shown are the keys of what the page shown and the side panel fetched

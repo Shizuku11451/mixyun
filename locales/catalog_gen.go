@@ -574,14 +574,16 @@ func (msgs Messages) PlayerOpenNowPlaying() string {
 	return Catalog.Format(msgs.locale, "playerOpenNowPlaying", nil)
 }
 
-// PlayerViaYouTube says "{line} · via NetEase Cloud Music"
+// PlayerViaYouTube says "{line} · via {service}"
 // in the language the app shows.
-func PlayerViaYouTube(line string) string { return In(i18n.Locale()).PlayerViaYouTube(line) }
+func PlayerViaYouTube(line string, service string) string {
+	return In(i18n.Locale()).PlayerViaYouTube(line, service)
+}
 
-// PlayerViaYouTube says "{line} · via NetEase Cloud Music"
+// PlayerViaYouTube says "{line} · via {service}"
 // in the language of msgs.
-func (msgs Messages) PlayerViaYouTube(line string) string {
-	return Catalog.Format(msgs.locale, "playerViaYouTube", map[string]any{"line": line})
+func (msgs Messages) PlayerViaYouTube(line string, service string) string {
+	return Catalog.Format(msgs.locale, "playerViaYouTube", map[string]any{"line": line, "service": service})
 }
 
 // PlayerOnSpotify says "{line} · on Spotify"
@@ -2530,21 +2532,21 @@ func (msgs Messages) PlaybackOnConnectDesc() string {
 	return Catalog.Format(msgs.locale, "playbackOnConnectDesc", nil)
 }
 
-// PlaybackFromYouTube says "In Mixyun, from NetEase Cloud Music"
+// PlaybackFromYouTube says "In Mixyun, from NetEase Cloud Music or YouTube Music"
 // in the language the app shows.
 func PlaybackFromYouTube() string { return In(i18n.Locale()).PlaybackFromYouTube() }
 
-// PlaybackFromYouTube says "In Mixyun, from NetEase Cloud Music"
+// PlaybackFromYouTube says "In Mixyun, from NetEase Cloud Music or YouTube Music"
 // in the language of msgs.
 func (msgs Messages) PlaybackFromYouTube() string {
 	return Catalog.Format(msgs.locale, "playbackFromYouTube", nil)
 }
 
-// PlaybackFromYouTubeDesc says "Mixyun plays their recording on NetEase Cloud Music, with the equalizer, crossfade and visualizer. Works without Prem…"
+// PlaybackFromYouTubeDesc says "Mixyun plays their recording on NetEase Cloud Music, else on YouTube Music, with the equalizer, crossfade and visuali…"
 // in the language the app shows.
 func PlaybackFromYouTubeDesc() string { return In(i18n.Locale()).PlaybackFromYouTubeDesc() }
 
-// PlaybackFromYouTubeDesc says "Mixyun plays their recording on NetEase Cloud Music, with the equalizer, crossfade and visualizer. Works without Prem…"
+// PlaybackFromYouTubeDesc says "Mixyun plays their recording on NetEase Cloud Music, else on YouTube Music, with the equalizer, crossfade and visuali…"
 // in the language of msgs.
 func (msgs Messages) PlaybackFromYouTubeDesc() string {
 	return Catalog.Format(msgs.locale, "playbackFromYouTubeDesc", nil)
@@ -6030,33 +6032,33 @@ func (msgs Messages) AccountSettingsSpotifySignOutBody() string {
 	return Catalog.Format(msgs.locale, "accountSettingsSpotifySignOutBody", nil)
 }
 
-// AccountSettingsYouTubeSignInTitle says "Sign in to NetEase Cloud Music"
+// AccountSettingsYouTubeSignInTitle says "Sign in to YouTube Music"
 // in the language the app shows.
 func AccountSettingsYouTubeSignInTitle() string {
 	return In(i18n.Locale()).AccountSettingsYouTubeSignInTitle()
 }
 
-// AccountSettingsYouTubeSignInTitle says "Sign in to NetEase Cloud Music"
+// AccountSettingsYouTubeSignInTitle says "Sign in to YouTube Music"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeSignInTitle() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeSignInTitle", nil)
 }
 
-// AccountSettingsYouTubeForm says "Sign in to NetEase Cloud Music. Log in. Google account. NetEase Cloud Music needs no account: search, artists, albums…"
+// AccountSettingsYouTubeForm says "Sign in to YouTube Music. Log in. Google account. YouTube Music needs no account: search, artists, albums, playlists …"
 // in the language the app shows.
 func AccountSettingsYouTubeForm() string { return In(i18n.Locale()).AccountSettingsYouTubeForm() }
 
-// AccountSettingsYouTubeForm says "Sign in to NetEase Cloud Music. Log in. Google account. NetEase Cloud Music needs no account: search, artists, albums…"
+// AccountSettingsYouTubeForm says "Sign in to YouTube Music. Log in. Google account. YouTube Music needs no account: search, artists, albums, playlists …"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeForm() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeForm", nil)
 }
 
-// AccountSettingsYouTubeHint says "NetEase Cloud Music needs no account: search, artists, albums, playlists and radios work signed out. Signed in, Mixyu…"
+// AccountSettingsYouTubeHint says "YouTube Music needs no account: search, artists, albums, playlists and radios work signed out. Signed in, Mixyun show…"
 // in the language the app shows.
 func AccountSettingsYouTubeHint() string { return In(i18n.Locale()).AccountSettingsYouTubeHint() }
 
-// AccountSettingsYouTubeHint says "NetEase Cloud Music needs no account: search, artists, albums, playlists and radios work signed out. Signed in, Mixyu…"
+// AccountSettingsYouTubeHint says "YouTube Music needs no account: search, artists, albums, playlists and radios work signed out. Signed in, Mixyun show…"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeHint() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeHint", nil)
@@ -6096,23 +6098,23 @@ func (msgs Messages) AccountSettingsYouTubeWaitingWindow() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeWaitingWindow", nil)
 }
 
-// AccountSettingsYouTubeSignedIn says "Signed in to NetEase Cloud Music"
+// AccountSettingsYouTubeSignedIn says "Signed in to YouTube Music"
 // in the language the app shows.
 func AccountSettingsYouTubeSignedIn() string {
 	return In(i18n.Locale()).AccountSettingsYouTubeSignedIn()
 }
 
-// AccountSettingsYouTubeSignedIn says "Signed in to NetEase Cloud Music"
+// AccountSettingsYouTubeSignedIn says "Signed in to YouTube Music"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeSignedIn() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeSignedIn", nil)
 }
 
-// AccountSettingsYouTubeRefused says "NetEase Cloud Music refused the sign-in"
+// AccountSettingsYouTubeRefused says "YouTube Music refused the sign-in"
 // in the language the app shows.
 func AccountSettingsYouTubeRefused() string { return In(i18n.Locale()).AccountSettingsYouTubeRefused() }
 
-// AccountSettingsYouTubeRefused says "NetEase Cloud Music refused the sign-in"
+// AccountSettingsYouTubeRefused says "YouTube Music refused the sign-in"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeRefused() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeRefused", nil)
@@ -6130,37 +6132,37 @@ func (msgs Messages) AccountSettingsYouTubeRefusedAgain(error string) string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeRefusedAgain", map[string]any{"error": error})
 }
 
-// AccountSettingsYouTubeSignedInDesc says "Your home feed, your library, and likes that reach NetEase Cloud Music."
+// AccountSettingsYouTubeSignedInDesc says "Your home feed, your library, and likes that reach YouTube Music."
 // in the language the app shows.
 func AccountSettingsYouTubeSignedInDesc() string {
 	return In(i18n.Locale()).AccountSettingsYouTubeSignedInDesc()
 }
 
-// AccountSettingsYouTubeSignedInDesc says "Your home feed, your library, and likes that reach NetEase Cloud Music."
+// AccountSettingsYouTubeSignedInDesc says "Your home feed, your library, and likes that reach YouTube Music."
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeSignedInDesc() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeSignedInDesc", nil)
 }
 
-// AccountSettingsYouTubeSignOutTitle says "sign out of NetEase Cloud Music"
+// AccountSettingsYouTubeSignOutTitle says "sign out of YouTube Music"
 // in the language the app shows.
 func AccountSettingsYouTubeSignOutTitle() string {
 	return In(i18n.Locale()).AccountSettingsYouTubeSignOutTitle()
 }
 
-// AccountSettingsYouTubeSignOutTitle says "sign out of NetEase Cloud Music"
+// AccountSettingsYouTubeSignOutTitle says "sign out of YouTube Music"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeSignOutTitle() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeSignOutTitle", nil)
 }
 
-// AccountSettingsYouTubeSignOutBody says "Mixyun forgets your NetEase Cloud Music session; your library stays on NetEase Cloud Music."
+// AccountSettingsYouTubeSignOutBody says "Mixyun forgets your YouTube Music session; your library stays on YouTube Music."
 // in the language the app shows.
 func AccountSettingsYouTubeSignOutBody() string {
 	return In(i18n.Locale()).AccountSettingsYouTubeSignOutBody()
 }
 
-// AccountSettingsYouTubeSignOutBody says "Mixyun forgets your NetEase Cloud Music session; your library stays on NetEase Cloud Music."
+// AccountSettingsYouTubeSignOutBody says "Mixyun forgets your YouTube Music session; your library stays on YouTube Music."
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeSignOutBody() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeSignOutBody", nil)
@@ -6178,59 +6180,59 @@ func (msgs Messages) AccountSettingsYouTubeHistoryTitle() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeHistoryTitle", nil)
 }
 
-// AccountSettingsYouTubeHistoryDesc says "NetEase Cloud Music makes its home and its radios of your history. Tracks join it once they played a while, as they d…"
+// AccountSettingsYouTubeHistoryDesc says "YouTube Music makes its home and its radios of your history. Tracks join it once they played a while, as they do on L…"
 // in the language the app shows.
 func AccountSettingsYouTubeHistoryDesc() string {
 	return In(i18n.Locale()).AccountSettingsYouTubeHistoryDesc()
 }
 
-// AccountSettingsYouTubeHistoryDesc says "NetEase Cloud Music makes its home and its radios of your history. Tracks join it once they played a while, as they d…"
+// AccountSettingsYouTubeHistoryDesc says "YouTube Music makes its home and its radios of your history. Tracks join it once they played a while, as they do on L…"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeHistoryDesc() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeHistoryDesc", nil)
 }
 
-// AccountSettingsYouTubeHistorySwitch says "Add what you play to your NetEase Cloud Music history"
+// AccountSettingsYouTubeHistorySwitch says "Add what you play to your YouTube Music history"
 // in the language the app shows.
 func AccountSettingsYouTubeHistorySwitch() string {
 	return In(i18n.Locale()).AccountSettingsYouTubeHistorySwitch()
 }
 
-// AccountSettingsYouTubeHistorySwitch says "Add what you play to your NetEase Cloud Music history"
+// AccountSettingsYouTubeHistorySwitch says "Add what you play to your YouTube Music history"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeHistorySwitch() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeHistorySwitch", nil)
 }
 
-// AccountSettingsYouTubeCookieTitle says "Sign in to NetEase Cloud Music with a browser's cookies"
+// AccountSettingsYouTubeCookieTitle says "Sign in to YouTube Music with a browser's cookies"
 // in the language the app shows.
 func AccountSettingsYouTubeCookieTitle() string {
 	return In(i18n.Locale()).AccountSettingsYouTubeCookieTitle()
 }
 
-// AccountSettingsYouTubeCookieTitle says "Sign in to NetEase Cloud Music with a browser's cookies"
+// AccountSettingsYouTubeCookieTitle says "Sign in to YouTube Music with a browser's cookies"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeCookieTitle() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeCookieTitle", nil)
 }
 
-// AccountSettingsYouTubeCookieForm says "Import from a browser. Sign in with the session of a browser you signed in to NetEase Cloud Music with. Browser. Prof…"
+// AccountSettingsYouTubeCookieForm says "Import from a browser. Sign in with the session of a browser you signed in to YouTube Music with. Browser. Profile. A…"
 // in the language the app shows.
 func AccountSettingsYouTubeCookieForm() string {
 	return In(i18n.Locale()).AccountSettingsYouTubeCookieForm()
 }
 
-// AccountSettingsYouTubeCookieForm says "Import from a browser. Sign in with the session of a browser you signed in to NetEase Cloud Music with. Browser. Prof…"
+// AccountSettingsYouTubeCookieForm says "Import from a browser. Sign in with the session of a browser you signed in to YouTube Music with. Browser. Profile. A…"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeCookieForm() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeCookieForm", nil)
 }
 
-// AccountSettingsYouTubeImport says "Sign in with the session of a browser you signed in to NetEase Cloud Music with."
+// AccountSettingsYouTubeImport says "Sign in with the session of a browser you signed in to YouTube Music with."
 // in the language the app shows.
 func AccountSettingsYouTubeImport() string { return In(i18n.Locale()).AccountSettingsYouTubeImport() }
 
-// AccountSettingsYouTubeImport says "Sign in with the session of a browser you signed in to NetEase Cloud Music with."
+// AccountSettingsYouTubeImport says "Sign in with the session of a browser you signed in to YouTube Music with."
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeImport() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeImport", nil)
@@ -6382,13 +6384,13 @@ func (msgs Messages) AccountSettingsSigningIn() string {
 	return Catalog.Format(msgs.locale, "accountSettingsSigningIn", nil)
 }
 
-// AccountSettingsYouTubeCookieProblem says "Mixyun didn't sign in to NetEase Cloud Music"
+// AccountSettingsYouTubeCookieProblem says "Mixyun didn't sign in to YouTube Music"
 // in the language the app shows.
 func AccountSettingsYouTubeCookieProblem() string {
 	return In(i18n.Locale()).AccountSettingsYouTubeCookieProblem()
 }
 
-// AccountSettingsYouTubeCookieProblem says "Mixyun didn't sign in to NetEase Cloud Music"
+// AccountSettingsYouTubeCookieProblem says "Mixyun didn't sign in to YouTube Music"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeCookieProblem() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeCookieProblem", nil)
@@ -8328,13 +8330,13 @@ func (msgs Messages) CollectionDeleteMixQuestion(title string) string {
 	return Catalog.Format(msgs.locale, "collectionDeleteMixQuestion", map[string]any{"title": title})
 }
 
-// CollectionDeleteYouTube says "Delete from NetEase Cloud Music…"
+// CollectionDeleteYouTube says "Delete from YouTube Music…"
 // in the language the app shows.
 //
 // Menu item that deletes a playlist on NetEase Cloud Music.
 func CollectionDeleteYouTube() string { return In(i18n.Locale()).CollectionDeleteYouTube() }
 
-// CollectionDeleteYouTube says "Delete from NetEase Cloud Music…"
+// CollectionDeleteYouTube says "Delete from YouTube Music…"
 // in the language of msgs.
 //
 // Menu item that deletes a playlist on NetEase Cloud Music.
@@ -8358,13 +8360,13 @@ func (msgs Messages) CollectionDeletePlaylist() string {
 	return Catalog.Format(msgs.locale, "collectionDeletePlaylist", nil)
 }
 
-// CollectionDeleteYouTubeQuestion says "Delete {title} from NetEase Cloud Music? It goes from NetEase Cloud Music too, and you can't undo this. To keep its t…"
+// CollectionDeleteYouTubeQuestion says "Delete {title} from YouTube Music? It goes from YouTube too, and you can't undo this. To keep its tracks in Mixyun, c…"
 // in the language the app shows.
 func CollectionDeleteYouTubeQuestion(title string) string {
 	return In(i18n.Locale()).CollectionDeleteYouTubeQuestion(title)
 }
 
-// CollectionDeleteYouTubeQuestion says "Delete {title} from NetEase Cloud Music? It goes from NetEase Cloud Music too, and you can't undo this. To keep its t…"
+// CollectionDeleteYouTubeQuestion says "Delete {title} from YouTube Music? It goes from YouTube too, and you can't undo this. To keep its tracks in Mixyun, c…"
 // in the language of msgs.
 func (msgs Messages) CollectionDeleteYouTubeQuestion(title string) string {
 	return Catalog.Format(msgs.locale, "collectionDeleteYouTubeQuestion", map[string]any{"title": title})
@@ -8382,13 +8384,13 @@ func (msgs Messages) CollectionDeleteFailed(title string, error string) string {
 	return Catalog.Format(msgs.locale, "collectionDeleteFailed", map[string]any{"title": title, "error": error})
 }
 
-// CollectionDeletedYouTube says "Deleted {title} from NetEase Cloud Music"
+// CollectionDeletedYouTube says "Deleted {title} from YouTube Music"
 // in the language the app shows.
 func CollectionDeletedYouTube(title string) string {
 	return In(i18n.Locale()).CollectionDeletedYouTube(title)
 }
 
-// CollectionDeletedYouTube says "Deleted {title} from NetEase Cloud Music"
+// CollectionDeletedYouTube says "Deleted {title} from YouTube Music"
 // in the language of msgs.
 func (msgs Messages) CollectionDeletedYouTube(title string) string {
 	return Catalog.Format(msgs.locale, "collectionDeletedYouTube", map[string]any{"title": title})
@@ -8408,13 +8410,13 @@ func (msgs Messages) CollectionSaveAsMix() string {
 	return Catalog.Format(msgs.locale, "collectionSaveAsMix", nil)
 }
 
-// CollectionSaveAsYouTube says "Save as a NetEase Cloud Music playlist"
+// CollectionSaveAsYouTube says "Save as a YouTube Music playlist"
 // in the language the app shows.
 //
 // Menu item that saves the tracks as a new playlist on NetEase Cloud Music.
 func CollectionSaveAsYouTube() string { return In(i18n.Locale()).CollectionSaveAsYouTube() }
 
-// CollectionSaveAsYouTube says "Save as a NetEase Cloud Music playlist"
+// CollectionSaveAsYouTube says "Save as a YouTube Music playlist"
 // in the language of msgs.
 //
 // Menu item that saves the tracks as a new playlist on NetEase Cloud Music.
@@ -10282,13 +10284,13 @@ func (msgs Messages) LibraryLoadMore(loaded string, total string) string {
 	return Catalog.Format(msgs.locale, "libraryLoadMore", map[string]any{"loaded": loaded, "total": total})
 }
 
-// LibraryLikedOnYouTube says "Liked on NetEase Cloud Music"
+// LibraryLikedOnYouTube says "Liked on YouTube Music"
 // in the language the app shows.
 //
 // Heading of the liked songs on NetEase Cloud Music.
 func LibraryLikedOnYouTube() string { return In(i18n.Locale()).LibraryLikedOnYouTube() }
 
-// LibraryLikedOnYouTube says "Liked on NetEase Cloud Music"
+// LibraryLikedOnYouTube says "Liked on YouTube Music"
 // in the language of msgs.
 //
 // Heading of the liked songs on NetEase Cloud Music.
@@ -10296,11 +10298,11 @@ func (msgs Messages) LibraryLikedOnYouTube() string {
 	return Catalog.Format(msgs.locale, "libraryLikedOnYouTube", nil)
 }
 
-// LibraryNoYouTubeLiked says "No liked songs on NetEase Cloud Music."
+// LibraryNoYouTubeLiked says "No liked songs on YouTube Music."
 // in the language the app shows.
 func LibraryNoYouTubeLiked() string { return In(i18n.Locale()).LibraryNoYouTubeLiked() }
 
-// LibraryNoYouTubeLiked says "No liked songs on NetEase Cloud Music."
+// LibraryNoYouTubeLiked says "No liked songs on YouTube Music."
 // in the language of msgs.
 func (msgs Messages) LibraryNoYouTubeLiked() string {
 	return Catalog.Format(msgs.locale, "libraryNoYouTubeLiked", nil)
@@ -11260,13 +11262,13 @@ func (msgs Messages) LibraryDeleted(title string) string {
 	return Catalog.Format(msgs.locale, "libraryDeleted", map[string]any{"title": title})
 }
 
-// LibraryNewYouTubePlaylist says "New playlist on NetEase Cloud Music"
+// LibraryNewYouTubePlaylist says "New playlist on YouTube Music"
 // in the language the app shows.
 //
 // Title of the prompt that names a new playlist on NetEase Cloud Music.
 func LibraryNewYouTubePlaylist() string { return In(i18n.Locale()).LibraryNewYouTubePlaylist() }
 
-// LibraryNewYouTubePlaylist says "New playlist on NetEase Cloud Music"
+// LibraryNewYouTubePlaylist says "New playlist on YouTube Music"
 // in the language of msgs.
 //
 // Title of the prompt that names a new playlist on NetEase Cloud Music.
@@ -13332,11 +13334,11 @@ func (msgs Messages) TrackInfoRouteFull() string {
 	return Catalog.Format(msgs.locale, "trackInfoRouteFull", nil)
 }
 
-// TrackInfoRouteAccount says "With yt-dlp's full run, with the session of your NetEase Cloud Music account"
+// TrackInfoRouteAccount says "With yt-dlp's full run, with the session of your YouTube Music account"
 // in the language the app shows.
 func TrackInfoRouteAccount() string { return In(i18n.Locale()).TrackInfoRouteAccount() }
 
-// TrackInfoRouteAccount says "With yt-dlp's full run, with the session of your NetEase Cloud Music account"
+// TrackInfoRouteAccount says "With yt-dlp's full run, with the session of your YouTube Music account"
 // in the language of msgs.
 func (msgs Messages) TrackInfoRouteAccount() string {
 	return Catalog.Format(msgs.locale, "trackInfoRouteAccount", nil)
@@ -15534,11 +15536,11 @@ func (msgs Messages) FollowedOnSpotify() string {
 	return Catalog.Format(msgs.locale, "followedOnSpotify", nil)
 }
 
-// FollowedOnYouTube says "Followed on NetEase Cloud Music"
+// FollowedOnYouTube says "Followed on YouTube Music"
 // in the language the app shows.
 func FollowedOnYouTube() string { return In(i18n.Locale()).FollowedOnYouTube() }
 
-// FollowedOnYouTube says "Followed on NetEase Cloud Music"
+// FollowedOnYouTube says "Followed on YouTube Music"
 // in the language of msgs.
 func (msgs Messages) FollowedOnYouTube() string {
 	return Catalog.Format(msgs.locale, "followedOnYouTube", nil)
@@ -17012,11 +17014,11 @@ func (msgs Messages) ExploreAddToMix() string {
 	return Catalog.Format(msgs.locale, "exploreAddToMix", nil)
 }
 
-// ExploreAddToYouTube says "Add to NetEase Cloud Music playlist"
+// ExploreAddToYouTube says "Add to YouTube Music playlist"
 // in the language the app shows.
 func ExploreAddToYouTube() string { return In(i18n.Locale()).ExploreAddToYouTube() }
 
-// ExploreAddToYouTube says "Add to NetEase Cloud Music playlist"
+// ExploreAddToYouTube says "Add to YouTube Music playlist"
 // in the language of msgs.
 func (msgs Messages) ExploreAddToYouTube() string {
 	return Catalog.Format(msgs.locale, "exploreAddToYouTube", nil)
@@ -17032,11 +17034,11 @@ func (msgs Messages) ExploreNewPlaylist() string {
 	return Catalog.Format(msgs.locale, "exploreNewPlaylist", nil)
 }
 
-// ExploreNewYouTubePlaylist says "New playlist on NetEase Cloud Music"
+// ExploreNewYouTubePlaylist says "New playlist on YouTube Music"
 // in the language the app shows.
 func ExploreNewYouTubePlaylist() string { return In(i18n.Locale()).ExploreNewYouTubePlaylist() }
 
-// ExploreNewYouTubePlaylist says "New playlist on NetEase Cloud Music"
+// ExploreNewYouTubePlaylist says "New playlist on YouTube Music"
 // in the language of msgs.
 func (msgs Messages) ExploreNewYouTubePlaylist() string {
 	return Catalog.Format(msgs.locale, "exploreNewYouTubePlaylist", nil)
@@ -17104,13 +17106,13 @@ func (msgs Messages) ExploreCouldntCreate(title string, error string) string {
 	return Catalog.Format(msgs.locale, "exploreCouldntCreate", map[string]any{"title": title, "error": error})
 }
 
-// ExploreCreatedOnYouTube says "Created {title} on NetEase Cloud Music"
+// ExploreCreatedOnYouTube says "Created {title} on YouTube Music"
 // in the language the app shows.
 func ExploreCreatedOnYouTube(title string) string {
 	return In(i18n.Locale()).ExploreCreatedOnYouTube(title)
 }
 
-// ExploreCreatedOnYouTube says "Created {title} on NetEase Cloud Music"
+// ExploreCreatedOnYouTube says "Created {title} on YouTube Music"
 // in the language of msgs.
 func (msgs Messages) ExploreCreatedOnYouTube(title string) string {
 	return Catalog.Format(msgs.locale, "exploreCreatedOnYouTube", map[string]any{"title": title})
@@ -17696,11 +17698,11 @@ func (msgs Messages) HomeEditSpotifyHidden() string {
 	return Catalog.Format(msgs.locale, "homeEditSpotifyHidden", nil)
 }
 
-// HomeEditYouTubePlaylist says "A NetEase Cloud Music playlist"
+// HomeEditYouTubePlaylist says "A YouTube Music playlist"
 // in the language the app shows.
 func HomeEditYouTubePlaylist() string { return In(i18n.Locale()).HomeEditYouTubePlaylist() }
 
-// HomeEditYouTubePlaylist says "A NetEase Cloud Music playlist"
+// HomeEditYouTubePlaylist says "A YouTube Music playlist"
 // in the language of msgs.
 func (msgs Messages) HomeEditYouTubePlaylist() string {
 	return Catalog.Format(msgs.locale, "homeEditYouTubePlaylist", nil)
@@ -17916,11 +17918,11 @@ func (msgs Messages) SearchServices() string {
 	return Catalog.Format(msgs.locale, "searchServices", nil)
 }
 
-// SearchNetEaseOnly says "Searching NetEase Cloud Music only. "
+// SearchNetEaseOnly says "Searching NetEase Cloud Music and YouTube Music only. "
 // in the language the app shows.
 func SearchNetEaseOnly() string { return In(i18n.Locale()).SearchNetEaseOnly() }
 
-// SearchNetEaseOnly says "Searching NetEase Cloud Music only. "
+// SearchNetEaseOnly says "Searching NetEase Cloud Music and YouTube Music only. "
 // in the language of msgs.
 func (msgs Messages) SearchNetEaseOnly() string {
 	return Catalog.Format(msgs.locale, "searchNetEaseOnly", nil)
@@ -18216,11 +18218,11 @@ func (msgs Messages) StatsAnd() string {
 	return Catalog.Format(msgs.locale, "statsAnd", nil)
 }
 
-// StatsFromYouTube says "{count} from NetEase Cloud Music"
+// StatsFromYouTube says "{count} from YouTube Music"
 // in the language the app shows.
 func StatsFromYouTube(count string) string { return In(i18n.Locale()).StatsFromYouTube(count) }
 
-// StatsFromYouTube says "{count} from NetEase Cloud Music"
+// StatsFromYouTube says "{count} from YouTube Music"
 // in the language of msgs.
 func (msgs Messages) StatsFromYouTube(count string) string {
 	return Catalog.Format(msgs.locale, "statsFromYouTube", map[string]any{"count": count})
@@ -18368,16 +18370,16 @@ func (msgs Messages) StatsDayTip(day string, minutes string, plays int) string {
 	return Catalog.Format(msgs.locale, "statsDayTip", map[string]any{"day": day, "minutes": minutes, "plays": plays})
 }
 
-// StatsVennLabel says "{spotify} plays from Spotify, {youtube} from NetEase Cloud Music"
+// StatsVennLabel says "{spotify} plays from Spotify, {netease} from NetEase Cloud Music, {youtube} from YouTube Music"
 // in the language the app shows.
-func StatsVennLabel(spotify string, youtube string) string {
-	return In(i18n.Locale()).StatsVennLabel(spotify, youtube)
+func StatsVennLabel(spotify string, netease string, youtube string) string {
+	return In(i18n.Locale()).StatsVennLabel(spotify, netease, youtube)
 }
 
-// StatsVennLabel says "{spotify} plays from Spotify, {youtube} from NetEase Cloud Music"
+// StatsVennLabel says "{spotify} plays from Spotify, {netease} from NetEase Cloud Music, {youtube} from YouTube Music"
 // in the language of msgs.
-func (msgs Messages) StatsVennLabel(spotify string, youtube string) string {
-	return Catalog.Format(msgs.locale, "statsVennLabel", map[string]any{"spotify": spotify, "youtube": youtube})
+func (msgs Messages) StatsVennLabel(spotify string, netease string, youtube string) string {
+	return Catalog.Format(msgs.locale, "statsVennLabel", map[string]any{"spotify": spotify, "netease": netease, "youtube": youtube})
 }
 
 // StatsArtistPlays says "{artist}: {plays, plural, one {# play} other {# plays}}"
@@ -18720,4 +18722,76 @@ func MarketplaceRemoved(name string) string { return In(i18n.Locale()).Marketpla
 // in the language of msgs.
 func (msgs Messages) MarketplaceRemoved(name string) string {
 	return Catalog.Format(msgs.locale, "marketplaceRemoved", map[string]any{"name": name})
+}
+
+// CmdViewLyricsStage says "Show or hide the full-screen lyrics"
+// in the language the app shows.
+func CmdViewLyricsStage() string { return In(i18n.Locale()).CmdViewLyricsStage() }
+
+// CmdViewLyricsStage says "Show or hide the full-screen lyrics"
+// in the language of msgs.
+func (msgs Messages) CmdViewLyricsStage() string {
+	return Catalog.Format(msgs.locale, "cmdViewLyricsStage", nil)
+}
+
+// PlaylistReadWaiting says "Spotify asked Mixyun to wait · {n}"
+// in the language the app shows.
+func PlaylistReadWaiting(n string) string { return In(i18n.Locale()).PlaylistReadWaiting(n) }
+
+// PlaylistReadWaiting says "Spotify asked Mixyun to wait · {n}"
+// in the language of msgs.
+func (msgs Messages) PlaylistReadWaiting(n string) string {
+	return Catalog.Format(msgs.locale, "playlistReadWaiting", map[string]any{"n": n})
+}
+
+// PlaylistReadWaitingOf says "Spotify asked Mixyun to wait · {n} of {count}"
+// in the language the app shows.
+func PlaylistReadWaitingOf(n string, count string) string {
+	return In(i18n.Locale()).PlaylistReadWaitingOf(n, count)
+}
+
+// PlaylistReadWaitingOf says "Spotify asked Mixyun to wait · {n} of {count}"
+// in the language of msgs.
+func (msgs Messages) PlaylistReadWaitingOf(n string, count string) string {
+	return Catalog.Format(msgs.locale, "playlistReadWaitingOf", map[string]any{"n": n, "count": count})
+}
+
+// SearchScopeAll says "All"
+// in the language the app shows.
+func SearchScopeAll() string { return In(i18n.Locale()).SearchScopeAll() }
+
+// SearchScopeAll says "All"
+// in the language of msgs.
+func (msgs Messages) SearchScopeAll() string {
+	return Catalog.Format(msgs.locale, "searchScopeAll", nil)
+}
+
+// SearchSortBy says "Sort by"
+// in the language the app shows.
+func SearchSortBy() string { return In(i18n.Locale()).SearchSortBy() }
+
+// SearchSortBy says "Sort by"
+// in the language of msgs.
+func (msgs Messages) SearchSortBy() string {
+	return Catalog.Format(msgs.locale, "searchSortBy", nil)
+}
+
+// StatsFromNetEase says "{count} from NetEase Cloud Music"
+// in the language the app shows.
+func StatsFromNetEase(count string) string { return In(i18n.Locale()).StatsFromNetEase(count) }
+
+// StatsFromNetEase says "{count} from NetEase Cloud Music"
+// in the language of msgs.
+func (msgs Messages) StatsFromNetEase(count string) string {
+	return Catalog.Format(msgs.locale, "statsFromNetEase", map[string]any{"count": count})
+}
+
+// StatsComma says ", "
+// in the language the app shows.
+func StatsComma() string { return In(i18n.Locale()).StatsComma() }
+
+// StatsComma says ", "
+// in the language of msgs.
+func (msgs Messages) StatsComma() string {
+	return Catalog.Format(msgs.locale, "statsComma", nil)
 }
