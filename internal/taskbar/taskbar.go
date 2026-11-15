@@ -48,10 +48,13 @@ type Lyrics struct{ l *lyricsWin }
 
 // OpenLyrics puts a window width DIPs wide in the primary taskbar, as its
 // child, so that it hides and slides with it and nothing comes over it. It
-// shows nothing until Show. It returns ErrUnsupported but on Windows, and
-// an error where the taskbar takes no window, as one at a side.
-func OpenLyrics(width int) (*Lyrics, error) {
-	l, err := openLyrics(width)
+// shows nothing until Show. Its cover shows a button that expands under
+// the pointer, and a click on it calls expand, on the window's own thread;
+// the taskbar under the rest of it takes the clicks. It returns
+// ErrUnsupported but on Windows, and an error where the taskbar takes no
+// window, as one at a side.
+func OpenLyrics(width int, expand func()) (*Lyrics, error) {
+	l, err := openLyrics(width, expand)
 	if err != nil {
 		return nil, err
 	}
@@ -126,6 +129,14 @@ var (
 	glyphPause = glyph{
 		{{0.26, 0.22}, {0.42, 0.22}, {0.42, 0.78}, {0.26, 0.78}},
 		{{0.58, 0.22}, {0.74, 0.22}, {0.74, 0.78}, {0.58, 0.78}},
+	}
+	// glyphExpand is two chevrons up, which open the player over the
+	// taskbar's lyrics.
+	glyphExpand = glyph{
+		{{0.24, 0.48}, {0.50, 0.24}, {0.50, 0.36}, {0.24, 0.60}},
+		{{0.50, 0.24}, {0.76, 0.48}, {0.76, 0.60}, {0.50, 0.36}},
+		{{0.24, 0.72}, {0.50, 0.48}, {0.50, 0.60}, {0.24, 0.84}},
+		{{0.50, 0.48}, {0.76, 0.72}, {0.76, 0.84}, {0.50, 0.60}},
 	}
 	glyphNext = glyph{
 		{{0.20, 0.25}, {0.64, 0.50}, {0.20, 0.75}},

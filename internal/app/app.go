@@ -77,6 +77,10 @@ type Options struct {
 	// mini player: windows that MyGo draws, of the root package.
 	Interface func(a *App, hidden bool) *mygo.Window
 	Mini      func(a *App) *mygo.Window
+	// TaskbarPlayer opens the player that the cover of the taskbar's
+	// lyrics expands, above the taskbar, which closes as it loses the
+	// keyboard (Windows).
+	TaskbarPlayer func(a *App) *mygo.Window
 	// Notch opens the player around the notch of a MacBook's screen, or
 	// returns nil where no screen has a camera housing (#46).
 	Notch func(a *App) *mygo.Window

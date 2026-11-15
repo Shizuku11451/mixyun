@@ -4,6 +4,7 @@ import (
 	"image"
 	"image/color"
 	"testing"
+	"time"
 )
 
 // TestLayoutView puts the cover at the left, centred, and the lines after
@@ -52,5 +53,53 @@ func TestOver(t *testing.T) {
 	}
 	if got := over(0, color.NRGBA{255, 0, 0, 128}); got != 0x80800000 {
 		t.Errorf("half: %08x", got)
+	}
+}
+
+// TestGlide eases from 0 to 1, and mixes pixels a share of the way.
+func TestGlide(t *testing.T) {
+	if glideEase(0) != 0 || glideEase(1) != 1 || glideEase(0.5) <= 0.5 {
+		t.Errorf("ease: %v %v %v", glideEase(0), glideEase(0.5), glideEase(1))
+	}
+	px := []uint32{0xFFFFFFFF, 0}
+	mixPixels(px, []uint32{0, 0xFF804000}, 0.5)
+	if px[0] != 0x7F7F7F7F || px[1] != 0x7F402000 {
+		t.Errorf("mix: %08x %08x", px[0], px[1])
+	}
+}
+
+// TestSweep lights the words sung, the one sung now in part, and dims the
+// pixels past the edge.
+func TestSweep(t *testing.T) {
+	words := []Word{{"a", time.Second, 2 * time.Second}, {"b", 3 * time.Second, 5 * time.Second}}
+	spans := []span{{0, 10}, {12, 32}}
+	for at, want := range map[time.Duration]float64{0: 0, 1500 * time.Millisecond: 5, 2500 * time.Millisecond: 10, 4 * time.Second: 22, 9 * time.Second: 32} {
+		if got := sweepAt(words, spans, at); got != want {
+			t.Errorf("at %v: %v, want %v", at, got, want)
+		}
+	}
+	px := []uint32{0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF}
+	sweepPixels(px, 4, rect{0, 0, 4, 1}, 2, 1, 1, 0.5)
+	if px[0] != 0xFFFFFF || px[3] != 0x7F7F7F || px[1] != 0xFFFFFF || px[2] != 0x7F7F7F {
+		t.Errorf("sweep: %06x", px)
+	}
+	v := LyricsView{Song: time.Second, Seen: time.Unix(10, 0), Speed: 2}
+	if got := v.songAt(time.Unix(10, 0).Add(time.Second)); got != 3*time.Second {
+		t.Errorf("song at: %v", got)
+	}
+}
+
+// TestHoverCover darkens the cover and puts the chevrons in its middle.
+func TestHoverCover(t *testing.T) {
+	c := image.NewNRGBA(image.Rect(0, 0, 40, 40))
+	for i := range c.Pix {
+		c.Pix[i] = 200
+	}
+	hoverCover(c)
+	if got := c.NRGBAAt(2, 2); got.R != 90 || got.A != 200 {
+		t.Errorf("corner: %v", got)
+	}
+	if got := c.NRGBAAt(20, 15); got.R < 200 {
+		t.Errorf("chevron: %v", got)
 	}
 }

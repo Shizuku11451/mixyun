@@ -12,7 +12,7 @@ func (*bar) show(state) {}
 
 type lyricsWin struct{}
 
-func openLyrics(int) (*lyricsWin, error) { return nil, ErrUnsupported }
-func (*lyricsWin) show(LyricsView)       {}
-func (*lyricsWin) close()                {}
-func (*lyricsWin) isClosed() bool        { return true }
+func openLyrics(int, func()) (*lyricsWin, error) { return nil, ErrUnsupported }
+func (*lyricsWin) show(LyricsView)               {}
+func (*lyricsWin) close()                        {}
+func (*lyricsWin) isClosed() bool                { return true }

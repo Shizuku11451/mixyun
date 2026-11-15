@@ -14,12 +14,16 @@ func TestLinesAt(t *testing.T) {
 	for pos, want := range map[time.Duration][2]string{
 		0: {"♪", "one"}, time.Second: {"one", "two"}, 4 * time.Second: {"♪", "two"}, time.Minute: {"two", ""},
 	} {
-		if cur, next := linesAt(lines, pos); cur != want[0] || next != want[1] {
+		if cur, next, _ := linesAt(lines, pos); cur != want[0] || next != want[1] {
 			t.Errorf("at %v: %q %q, not %q", pos, cur, next, want)
 		}
 	}
-	if cur, next := linesAt(nil, time.Second); cur != "" || next != "" {
+	if cur, next, _ := linesAt(nil, time.Second); cur != "" || next != "" {
 		t.Errorf("without lyrics: %q %q", cur, next)
+	}
+	timed := []lyrics.Line{{TimeMs: 1000, Text: "a b", Words: []lyrics.Word{{Text: "a"}, {Text: "b"}}}}
+	if _, _, words := linesAt(timed, 2*time.Second); len(words) != 2 {
+		t.Errorf("words: %v", words)
 	}
 	if got := clip("ピョンピョンまた", 4); got != "ピョン…" {
 		t.Errorf("clip: %q", got)
