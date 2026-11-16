@@ -7,8 +7,7 @@ import (
 	"github.com/fzn0x/mixmusic/locales"
 )
 
-// The row is not shown: it serves YouTube Music's tracks alone, which
-// NetEase Cloud Music took the place of in the interface.
+func init() { addSettings(soundRows, 30, (*shell).loudnessRow) }
 
 // loudnessRow turns loud tracks down to one level, in Settings › Playback
 // › Sound.

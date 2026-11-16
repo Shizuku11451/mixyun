@@ -245,10 +245,12 @@ Flatpak запускает MixMusic в песочнице, которая вид
 настройки и медиатеку в `~/.var/app/io.github.fzn0x.mixmusic`, отдельно от
 копии из `.deb`, `.rpm`, AppImage или архива, и обе могут работать
 одновременно. Чтобы перенести настройки и медиатеку из такой копии,
-закройте обе, скопируйте `settings.json`, `library.json`, `queue.json` и
-папку `addons` из `~/.config/MixMusic` в
-`~/.var/app/io.github.fzn0x.mixmusic/config/MixMusic` и войдите в свои
-учётные записи заново: входы остаются в связке ключей другой копии.
+закройте обе, скопируйте `settings.json`, `library.json`, `queue.json`,
+`positions.json` и папки `addons` и `mix-covers` из `~/.config/MixMusic` в
+`~/.var/app/io.github.fzn0x.mixmusic/config/MixMusic`. Сначала закройте
+обе копии: работающий MixMusic держит `library.json` и большинство других
+файлов в памяти и при следующем сохранении перезапишет скопированный. Затем
+войдите в свои учётные записи заново: входы остаются в связке ключей другой копии.
 
 Во Flatpak запуск при входе в систему идёт через ваш рабочий стол, который
 может сначала спросить вас, а собственный yt-dlp должен лежать в
@@ -424,7 +426,7 @@ ac3/                 an AC-3 and E-AC-3 decoder in pure Go, written from ATSC A/
 webm/                the audio of WebM files: packets, times and seeking
 mp4/                 the audio of MP4 files: packets, times and seeking
 resample/            sample rate conversion, with Kaiser-windowed sincs
-lyrics/              synced lyrics from Unison and LRCLIB, and translations
+lyrics/              synced lyrics from Better Lyrics, Unison and LRCLIB, and translations
 brand/               MixMusic's logo, for code that draws it
 ```
 
@@ -553,8 +555,9 @@ MixMusic построен на этих проектах:
   который делает AppImage.
 - **[yt-dlp](https://github.com/yt-dlp/yt-dlp)**, который находит звук
   треков, которые MixMusic не может найти сам.
+- **[Better Lyrics](https://betterlyrics.org)**, сервис с текстами, синхронизированными по словам.
 - **[Unison](https://unison.betterlyrics.org)**, открытая база текстов
-  песен, собираемая сообществом, под ODbL, и **[LRCLIB](https://lrclib.net)**,
+  песен, собираемая сообществом, под Unison Community License, и **[LRCLIB](https://lrclib.net)**,
   открытая база синхронизированных текстов песен.
 - **[kagome](https://github.com/ikawaha/kagome)**, японский
   морфологический анализатор, который читает кандзи в текстах для их

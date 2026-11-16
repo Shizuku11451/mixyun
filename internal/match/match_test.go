@@ -162,3 +162,19 @@ func TestMatchFindsNothing(t *testing.T) {
 		t.Errorf("err = %v", err)
 	}
 }
+
+func TestMatchFallsBackToAnotherService(t *testing.T) {
+	ne := &fakeSearch{songs: items(track("Something Else", "Nobody", 100000, false))}
+	yt := &fakeSearch{songs: items(track("One More Time", "Daft Punk", 320000, false))}
+	m := New(ne, nil)
+	m.Fallback = yt
+	got, err := m.Match(context.Background(), oneMoreTime)
+	if err != nil || got.Title != "One More Time" {
+		t.Fatalf("match = %+v, %v", got, err)
+	}
+	// The first service is asked for songs and videos, the fallback for
+	// songs alone, which had the match.
+	if ne.calls.Load() != 2 || yt.calls.Load() != 1 {
+		t.Errorf("searched %d and %d times", ne.calls.Load(), yt.calls.Load())
+	}
+}

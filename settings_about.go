@@ -5,6 +5,7 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
+	"github.com/fzn0x/mixmusic/internal/app"
 	"github.com/fzn0x/mixmusic/locales"
 )
 
@@ -65,9 +66,10 @@ func (s *shell) licenseSettings(c *ui.Context) {
 	s.group(c, locales.AboutLicenses(), func() {
 		for i, n := range append(s.svc.System.Notices(), fontNotices()...) {
 			open := s.licenseOpen == i
+			name := noticeName(n)
 			// A license's text shows with its row.
-			s.found(c, n.Name, "", func() {
-				s.row(c, n.Name, "", func() {
+			s.found(c, name, "", func() {
+				s.row(c, name, "", func() {
 					label := locales.AboutShow()
 					if open {
 						label = locales.AboutHide()
@@ -86,4 +88,32 @@ func (s *shell) licenseSettings(c *ui.Context) {
 			})
 		}
 	})
+}
+
+// noticeName is the name of the project of a license in the language shown;
+// the fonts' are already.
+func noticeName(n app.Notice) string {
+	switch n.ID {
+	case "opus":
+		return locales.AboutNoticeOpus()
+	case "aac":
+		return locales.AboutNoticeAac()
+	case "mp3":
+		return locales.AboutNoticeMp3()
+	case "vorbis":
+		return locales.AboutNoticeVorbis()
+	case "webAudio":
+		return locales.AboutNoticeWebAudio()
+	case "materialColor":
+		return locales.AboutNoticeMaterialColor()
+	case "unihan":
+		return locales.AboutNoticeUnihan()
+	case "pinyin":
+		return locales.AboutNoticePinyin()
+	case "kagome":
+		return locales.AboutNoticeKagome()
+	case "ipadic":
+		return locales.AboutNoticeIpadic()
+	}
+	return n.Name
 }

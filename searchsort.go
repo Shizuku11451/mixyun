@@ -1,0 +1,180 @@
+package main
+
+import (
+	"cmp"
+	"slices"
+	"strconv"
+	"strings"
+
+	"github.com/egoist/mygo/ui"
+
+	"github.com/fzn0x/mixmusic/internal/app"
+	"github.com/fzn0x/mixmusic/internal/media"
+	"github.com/fzn0x/mixmusic/locales"
+)
+
+// The orders of a search's results (#630), by id: sortLabel names them.
+// Best match is the services' own; Most played counts what YouTube Music
+// says of a song, a video or a playlist, and NetEase Cloud Music of a
+// playlist; Newest orders albums by their year.
+const (
+	sortBestMatch  = "Best match"
+	sortMostPlayed = "Most played"
+	sortNewest     = "Newest"
+)
+
+// searchSorting is the order chosen for the results of the search query:
+// one for the pivots that list songs, videos and playlists, one for the
+// albums.
+type searchSorting struct {
+	query           string
+	general, albums string
+}
+
+// sortLabel is what the Sort by select calls the order id.
+func sortLabel(id string) string {
+	switch id {
+	case sortMostPlayed:
+		return locales.SearchSortPlayed()
+	case sortNewest:
+		return locales.SearchSortNewest()
+	}
+	return locales.SearchSortBest()
+}
+
+// searchSortOptions are the orders the pivot offers, or none where only
+// the services' own is there: Spotify gives apps no play counts, so with
+// only Spotify chosen, Most played isn't offered, and NetEase Cloud Music
+// counts only its playlists' plays. Artists and podcasts have no order to
+// choose.
+func searchSortOptions(pivot string, scope int) []string {
+	switch pivot {
+	case "albums":
+		return []string{sortBestMatch, sortNewest}
+	case "playlists":
+		if scope != spotifyScope {
+			return []string{sortBestMatch, sortMostPlayed}
+		}
+	case "all", "songs", "videos":
+		if scope != spotifyScope && scope != neteaseScope {
+			return []string{sortBestMatch, sortMostPlayed}
+		}
+	}
+	return nil
+}
+
+// sortSelect is the Sort by select, beside Services, for the options of
+// the pivot, and what it chose. The choices go back to Best match on each
+// new search, and the shared one where only Spotify is chosen, which has
+// no counts; the pivots with no order (artists, podcasts) show no select
+// and keep them.
+func (s *shell) sortSelect(c *ui.Context, q, pivot string, scope int) string {
+	st := &s.searchSort
+	if st.query != q {
+		*st = searchSorting{query: q}
+	}
+	options := searchSortOptions(pivot, scope)
+	if len(options) == 0 {
+		if scope == spotifyScope || scope == neteaseScope {
+			st.general = sortBestMatch
+		}
+		return sortBestMatch
+	}
+	chosen := &st.general
+	if pivot == "albums" {
+		chosen = &st.albums
+	}
+	if !slices.Contains(options, *chosen) {
+		*chosen = sortBestMatch
+	}
+	labels := make([]string, len(options))
+	for i, o := range options {
+		labels[i] = sortLabel(o)
+	}
+	label := sortLabel(*chosen)
+	if s.selectOf(c.Key("sort"), &label, labels).Width(170).Label(locales.SearchSortBy()).Changed() {
+		*chosen = options[slices.Index(labels, label)]
+	}
+	return *chosen
+}
+
+// byPlayed orders by the count of plays or views, the most first, and
+// keeps the order of those that tie or have none, which come last.
+func byPlayed[T any](count func(T) int64) func(a, b T) int {
+	return func(a, b T) int { return cmp.Compare(max(count(b), 0), max(count(a), 0)) }
+}
+
+// sortTracks is tracks with the most played first, as a copy.
+func sortTracks(tracks []media.Track) []media.Track {
+	out := slices.Clone(tracks)
+	slices.SortStableFunc(out, byPlayed(func(t media.Track) int64 { return t.Plays }))
+	return out
+}
+
+// sortPlaylists is playlists with the most viewed first, as a copy.
+func sortPlaylists(playlists []media.Playlist) []media.Playlist {
+	out := slices.Clone(playlists)
+	slices.SortStableFunc(out, byPlayed(func(p media.Playlist) int64 { return p.Views }))
+	return out
+}
+
+// albumYear reads the year of an album, or 0 where it has none.
+func albumYear(a media.Album) int {
+	y, err := strconv.Atoi(strings.TrimSpace(a.Year))
+	if err != nil || y <= 0 {
+		return 0
+	}
+	return y
+}
+
+// newestFirst is the order of albums, by the year of each, the newest
+// first; those with no year come last, and ties keep their order.
+func newestFirst(albums []media.Album) []media.Album {
+	out := slices.Clone(albums)
+	slices.SortStableFunc(out, func(a, b media.Album) int { return cmp.Compare(albumYear(b), albumYear(a)) })
+	return out
+}
+
+// playedResults are the results of the services of scope, for the order
+// of Most played: with all of them, YouTube Music's first, then NetEase
+// Cloud Music's, whose songs have no counts, then Spotify's, which has none,
+// then each sorted by its count.
+func playedResults(r app.SearchResponse, scope int, shown func(media.SearchResults) media.SearchResults) media.SearchResults {
+	out := mergeResults(r, scope)
+	if scope == allScope {
+		out.Tracks = slices.Concat(r.YouTube.Tracks, r.NetEase.Tracks, r.Spotify.Tracks)
+		out.Videos = slices.Concat(r.YouTube.Videos, r.NetEase.Videos, r.Spotify.Videos)
+		out.Playlists = slices.Concat(r.YouTube.Playlists, r.NetEase.Playlists, r.Spotify.Playlists)
+	}
+	out = shown(out)
+	out.Tracks = sortTracks(out.Tracks)
+	out.Videos = sortTracks(out.Videos)
+	out.Playlists = sortPlaylists(out.Playlists)
+	return out
+}
+
+// newestAlbumTiles are the tiles of albums with the newest first: an
+// album of several versions is one tile, placed by the year of the
+// version it shows.
+func (s *shell) newestAlbumTiles(c *ui.Context, key string, albums []media.Album) {
+	groups := s.albumGroups(key, albums)
+	shown := make([]media.Album, len(groups))
+	for i, g := range groups {
+		shown[i] = s.preferredVersion(g)
+	}
+	order := make([]int, len(shown))
+	for i := range order {
+		order[i] = i
+	}
+	slices.SortStableFunc(order, func(a, b int) int { return cmp.Compare(albumYear(shown[b]), albumYear(shown[a])) })
+	for n, i := range order {
+		s.albumTile(c, key+"-"+count(n), shown[i])
+	}
+}
+
+// sortNote tells, while Most played orders the results of all services,
+// where those with no counts go.
+func (s *shell) sortNote(c *ui.Context) {
+	ui.Text(c, locales.SearchSortNote()).
+		FontSize(s.lk.smallSize()).TextColor(s.lk.muted).Margin(0, 0, 16)
+}

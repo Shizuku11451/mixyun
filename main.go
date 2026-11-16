@@ -54,6 +54,14 @@ func main() {
 	if allowed, status := allowFirewall(os.Args[1:], os.Stderr); allowed {
 		os.Exit(status)
 	}
+	// A Stream Deck key or a script starts MixMusic --next and the like,
+	// for the MixMusic that runs to do. Should this one take the single
+	// instance's lock, none runs: it ends all the same, and the lock it
+	// leaves goes to the next start, as one a crash left does.
+	handOver := func() bool { return !mygo.App.RequestSingleInstanceLock() }
+	if controlled, status := controlRunning(os.Args[1:], handOver, os.Stderr); controlled {
+		os.Exit(status)
+	}
 	if !mygo.App.RequestSingleInstanceLock() {
 		return // the running instance takes over
 	}
@@ -86,17 +94,18 @@ func main() {
 	}
 	home, _ := os.UserHomeDir()
 	a, err := app.New(app.Options{
-		DataDir:      dataDir,
-		CacheDir:     cacheDir,
-		DownloadsDir: defaultDownloadsDir(runtime.GOOS, portable, dataDir, cacheDir, home, os.Getenv("XDG_DATA_HOME")),
-		Builtin:      builtin.FS,
-		TrayIcon:     trayIcon,
-		Version:      version,
-		LogsDir:      logsDir,
-		LastCrash:    lastCrash,
-		Interface:    Open,
-		Mini:         OpenMini,
-		Notch:        OpenNotch,
+		DataDir:       dataDir,
+		CacheDir:      cacheDir,
+		DownloadsDir:  defaultDownloadsDir(runtime.GOOS, portable, dataDir, cacheDir, home, os.Getenv("XDG_DATA_HOME")),
+		Builtin:       builtin.FS,
+		TrayIcon:      trayIcon,
+		Version:       version,
+		LogsDir:       logsDir,
+		LastCrash:     lastCrash,
+		Interface:     Open,
+		Mini:          OpenMini,
+		TaskbarPlayer: OpenTaskbarPlayer,
+		Notch:         OpenNotch,
 	})
 	if err != nil {
 		log.Fatal(err)

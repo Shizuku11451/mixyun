@@ -18,8 +18,14 @@
   "zoom": 1.25,
   "sidebarCollapsed": true,
   "wavyProgress": true,
+  "coverBackdrop": false,
+  "coverBackdropVeil": 0.7,
   "panel": "lyrics",
   "lyricsPlain": true,
+  "lyricsStyle": "bold",
+  "lyricsSize": 1.3,
+  "lyricsBall": false,
+  "lyricsBallMotion": "boomerang",
   "lyricsTranslate": [
     "ja",
     ""
@@ -85,6 +91,8 @@
   "volume": 0.5,
   "cacheSizeMb": 4096,
   "lyricsTranslateTo": "ja",
+  "lyricsLlmUrl": "https://api.deepseek.com/v1",
+  "lyricsLlmModel": "deepseek-chat",
   "downloadsFolder": "/home/me/Music",
   "downloadOnMetered": true,
   "downloadAdded": false,

@@ -101,7 +101,10 @@ Two rows of Settings › Appearance › Colour and type set the accent, the
 colour of what is chosen, of links and of the progress bars:
 
 - **Follow the artwork**, on by default, takes the accent from the cover of
-  what plays, and changes it with each track.
+  what plays, and changes it with each track. The most vivid colour that
+  covers more than 1% of the cover sets it, pure colours included. A cover
+  without one, black or grey with a small mark, gives its own average,
+  a readable grey.
 - **Accent colour** is a colour of your own, which replaces the theme's when
   the artwork doesn't set it: while nothing plays, or with Follow the
   artwork off. "use the theme's" beside it puts the theme's back.
@@ -158,7 +161,7 @@ The other rows of Settings › Appearance › Colour and type:
 | **Text size** | Makes the text alone larger or smaller, from 85% to 130%. |
 | **Density** | Comfortable, or compact, which fits more rows on the screen: rows, the sidebar and the player bar take less room. |
 | **Icons only in the sidebar** | Shows the sidebar's pages as icons. A narrow window does this too, until you unfold the sidebar there. |
-| **Wavy progress bar** | Draws the played part of the seek bar, in the player bar and on the now playing page, as a gentle wave that moves along while music plays and eases flat when you pause. Seeking works as with the straight bar. Off at first. A live stream's bar stays straight. |
+| **Wavy progress bar** | Draws the played part of the seek bar, in the player bar and on the now playing page, and of the mini player's progress line, as a gentle wave that moves along while music plays and eases flat when you pause. Seeking works as with the straight bar. Off at first. A live stream's bar stays straight. |
 
 The zoom has keys of its own:
 
@@ -191,6 +194,10 @@ or animations turned off on a Linux desktop), MixMusic moves less:
   goes flat at once when you pause.
 - Lyrics timed [word by word](lyrics.md#word-by-word) light each word
   whole as it starts, rather than filling it as it's sung.
+- The [full-screen lyrics](lyrics.md#full-screen-lyrics) jump to each line as
+  the song goes on, and their lines fade and blur at once, rather than
+  glide. Their ball doesn't hop or fly, squash or leave rings: it sits on the
+  word being sung, and on the first word of the next line as it starts.
 - What moves on springs, as a button you press or the mark of the page
   you're on, goes where it goes at once, and the head of a playlist or an
   album shows in the top bar at once as you scroll.

@@ -362,6 +362,7 @@ func (s *shell) playlistPage(c *ui.Context, id string) {
 			noun = "mix"
 		}
 		s.readLine(c, r, noun)
+		s.gapLine(c, r, tracks, noun)
 		view := s.trackTools(c, key, noun, tracks)
 		empty := locales.CollectionPlaylistEmpty()
 		switch {

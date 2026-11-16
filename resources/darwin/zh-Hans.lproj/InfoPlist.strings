@@ -1,0 +1,3 @@
+/* The reasons of mygo.config.ts's infoPlist, in Chinese: macOS shows them as it asks for the permission. MyGo adds the app's name, mygo.appName of locales/zh-Hans.json. */
+"NSLocalNetworkUsageDescription" = "混云会查找你网络中的投放设备（如 Chromecast 和 Nest 音箱）以在上面播放，也会查找你其他电脑上的混云以便控制它。";
+"NSAudioCaptureUsageDescription" = "混云会收听它播放的 Spotify 曲目，用于可视化效果和插件的分析器。它从不录制或发送这些声音。";

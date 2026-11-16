@@ -21,6 +21,7 @@ func (s *shell) nowPlayingPage(c *ui.Context) {
 		return
 	}
 	// The page fits the pane and doesn't scroll: only its lyrics do.
+	// The cover's backdrop under it is the window's: shell.view paints it.
 	ui.Column(c).Grow(1).MinWidth(0).MinHeight(0).Padding(8, k.gutter, 24).Gap(24).Children(func() {
 		t := cur.Track
 		ui.Text(c, t.Title).FontSize(k.titleSize()).FontWeight(k.displayWeight()).Font(k.display).
@@ -72,7 +73,12 @@ func (s *shell) nowPlayingPage(c *ui.Context) {
 						ui.Text(c, k.sentence(locales.NowPlayingWaiting())).FontSize(k.smallSize()).TextColor(k.muted)
 					}
 					s.videoToggle(c)
+					// An episode has details, not lyrics: nothing to show full screen.
+					if !t.IsEpisode() && s.iconButton(c, "now-stage", "expand", locales.LyricsStageTitle(), false, 18).Clicked() {
+						s.toggleStage()
+					}
 				})
+				s.nowQualityLine(c, t)
 			})
 			ui.Column(c).Grow(1).MinWidth(0).MinHeight(0).AlignSelf(ui.Stretch).Gap(24).Children(func() {
 				ui.Column(c).Grow(1).MinHeight(0).Children(func() { s.lyrics(c, true) })
@@ -80,6 +86,34 @@ func (s *shell) nowPlayingPage(c *ui.Context) {
 			})
 		})
 	})
+}
+
+// onBackdrop tells whether the window shows the cover's backdrop: on the
+// now playing page, while a track is there, unless the user turned it
+// off in Settings. The rail and the player bar
+// leave their ground off over it.
+func (s *shell) onBackdrop() bool {
+	_, ok := s.st.Current()
+	return ok && s.set.CoverBackdrop && s.router.Path() == "/now-playing"
+}
+
+// coverBackdrop fills the window, on the now playing page, with the cover
+// of what plays, blurred to a wash of its colours, as Apple Music's player
+// does, under a veil of the ground that keeps the text readable. It
+// overhangs the window by three sigma, so the blur's transparent rim falls
+// outside it.
+func (s *shell) coverBackdrop(c *ui.Context) {
+	cur, ok := s.st.Current()
+	if !ok || !s.onBackdrop() {
+		return
+	}
+	const sigma, size = 60, 96 // the blur hides detail: a small bitmap does
+	b := s.art.get(c, artworkURL(cur.Track.Artwork, size), size)
+	if b == nil {
+		return
+	}
+	ui.Image(c, b).Absolute().Top(-3 * sigma).Right(-3 * sigma).Bottom(-3 * sigma).Left(-3 * sigma).Fit(ui.Cover).Blur(sigma).PassThrough()
+	ui.Box(c).Absolute().Top(0).Right(0).Bottom(0).Left(0).Background(withAlpha(s.lk.bg, s.set.CoverBackdropVeil)).PassThrough()
 }
 
 // visualizer draws the spectrum of what plays over the foot of the sleeve,

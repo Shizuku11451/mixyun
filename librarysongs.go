@@ -101,3 +101,19 @@ func (s *shell) listSong(t media.Track, on bool) {
 		l.value = songs
 	}
 }
+
+// youtubeSongsList lists the songs of the user's library on YouTube
+// Music, in Library › YouTube Music.
+func (s *shell) youtubeSongsList(c *ui.Context) {
+	s.sectionTitle(c, locales.LibrarySongsTitle())
+	songs := s.youtubeSongs()
+	switch {
+	case !songs.done:
+		s.loading(c)
+	case songs.err != nil:
+		s.problem(c, songs.err, func() { s.forget(youtubeSongsKey) })
+	default:
+		s.trackList(c, "youtube-songs", songs.value, trackListOptions{art: true, album: true,
+			empty: locales.LibrarySongsEmpty()})
+	}
+}

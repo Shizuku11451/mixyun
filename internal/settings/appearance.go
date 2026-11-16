@@ -103,6 +103,13 @@ type Appearance struct {
 	// moves while the track plays and lies flat while it doesn't (#382).
 	// It is off at first.
 	WavyProgress bool `json:"wavyProgress"`
+	// CoverBackdrop fills the window, on the now playing page, with the
+	// cover of what plays, blurred. It is on at first.
+	CoverBackdrop bool `json:"coverBackdrop"`
+	// CoverBackdropVeil is how opaque the ground over the cover's backdrop
+	// is, from 0 to 0.9: more keeps the text clearer, less the cover's
+	// colours stronger.
+	CoverBackdropVeil float64 `json:"coverBackdropVeil"`
 	// Panel is the side panel beside the pages: "queue", "lyrics" or
 	// "none". Settings from before it show the queue.
 	Panel string `json:"panel"`
@@ -121,6 +128,8 @@ func defaultAppearance() Appearance {
 	a.Panel = "queue"
 	a.FontScale = 1
 	a.Zoom = 1
+	a.CoverBackdrop = true
+	a.CoverBackdropVeil = 0.55
 	return a
 }
 
@@ -166,6 +175,9 @@ func (a Appearance) clean(d Appearance) Appearance {
 		a.FontScale = d.FontScale
 	}
 	a.Zoom = zoomStep(a.Zoom, d.Zoom)
+	if !(a.CoverBackdropVeil >= 0 && a.CoverBackdropVeil <= 0.9) {
+		a.CoverBackdropVeil = d.CoverBackdropVeil
+	}
 	return a
 }
 

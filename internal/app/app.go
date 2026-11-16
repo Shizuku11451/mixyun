@@ -77,6 +77,10 @@ type Options struct {
 	// mini player: windows that MyGo draws, of the root package.
 	Interface func(a *App, hidden bool) *mygo.Window
 	Mini      func(a *App) *mygo.Window
+	// TaskbarPlayer opens the player that the cover of the taskbar's
+	// lyrics expands, above the taskbar, which closes as it loses the
+	// keyboard (Windows).
+	TaskbarPlayer func(a *App) *mygo.Window
 	// Notch opens the player around the notch of a MacBook's screen, or
 	// returns nil where no screen has a camera housing (#46).
 	Notch func(a *App) *mygo.Window
@@ -156,6 +160,7 @@ type App struct {
 	labels       *labelCache
 	lyrics       *lyrics.Client
 	unison       *lyrics.Unison
+	llm          llmKeyStore
 	betterLyrics *lyrics.BetterLyrics
 	translations *translations
 	romaji       *romaji.Dictionary
@@ -354,12 +359,15 @@ func New(opts Options) (*App, error) {
 	a.openYouTube()
 	a.proxy.Cache = a.cache
 	a.matcher = match.New(neteaseSearcher{a.netease}, matches)
+	// A track NetEase Cloud Music doesn't have plays from YouTube Music.
+	a.matcher.Fallback = a.youtube
 	a.labels = newLabelCache(a.youtube.MadeWithAI, aiLabels, time.Now)
 	userAgent := "Mixyun/" + opts.Version + " (https://github.com/fzn0x/mixmusic)"
 	a.lyrics = lyrics.New(userAgent)
 	a.unison = lyrics.NewUnison(userAgent)
 	a.betterLyrics = lyrics.NewBetterLyrics(userAgent)
 	a.translations = newTranslations(filepath.Join(opts.CacheDir, "lyrics-translations"))
+	a.llm.key = jsonSecret[string]{newSecretStore(opts.DataDir, llmSecret, "lyrics-llm-key.json", "lyrics-llm-key.dpapi")}
 	a.romaji = newRomaji(opts, userAgent)
 	a.lyricsMemo = newMemo[lyrics.Lyrics](200)
 	a.related = newMemo[[]media.Shelf](100)

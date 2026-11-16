@@ -79,6 +79,7 @@ func (s *shell) commands() []command {
 		{"player.openFiles", locales.CmdPlayerOpenFiles(), "Mod+O", "playback", s.openMusicFiles},
 		{"go.home", locales.CmdGoHome(), "Alt+1", "go to", func() { s.navigate("/") }},
 		{"go.search", locales.RailSearch(), "Mod+F", "go to", func() { s.searchBox.Focus() }},
+		{"go.explore", locales.RailExplore(), "Alt+5", "go to", func() { s.navigate("/explore") }},
 		{"go.library", locales.RailLibrary(), "Alt+2", "go to", func() { s.navigate("/library") }},
 		{"go.liked", locales.RailLikedSongs(), "Alt+3", "go to", func() { s.navigate("/library/liked") }},
 		{"go.downloads", locales.RailDownloads(), "", "go to", func() { s.navigate("/library/downloads") }},
@@ -90,6 +91,7 @@ func (s *shell) commands() []command {
 		{"go.settingsSearch", locales.SettingsSearchLabel(), "", "go to", s.searchSettings},
 		{"view.queue", locales.CmdViewQueue(), "Mod+J", "view", func() { s.togglePanel("queue") }},
 		{"view.lyrics", locales.CmdViewLyrics(), "Mod+Shift+L", "view", func() { s.togglePanel("lyrics") }},
+		{"view.lyricsStage", locales.CmdViewLyricsStage(), "Mod+Shift+F", "view", s.toggleStage},
 		{"view.palette", locales.CmdViewPalette(), "Mod+K", "view", func() { s.paletteOpen = !s.paletteOpen }},
 		{"view.mini", locales.CmdViewMini(), "Mod+M", "view", s.showMini},
 		{"view.keepOnTop", locales.CmdViewKeepOnTop(), "", "view", s.toggleOnTop},
@@ -107,6 +109,7 @@ func (s *shell) commands() []command {
 		{"settings.openFile", locales.CmdSettingsOpenFile(), "", "settings", s.openSettingsFile},
 	}
 	cmds = append(cmds, s.themeCommands...)
+	cmds = append(cmds, s.lyricStyleCommands()...)
 	for _, pc := range s.plugins.Commands() {
 		cmds = append(cmds, command{pc.ID, pc.Title, pc.Shortcut, "plugins", pc.Run})
 	}

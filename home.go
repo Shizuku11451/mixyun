@@ -12,10 +12,10 @@ import (
 
 // homeFilters are the home page's pivots, and the sources they keep;
 // homeFilterLabels are their names, in the language the app shows.
-var homeFilters = []media.Source{"", media.SourceLocal, media.SourceSpotify, media.SourceNetEase}
+var homeFilters = []media.Source{"", media.SourceLocal, media.SourceSpotify, media.SourceNetEase, media.SourceYouTube}
 
 func homeFilterLabels() []string {
-	return []string{locales.HomeFilterEverything(), locales.HomeFilterYours(), "Spotify", "网易云音乐"}
+	return []string{locales.HomeFilterEverything(), locales.HomeFilterYours(), "Spotify", "网易云音乐", "YouTube Music"}
 }
 
 // networkOnline tells whether the network answers, as last checked; tests
@@ -34,6 +34,7 @@ func (s *shell) homePage(c *ui.Context) {
 			return
 		}
 		s.pageHeader(c, locales.HomeTitle(), homeFilterLabels(), &s.homeFilter)
+		s.toolProblems(c)
 		accounts := fetch(s, "accounts", func(ctx context.Context) (app.AccountsStatus, error) { return s.svc.Accounts.Status(ctx), nil })
 
 		// The track played last, as the library has it now.

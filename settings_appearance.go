@@ -383,27 +383,28 @@ func (s *shell) themeOption(c *ui.Context, th addons.Theme, o addons.Option) {
 		s.save()
 	}
 	key := "option-" + th.ID + "-" + o.ID
+	label := optionLabel(th, o.ID, o.Label)
 	desc := ""
 	if o.Type == addons.OptionRange {
 		desc = value + o.Unit
 	}
-	s.row(c, o.Label, desc, func() {
+	s.row(c, label, desc, func() {
 		switch o.Type {
 		case addons.OptionToggle:
 			on := value == "true"
-			if s.switchOf(c.Key(key), &on).Label(o.Label).Changed() {
+			if s.switchOf(c.Key(key), &on).Label(label).Changed() {
 				set(strconv.FormatBool(on))
 			}
 		case addons.OptionSelect:
 			labels := make([]string, len(o.Choices))
 			chosen := value
 			for i, ch := range o.Choices {
-				labels[i] = ch.Label
+				labels[i] = optionLabel(th, o.ID+"/"+ch.Value, ch.Label)
 				if ch.Value == value {
-					chosen = ch.Label
+					chosen = labels[i]
 				}
 			}
-			if s.selectOf(c.Key(key), &chosen, labels).Width(200).Label(o.Label).Changed() {
+			if s.selectOf(c.Key(key), &chosen, labels).Width(200).Label(label).Changed() {
 				if i := slices.Index(labels, chosen); i >= 0 {
 					set(o.Choices[i].Value)
 				}
@@ -417,7 +418,7 @@ func (s *shell) themeOption(c *ui.Context, th addons.Theme, o addons.Option) {
 			if step <= 0 {
 				step = 1
 			}
-			if ui.StepSlider(c.Key(key), &v, o.Min, top, step).Width(200).Label(o.Label).Changed() {
+			if ui.StepSlider(c.Key(key), &v, o.Min, top, step).Width(200).Label(label).Changed() {
 				set(strconv.FormatFloat(v, 'f', -1, 64))
 			}
 		case addons.OptionColor:
@@ -425,7 +426,7 @@ func (s *shell) themeOption(c *ui.Context, th addons.Theme, o addons.Option) {
 			if !ok {
 				current, _ = parseColor(o.Default)
 			}
-			s.colorControl(c, key, o.Label, col(current), func(hex string) { s.setThemeOption(th.ID, o.ID, hex) })
+			s.colorControl(c, key, label, col(current), func(hex string) { s.setThemeOption(th.ID, o.ID, hex) })
 		}
 	})
 }
@@ -462,4 +463,37 @@ func (s *shell) wornColors() colorfile.Colors {
 		return colorfile.Colors{}
 	}
 	return s.colorFile.Colors
+}
+
+// builtinOptionLabels say the labels of the built-in themes' options, by
+// "theme/option" and "theme/option/choice", in the language shown; a
+// community theme's labels are its own.
+var builtinOptionLabels = map[string]func() string{
+	"anime/screentone":    locales.ThemeOptionAnimeScreentone,
+	"anime/speedlines":    locales.ThemeOptionAnimeSpeedlines,
+	"aurora/blur":         locales.ThemeOptionAuroraBlur,
+	"aurora/motion":       locales.ThemeOptionAuroraMotion,
+	"aurora/tint":         locales.ThemeOptionAuroraTint,
+	"glasshouse/blur":     locales.ThemeOptionGlasshouseBlur,
+	"glasshouse/cover":    locales.ThemeOptionGlasshouseCover,
+	"greenroom/wash":      locales.ThemeOptionGreenroomWash,
+	"mix/texture":         locales.ThemeOptionMixTexture,
+	"mix/texture/dots":    locales.ThemeOptionMixTextureDots,
+	"mix/texture/none":    locales.ThemeOptionMixTextureNone,
+	"mix/texture/slashes": locales.ThemeOptionMixTextureSlashes,
+	"mix/texture/stripes": locales.ThemeOptionMixTextureStripes,
+	"mix/white-tiles":     locales.ThemeOptionMixWhiteTiles,
+	"mochi/sparkles":      locales.ThemeOptionMochiSparkles,
+	"sakura/petals":       locales.ThemeOptionSakuraPetals,
+	"terminal/glow":       locales.ThemeOptionTerminalGlow,
+	"terminal/scanlines":  locales.ThemeOptionTerminalScanlines,
+}
+
+// optionLabel is the label of an option of th, or of one of its choices,
+// in the language shown where th is built in.
+func optionLabel(th addons.Theme, path, label string) string {
+	if f, ok := builtinOptionLabels[th.ID+"/"+path]; ok && th.Builtin {
+		return f()
+	}
+	return label
 }

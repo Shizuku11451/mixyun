@@ -101,7 +101,7 @@
   "topbarBack": "Back",
   "topbarForward": "Forward",
   "topbarPalette": "Open the command palette",
-  "topbarSearchPlaceholder": "Search Spotify and NetEase Cloud Music",
+  "topbarSearchPlaceholder": "Search Spotify, NetEase Cloud Music and YouTube Music",
   "topbarSearch": "Search",
   "topbarKindSong": "Song",
   "topbarKindVideo": "Video",
@@ -114,10 +114,13 @@
   "topbarKindPodcast": "Podcast",
   "playerPickSomething": "Pick something to play",
   "playerOpenNowPlaying": "Open now playing",
-  "playerViaYouTube": "{line} · via NetEase Cloud Music",
+  "playerViaYouTube": "{line} · via {service}",
   "@playerViaYouTube": {
     "placeholders": {
       "line": {
+        "type": "String"
+      },
+      "service": {
         "type": "String"
       }
     }
@@ -443,6 +446,10 @@
   },
   "wavyProgressTitle": "Wavy progress bar",
   "wavyProgressDescription": "The played part of the seek bar is a gentle wave that moves while music plays and lies flat while it's paused. It holds still while your system asks for less motion.",
+  "coverBackdropTitle": "Cover backdrop",
+  "coverBackdropDescription": "On the now playing page, the cover of what plays fills the whole window, blurred to a wash of its colours.",
+  "coverBackdropVeilTitle": "Backdrop veil",
+  "coverBackdropVeilDescription": "How much of the ground lies over the cover's backdrop: more keeps the text clearer, less makes the cover's colours stronger.",
   "notchTitle": "Player around the notch",
   "notchDescription": "While a track is loaded, the black around the camera shows its cover, and bars that move with the music. Click it for the player and the lyrics, over any app and on every Space.",
   "overlayTitle": "Now playing for overlays",
@@ -546,8 +553,8 @@
   "playbackFromSpotify": "In Mixyun, from Spotify",
   "playbackOnConnect": "On Spotify Connect",
   "playbackOnConnectDesc": "Your Spotify app, or another Spotify device, plays them, at Spotify's own quality. Needs Spotify Premium and a device with Spotify open.",
-  "playbackFromYouTube": "In Mixyun, from NetEase Cloud Music",
-  "playbackFromYouTubeDesc": "Mixyun plays their recording on NetEase Cloud Music, with the equalizer, crossfade and visualizer. Works without Premium.",
+  "playbackFromYouTube": "In Mixyun, from NetEase Cloud Music or YouTube Music",
+  "playbackFromYouTubeDesc": "Mixyun plays their recording on NetEase Cloud Music, else on YouTube Music, with the equalizer, crossfade and visualizer. Works without Premium.",
   "playbackSignInSpotify": "Sign in to Spotify in accounts to play your Spotify library.",
   "playbackSignInSpotifyLead": "Sign in to Spotify in ",
   "playbackSignInSpotifyTail": " to play your Spotify library.",
@@ -671,6 +678,14 @@
   "lyricsSettingsGroup": "Lyrics",
   "lyricsSettingsTranslate": "Translate lyrics to",
   "lyricsSettingsDesc": "The translate switch beside the lyrics shows them in this language. While it's on, the lyrics of the track playing and its video ID go to Unison, which has Google translate them; nothing is sent while it's off. Lyrics in other scripts show in Latin letters made on this computer, which sends nothing: Japanese in romaji, and the others by the standard of their language. Only Arabic's go to Unison, which romanizes them with the vowels Arabic doesn't write.",
+  "lyricsSettingsLLMURL": "Translate with a language model",
+  "lyricsSettingsLLMURLInvalid": "That isn't a server Mixyun can send the key to: give a URL of https, or of http on this computer, as http://localhost:11434/v1.",
+  "lyricsSettingsLLMDesc": "Lyrics without a translation of their own (NetEase Cloud Music's) are translated by the language model you choose, in place of Unison: the base URL of a server that speaks OpenAI's chat completions, as OpenAI, DeepSeek, OpenRouter or Ollama. While it's set, the lines of the lyrics you translate go to that server. Leave it empty to translate with Unison.",
+  "lyricsSettingsLLMModel": "Model",
+  "lyricsSettingsLLMKey": "API key",
+  "lyricsSettingsLLMKeyNone": "None, as for Ollama",
+  "lyricsSettingsLLMKeyKept": "Kept — type to replace it",
+  "lyricsSettingsLLMKeyForget": "Forget",
   "lyricsSettingsSystemLanguage": "System language ({language})",
   "@lyricsSettingsSystemLanguage": {
     "placeholders": {
@@ -1274,14 +1289,14 @@
   "accountSettingsSignedInSpotify": "Signed in to Spotify",
   "accountSettingsSpotifySignOutTitle": "sign out of Spotify",
   "accountSettingsSpotifySignOutBody": "Mixyun forgets your Spotify sign-in.",
-  "accountSettingsYouTubeSignInTitle": "Sign in to NetEase Cloud Music",
-  "accountSettingsYouTubeForm": "Sign in to NetEase Cloud Music. Log in. Google account. NetEase Cloud Music needs no account: search, artists, albums, playlists and radios work signed out. Signed in, Mixyun shows your own home feed and library, and saves what you like and follow to NetEase Cloud Music. Tracks play as they do signed out: your session never goes to yt-dlp. You sign in on Google's own page, in a window of Mixyun: Mixyun never sees your password, and keeps the session encrypted on this computer. NetEase Cloud Music does not offer this to apps officially, so it may stop working when YouTube changes.",
-  "accountSettingsYouTubeHint": "NetEase Cloud Music needs no account: search, artists, albums, playlists and radios work signed out. Signed in, Mixyun shows your own home feed and library, and saves what you like and follow to NetEase Cloud Music. Tracks play as they do signed out: your session never goes to yt-dlp.",
-  "accountSettingsYouTubeSession": "You sign in on Google's own page, in a window of Mixyun: Mixyun never sees your password, and keeps the session encrypted on this computer. NetEase Cloud Music does not offer this to apps officially, so it may stop working when YouTube changes.",
+  "accountSettingsYouTubeSignInTitle": "Sign in to YouTube Music",
+  "accountSettingsYouTubeForm": "Sign in to YouTube Music. Log in. Google account. YouTube Music needs no account: search, artists, albums, playlists and radios work signed out. Signed in, Mixyun shows your own home feed and library, and saves what you like and follow to YouTube Music. Tracks play as they do signed out, unless Play audio as your account is on: then yt-dlp asks as your account first. You sign in on Google's own page, in a window of Mixyun: Mixyun never sees your password, and keeps the session encrypted on this computer. YouTube Music does not offer this to apps officially, so it may stop working when YouTube changes.",
+  "accountSettingsYouTubeHint": "YouTube Music needs no account: search, artists, albums, playlists and radios work signed out. Signed in, Mixyun shows your own home feed and library, and saves what you like and follow to YouTube Music. Tracks play as they do signed out, unless Play audio as your account is on: then yt-dlp asks as your account first.",
+  "accountSettingsYouTubeSession": "You sign in on Google's own page, in a window of Mixyun: Mixyun never sees your password, and keeps the session encrypted on this computer. YouTube Music does not offer this to apps officially, so it may stop working when YouTube changes.",
   "accountSettingsYouTubeSignInButton": "sign in to youtube music",
   "accountSettingsYouTubeWaitingWindow": "waiting for the sign-in window…",
-  "accountSettingsYouTubeSignedIn": "Signed in to NetEase Cloud Music",
-  "accountSettingsYouTubeRefused": "NetEase Cloud Music refused the sign-in",
+  "accountSettingsYouTubeSignedIn": "Signed in to YouTube Music",
+  "accountSettingsYouTubeRefused": "YouTube Music refused the sign-in",
   "accountSettingsYouTubeRefusedAgain": "{error}. Sign out, then sign in again.",
   "@accountSettingsYouTubeRefusedAgain": {
     "placeholders": {
@@ -1290,15 +1305,15 @@
       }
     }
   },
-  "accountSettingsYouTubeSignedInDesc": "Your home feed, your library, and likes that reach NetEase Cloud Music.",
-  "accountSettingsYouTubeSignOutTitle": "sign out of NetEase Cloud Music",
-  "accountSettingsYouTubeSignOutBody": "Mixyun forgets your NetEase Cloud Music session; your library stays on NetEase Cloud Music.",
+  "accountSettingsYouTubeSignedInDesc": "Your home feed, your library, and likes that reach YouTube Music.",
+  "accountSettingsYouTubeSignOutTitle": "sign out of YouTube Music",
+  "accountSettingsYouTubeSignOutBody": "Mixyun forgets your YouTube Music session; your library stays on YouTube Music.",
   "accountSettingsYouTubeHistoryTitle": "Add what you play to your history",
-  "accountSettingsYouTubeHistoryDesc": "NetEase Cloud Music makes its home and its radios of your history. Tracks join it once they played a while, as they do on Last.fm, and episodes keep where you left them, for NetEase Cloud Music to go on from there on your other devices.",
-  "accountSettingsYouTubeHistorySwitch": "Add what you play to your NetEase Cloud Music history",
-  "accountSettingsYouTubeCookieTitle": "Sign in to NetEase Cloud Music with a browser's cookies",
-  "accountSettingsYouTubeCookieForm": "Import from a browser. Sign in with the session of a browser you signed in to NetEase Cloud Music with. Browser. Profile. Another profile than the browser's own, by its name or its folder. Mixyun finds those of Zen, Helium and the browsers installed as Flatpaks in their folders. Import. Mixyun reads the browser's cookies with yt-dlp, keeps YouTube's alone, encrypted on this computer, and deletes the rest at once. Close the browser first: while it's open, it may hold its cookies, or not have saved a new sign-in yet. Recent Chrome on Windows seals its cookies against other programs: use Firefox there, or paste a cookie header. Paste a cookie header. In a tab signed in to music.youtube.com, open the developer tools, and copy the Cookie header of a request to music.youtube.com from the Network panel. The text of a cookies.txt file will do too. Sign in with it. Log in. A cookie header is as good as your password: paste it here alone. YouTube may end a session that goes on in the browser; one from a private window you then close lasts longest.",
-  "accountSettingsYouTubeImport": "Sign in with the session of a browser you signed in to NetEase Cloud Music with.",
+  "accountSettingsYouTubeHistoryDesc": "YouTube Music makes its home and its radios of your history. Tracks join it once they played a while, as they do on Last.fm, and episodes keep where you left them, for YouTube Music to go on from there on your other devices.",
+  "accountSettingsYouTubeHistorySwitch": "Add what you play to your YouTube Music history",
+  "accountSettingsYouTubeCookieTitle": "Sign in to YouTube Music with a browser's cookies",
+  "accountSettingsYouTubeCookieForm": "Import from a browser. Sign in with the session of a browser you signed in to YouTube Music with. Browser. Profile. Another profile than the browser's own, by its name or its folder. Mixyun finds those of Zen, Helium and the browsers installed as Flatpaks in their folders. Import. Mixyun reads the browser's cookies with yt-dlp, keeps YouTube's alone, encrypted on this computer, and deletes the rest at once. Close the browser first: while it's open, it may hold its cookies, or not have saved a new sign-in yet. Recent Chrome on Windows seals its cookies against other programs: use Firefox there, or paste a cookie header. Paste a cookie header. In a tab signed in to music.youtube.com, open the developer tools, and copy the Cookie header of a request to music.youtube.com from the Network panel. The text of a cookies.txt file will do too. Sign in with it. Log in. A cookie header is as good as your password: paste it here alone. YouTube may end a session that goes on in the browser; one from a private window you then close lasts longest.",
+  "accountSettingsYouTubeImport": "Sign in with the session of a browser you signed in to YouTube Music with.",
   "accountSettingsYouTubeProfile": "Another profile than the browser's own, by its name or its folder. Mixyun finds those of Zen, Helium and the browsers installed as Flatpaks in their folders.",
   "accountSettingsYouTubeImportHint": "Mixyun reads the browser's cookies with yt-dlp, keeps YouTube's alone, encrypted on this computer, and deletes the rest at once. Close the browser first: while it's open, it may hold its cookies, or not have saved a new sign-in yet. Recent Chrome on Windows seals its cookies against other programs: use Firefox there, or paste a cookie header.",
   "accountSettingsYouTubePaste": "In a tab signed in to music.youtube.com, open the developer tools, and copy the Cookie header of a request to music.youtube.com from the Network panel. The text of a cookies.txt file will do too.",
@@ -1313,7 +1328,7 @@
   "accountSettingsCookieHeader": "Cookie header",
   "accountSettingsSignInWithIt": "sign in with it",
   "accountSettingsSigningIn": "signing in…",
-  "accountSettingsYouTubeCookieProblem": "Mixyun didn't sign in to NetEase Cloud Music",
+  "accountSettingsYouTubeCookieProblem": "Mixyun didn't sign in to YouTube Music",
   "accountSettingsChannel": "Channel",
   "accountSettingsChannelAbout": "Brand channels of your account have their own home feed, library and likes.",
   "accountSettingsAccountChannel": "Account and channel",
@@ -1942,7 +1957,7 @@
       }
     }
   },
-  "collectionDeleteYouTube": "Delete from NetEase Cloud Music…",
+  "collectionDeleteYouTube": "Delete from YouTube Music…",
   "@collectionDeleteYouTube": {
     "description": "Menu item that deletes a playlist on NetEase Cloud Music."
   },
@@ -1950,7 +1965,7 @@
   "@collectionDeletePlaylist": {
     "description": "Title of the question before a playlist on NetEase Cloud Music is deleted. Lowercase."
   },
-  "collectionDeleteYouTubeQuestion": "Delete {title} from NetEase Cloud Music? It goes from NetEase Cloud Music too, and you can't undo this. To keep its tracks in Mixyun, copy it into a mix first.",
+  "collectionDeleteYouTubeQuestion": "Delete {title} from YouTube Music? It goes from YouTube too, and you can't undo this. To keep its tracks in Mixyun, copy it into a mix first.",
   "@collectionDeleteYouTubeQuestion": {
     "placeholders": {
       "title": {
@@ -1969,7 +1984,7 @@
       }
     }
   },
-  "collectionDeletedYouTube": "Deleted {title} from NetEase Cloud Music",
+  "collectionDeletedYouTube": "Deleted {title} from YouTube Music",
   "@collectionDeletedYouTube": {
     "placeholders": {
       "title": {
@@ -1981,7 +1996,7 @@
   "@collectionSaveAsMix": {
     "description": "Menu item that saves the tracks as a new mix."
   },
-  "collectionSaveAsYouTube": "Save as a NetEase Cloud Music playlist",
+  "collectionSaveAsYouTube": "Save as a YouTube Music playlist",
   "@collectionSaveAsYouTube": {
     "description": "Menu item that saves the tracks as a new playlist on NetEase Cloud Music."
   },
@@ -2777,11 +2792,11 @@
       }
     }
   },
-  "libraryLikedOnYouTube": "Liked on NetEase Cloud Music",
+  "libraryLikedOnYouTube": "Liked on YouTube Music",
   "@libraryLikedOnYouTube": {
     "description": "Heading of the liked songs on NetEase Cloud Music."
   },
-  "libraryNoYouTubeLiked": "No liked songs on NetEase Cloud Music.",
+  "libraryNoYouTubeLiked": "No liked songs on YouTube Music.",
   "librarySongsTitle": "Songs in your library",
   "@librarySongsTitle": {
     "description": "Heading of the songs saved to the library on NetEase Cloud Music."
@@ -3176,7 +3191,7 @@
       }
     }
   },
-  "libraryNewYouTubePlaylist": "New playlist on NetEase Cloud Music",
+  "libraryNewYouTubePlaylist": "New playlist on YouTube Music",
   "@libraryNewYouTubePlaylist": {
     "description": "Title of the prompt that names a new playlist on NetEase Cloud Music."
   },
@@ -3699,7 +3714,7 @@
   "trackInfoRoutePlayerAPI": "Quickly, through YouTube's player API, with no yt-dlp",
   "trackInfoRouteQuick": "With yt-dlp's quick run, as YouTube's visionOS app alone",
   "trackInfoRouteFull": "With yt-dlp's full run, with its default clients and a JavaScript runtime",
-  "trackInfoRouteAccount": "With yt-dlp's full run, with the session of your NetEase Cloud Music account",
+  "trackInfoRouteAccount": "With yt-dlp's full run, with the session of your YouTube Music account",
   "trackInfoYtDlpRan": "yt-dlp ran",
   "trackInfoSignedIn": "Signed in",
   "trackInfoSignedOut": "No: asked for signed out, as no one's account.",
@@ -4515,7 +4530,7 @@
   "followUnfollow": "Unfollow",
   "followedInMixMusic": "Followed in Mixyun",
   "followedOnSpotify": "Followed on Spotify",
-  "followedOnYouTube": "Followed on NetEase Cloud Music",
+  "followedOnYouTube": "Followed on YouTube Music",
   "mixCoverCancel": "cancel",
   "mixCoverChange": "Change cover…",
   "mixCoverChanged": "Changed the cover of {title}",
@@ -5099,9 +5114,9 @@
   },
   "exploreMood": "Mood",
   "exploreAddToMix": "Add to mix",
-  "exploreAddToYouTube": "Add to NetEase Cloud Music playlist",
+  "exploreAddToYouTube": "Add to YouTube Music playlist",
   "exploreNewPlaylist": "New playlist…",
-  "exploreNewYouTubePlaylist": "New playlist on NetEase Cloud Music",
+  "exploreNewYouTubePlaylist": "New playlist on YouTube Music",
   "exploreLoadingPlaylists": "Loading your playlists…",
   "exploreLoadPlaylistsFailed": "Couldn't load your playlists",
   "exploreNoPlaylists": "No playlists of yours",
@@ -5118,7 +5133,7 @@
       }
     }
   },
-  "exploreCreatedOnYouTube": "Created {title} on NetEase Cloud Music",
+  "exploreCreatedOnYouTube": "Created {title} on YouTube Music",
   "@exploreCreatedOnYouTube": {
     "placeholders": {
       "title": {
@@ -5344,7 +5359,7 @@
   "homeEditLoadFailed": "Couldn't load your playlists",
   "homeEditNoPlaylists": "No playlists yet",
   "homeEditSpotifyHidden": "Spotify shows apps the tracks of your own and shared playlists only",
-  "homeEditYouTubePlaylist": "A NetEase Cloud Music playlist",
+  "homeEditYouTubePlaylist": "A YouTube Music playlist",
   "homeEditSpotifyPlaylist": "A Spotify playlist",
   "homeEditOneMix": "One of your mixes",
   "homeEditNoMixes": "No mixes yet",
@@ -5378,9 +5393,8 @@
   "searchPivotArtists": "artists",
   "searchPivotPlaylists": "playlists",
   "searchPivotPodcasts": "podcasts",
-  "searchScopeBoth": "both",
   "searchServices": "Services",
-  "searchNetEaseOnly": "Searching NetEase Cloud Music only. ",
+  "searchNetEaseOnly": "Searching NetEase Cloud Music and YouTube Music only. ",
   "searchSignInSpotify": "Sign in to Spotify",
   "searchSignInTail": " to search it too.",
   "searchSongs": "Songs",
@@ -5424,7 +5438,7 @@
     }
   },
   "statsAnd": " and ",
-  "statsFromYouTube": "{count} from NetEase Cloud Music",
+  "statsFromYouTube": "{count} from YouTube Music",
   "@statsFromYouTube": {
     "placeholders": {
       "count": {
@@ -5459,10 +5473,13 @@
       }
     }
   },
-  "statsVennLabel": "{spotify} plays from Spotify, {youtube} from NetEase Cloud Music",
+  "statsVennLabel": "{spotify} plays from Spotify, {netease} from NetEase Cloud Music, {youtube} from YouTube Music",
   "@statsVennLabel": {
     "placeholders": {
       "spotify": {
+        "type": "String"
+      },
+      "netease": {
         "type": "String"
       },
       "youtube": {
@@ -5578,5 +5595,182 @@
         "type": "String"
       }
     }
-  }
+  },
+  "cmdViewLyricsStage": "Show or hide the full-screen lyrics",
+  "playlistReadWaiting": "Spotify asked Mixyun to wait · {n}",
+  "@playlistReadWaiting": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "playlistReadWaitingOf": "Spotify asked Mixyun to wait · {n} of {count}",
+  "@playlistReadWaitingOf": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "searchScopeAll": "All",
+  "searchSortBy": "Sort by",
+  "statsFromNetEase": "{count} from NetEase Cloud Music",
+  "@statsFromNetEase": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "statsComma": ", ",
+  "lyricsStageTitle": "Full-screen lyrics",
+  "lyricsStageClose": "Close full-screen lyrics",
+  "lyricsStageCloseTip": "Close",
+  "lyricsStageNoEpisode": "Podcast episodes have no lyrics",
+  "lyricsStageControls": "Player controls",
+  "cmdLyricsStyle": "Lyrics style: {name}",
+  "@cmdLyricsStyle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "lyricStyleSpotlightAbout": "Very big letters. Only the line sung is sharp: the others blur.",
+  "lyricStyleGlowAbout": "Round, bold letters with a soft glow on the words as they are sung. The other lines blur.",
+  "lyricStyleFocusAbout": "Bold, even letters. The farther a line is from the one sung, the more it fades and blurs.",
+  "lyricStyleSimpleAbout": "Plain letters, as in the rest of Mixyun. No blur: the other lines only fade.",
+  "lyricStyleBoldAbout": "Big, heavy, tight letters, like a poster.",
+  "lyricStyleCalmAbout": "Small, quiet letters, with a light fade and almost no blur, for a relaxed mood.",
+  "lyricBallMix": "Mix",
+  "lyricBallMixAbout": "A different motion for each line, in turn.",
+  "lyricBallHop": "Hop",
+  "lyricBallHopAbout": "One arc, as the hops between words are.",
+  "lyricBallBoomerang": "Boomerang",
+  "lyricBallBoomerangAbout": "Thrown out past the end of the line, it curves back to the next.",
+  "lyricBallLoop": "Loop",
+  "lyricBallLoopAbout": "A loop over the last word, then a swoop to the next line.",
+  "lyricBallDive": "Dive",
+  "lyricBallDiveAbout": "It rises a little, as to gather itself, and drops to the next line.",
+  "lyricBallRicochet": "Ricochet",
+  "lyricBallRicochetAbout": "It bounces off the right edge of the lyrics and their floor.",
+  "lyricStyleGroup": "Lyrics style",
+  "lyricStylePreview": "Preview of the lyrics",
+  "lyricStylePreviewFind": "how the full-screen lyrics look in the style, size and ball set",
+  "lyricStylePreviewLabel": "Preview of the full-screen lyrics",
+  "lyricStyleSize": "Lyrics text size",
+  "lyricStyleBall": "Bouncing ball",
+  "lyricStyleBallDesc": "A ball hops from word to word over the line sung, as its words are sung, and flies to the next line. Only for lyrics timed word by word.",
+  "lyricStyleBallSwitch": "Show the bouncing ball",
+  "lyricStyleBallMotion": "Ball between lines",
+  "lyricStyleBallMotionLabel": "Motion between lines",
+  "lyricStyleStageDesc": "Cover the window with the lyrics of what plays, over its blurred cover.",
+  "searchSortBest": "Best match",
+  "searchSortPlayed": "Most played",
+  "searchSortNewest": "Newest",
+  "searchSortNote": "Spotify gives apps no play counts, nor NetEase Cloud Music for songs, so their results come after YouTube Music's.",
+  "playlistGapItems": "{n} of this {noun, select, mix {mix} playlist {playlist} other {list}}'s items can't play here: {kinds}.",
+  "@playlistGapItems": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "noun": {
+        "type": "String"
+      },
+      "kinds": {
+        "type": "String"
+      }
+    }
+  },
+  "playlistGapLocal": "{count, plural, one {{n} local file} other {{n} local files}}",
+  "@playlistGapLocal": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "playlistGapEpisodes": "{count, plural, one {{n} episode} other {{n} episodes}}",
+  "@playlistGapEpisodes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "playlistGapGone": "{count, plural, one {{n} removed or unavailable item} other {{n} removed or unavailable items}}",
+  "@playlistGapGone": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "playlistGapHidden": "{count, plural, one {{n} explicit song is hidden by your settings.} other {{n} explicit songs are hidden by your settings.}}",
+  "@playlistGapHidden": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "playlistShort": "Only {n} of this {noun, select, mix {mix} playlist {playlist} other {list}}'s {count} tracks came from YouTube Music.",
+  "@playlistShort": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "noun": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "aboutNoticeAac": "SharpJaad, which decodes AAC audio",
+  "aboutNoticeIpadic": "The IPA dictionary (mecab-ipadic), which romaji downloads the first time it's turned on",
+  "aboutNoticeKagome": "kagome, which reads the kanji of Japanese lyrics for their romaji",
+  "aboutNoticeMaterialColor": "Material Color Utilities, which make the Material themes' colours",
+  "aboutNoticeMp3": "go-mp3, which decodes the MP3 files on this computer",
+  "aboutNoticeOpus": "libopus, which decodes Opus audio",
+  "aboutNoticePinyin": "pinyin-data and phrase-pinyin-data, the readings of Chinese characters and words in pinyin",
+  "aboutNoticeUnihan": "Unihan, whose readings of Chinese characters write Chinese lyrics in pinyin",
+  "aboutNoticeVorbis": "jfreymuth/vorbis, which decodes the Vorbis files on this computer",
+  "aboutNoticeWebAudio": "Chromium's Web Audio, which shapes the sound",
+  "themeOptionAnimeScreentone": "Screentone",
+  "themeOptionAnimeSpeedlines": "Speed lines",
+  "themeOptionAuroraBlur": "Glass blur",
+  "themeOptionAuroraMotion": "Drifting lights",
+  "themeOptionAuroraTint": "Light color",
+  "themeOptionGlasshouseBlur": "Glass blur",
+  "themeOptionGlasshouseCover": "Colours of the cover",
+  "themeOptionGreenroomWash": "Colour of the cover",
+  "themeOptionMixTexture": "Tile texture",
+  "themeOptionMixTextureDots": "Dot matrix",
+  "themeOptionMixTextureNone": "None",
+  "themeOptionMixTextureSlashes": "Slashes",
+  "themeOptionMixTextureStripes": "Pinstripes",
+  "themeOptionMixWhiteTiles": "White text on tiles",
+  "themeOptionMochiSparkles": "Drifting sparkles",
+  "themeOptionSakuraPetals": "Petal pattern",
+  "themeOptionTerminalGlow": "Text glow",
+  "themeOptionTerminalScanlines": "Scanlines"
 }

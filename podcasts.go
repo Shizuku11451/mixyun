@@ -488,9 +488,12 @@ func (s *shell) mergedPodcasts(res *loaded[app.PodcastSearch]) media.PodcastResu
 	if m.of != res || m.at != res.answers || m.scope != s.searchScope {
 		m.of, m.at, m.scope = res, res.answers, s.searchScope
 		switch r := res.value; s.searchScope {
-		case 1:
+		case spotifyScope:
 			m.merged = r.Spotify
-		case 2:
+		case neteaseScope:
+			// NetEase Cloud Music's podcasts aren't searched.
+			m.merged = media.PodcastResults{}
+		case youtubeMusicScope:
 			m.merged = r.YouTube
 		default:
 			m.merged = media.PodcastResults{

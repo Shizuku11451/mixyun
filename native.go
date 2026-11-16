@@ -216,6 +216,8 @@ type shell struct {
 	artistPivot int
 	artistOf    string
 	searchScope int
+	// searchSort is the order chosen for the search results (searchsort.go).
+	searchSort  searchSorting
 	libraryTab  int
 	settingsTab int
 	statsRange  int
@@ -234,6 +236,8 @@ type shell struct {
 	paletteAt    int
 	paletteMoved bool
 	lyricsView   lyricsState
+	// stage is the full-screen lyrics' (lyricsstage.go).
+	stage stageState
 	// pagePath is the path of the page being built.
 	pagePath string
 	// shown are the keys of what the page shown and the side panel fetched
@@ -285,6 +289,22 @@ type shell struct {
 	drafts                  map[string]*draft
 	lastfmKey, lastfmSecret string
 	signingIn               string
+	// youtubeCookies is the YouTube Music sign-in with a browser's cookies:
+	// the browsers to import from, their names, which the search of the
+	// settings finds the sign-in by too, the one chosen and its profile, the
+	// header pasted, and why the last try failed; youtubePick asks for the
+	// account and channel of the session it signed in with.
+	youtubeCookies struct {
+		browsers         []app.YouTubeBrowser
+		names            []string
+		words            string
+		browser, profile string
+		pasted, problem  string
+	}
+	// youtubeBrowser is the YouTube Music sign-in through a browser of the
+	// user's, with a profile of its own (accounts_browser.go).
+	youtubeBrowser youtubeBrowserSignIn
+	youtubePick    bool
 	// wells are the colour wells' colours, by key; tools are how the user
 	// sorted and searched the lists of tracks, by key.
 	wells map[string]*colorWell
@@ -323,6 +343,9 @@ type shell struct {
 	licenseOpen int
 	// trackInfo is the dialog of a track's Track info (trackinfo.go).
 	trackInfo trackInfoView
+	// nowQuality is when the now playing page started, and last asked
+	// for, what the track playing's audio is (nowquality.go).
+	nowQuality nowQualityView
 	// tagDialogs edit the tags of the music on this computer
 	// (localtags.go).
 	tagDialogs tagDialogs

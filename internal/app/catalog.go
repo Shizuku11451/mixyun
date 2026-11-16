@@ -28,7 +28,6 @@ type Catalog struct{ a *App }
 
 // SearchResponse holds what each service found.
 type SearchResponse struct {
-	// YouTube is unused since NetEase took YouTube Music's place: empty.
 	YouTube media.SearchResults `json:"youtube"`
 	NetEase media.SearchResults `json:"netease"`
 	Spotify media.SearchResults `json:"spotify"`
@@ -52,8 +51,9 @@ func (c *Catalog) Search(ctx context.Context, query string) (SearchResponse, err
 	return res, err
 }
 
-// search searches NetEase Cloud Music, and Spotify when the user signed
-// in: an AI assistant's searches aren't the user's own.
+// search searches NetEase Cloud Music and YouTube Music, and Spotify when
+// the user signed in: an AI assistant's searches aren't the user's own. It
+// fails only when every service searched did.
 func (c *Catalog) search(ctx context.Context, query string) (SearchResponse, error) {
 	query = strings.TrimSpace(query)
 	res := SearchResponse{YouTube: emptyResults(), NetEase: emptyResults(), Spotify: emptyResults(), SpotifySignedIn: c.a.spotify.SignedIn(), Errors: []string{}}
@@ -61,10 +61,11 @@ func (c *Catalog) search(ctx context.Context, query string) (SearchResponse, err
 		return res, nil
 	}
 	var (
-		wg           sync.WaitGroup
-		neErr, spErr error
+		wg                  sync.WaitGroup
+		neErr, ytErr, spErr error
 	)
 	wg.Go(func() { res.NetEase, neErr = c.a.netease.Search(ctx, query) })
+	wg.Go(func() { res.YouTube, ytErr = c.a.youtube.SearchAll(ctx, query) })
 	if res.SpotifySignedIn {
 		wg.Go(func() { res.Spotify, spErr = c.a.spotify.Search(ctx, query, c.a.spotifyUserID(ctx)) })
 	}
@@ -73,14 +74,30 @@ func (c *Catalog) search(ctx context.Context, query string) (SearchResponse, err
 		res.NetEase = emptyResults()
 		res.Errors = append(res.Errors, neErr.Error())
 	}
+	if ytErr != nil {
+		res.YouTube = emptyResults()
+		res.Errors = append(res.Errors, ytErr.Error())
+	}
 	if spErr != nil {
 		res.Spotify = emptyResults()
 		res.Errors = append(res.Errors, spErr.Error())
 	}
-	if neErr != nil && (spErr != nil || !res.SpotifySignedIn) {
+	if neErr != nil && ytErr != nil && (spErr != nil || !res.SpotifySignedIn) {
 		return res, neErr
 	}
 	return res, nil
+}
+
+// SearchYouTube searches YouTube itself, not its music catalog: the videos
+// of the website, as tutorials, vlogs and live streams, which YouTube Music
+// doesn't list. It is asked apart from Search, so that a slow or blocked
+// youtube.com never holds up a search of the music catalog.
+func (c *Catalog) SearchYouTube(ctx context.Context, query string) (media.SearchResults, error) {
+	query = strings.TrimSpace(query)
+	if query == "" {
+		return emptyResults(), nil
+	}
+	return c.a.youtube.SearchWeb(ctx, query)
 }
 
 // Suggestions returns what to suggest for what the user typed: NetEase
@@ -117,6 +134,14 @@ func (c *Catalog) NetEaseHome(ctx context.Context) ([]media.Shelf, error) {
 	ctx, cancel := context.WithTimeout(ctx, shelfTimeout)
 	defer cancel()
 	return c.a.netease.Home(ctx, c.a.neteaseUserID(ctx))
+}
+
+// YouTubeHome returns YouTube Music's shelves of the home page: the
+// user's own there once they signed in.
+func (c *Catalog) YouTubeHome(ctx context.Context) ([]media.Shelf, error) {
+	ctx, cancel := context.WithTimeout(ctx, shelfTimeout)
+	defer cancel()
+	return c.a.youtube.Home(ctx)
 }
 
 // LocalShelves returns the shelves of what the user played and made, as

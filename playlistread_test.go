@@ -252,6 +252,26 @@ func TestLongPlaylistCut(t *testing.T) {
 	}
 }
 
+// TestYouTubeLikedReadsOn shows the first page of the songs the user liked
+// on YouTube Music at once, in the library, and the rest as they come.
+func TestYouTubeLikedReadsOn(t *testing.T) {
+	t.Skip("YouTube Music is replaced by NetEase Cloud Music in the UI")
+	s := newTestShell(t)
+	youtubeLibraryOf(s)
+	f := slowReading(t, s, "youtube:liked")
+	s.loads["youtube:liked"] = longHead("yt:LM")
+	tt := testerOf(t, s, 1280, 1800)
+	show(s, tt, "/library/youtube")
+	if !tt.HasText("Loading tracks · 2 of 6") || !tt.HasText(testTracks[1].Title) || tt.HasText(testTracks[2].Title) {
+		t.Fatalf("the first page shows %q", tt.Texts())
+	}
+	f.page(t, s, tt)
+	f.page(t, s, tt)
+	if tt.HasText("Loading tracks") || !tt.HasText(testTracks[5].Title) {
+		t.Errorf("the whole list shows %q", tt.Texts())
+	}
+}
+
 // TestLongQueueBuildsNearRows lists a queue of thousands of tracks, as
 // Play makes of a long playlist, building only the entries near the view.
 func TestLongQueueBuildsNearRows(t *testing.T) {

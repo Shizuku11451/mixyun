@@ -227,8 +227,9 @@ func spotifyPlayer(t media.Track, st settings.Settings, now *player.Source) (Tra
 	return "", false
 }
 
-// recordingOf returns the track of YouTube Music that plays for t, and
-// its video's ID, when MixMusic knows it: the one that plays, as now
+// recordingOf returns the track of YouTube Music or NetEase that plays
+// for t, and the key its audio is known by (streamKey), when MixMusic
+// knows it: the one that plays, as now
 // tells, else the one its download holds, else of a Spotify track, the
 // one found for it before.
 func recordingOf(a *App, t media.Track, now *player.Source) (media.Track, string) {
@@ -245,8 +246,13 @@ func recordingOf(a *App, t media.Track, now *player.Source) (media.Track, string
 		}
 		rec = found
 	}
-	source, video, err := media.ParseID(rec.ID)
-	if err != nil || source != media.SourceYouTube || !stream.ValidVideoID(video) {
+	source, _, err := media.ParseID(rec.ID)
+	if err != nil || source != media.SourceYouTube && source != media.SourceNetEase {
+		return media.Track{}, ""
+	}
+	// A NetEase song's audio is known by its own key (streamKey).
+	video, err := streamKey(rec)
+	if err != nil || source == media.SourceYouTube && !stream.ValidVideoID(video) {
 		return media.Track{}, ""
 	}
 	return rec, video

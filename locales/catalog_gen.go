@@ -444,11 +444,11 @@ func (msgs Messages) TopbarPalette() string {
 	return Catalog.Format(msgs.locale, "topbarPalette", nil)
 }
 
-// TopbarSearchPlaceholder says "Search Spotify and NetEase Cloud Music"
+// TopbarSearchPlaceholder says "Search Spotify, NetEase Cloud Music and YouTube Music"
 // in the language the app shows.
 func TopbarSearchPlaceholder() string { return In(i18n.Locale()).TopbarSearchPlaceholder() }
 
-// TopbarSearchPlaceholder says "Search Spotify and NetEase Cloud Music"
+// TopbarSearchPlaceholder says "Search Spotify, NetEase Cloud Music and YouTube Music"
 // in the language of msgs.
 func (msgs Messages) TopbarSearchPlaceholder() string {
 	return Catalog.Format(msgs.locale, "topbarSearchPlaceholder", nil)
@@ -574,14 +574,16 @@ func (msgs Messages) PlayerOpenNowPlaying() string {
 	return Catalog.Format(msgs.locale, "playerOpenNowPlaying", nil)
 }
 
-// PlayerViaYouTube says "{line} · via NetEase Cloud Music"
+// PlayerViaYouTube says "{line} · via {service}"
 // in the language the app shows.
-func PlayerViaYouTube(line string) string { return In(i18n.Locale()).PlayerViaYouTube(line) }
+func PlayerViaYouTube(line string, service string) string {
+	return In(i18n.Locale()).PlayerViaYouTube(line, service)
+}
 
-// PlayerViaYouTube says "{line} · via NetEase Cloud Music"
+// PlayerViaYouTube says "{line} · via {service}"
 // in the language of msgs.
-func (msgs Messages) PlayerViaYouTube(line string) string {
-	return Catalog.Format(msgs.locale, "playerViaYouTube", map[string]any{"line": line})
+func (msgs Messages) PlayerViaYouTube(line string, service string) string {
+	return Catalog.Format(msgs.locale, "playerViaYouTube", map[string]any{"line": line, "service": service})
 }
 
 // PlayerOnSpotify says "{line} · on Spotify"
@@ -1940,6 +1942,46 @@ func (msgs Messages) WavyProgressDescription() string {
 	return Catalog.Format(msgs.locale, "wavyProgressDescription", nil)
 }
 
+// CoverBackdropTitle says "Cover backdrop"
+// in the language the app shows.
+func CoverBackdropTitle() string { return In(i18n.Locale()).CoverBackdropTitle() }
+
+// CoverBackdropTitle says "Cover backdrop"
+// in the language of msgs.
+func (msgs Messages) CoverBackdropTitle() string {
+	return Catalog.Format(msgs.locale, "coverBackdropTitle", nil)
+}
+
+// CoverBackdropDescription says "On the now playing page, the cover of what plays fills the whole window, blurred to a wash of its colours."
+// in the language the app shows.
+func CoverBackdropDescription() string { return In(i18n.Locale()).CoverBackdropDescription() }
+
+// CoverBackdropDescription says "On the now playing page, the cover of what plays fills the whole window, blurred to a wash of its colours."
+// in the language of msgs.
+func (msgs Messages) CoverBackdropDescription() string {
+	return Catalog.Format(msgs.locale, "coverBackdropDescription", nil)
+}
+
+// CoverBackdropVeilTitle says "Backdrop veil"
+// in the language the app shows.
+func CoverBackdropVeilTitle() string { return In(i18n.Locale()).CoverBackdropVeilTitle() }
+
+// CoverBackdropVeilTitle says "Backdrop veil"
+// in the language of msgs.
+func (msgs Messages) CoverBackdropVeilTitle() string {
+	return Catalog.Format(msgs.locale, "coverBackdropVeilTitle", nil)
+}
+
+// CoverBackdropVeilDescription says "How much of the ground lies over the cover's backdrop: more keeps the text clearer, less makes the cover's colours st…"
+// in the language the app shows.
+func CoverBackdropVeilDescription() string { return In(i18n.Locale()).CoverBackdropVeilDescription() }
+
+// CoverBackdropVeilDescription says "How much of the ground lies over the cover's backdrop: more keeps the text clearer, less makes the cover's colours st…"
+// in the language of msgs.
+func (msgs Messages) CoverBackdropVeilDescription() string {
+	return Catalog.Format(msgs.locale, "coverBackdropVeilDescription", nil)
+}
+
 // NotchTitle says "Player around the notch"
 // in the language the app shows.
 func NotchTitle() string { return In(i18n.Locale()).NotchTitle() }
@@ -2530,21 +2572,21 @@ func (msgs Messages) PlaybackOnConnectDesc() string {
 	return Catalog.Format(msgs.locale, "playbackOnConnectDesc", nil)
 }
 
-// PlaybackFromYouTube says "In Mixyun, from NetEase Cloud Music"
+// PlaybackFromYouTube says "In Mixyun, from NetEase Cloud Music or YouTube Music"
 // in the language the app shows.
 func PlaybackFromYouTube() string { return In(i18n.Locale()).PlaybackFromYouTube() }
 
-// PlaybackFromYouTube says "In Mixyun, from NetEase Cloud Music"
+// PlaybackFromYouTube says "In Mixyun, from NetEase Cloud Music or YouTube Music"
 // in the language of msgs.
 func (msgs Messages) PlaybackFromYouTube() string {
 	return Catalog.Format(msgs.locale, "playbackFromYouTube", nil)
 }
 
-// PlaybackFromYouTubeDesc says "Mixyun plays their recording on NetEase Cloud Music, with the equalizer, crossfade and visualizer. Works without Prem…"
+// PlaybackFromYouTubeDesc says "Mixyun plays their recording on NetEase Cloud Music, else on YouTube Music, with the equalizer, crossfade and visuali…"
 // in the language the app shows.
 func PlaybackFromYouTubeDesc() string { return In(i18n.Locale()).PlaybackFromYouTubeDesc() }
 
-// PlaybackFromYouTubeDesc says "Mixyun plays their recording on NetEase Cloud Music, with the equalizer, crossfade and visualizer. Works without Prem…"
+// PlaybackFromYouTubeDesc says "Mixyun plays their recording on NetEase Cloud Music, else on YouTube Music, with the equalizer, crossfade and visuali…"
 // in the language of msgs.
 func (msgs Messages) PlaybackFromYouTubeDesc() string {
 	return Catalog.Format(msgs.locale, "playbackFromYouTubeDesc", nil)
@@ -3500,6 +3542,86 @@ func LyricsSettingsDesc() string { return In(i18n.Locale()).LyricsSettingsDesc()
 // in the language of msgs.
 func (msgs Messages) LyricsSettingsDesc() string {
 	return Catalog.Format(msgs.locale, "lyricsSettingsDesc", nil)
+}
+
+// LyricsSettingsLLMURL says "Translate with a language model"
+// in the language the app shows.
+func LyricsSettingsLLMURL() string { return In(i18n.Locale()).LyricsSettingsLLMURL() }
+
+// LyricsSettingsLLMURL says "Translate with a language model"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMURL() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMURL", nil)
+}
+
+// LyricsSettingsLLMURLInvalid says "That isn't a server Mixyun can send the key to: give a URL of https, or of http on this computer, as http://localhost…"
+// in the language the app shows.
+func LyricsSettingsLLMURLInvalid() string { return In(i18n.Locale()).LyricsSettingsLLMURLInvalid() }
+
+// LyricsSettingsLLMURLInvalid says "That isn't a server Mixyun can send the key to: give a URL of https, or of http on this computer, as http://localhost…"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMURLInvalid() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMURLInvalid", nil)
+}
+
+// LyricsSettingsLLMDesc says "Lyrics without a translation of their own (NetEase Cloud Music's) are translated by the language model you choose, in…"
+// in the language the app shows.
+func LyricsSettingsLLMDesc() string { return In(i18n.Locale()).LyricsSettingsLLMDesc() }
+
+// LyricsSettingsLLMDesc says "Lyrics without a translation of their own (NetEase Cloud Music's) are translated by the language model you choose, in…"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMDesc() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMDesc", nil)
+}
+
+// LyricsSettingsLLMModel says "Model"
+// in the language the app shows.
+func LyricsSettingsLLMModel() string { return In(i18n.Locale()).LyricsSettingsLLMModel() }
+
+// LyricsSettingsLLMModel says "Model"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMModel() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMModel", nil)
+}
+
+// LyricsSettingsLLMKey says "API key"
+// in the language the app shows.
+func LyricsSettingsLLMKey() string { return In(i18n.Locale()).LyricsSettingsLLMKey() }
+
+// LyricsSettingsLLMKey says "API key"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMKey() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMKey", nil)
+}
+
+// LyricsSettingsLLMKeyNone says "None, as for Ollama"
+// in the language the app shows.
+func LyricsSettingsLLMKeyNone() string { return In(i18n.Locale()).LyricsSettingsLLMKeyNone() }
+
+// LyricsSettingsLLMKeyNone says "None, as for Ollama"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMKeyNone() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMKeyNone", nil)
+}
+
+// LyricsSettingsLLMKeyKept says "Kept — type to replace it"
+// in the language the app shows.
+func LyricsSettingsLLMKeyKept() string { return In(i18n.Locale()).LyricsSettingsLLMKeyKept() }
+
+// LyricsSettingsLLMKeyKept says "Kept — type to replace it"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMKeyKept() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMKeyKept", nil)
+}
+
+// LyricsSettingsLLMKeyForget says "Forget"
+// in the language the app shows.
+func LyricsSettingsLLMKeyForget() string { return In(i18n.Locale()).LyricsSettingsLLMKeyForget() }
+
+// LyricsSettingsLLMKeyForget says "Forget"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMKeyForget() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMKeyForget", nil)
 }
 
 // LyricsSettingsSystemLanguage says "System language ({language})"
@@ -6030,33 +6152,33 @@ func (msgs Messages) AccountSettingsSpotifySignOutBody() string {
 	return Catalog.Format(msgs.locale, "accountSettingsSpotifySignOutBody", nil)
 }
 
-// AccountSettingsYouTubeSignInTitle says "Sign in to NetEase Cloud Music"
+// AccountSettingsYouTubeSignInTitle says "Sign in to YouTube Music"
 // in the language the app shows.
 func AccountSettingsYouTubeSignInTitle() string {
 	return In(i18n.Locale()).AccountSettingsYouTubeSignInTitle()
 }
 
-// AccountSettingsYouTubeSignInTitle says "Sign in to NetEase Cloud Music"
+// AccountSettingsYouTubeSignInTitle says "Sign in to YouTube Music"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeSignInTitle() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeSignInTitle", nil)
 }
 
-// AccountSettingsYouTubeForm says "Sign in to NetEase Cloud Music. Log in. Google account. NetEase Cloud Music needs no account: search, artists, albums…"
+// AccountSettingsYouTubeForm says "Sign in to YouTube Music. Log in. Google account. YouTube Music needs no account: search, artists, albums, playlists …"
 // in the language the app shows.
 func AccountSettingsYouTubeForm() string { return In(i18n.Locale()).AccountSettingsYouTubeForm() }
 
-// AccountSettingsYouTubeForm says "Sign in to NetEase Cloud Music. Log in. Google account. NetEase Cloud Music needs no account: search, artists, albums…"
+// AccountSettingsYouTubeForm says "Sign in to YouTube Music. Log in. Google account. YouTube Music needs no account: search, artists, albums, playlists …"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeForm() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeForm", nil)
 }
 
-// AccountSettingsYouTubeHint says "NetEase Cloud Music needs no account: search, artists, albums, playlists and radios work signed out. Signed in, Mixyu…"
+// AccountSettingsYouTubeHint says "YouTube Music needs no account: search, artists, albums, playlists and radios work signed out. Signed in, Mixyun show…"
 // in the language the app shows.
 func AccountSettingsYouTubeHint() string { return In(i18n.Locale()).AccountSettingsYouTubeHint() }
 
-// AccountSettingsYouTubeHint says "NetEase Cloud Music needs no account: search, artists, albums, playlists and radios work signed out. Signed in, Mixyu…"
+// AccountSettingsYouTubeHint says "YouTube Music needs no account: search, artists, albums, playlists and radios work signed out. Signed in, Mixyun show…"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeHint() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeHint", nil)
@@ -6096,23 +6218,23 @@ func (msgs Messages) AccountSettingsYouTubeWaitingWindow() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeWaitingWindow", nil)
 }
 
-// AccountSettingsYouTubeSignedIn says "Signed in to NetEase Cloud Music"
+// AccountSettingsYouTubeSignedIn says "Signed in to YouTube Music"
 // in the language the app shows.
 func AccountSettingsYouTubeSignedIn() string {
 	return In(i18n.Locale()).AccountSettingsYouTubeSignedIn()
 }
 
-// AccountSettingsYouTubeSignedIn says "Signed in to NetEase Cloud Music"
+// AccountSettingsYouTubeSignedIn says "Signed in to YouTube Music"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeSignedIn() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeSignedIn", nil)
 }
 
-// AccountSettingsYouTubeRefused says "NetEase Cloud Music refused the sign-in"
+// AccountSettingsYouTubeRefused says "YouTube Music refused the sign-in"
 // in the language the app shows.
 func AccountSettingsYouTubeRefused() string { return In(i18n.Locale()).AccountSettingsYouTubeRefused() }
 
-// AccountSettingsYouTubeRefused says "NetEase Cloud Music refused the sign-in"
+// AccountSettingsYouTubeRefused says "YouTube Music refused the sign-in"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeRefused() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeRefused", nil)
@@ -6130,37 +6252,37 @@ func (msgs Messages) AccountSettingsYouTubeRefusedAgain(error string) string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeRefusedAgain", map[string]any{"error": error})
 }
 
-// AccountSettingsYouTubeSignedInDesc says "Your home feed, your library, and likes that reach NetEase Cloud Music."
+// AccountSettingsYouTubeSignedInDesc says "Your home feed, your library, and likes that reach YouTube Music."
 // in the language the app shows.
 func AccountSettingsYouTubeSignedInDesc() string {
 	return In(i18n.Locale()).AccountSettingsYouTubeSignedInDesc()
 }
 
-// AccountSettingsYouTubeSignedInDesc says "Your home feed, your library, and likes that reach NetEase Cloud Music."
+// AccountSettingsYouTubeSignedInDesc says "Your home feed, your library, and likes that reach YouTube Music."
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeSignedInDesc() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeSignedInDesc", nil)
 }
 
-// AccountSettingsYouTubeSignOutTitle says "sign out of NetEase Cloud Music"
+// AccountSettingsYouTubeSignOutTitle says "sign out of YouTube Music"
 // in the language the app shows.
 func AccountSettingsYouTubeSignOutTitle() string {
 	return In(i18n.Locale()).AccountSettingsYouTubeSignOutTitle()
 }
 
-// AccountSettingsYouTubeSignOutTitle says "sign out of NetEase Cloud Music"
+// AccountSettingsYouTubeSignOutTitle says "sign out of YouTube Music"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeSignOutTitle() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeSignOutTitle", nil)
 }
 
-// AccountSettingsYouTubeSignOutBody says "Mixyun forgets your NetEase Cloud Music session; your library stays on NetEase Cloud Music."
+// AccountSettingsYouTubeSignOutBody says "Mixyun forgets your YouTube Music session; your library stays on YouTube Music."
 // in the language the app shows.
 func AccountSettingsYouTubeSignOutBody() string {
 	return In(i18n.Locale()).AccountSettingsYouTubeSignOutBody()
 }
 
-// AccountSettingsYouTubeSignOutBody says "Mixyun forgets your NetEase Cloud Music session; your library stays on NetEase Cloud Music."
+// AccountSettingsYouTubeSignOutBody says "Mixyun forgets your YouTube Music session; your library stays on YouTube Music."
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeSignOutBody() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeSignOutBody", nil)
@@ -6178,59 +6300,59 @@ func (msgs Messages) AccountSettingsYouTubeHistoryTitle() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeHistoryTitle", nil)
 }
 
-// AccountSettingsYouTubeHistoryDesc says "NetEase Cloud Music makes its home and its radios of your history. Tracks join it once they played a while, as they d…"
+// AccountSettingsYouTubeHistoryDesc says "YouTube Music makes its home and its radios of your history. Tracks join it once they played a while, as they do on L…"
 // in the language the app shows.
 func AccountSettingsYouTubeHistoryDesc() string {
 	return In(i18n.Locale()).AccountSettingsYouTubeHistoryDesc()
 }
 
-// AccountSettingsYouTubeHistoryDesc says "NetEase Cloud Music makes its home and its radios of your history. Tracks join it once they played a while, as they d…"
+// AccountSettingsYouTubeHistoryDesc says "YouTube Music makes its home and its radios of your history. Tracks join it once they played a while, as they do on L…"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeHistoryDesc() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeHistoryDesc", nil)
 }
 
-// AccountSettingsYouTubeHistorySwitch says "Add what you play to your NetEase Cloud Music history"
+// AccountSettingsYouTubeHistorySwitch says "Add what you play to your YouTube Music history"
 // in the language the app shows.
 func AccountSettingsYouTubeHistorySwitch() string {
 	return In(i18n.Locale()).AccountSettingsYouTubeHistorySwitch()
 }
 
-// AccountSettingsYouTubeHistorySwitch says "Add what you play to your NetEase Cloud Music history"
+// AccountSettingsYouTubeHistorySwitch says "Add what you play to your YouTube Music history"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeHistorySwitch() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeHistorySwitch", nil)
 }
 
-// AccountSettingsYouTubeCookieTitle says "Sign in to NetEase Cloud Music with a browser's cookies"
+// AccountSettingsYouTubeCookieTitle says "Sign in to YouTube Music with a browser's cookies"
 // in the language the app shows.
 func AccountSettingsYouTubeCookieTitle() string {
 	return In(i18n.Locale()).AccountSettingsYouTubeCookieTitle()
 }
 
-// AccountSettingsYouTubeCookieTitle says "Sign in to NetEase Cloud Music with a browser's cookies"
+// AccountSettingsYouTubeCookieTitle says "Sign in to YouTube Music with a browser's cookies"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeCookieTitle() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeCookieTitle", nil)
 }
 
-// AccountSettingsYouTubeCookieForm says "Import from a browser. Sign in with the session of a browser you signed in to NetEase Cloud Music with. Browser. Prof…"
+// AccountSettingsYouTubeCookieForm says "Import from a browser. Sign in with the session of a browser you signed in to YouTube Music with. Browser. Profile. A…"
 // in the language the app shows.
 func AccountSettingsYouTubeCookieForm() string {
 	return In(i18n.Locale()).AccountSettingsYouTubeCookieForm()
 }
 
-// AccountSettingsYouTubeCookieForm says "Import from a browser. Sign in with the session of a browser you signed in to NetEase Cloud Music with. Browser. Prof…"
+// AccountSettingsYouTubeCookieForm says "Import from a browser. Sign in with the session of a browser you signed in to YouTube Music with. Browser. Profile. A…"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeCookieForm() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeCookieForm", nil)
 }
 
-// AccountSettingsYouTubeImport says "Sign in with the session of a browser you signed in to NetEase Cloud Music with."
+// AccountSettingsYouTubeImport says "Sign in with the session of a browser you signed in to YouTube Music with."
 // in the language the app shows.
 func AccountSettingsYouTubeImport() string { return In(i18n.Locale()).AccountSettingsYouTubeImport() }
 
-// AccountSettingsYouTubeImport says "Sign in with the session of a browser you signed in to NetEase Cloud Music with."
+// AccountSettingsYouTubeImport says "Sign in with the session of a browser you signed in to YouTube Music with."
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeImport() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeImport", nil)
@@ -6382,13 +6504,13 @@ func (msgs Messages) AccountSettingsSigningIn() string {
 	return Catalog.Format(msgs.locale, "accountSettingsSigningIn", nil)
 }
 
-// AccountSettingsYouTubeCookieProblem says "Mixyun didn't sign in to NetEase Cloud Music"
+// AccountSettingsYouTubeCookieProblem says "Mixyun didn't sign in to YouTube Music"
 // in the language the app shows.
 func AccountSettingsYouTubeCookieProblem() string {
 	return In(i18n.Locale()).AccountSettingsYouTubeCookieProblem()
 }
 
-// AccountSettingsYouTubeCookieProblem says "Mixyun didn't sign in to NetEase Cloud Music"
+// AccountSettingsYouTubeCookieProblem says "Mixyun didn't sign in to YouTube Music"
 // in the language of msgs.
 func (msgs Messages) AccountSettingsYouTubeCookieProblem() string {
 	return Catalog.Format(msgs.locale, "accountSettingsYouTubeCookieProblem", nil)
@@ -8328,13 +8450,13 @@ func (msgs Messages) CollectionDeleteMixQuestion(title string) string {
 	return Catalog.Format(msgs.locale, "collectionDeleteMixQuestion", map[string]any{"title": title})
 }
 
-// CollectionDeleteYouTube says "Delete from NetEase Cloud Music…"
+// CollectionDeleteYouTube says "Delete from YouTube Music…"
 // in the language the app shows.
 //
 // Menu item that deletes a playlist on NetEase Cloud Music.
 func CollectionDeleteYouTube() string { return In(i18n.Locale()).CollectionDeleteYouTube() }
 
-// CollectionDeleteYouTube says "Delete from NetEase Cloud Music…"
+// CollectionDeleteYouTube says "Delete from YouTube Music…"
 // in the language of msgs.
 //
 // Menu item that deletes a playlist on NetEase Cloud Music.
@@ -8358,13 +8480,13 @@ func (msgs Messages) CollectionDeletePlaylist() string {
 	return Catalog.Format(msgs.locale, "collectionDeletePlaylist", nil)
 }
 
-// CollectionDeleteYouTubeQuestion says "Delete {title} from NetEase Cloud Music? It goes from NetEase Cloud Music too, and you can't undo this. To keep its t…"
+// CollectionDeleteYouTubeQuestion says "Delete {title} from YouTube Music? It goes from YouTube too, and you can't undo this. To keep its tracks in Mixyun, c…"
 // in the language the app shows.
 func CollectionDeleteYouTubeQuestion(title string) string {
 	return In(i18n.Locale()).CollectionDeleteYouTubeQuestion(title)
 }
 
-// CollectionDeleteYouTubeQuestion says "Delete {title} from NetEase Cloud Music? It goes from NetEase Cloud Music too, and you can't undo this. To keep its t…"
+// CollectionDeleteYouTubeQuestion says "Delete {title} from YouTube Music? It goes from YouTube too, and you can't undo this. To keep its tracks in Mixyun, c…"
 // in the language of msgs.
 func (msgs Messages) CollectionDeleteYouTubeQuestion(title string) string {
 	return Catalog.Format(msgs.locale, "collectionDeleteYouTubeQuestion", map[string]any{"title": title})
@@ -8382,13 +8504,13 @@ func (msgs Messages) CollectionDeleteFailed(title string, error string) string {
 	return Catalog.Format(msgs.locale, "collectionDeleteFailed", map[string]any{"title": title, "error": error})
 }
 
-// CollectionDeletedYouTube says "Deleted {title} from NetEase Cloud Music"
+// CollectionDeletedYouTube says "Deleted {title} from YouTube Music"
 // in the language the app shows.
 func CollectionDeletedYouTube(title string) string {
 	return In(i18n.Locale()).CollectionDeletedYouTube(title)
 }
 
-// CollectionDeletedYouTube says "Deleted {title} from NetEase Cloud Music"
+// CollectionDeletedYouTube says "Deleted {title} from YouTube Music"
 // in the language of msgs.
 func (msgs Messages) CollectionDeletedYouTube(title string) string {
 	return Catalog.Format(msgs.locale, "collectionDeletedYouTube", map[string]any{"title": title})
@@ -8408,13 +8530,13 @@ func (msgs Messages) CollectionSaveAsMix() string {
 	return Catalog.Format(msgs.locale, "collectionSaveAsMix", nil)
 }
 
-// CollectionSaveAsYouTube says "Save as a NetEase Cloud Music playlist"
+// CollectionSaveAsYouTube says "Save as a YouTube Music playlist"
 // in the language the app shows.
 //
 // Menu item that saves the tracks as a new playlist on NetEase Cloud Music.
 func CollectionSaveAsYouTube() string { return In(i18n.Locale()).CollectionSaveAsYouTube() }
 
-// CollectionSaveAsYouTube says "Save as a NetEase Cloud Music playlist"
+// CollectionSaveAsYouTube says "Save as a YouTube Music playlist"
 // in the language of msgs.
 //
 // Menu item that saves the tracks as a new playlist on NetEase Cloud Music.
@@ -10282,13 +10404,13 @@ func (msgs Messages) LibraryLoadMore(loaded string, total string) string {
 	return Catalog.Format(msgs.locale, "libraryLoadMore", map[string]any{"loaded": loaded, "total": total})
 }
 
-// LibraryLikedOnYouTube says "Liked on NetEase Cloud Music"
+// LibraryLikedOnYouTube says "Liked on YouTube Music"
 // in the language the app shows.
 //
 // Heading of the liked songs on NetEase Cloud Music.
 func LibraryLikedOnYouTube() string { return In(i18n.Locale()).LibraryLikedOnYouTube() }
 
-// LibraryLikedOnYouTube says "Liked on NetEase Cloud Music"
+// LibraryLikedOnYouTube says "Liked on YouTube Music"
 // in the language of msgs.
 //
 // Heading of the liked songs on NetEase Cloud Music.
@@ -10296,11 +10418,11 @@ func (msgs Messages) LibraryLikedOnYouTube() string {
 	return Catalog.Format(msgs.locale, "libraryLikedOnYouTube", nil)
 }
 
-// LibraryNoYouTubeLiked says "No liked songs on NetEase Cloud Music."
+// LibraryNoYouTubeLiked says "No liked songs on YouTube Music."
 // in the language the app shows.
 func LibraryNoYouTubeLiked() string { return In(i18n.Locale()).LibraryNoYouTubeLiked() }
 
-// LibraryNoYouTubeLiked says "No liked songs on NetEase Cloud Music."
+// LibraryNoYouTubeLiked says "No liked songs on YouTube Music."
 // in the language of msgs.
 func (msgs Messages) LibraryNoYouTubeLiked() string {
 	return Catalog.Format(msgs.locale, "libraryNoYouTubeLiked", nil)
@@ -11260,13 +11382,13 @@ func (msgs Messages) LibraryDeleted(title string) string {
 	return Catalog.Format(msgs.locale, "libraryDeleted", map[string]any{"title": title})
 }
 
-// LibraryNewYouTubePlaylist says "New playlist on NetEase Cloud Music"
+// LibraryNewYouTubePlaylist says "New playlist on YouTube Music"
 // in the language the app shows.
 //
 // Title of the prompt that names a new playlist on NetEase Cloud Music.
 func LibraryNewYouTubePlaylist() string { return In(i18n.Locale()).LibraryNewYouTubePlaylist() }
 
-// LibraryNewYouTubePlaylist says "New playlist on NetEase Cloud Music"
+// LibraryNewYouTubePlaylist says "New playlist on YouTube Music"
 // in the language of msgs.
 //
 // Title of the prompt that names a new playlist on NetEase Cloud Music.
@@ -13332,11 +13454,11 @@ func (msgs Messages) TrackInfoRouteFull() string {
 	return Catalog.Format(msgs.locale, "trackInfoRouteFull", nil)
 }
 
-// TrackInfoRouteAccount says "With yt-dlp's full run, with the session of your NetEase Cloud Music account"
+// TrackInfoRouteAccount says "With yt-dlp's full run, with the session of your YouTube Music account"
 // in the language the app shows.
 func TrackInfoRouteAccount() string { return In(i18n.Locale()).TrackInfoRouteAccount() }
 
-// TrackInfoRouteAccount says "With yt-dlp's full run, with the session of your NetEase Cloud Music account"
+// TrackInfoRouteAccount says "With yt-dlp's full run, with the session of your YouTube Music account"
 // in the language of msgs.
 func (msgs Messages) TrackInfoRouteAccount() string {
 	return Catalog.Format(msgs.locale, "trackInfoRouteAccount", nil)
@@ -15534,11 +15656,11 @@ func (msgs Messages) FollowedOnSpotify() string {
 	return Catalog.Format(msgs.locale, "followedOnSpotify", nil)
 }
 
-// FollowedOnYouTube says "Followed on NetEase Cloud Music"
+// FollowedOnYouTube says "Followed on YouTube Music"
 // in the language the app shows.
 func FollowedOnYouTube() string { return In(i18n.Locale()).FollowedOnYouTube() }
 
-// FollowedOnYouTube says "Followed on NetEase Cloud Music"
+// FollowedOnYouTube says "Followed on YouTube Music"
 // in the language of msgs.
 func (msgs Messages) FollowedOnYouTube() string {
 	return Catalog.Format(msgs.locale, "followedOnYouTube", nil)
@@ -17012,11 +17134,11 @@ func (msgs Messages) ExploreAddToMix() string {
 	return Catalog.Format(msgs.locale, "exploreAddToMix", nil)
 }
 
-// ExploreAddToYouTube says "Add to NetEase Cloud Music playlist"
+// ExploreAddToYouTube says "Add to YouTube Music playlist"
 // in the language the app shows.
 func ExploreAddToYouTube() string { return In(i18n.Locale()).ExploreAddToYouTube() }
 
-// ExploreAddToYouTube says "Add to NetEase Cloud Music playlist"
+// ExploreAddToYouTube says "Add to YouTube Music playlist"
 // in the language of msgs.
 func (msgs Messages) ExploreAddToYouTube() string {
 	return Catalog.Format(msgs.locale, "exploreAddToYouTube", nil)
@@ -17032,11 +17154,11 @@ func (msgs Messages) ExploreNewPlaylist() string {
 	return Catalog.Format(msgs.locale, "exploreNewPlaylist", nil)
 }
 
-// ExploreNewYouTubePlaylist says "New playlist on NetEase Cloud Music"
+// ExploreNewYouTubePlaylist says "New playlist on YouTube Music"
 // in the language the app shows.
 func ExploreNewYouTubePlaylist() string { return In(i18n.Locale()).ExploreNewYouTubePlaylist() }
 
-// ExploreNewYouTubePlaylist says "New playlist on NetEase Cloud Music"
+// ExploreNewYouTubePlaylist says "New playlist on YouTube Music"
 // in the language of msgs.
 func (msgs Messages) ExploreNewYouTubePlaylist() string {
 	return Catalog.Format(msgs.locale, "exploreNewYouTubePlaylist", nil)
@@ -17104,13 +17226,13 @@ func (msgs Messages) ExploreCouldntCreate(title string, error string) string {
 	return Catalog.Format(msgs.locale, "exploreCouldntCreate", map[string]any{"title": title, "error": error})
 }
 
-// ExploreCreatedOnYouTube says "Created {title} on NetEase Cloud Music"
+// ExploreCreatedOnYouTube says "Created {title} on YouTube Music"
 // in the language the app shows.
 func ExploreCreatedOnYouTube(title string) string {
 	return In(i18n.Locale()).ExploreCreatedOnYouTube(title)
 }
 
-// ExploreCreatedOnYouTube says "Created {title} on NetEase Cloud Music"
+// ExploreCreatedOnYouTube says "Created {title} on YouTube Music"
 // in the language of msgs.
 func (msgs Messages) ExploreCreatedOnYouTube(title string) string {
 	return Catalog.Format(msgs.locale, "exploreCreatedOnYouTube", map[string]any{"title": title})
@@ -17696,11 +17818,11 @@ func (msgs Messages) HomeEditSpotifyHidden() string {
 	return Catalog.Format(msgs.locale, "homeEditSpotifyHidden", nil)
 }
 
-// HomeEditYouTubePlaylist says "A NetEase Cloud Music playlist"
+// HomeEditYouTubePlaylist says "A YouTube Music playlist"
 // in the language the app shows.
 func HomeEditYouTubePlaylist() string { return In(i18n.Locale()).HomeEditYouTubePlaylist() }
 
-// HomeEditYouTubePlaylist says "A NetEase Cloud Music playlist"
+// HomeEditYouTubePlaylist says "A YouTube Music playlist"
 // in the language of msgs.
 func (msgs Messages) HomeEditYouTubePlaylist() string {
 	return Catalog.Format(msgs.locale, "homeEditYouTubePlaylist", nil)
@@ -17896,16 +18018,6 @@ func (msgs Messages) SearchPivotPodcasts() string {
 	return Catalog.Format(msgs.locale, "searchPivotPodcasts", nil)
 }
 
-// SearchScopeBoth says "both"
-// in the language the app shows.
-func SearchScopeBoth() string { return In(i18n.Locale()).SearchScopeBoth() }
-
-// SearchScopeBoth says "both"
-// in the language of msgs.
-func (msgs Messages) SearchScopeBoth() string {
-	return Catalog.Format(msgs.locale, "searchScopeBoth", nil)
-}
-
 // SearchServices says "Services"
 // in the language the app shows.
 func SearchServices() string { return In(i18n.Locale()).SearchServices() }
@@ -17916,11 +18028,11 @@ func (msgs Messages) SearchServices() string {
 	return Catalog.Format(msgs.locale, "searchServices", nil)
 }
 
-// SearchNetEaseOnly says "Searching NetEase Cloud Music only. "
+// SearchNetEaseOnly says "Searching NetEase Cloud Music and YouTube Music only. "
 // in the language the app shows.
 func SearchNetEaseOnly() string { return In(i18n.Locale()).SearchNetEaseOnly() }
 
-// SearchNetEaseOnly says "Searching NetEase Cloud Music only. "
+// SearchNetEaseOnly says "Searching NetEase Cloud Music and YouTube Music only. "
 // in the language of msgs.
 func (msgs Messages) SearchNetEaseOnly() string {
 	return Catalog.Format(msgs.locale, "searchNetEaseOnly", nil)
@@ -18216,11 +18328,11 @@ func (msgs Messages) StatsAnd() string {
 	return Catalog.Format(msgs.locale, "statsAnd", nil)
 }
 
-// StatsFromYouTube says "{count} from NetEase Cloud Music"
+// StatsFromYouTube says "{count} from YouTube Music"
 // in the language the app shows.
 func StatsFromYouTube(count string) string { return In(i18n.Locale()).StatsFromYouTube(count) }
 
-// StatsFromYouTube says "{count} from NetEase Cloud Music"
+// StatsFromYouTube says "{count} from YouTube Music"
 // in the language of msgs.
 func (msgs Messages) StatsFromYouTube(count string) string {
 	return Catalog.Format(msgs.locale, "statsFromYouTube", map[string]any{"count": count})
@@ -18368,16 +18480,16 @@ func (msgs Messages) StatsDayTip(day string, minutes string, plays int) string {
 	return Catalog.Format(msgs.locale, "statsDayTip", map[string]any{"day": day, "minutes": minutes, "plays": plays})
 }
 
-// StatsVennLabel says "{spotify} plays from Spotify, {youtube} from NetEase Cloud Music"
+// StatsVennLabel says "{spotify} plays from Spotify, {netease} from NetEase Cloud Music, {youtube} from YouTube Music"
 // in the language the app shows.
-func StatsVennLabel(spotify string, youtube string) string {
-	return In(i18n.Locale()).StatsVennLabel(spotify, youtube)
+func StatsVennLabel(spotify string, netease string, youtube string) string {
+	return In(i18n.Locale()).StatsVennLabel(spotify, netease, youtube)
 }
 
-// StatsVennLabel says "{spotify} plays from Spotify, {youtube} from NetEase Cloud Music"
+// StatsVennLabel says "{spotify} plays from Spotify, {netease} from NetEase Cloud Music, {youtube} from YouTube Music"
 // in the language of msgs.
-func (msgs Messages) StatsVennLabel(spotify string, youtube string) string {
-	return Catalog.Format(msgs.locale, "statsVennLabel", map[string]any{"spotify": spotify, "youtube": youtube})
+func (msgs Messages) StatsVennLabel(spotify string, netease string, youtube string) string {
+	return Catalog.Format(msgs.locale, "statsVennLabel", map[string]any{"spotify": spotify, "netease": netease, "youtube": youtube})
 }
 
 // StatsArtistPlays says "{artist}: {plays, plural, one {# play} other {# plays}}"
@@ -18720,4 +18832,816 @@ func MarketplaceRemoved(name string) string { return In(i18n.Locale()).Marketpla
 // in the language of msgs.
 func (msgs Messages) MarketplaceRemoved(name string) string {
 	return Catalog.Format(msgs.locale, "marketplaceRemoved", map[string]any{"name": name})
+}
+
+// CmdViewLyricsStage says "Show or hide the full-screen lyrics"
+// in the language the app shows.
+func CmdViewLyricsStage() string { return In(i18n.Locale()).CmdViewLyricsStage() }
+
+// CmdViewLyricsStage says "Show or hide the full-screen lyrics"
+// in the language of msgs.
+func (msgs Messages) CmdViewLyricsStage() string {
+	return Catalog.Format(msgs.locale, "cmdViewLyricsStage", nil)
+}
+
+// PlaylistReadWaiting says "Spotify asked Mixyun to wait · {n}"
+// in the language the app shows.
+func PlaylistReadWaiting(n string) string { return In(i18n.Locale()).PlaylistReadWaiting(n) }
+
+// PlaylistReadWaiting says "Spotify asked Mixyun to wait · {n}"
+// in the language of msgs.
+func (msgs Messages) PlaylistReadWaiting(n string) string {
+	return Catalog.Format(msgs.locale, "playlistReadWaiting", map[string]any{"n": n})
+}
+
+// PlaylistReadWaitingOf says "Spotify asked Mixyun to wait · {n} of {count}"
+// in the language the app shows.
+func PlaylistReadWaitingOf(n string, count string) string {
+	return In(i18n.Locale()).PlaylistReadWaitingOf(n, count)
+}
+
+// PlaylistReadWaitingOf says "Spotify asked Mixyun to wait · {n} of {count}"
+// in the language of msgs.
+func (msgs Messages) PlaylistReadWaitingOf(n string, count string) string {
+	return Catalog.Format(msgs.locale, "playlistReadWaitingOf", map[string]any{"n": n, "count": count})
+}
+
+// SearchScopeAll says "All"
+// in the language the app shows.
+func SearchScopeAll() string { return In(i18n.Locale()).SearchScopeAll() }
+
+// SearchScopeAll says "All"
+// in the language of msgs.
+func (msgs Messages) SearchScopeAll() string {
+	return Catalog.Format(msgs.locale, "searchScopeAll", nil)
+}
+
+// SearchSortBy says "Sort by"
+// in the language the app shows.
+func SearchSortBy() string { return In(i18n.Locale()).SearchSortBy() }
+
+// SearchSortBy says "Sort by"
+// in the language of msgs.
+func (msgs Messages) SearchSortBy() string {
+	return Catalog.Format(msgs.locale, "searchSortBy", nil)
+}
+
+// StatsFromNetEase says "{count} from NetEase Cloud Music"
+// in the language the app shows.
+func StatsFromNetEase(count string) string { return In(i18n.Locale()).StatsFromNetEase(count) }
+
+// StatsFromNetEase says "{count} from NetEase Cloud Music"
+// in the language of msgs.
+func (msgs Messages) StatsFromNetEase(count string) string {
+	return Catalog.Format(msgs.locale, "statsFromNetEase", map[string]any{"count": count})
+}
+
+// StatsComma says ", "
+// in the language the app shows.
+func StatsComma() string { return In(i18n.Locale()).StatsComma() }
+
+// StatsComma says ", "
+// in the language of msgs.
+func (msgs Messages) StatsComma() string {
+	return Catalog.Format(msgs.locale, "statsComma", nil)
+}
+
+// LyricsStageTitle says "Full-screen lyrics"
+// in the language the app shows.
+func LyricsStageTitle() string { return In(i18n.Locale()).LyricsStageTitle() }
+
+// LyricsStageTitle says "Full-screen lyrics"
+// in the language of msgs.
+func (msgs Messages) LyricsStageTitle() string {
+	return Catalog.Format(msgs.locale, "lyricsStageTitle", nil)
+}
+
+// LyricsStageClose says "Close full-screen lyrics"
+// in the language the app shows.
+func LyricsStageClose() string { return In(i18n.Locale()).LyricsStageClose() }
+
+// LyricsStageClose says "Close full-screen lyrics"
+// in the language of msgs.
+func (msgs Messages) LyricsStageClose() string {
+	return Catalog.Format(msgs.locale, "lyricsStageClose", nil)
+}
+
+// LyricsStageCloseTip says "Close"
+// in the language the app shows.
+func LyricsStageCloseTip() string { return In(i18n.Locale()).LyricsStageCloseTip() }
+
+// LyricsStageCloseTip says "Close"
+// in the language of msgs.
+func (msgs Messages) LyricsStageCloseTip() string {
+	return Catalog.Format(msgs.locale, "lyricsStageCloseTip", nil)
+}
+
+// LyricsStageNoEpisode says "Podcast episodes have no lyrics"
+// in the language the app shows.
+func LyricsStageNoEpisode() string { return In(i18n.Locale()).LyricsStageNoEpisode() }
+
+// LyricsStageNoEpisode says "Podcast episodes have no lyrics"
+// in the language of msgs.
+func (msgs Messages) LyricsStageNoEpisode() string {
+	return Catalog.Format(msgs.locale, "lyricsStageNoEpisode", nil)
+}
+
+// LyricsStageControls says "Player controls"
+// in the language the app shows.
+func LyricsStageControls() string { return In(i18n.Locale()).LyricsStageControls() }
+
+// LyricsStageControls says "Player controls"
+// in the language of msgs.
+func (msgs Messages) LyricsStageControls() string {
+	return Catalog.Format(msgs.locale, "lyricsStageControls", nil)
+}
+
+// CmdLyricsStyle says "Lyrics style: {name}"
+// in the language the app shows.
+func CmdLyricsStyle(name string) string { return In(i18n.Locale()).CmdLyricsStyle(name) }
+
+// CmdLyricsStyle says "Lyrics style: {name}"
+// in the language of msgs.
+func (msgs Messages) CmdLyricsStyle(name string) string {
+	return Catalog.Format(msgs.locale, "cmdLyricsStyle", map[string]any{"name": name})
+}
+
+// LyricStyleSpotlightAbout says "Very big letters. Only the line sung is sharp: the others blur."
+// in the language the app shows.
+func LyricStyleSpotlightAbout() string { return In(i18n.Locale()).LyricStyleSpotlightAbout() }
+
+// LyricStyleSpotlightAbout says "Very big letters. Only the line sung is sharp: the others blur."
+// in the language of msgs.
+func (msgs Messages) LyricStyleSpotlightAbout() string {
+	return Catalog.Format(msgs.locale, "lyricStyleSpotlightAbout", nil)
+}
+
+// LyricStyleGlowAbout says "Round, bold letters with a soft glow on the words as they are sung. The other lines blur."
+// in the language the app shows.
+func LyricStyleGlowAbout() string { return In(i18n.Locale()).LyricStyleGlowAbout() }
+
+// LyricStyleGlowAbout says "Round, bold letters with a soft glow on the words as they are sung. The other lines blur."
+// in the language of msgs.
+func (msgs Messages) LyricStyleGlowAbout() string {
+	return Catalog.Format(msgs.locale, "lyricStyleGlowAbout", nil)
+}
+
+// LyricStyleFocusAbout says "Bold, even letters. The farther a line is from the one sung, the more it fades and blurs."
+// in the language the app shows.
+func LyricStyleFocusAbout() string { return In(i18n.Locale()).LyricStyleFocusAbout() }
+
+// LyricStyleFocusAbout says "Bold, even letters. The farther a line is from the one sung, the more it fades and blurs."
+// in the language of msgs.
+func (msgs Messages) LyricStyleFocusAbout() string {
+	return Catalog.Format(msgs.locale, "lyricStyleFocusAbout", nil)
+}
+
+// LyricStyleSimpleAbout says "Plain letters, as in the rest of Mixyun. No blur: the other lines only fade."
+// in the language the app shows.
+func LyricStyleSimpleAbout() string { return In(i18n.Locale()).LyricStyleSimpleAbout() }
+
+// LyricStyleSimpleAbout says "Plain letters, as in the rest of Mixyun. No blur: the other lines only fade."
+// in the language of msgs.
+func (msgs Messages) LyricStyleSimpleAbout() string {
+	return Catalog.Format(msgs.locale, "lyricStyleSimpleAbout", nil)
+}
+
+// LyricStyleBoldAbout says "Big, heavy, tight letters, like a poster."
+// in the language the app shows.
+func LyricStyleBoldAbout() string { return In(i18n.Locale()).LyricStyleBoldAbout() }
+
+// LyricStyleBoldAbout says "Big, heavy, tight letters, like a poster."
+// in the language of msgs.
+func (msgs Messages) LyricStyleBoldAbout() string {
+	return Catalog.Format(msgs.locale, "lyricStyleBoldAbout", nil)
+}
+
+// LyricStyleCalmAbout says "Small, quiet letters, with a light fade and almost no blur, for a relaxed mood."
+// in the language the app shows.
+func LyricStyleCalmAbout() string { return In(i18n.Locale()).LyricStyleCalmAbout() }
+
+// LyricStyleCalmAbout says "Small, quiet letters, with a light fade and almost no blur, for a relaxed mood."
+// in the language of msgs.
+func (msgs Messages) LyricStyleCalmAbout() string {
+	return Catalog.Format(msgs.locale, "lyricStyleCalmAbout", nil)
+}
+
+// LyricBallMix says "Mix"
+// in the language the app shows.
+func LyricBallMix() string { return In(i18n.Locale()).LyricBallMix() }
+
+// LyricBallMix says "Mix"
+// in the language of msgs.
+func (msgs Messages) LyricBallMix() string {
+	return Catalog.Format(msgs.locale, "lyricBallMix", nil)
+}
+
+// LyricBallMixAbout says "A different motion for each line, in turn."
+// in the language the app shows.
+func LyricBallMixAbout() string { return In(i18n.Locale()).LyricBallMixAbout() }
+
+// LyricBallMixAbout says "A different motion for each line, in turn."
+// in the language of msgs.
+func (msgs Messages) LyricBallMixAbout() string {
+	return Catalog.Format(msgs.locale, "lyricBallMixAbout", nil)
+}
+
+// LyricBallHop says "Hop"
+// in the language the app shows.
+func LyricBallHop() string { return In(i18n.Locale()).LyricBallHop() }
+
+// LyricBallHop says "Hop"
+// in the language of msgs.
+func (msgs Messages) LyricBallHop() string {
+	return Catalog.Format(msgs.locale, "lyricBallHop", nil)
+}
+
+// LyricBallHopAbout says "One arc, as the hops between words are."
+// in the language the app shows.
+func LyricBallHopAbout() string { return In(i18n.Locale()).LyricBallHopAbout() }
+
+// LyricBallHopAbout says "One arc, as the hops between words are."
+// in the language of msgs.
+func (msgs Messages) LyricBallHopAbout() string {
+	return Catalog.Format(msgs.locale, "lyricBallHopAbout", nil)
+}
+
+// LyricBallBoomerang says "Boomerang"
+// in the language the app shows.
+func LyricBallBoomerang() string { return In(i18n.Locale()).LyricBallBoomerang() }
+
+// LyricBallBoomerang says "Boomerang"
+// in the language of msgs.
+func (msgs Messages) LyricBallBoomerang() string {
+	return Catalog.Format(msgs.locale, "lyricBallBoomerang", nil)
+}
+
+// LyricBallBoomerangAbout says "Thrown out past the end of the line, it curves back to the next."
+// in the language the app shows.
+func LyricBallBoomerangAbout() string { return In(i18n.Locale()).LyricBallBoomerangAbout() }
+
+// LyricBallBoomerangAbout says "Thrown out past the end of the line, it curves back to the next."
+// in the language of msgs.
+func (msgs Messages) LyricBallBoomerangAbout() string {
+	return Catalog.Format(msgs.locale, "lyricBallBoomerangAbout", nil)
+}
+
+// LyricBallLoop says "Loop"
+// in the language the app shows.
+func LyricBallLoop() string { return In(i18n.Locale()).LyricBallLoop() }
+
+// LyricBallLoop says "Loop"
+// in the language of msgs.
+func (msgs Messages) LyricBallLoop() string {
+	return Catalog.Format(msgs.locale, "lyricBallLoop", nil)
+}
+
+// LyricBallLoopAbout says "A loop over the last word, then a swoop to the next line."
+// in the language the app shows.
+func LyricBallLoopAbout() string { return In(i18n.Locale()).LyricBallLoopAbout() }
+
+// LyricBallLoopAbout says "A loop over the last word, then a swoop to the next line."
+// in the language of msgs.
+func (msgs Messages) LyricBallLoopAbout() string {
+	return Catalog.Format(msgs.locale, "lyricBallLoopAbout", nil)
+}
+
+// LyricBallDive says "Dive"
+// in the language the app shows.
+func LyricBallDive() string { return In(i18n.Locale()).LyricBallDive() }
+
+// LyricBallDive says "Dive"
+// in the language of msgs.
+func (msgs Messages) LyricBallDive() string {
+	return Catalog.Format(msgs.locale, "lyricBallDive", nil)
+}
+
+// LyricBallDiveAbout says "It rises a little, as to gather itself, and drops to the next line."
+// in the language the app shows.
+func LyricBallDiveAbout() string { return In(i18n.Locale()).LyricBallDiveAbout() }
+
+// LyricBallDiveAbout says "It rises a little, as to gather itself, and drops to the next line."
+// in the language of msgs.
+func (msgs Messages) LyricBallDiveAbout() string {
+	return Catalog.Format(msgs.locale, "lyricBallDiveAbout", nil)
+}
+
+// LyricBallRicochet says "Ricochet"
+// in the language the app shows.
+func LyricBallRicochet() string { return In(i18n.Locale()).LyricBallRicochet() }
+
+// LyricBallRicochet says "Ricochet"
+// in the language of msgs.
+func (msgs Messages) LyricBallRicochet() string {
+	return Catalog.Format(msgs.locale, "lyricBallRicochet", nil)
+}
+
+// LyricBallRicochetAbout says "It bounces off the right edge of the lyrics and their floor."
+// in the language the app shows.
+func LyricBallRicochetAbout() string { return In(i18n.Locale()).LyricBallRicochetAbout() }
+
+// LyricBallRicochetAbout says "It bounces off the right edge of the lyrics and their floor."
+// in the language of msgs.
+func (msgs Messages) LyricBallRicochetAbout() string {
+	return Catalog.Format(msgs.locale, "lyricBallRicochetAbout", nil)
+}
+
+// LyricStyleGroup says "Lyrics style"
+// in the language the app shows.
+func LyricStyleGroup() string { return In(i18n.Locale()).LyricStyleGroup() }
+
+// LyricStyleGroup says "Lyrics style"
+// in the language of msgs.
+func (msgs Messages) LyricStyleGroup() string {
+	return Catalog.Format(msgs.locale, "lyricStyleGroup", nil)
+}
+
+// LyricStylePreview says "Preview of the lyrics"
+// in the language the app shows.
+func LyricStylePreview() string { return In(i18n.Locale()).LyricStylePreview() }
+
+// LyricStylePreview says "Preview of the lyrics"
+// in the language of msgs.
+func (msgs Messages) LyricStylePreview() string {
+	return Catalog.Format(msgs.locale, "lyricStylePreview", nil)
+}
+
+// LyricStylePreviewFind says "how the full-screen lyrics look in the style, size and ball set"
+// in the language the app shows.
+func LyricStylePreviewFind() string { return In(i18n.Locale()).LyricStylePreviewFind() }
+
+// LyricStylePreviewFind says "how the full-screen lyrics look in the style, size and ball set"
+// in the language of msgs.
+func (msgs Messages) LyricStylePreviewFind() string {
+	return Catalog.Format(msgs.locale, "lyricStylePreviewFind", nil)
+}
+
+// LyricStylePreviewLabel says "Preview of the full-screen lyrics"
+// in the language the app shows.
+func LyricStylePreviewLabel() string { return In(i18n.Locale()).LyricStylePreviewLabel() }
+
+// LyricStylePreviewLabel says "Preview of the full-screen lyrics"
+// in the language of msgs.
+func (msgs Messages) LyricStylePreviewLabel() string {
+	return Catalog.Format(msgs.locale, "lyricStylePreviewLabel", nil)
+}
+
+// LyricStyleSize says "Lyrics text size"
+// in the language the app shows.
+func LyricStyleSize() string { return In(i18n.Locale()).LyricStyleSize() }
+
+// LyricStyleSize says "Lyrics text size"
+// in the language of msgs.
+func (msgs Messages) LyricStyleSize() string {
+	return Catalog.Format(msgs.locale, "lyricStyleSize", nil)
+}
+
+// LyricStyleBall says "Bouncing ball"
+// in the language the app shows.
+func LyricStyleBall() string { return In(i18n.Locale()).LyricStyleBall() }
+
+// LyricStyleBall says "Bouncing ball"
+// in the language of msgs.
+func (msgs Messages) LyricStyleBall() string {
+	return Catalog.Format(msgs.locale, "lyricStyleBall", nil)
+}
+
+// LyricStyleBallDesc says "A ball hops from word to word over the line sung, as its words are sung, and flies to the next line. Only for lyrics …"
+// in the language the app shows.
+func LyricStyleBallDesc() string { return In(i18n.Locale()).LyricStyleBallDesc() }
+
+// LyricStyleBallDesc says "A ball hops from word to word over the line sung, as its words are sung, and flies to the next line. Only for lyrics …"
+// in the language of msgs.
+func (msgs Messages) LyricStyleBallDesc() string {
+	return Catalog.Format(msgs.locale, "lyricStyleBallDesc", nil)
+}
+
+// LyricStyleBallSwitch says "Show the bouncing ball"
+// in the language the app shows.
+func LyricStyleBallSwitch() string { return In(i18n.Locale()).LyricStyleBallSwitch() }
+
+// LyricStyleBallSwitch says "Show the bouncing ball"
+// in the language of msgs.
+func (msgs Messages) LyricStyleBallSwitch() string {
+	return Catalog.Format(msgs.locale, "lyricStyleBallSwitch", nil)
+}
+
+// LyricStyleBallMotion says "Ball between lines"
+// in the language the app shows.
+func LyricStyleBallMotion() string { return In(i18n.Locale()).LyricStyleBallMotion() }
+
+// LyricStyleBallMotion says "Ball between lines"
+// in the language of msgs.
+func (msgs Messages) LyricStyleBallMotion() string {
+	return Catalog.Format(msgs.locale, "lyricStyleBallMotion", nil)
+}
+
+// LyricStyleBallMotionLabel says "Motion between lines"
+// in the language the app shows.
+func LyricStyleBallMotionLabel() string { return In(i18n.Locale()).LyricStyleBallMotionLabel() }
+
+// LyricStyleBallMotionLabel says "Motion between lines"
+// in the language of msgs.
+func (msgs Messages) LyricStyleBallMotionLabel() string {
+	return Catalog.Format(msgs.locale, "lyricStyleBallMotionLabel", nil)
+}
+
+// LyricStyleStageDesc says "Cover the window with the lyrics of what plays, over its blurred cover."
+// in the language the app shows.
+func LyricStyleStageDesc() string { return In(i18n.Locale()).LyricStyleStageDesc() }
+
+// LyricStyleStageDesc says "Cover the window with the lyrics of what plays, over its blurred cover."
+// in the language of msgs.
+func (msgs Messages) LyricStyleStageDesc() string {
+	return Catalog.Format(msgs.locale, "lyricStyleStageDesc", nil)
+}
+
+// SearchSortBest says "Best match"
+// in the language the app shows.
+func SearchSortBest() string { return In(i18n.Locale()).SearchSortBest() }
+
+// SearchSortBest says "Best match"
+// in the language of msgs.
+func (msgs Messages) SearchSortBest() string {
+	return Catalog.Format(msgs.locale, "searchSortBest", nil)
+}
+
+// SearchSortPlayed says "Most played"
+// in the language the app shows.
+func SearchSortPlayed() string { return In(i18n.Locale()).SearchSortPlayed() }
+
+// SearchSortPlayed says "Most played"
+// in the language of msgs.
+func (msgs Messages) SearchSortPlayed() string {
+	return Catalog.Format(msgs.locale, "searchSortPlayed", nil)
+}
+
+// SearchSortNewest says "Newest"
+// in the language the app shows.
+func SearchSortNewest() string { return In(i18n.Locale()).SearchSortNewest() }
+
+// SearchSortNewest says "Newest"
+// in the language of msgs.
+func (msgs Messages) SearchSortNewest() string {
+	return Catalog.Format(msgs.locale, "searchSortNewest", nil)
+}
+
+// SearchSortNote says "Spotify gives apps no play counts, nor NetEase Cloud Music for songs, so their results come after YouTube Music's."
+// in the language the app shows.
+func SearchSortNote() string { return In(i18n.Locale()).SearchSortNote() }
+
+// SearchSortNote says "Spotify gives apps no play counts, nor NetEase Cloud Music for songs, so their results come after YouTube Music's."
+// in the language of msgs.
+func (msgs Messages) SearchSortNote() string {
+	return Catalog.Format(msgs.locale, "searchSortNote", nil)
+}
+
+// PlaylistGapItems says "{n} of this {noun, select, mix {mix} playlist {playlist} other {list}}'s items can't play here: {kinds}."
+// in the language the app shows.
+func PlaylistGapItems(n string, noun string, kinds string) string {
+	return In(i18n.Locale()).PlaylistGapItems(n, noun, kinds)
+}
+
+// PlaylistGapItems says "{n} of this {noun, select, mix {mix} playlist {playlist} other {list}}'s items can't play here: {kinds}."
+// in the language of msgs.
+func (msgs Messages) PlaylistGapItems(n string, noun string, kinds string) string {
+	return Catalog.Format(msgs.locale, "playlistGapItems", map[string]any{"n": n, "noun": noun, "kinds": kinds})
+}
+
+// PlaylistGapLocal says "{count, plural, one {{n} local file} other {{n} local files}}"
+// in the language the app shows.
+func PlaylistGapLocal(count int, n string) string {
+	return In(i18n.Locale()).PlaylistGapLocal(count, n)
+}
+
+// PlaylistGapLocal says "{count, plural, one {{n} local file} other {{n} local files}}"
+// in the language of msgs.
+func (msgs Messages) PlaylistGapLocal(count int, n string) string {
+	return Catalog.Format(msgs.locale, "playlistGapLocal", map[string]any{"count": count, "n": n})
+}
+
+// PlaylistGapEpisodes says "{count, plural, one {{n} episode} other {{n} episodes}}"
+// in the language the app shows.
+func PlaylistGapEpisodes(count int, n string) string {
+	return In(i18n.Locale()).PlaylistGapEpisodes(count, n)
+}
+
+// PlaylistGapEpisodes says "{count, plural, one {{n} episode} other {{n} episodes}}"
+// in the language of msgs.
+func (msgs Messages) PlaylistGapEpisodes(count int, n string) string {
+	return Catalog.Format(msgs.locale, "playlistGapEpisodes", map[string]any{"count": count, "n": n})
+}
+
+// PlaylistGapGone says "{count, plural, one {{n} removed or unavailable item} other {{n} removed or unavailable items}}"
+// in the language the app shows.
+func PlaylistGapGone(count int, n string) string { return In(i18n.Locale()).PlaylistGapGone(count, n) }
+
+// PlaylistGapGone says "{count, plural, one {{n} removed or unavailable item} other {{n} removed or unavailable items}}"
+// in the language of msgs.
+func (msgs Messages) PlaylistGapGone(count int, n string) string {
+	return Catalog.Format(msgs.locale, "playlistGapGone", map[string]any{"count": count, "n": n})
+}
+
+// PlaylistGapHidden says "{count, plural, one {{n} explicit song is hidden by your settings.} other {{n} explicit songs are hidden by your sett…"
+// in the language the app shows.
+func PlaylistGapHidden(count int, n string) string {
+	return In(i18n.Locale()).PlaylistGapHidden(count, n)
+}
+
+// PlaylistGapHidden says "{count, plural, one {{n} explicit song is hidden by your settings.} other {{n} explicit songs are hidden by your sett…"
+// in the language of msgs.
+func (msgs Messages) PlaylistGapHidden(count int, n string) string {
+	return Catalog.Format(msgs.locale, "playlistGapHidden", map[string]any{"count": count, "n": n})
+}
+
+// PlaylistShort says "Only {n} of this {noun, select, mix {mix} playlist {playlist} other {list}}'s {count} tracks came from YouTube Music."
+// in the language the app shows.
+func PlaylistShort(n string, noun string, count string) string {
+	return In(i18n.Locale()).PlaylistShort(n, noun, count)
+}
+
+// PlaylistShort says "Only {n} of this {noun, select, mix {mix} playlist {playlist} other {list}}'s {count} tracks came from YouTube Music."
+// in the language of msgs.
+func (msgs Messages) PlaylistShort(n string, noun string, count string) string {
+	return Catalog.Format(msgs.locale, "playlistShort", map[string]any{"n": n, "noun": noun, "count": count})
+}
+
+// AboutNoticeAac says "SharpJaad, which decodes AAC audio"
+// in the language the app shows.
+func AboutNoticeAac() string { return In(i18n.Locale()).AboutNoticeAac() }
+
+// AboutNoticeAac says "SharpJaad, which decodes AAC audio"
+// in the language of msgs.
+func (msgs Messages) AboutNoticeAac() string {
+	return Catalog.Format(msgs.locale, "aboutNoticeAac", nil)
+}
+
+// AboutNoticeIpadic says "The IPA dictionary (mecab-ipadic), which romaji downloads the first time it's turned on"
+// in the language the app shows.
+func AboutNoticeIpadic() string { return In(i18n.Locale()).AboutNoticeIpadic() }
+
+// AboutNoticeIpadic says "The IPA dictionary (mecab-ipadic), which romaji downloads the first time it's turned on"
+// in the language of msgs.
+func (msgs Messages) AboutNoticeIpadic() string {
+	return Catalog.Format(msgs.locale, "aboutNoticeIpadic", nil)
+}
+
+// AboutNoticeKagome says "kagome, which reads the kanji of Japanese lyrics for their romaji"
+// in the language the app shows.
+func AboutNoticeKagome() string { return In(i18n.Locale()).AboutNoticeKagome() }
+
+// AboutNoticeKagome says "kagome, which reads the kanji of Japanese lyrics for their romaji"
+// in the language of msgs.
+func (msgs Messages) AboutNoticeKagome() string {
+	return Catalog.Format(msgs.locale, "aboutNoticeKagome", nil)
+}
+
+// AboutNoticeMaterialColor says "Material Color Utilities, which make the Material themes' colours"
+// in the language the app shows.
+func AboutNoticeMaterialColor() string { return In(i18n.Locale()).AboutNoticeMaterialColor() }
+
+// AboutNoticeMaterialColor says "Material Color Utilities, which make the Material themes' colours"
+// in the language of msgs.
+func (msgs Messages) AboutNoticeMaterialColor() string {
+	return Catalog.Format(msgs.locale, "aboutNoticeMaterialColor", nil)
+}
+
+// AboutNoticeMp3 says "go-mp3, which decodes the MP3 files on this computer"
+// in the language the app shows.
+func AboutNoticeMp3() string { return In(i18n.Locale()).AboutNoticeMp3() }
+
+// AboutNoticeMp3 says "go-mp3, which decodes the MP3 files on this computer"
+// in the language of msgs.
+func (msgs Messages) AboutNoticeMp3() string {
+	return Catalog.Format(msgs.locale, "aboutNoticeMp3", nil)
+}
+
+// AboutNoticeOpus says "libopus, which decodes Opus audio"
+// in the language the app shows.
+func AboutNoticeOpus() string { return In(i18n.Locale()).AboutNoticeOpus() }
+
+// AboutNoticeOpus says "libopus, which decodes Opus audio"
+// in the language of msgs.
+func (msgs Messages) AboutNoticeOpus() string {
+	return Catalog.Format(msgs.locale, "aboutNoticeOpus", nil)
+}
+
+// AboutNoticePinyin says "pinyin-data and phrase-pinyin-data, the readings of Chinese characters and words in pinyin"
+// in the language the app shows.
+func AboutNoticePinyin() string { return In(i18n.Locale()).AboutNoticePinyin() }
+
+// AboutNoticePinyin says "pinyin-data and phrase-pinyin-data, the readings of Chinese characters and words in pinyin"
+// in the language of msgs.
+func (msgs Messages) AboutNoticePinyin() string {
+	return Catalog.Format(msgs.locale, "aboutNoticePinyin", nil)
+}
+
+// AboutNoticeUnihan says "Unihan, whose readings of Chinese characters write Chinese lyrics in pinyin"
+// in the language the app shows.
+func AboutNoticeUnihan() string { return In(i18n.Locale()).AboutNoticeUnihan() }
+
+// AboutNoticeUnihan says "Unihan, whose readings of Chinese characters write Chinese lyrics in pinyin"
+// in the language of msgs.
+func (msgs Messages) AboutNoticeUnihan() string {
+	return Catalog.Format(msgs.locale, "aboutNoticeUnihan", nil)
+}
+
+// AboutNoticeVorbis says "jfreymuth/vorbis, which decodes the Vorbis files on this computer"
+// in the language the app shows.
+func AboutNoticeVorbis() string { return In(i18n.Locale()).AboutNoticeVorbis() }
+
+// AboutNoticeVorbis says "jfreymuth/vorbis, which decodes the Vorbis files on this computer"
+// in the language of msgs.
+func (msgs Messages) AboutNoticeVorbis() string {
+	return Catalog.Format(msgs.locale, "aboutNoticeVorbis", nil)
+}
+
+// AboutNoticeWebAudio says "Chromium's Web Audio, which shapes the sound"
+// in the language the app shows.
+func AboutNoticeWebAudio() string { return In(i18n.Locale()).AboutNoticeWebAudio() }
+
+// AboutNoticeWebAudio says "Chromium's Web Audio, which shapes the sound"
+// in the language of msgs.
+func (msgs Messages) AboutNoticeWebAudio() string {
+	return Catalog.Format(msgs.locale, "aboutNoticeWebAudio", nil)
+}
+
+// ThemeOptionAnimeScreentone says "Screentone"
+// in the language the app shows.
+func ThemeOptionAnimeScreentone() string { return In(i18n.Locale()).ThemeOptionAnimeScreentone() }
+
+// ThemeOptionAnimeScreentone says "Screentone"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionAnimeScreentone() string {
+	return Catalog.Format(msgs.locale, "themeOptionAnimeScreentone", nil)
+}
+
+// ThemeOptionAnimeSpeedlines says "Speed lines"
+// in the language the app shows.
+func ThemeOptionAnimeSpeedlines() string { return In(i18n.Locale()).ThemeOptionAnimeSpeedlines() }
+
+// ThemeOptionAnimeSpeedlines says "Speed lines"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionAnimeSpeedlines() string {
+	return Catalog.Format(msgs.locale, "themeOptionAnimeSpeedlines", nil)
+}
+
+// ThemeOptionAuroraBlur says "Glass blur"
+// in the language the app shows.
+func ThemeOptionAuroraBlur() string { return In(i18n.Locale()).ThemeOptionAuroraBlur() }
+
+// ThemeOptionAuroraBlur says "Glass blur"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionAuroraBlur() string {
+	return Catalog.Format(msgs.locale, "themeOptionAuroraBlur", nil)
+}
+
+// ThemeOptionAuroraMotion says "Drifting lights"
+// in the language the app shows.
+func ThemeOptionAuroraMotion() string { return In(i18n.Locale()).ThemeOptionAuroraMotion() }
+
+// ThemeOptionAuroraMotion says "Drifting lights"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionAuroraMotion() string {
+	return Catalog.Format(msgs.locale, "themeOptionAuroraMotion", nil)
+}
+
+// ThemeOptionAuroraTint says "Light color"
+// in the language the app shows.
+func ThemeOptionAuroraTint() string { return In(i18n.Locale()).ThemeOptionAuroraTint() }
+
+// ThemeOptionAuroraTint says "Light color"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionAuroraTint() string {
+	return Catalog.Format(msgs.locale, "themeOptionAuroraTint", nil)
+}
+
+// ThemeOptionGlasshouseBlur says "Glass blur"
+// in the language the app shows.
+func ThemeOptionGlasshouseBlur() string { return In(i18n.Locale()).ThemeOptionGlasshouseBlur() }
+
+// ThemeOptionGlasshouseBlur says "Glass blur"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionGlasshouseBlur() string {
+	return Catalog.Format(msgs.locale, "themeOptionGlasshouseBlur", nil)
+}
+
+// ThemeOptionGlasshouseCover says "Colours of the cover"
+// in the language the app shows.
+func ThemeOptionGlasshouseCover() string { return In(i18n.Locale()).ThemeOptionGlasshouseCover() }
+
+// ThemeOptionGlasshouseCover says "Colours of the cover"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionGlasshouseCover() string {
+	return Catalog.Format(msgs.locale, "themeOptionGlasshouseCover", nil)
+}
+
+// ThemeOptionGreenroomWash says "Colour of the cover"
+// in the language the app shows.
+func ThemeOptionGreenroomWash() string { return In(i18n.Locale()).ThemeOptionGreenroomWash() }
+
+// ThemeOptionGreenroomWash says "Colour of the cover"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionGreenroomWash() string {
+	return Catalog.Format(msgs.locale, "themeOptionGreenroomWash", nil)
+}
+
+// ThemeOptionMixTexture says "Tile texture"
+// in the language the app shows.
+func ThemeOptionMixTexture() string { return In(i18n.Locale()).ThemeOptionMixTexture() }
+
+// ThemeOptionMixTexture says "Tile texture"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionMixTexture() string {
+	return Catalog.Format(msgs.locale, "themeOptionMixTexture", nil)
+}
+
+// ThemeOptionMixTextureDots says "Dot matrix"
+// in the language the app shows.
+func ThemeOptionMixTextureDots() string { return In(i18n.Locale()).ThemeOptionMixTextureDots() }
+
+// ThemeOptionMixTextureDots says "Dot matrix"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionMixTextureDots() string {
+	return Catalog.Format(msgs.locale, "themeOptionMixTextureDots", nil)
+}
+
+// ThemeOptionMixTextureNone says "None"
+// in the language the app shows.
+func ThemeOptionMixTextureNone() string { return In(i18n.Locale()).ThemeOptionMixTextureNone() }
+
+// ThemeOptionMixTextureNone says "None"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionMixTextureNone() string {
+	return Catalog.Format(msgs.locale, "themeOptionMixTextureNone", nil)
+}
+
+// ThemeOptionMixTextureSlashes says "Slashes"
+// in the language the app shows.
+func ThemeOptionMixTextureSlashes() string { return In(i18n.Locale()).ThemeOptionMixTextureSlashes() }
+
+// ThemeOptionMixTextureSlashes says "Slashes"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionMixTextureSlashes() string {
+	return Catalog.Format(msgs.locale, "themeOptionMixTextureSlashes", nil)
+}
+
+// ThemeOptionMixTextureStripes says "Pinstripes"
+// in the language the app shows.
+func ThemeOptionMixTextureStripes() string { return In(i18n.Locale()).ThemeOptionMixTextureStripes() }
+
+// ThemeOptionMixTextureStripes says "Pinstripes"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionMixTextureStripes() string {
+	return Catalog.Format(msgs.locale, "themeOptionMixTextureStripes", nil)
+}
+
+// ThemeOptionMixWhiteTiles says "White text on tiles"
+// in the language the app shows.
+func ThemeOptionMixWhiteTiles() string { return In(i18n.Locale()).ThemeOptionMixWhiteTiles() }
+
+// ThemeOptionMixWhiteTiles says "White text on tiles"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionMixWhiteTiles() string {
+	return Catalog.Format(msgs.locale, "themeOptionMixWhiteTiles", nil)
+}
+
+// ThemeOptionMochiSparkles says "Drifting sparkles"
+// in the language the app shows.
+func ThemeOptionMochiSparkles() string { return In(i18n.Locale()).ThemeOptionMochiSparkles() }
+
+// ThemeOptionMochiSparkles says "Drifting sparkles"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionMochiSparkles() string {
+	return Catalog.Format(msgs.locale, "themeOptionMochiSparkles", nil)
+}
+
+// ThemeOptionSakuraPetals says "Petal pattern"
+// in the language the app shows.
+func ThemeOptionSakuraPetals() string { return In(i18n.Locale()).ThemeOptionSakuraPetals() }
+
+// ThemeOptionSakuraPetals says "Petal pattern"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionSakuraPetals() string {
+	return Catalog.Format(msgs.locale, "themeOptionSakuraPetals", nil)
+}
+
+// ThemeOptionTerminalGlow says "Text glow"
+// in the language the app shows.
+func ThemeOptionTerminalGlow() string { return In(i18n.Locale()).ThemeOptionTerminalGlow() }
+
+// ThemeOptionTerminalGlow says "Text glow"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionTerminalGlow() string {
+	return Catalog.Format(msgs.locale, "themeOptionTerminalGlow", nil)
+}
+
+// ThemeOptionTerminalScanlines says "Scanlines"
+// in the language the app shows.
+func ThemeOptionTerminalScanlines() string { return In(i18n.Locale()).ThemeOptionTerminalScanlines() }
+
+// ThemeOptionTerminalScanlines says "Scanlines"
+// in the language of msgs.
+func (msgs Messages) ThemeOptionTerminalScanlines() string {
+	return Catalog.Format(msgs.locale, "themeOptionTerminalScanlines", nil)
 }
