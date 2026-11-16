@@ -3,6 +3,7 @@
 package main
 
 import (
+	"syscall"
 	"unsafe"
 
 	"github.com/egoist/mygo"
@@ -13,7 +14,18 @@ import (
 // app always is, so setFloatGlass blurs behind it instead.
 const floatVibrancy = mygo.VibrancyNone
 
-var procSetWindowCompositionAttribute = floatUser32.NewProc("SetWindowCompositionAttribute")
+var (
+	procSetWindowCompositionAttribute = floatUser32.NewProc("SetWindowCompositionAttribute")
+	procFloatDwmSetWindowAttribute    = syscall.NewLazyDLL("dwmapi.dll").NewProc("DwmSetWindowAttribute")
+)
+
+// Windows 11 outlines a window it rounds the corners of: none while the
+// window is locked, the lyrics alone over the desktop (DWMWA_BORDER_COLOR).
+const (
+	dwmwaBorderColor = 34
+	dwmColorDefault  = 0xFFFFFFFF
+	dwmColorNone     = 0xFFFFFFFE
+)
 
 // The accent policy of SetWindowCompositionAttribute, which DWM keeps
 // drawing whether the window is active or not (Windows 10 1803 and later).
@@ -31,12 +43,22 @@ type compositionAttrib struct {
 	size   uintptr
 }
 
-// setFloatGlass blurs what is behind the window w, a Gaussian blur, or
-// stops, and reports whether it blurs: then the window draws its own tint
-// over it (floatView). Main thread.
+// setFloatGlass blurs what is behind the window w, a Gaussian blur, and
+// outlines it, or stops both, and reports whether it blurs: then the
+// window draws its own tint over it (floatView). Main thread.
 func setFloatGlass(w *mygo.Window, on bool) bool {
 	hwnd := w.NativeHandle()
-	if hwnd == 0 || procSetWindowCompositionAttribute.Find() != nil {
+	if hwnd == 0 {
+		return false
+	}
+	border := uint32(dwmColorNone)
+	if on {
+		border = dwmColorDefault
+	}
+	if procFloatDwmSetWindowAttribute.Find() == nil { // Windows 10 ignores it
+		procFloatDwmSetWindowAttribute.Call(hwnd, dwmwaBorderColor, uintptr(unsafe.Pointer(&border)), 4)
+	}
+	if procSetWindowCompositionAttribute.Find() != nil {
 		return false
 	}
 	p := accentPolicy{state: accentDisabled}
