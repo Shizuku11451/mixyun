@@ -109,7 +109,7 @@ func TestOutputButtonBesideSpotifyConnect(t *testing.T) {
 	if _, ok := tt.Find("Output device: System default"); ok {
 		t.Error("a device button beside Spotify Connect's at 1280")
 	}
-	for _, label := range []string{"Spotify Connect devices", "Volume", "Open the mini player"} {
+	for _, label := range []string{"Spotify Connect devices", "Volume", "Open the floating window"} {
 		if r, ok := tt.Find(label); !ok || r.X+r.W > 1280 {
 			t.Errorf("%q is at %v, out of a window 1280 wide", label, r)
 		}
@@ -237,7 +237,7 @@ func TestOutputButtonHidden(t *testing.T) {
 	if _, ok := tt.Find("Output device: System default"); ok {
 		t.Error("a device button at the least width")
 	}
-	for _, label := range []string{"Volume", "Open the mini player"} {
+	for _, label := range []string{"Volume", "Open the floating window"} {
 		if r, ok := tt.Find(label); !ok || r.X+r.W > 940 {
 			t.Errorf("%q is at %v, out of a window 940 wide", label, r)
 		}

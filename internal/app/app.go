@@ -82,6 +82,9 @@ type Options struct {
 	// lyrics expands, above the taskbar, which closes as it loses the
 	// keyboard (Windows).
 	TaskbarPlayer func(a *App) *mygo.Window
+	// Float opens the floating lyrics, a window without a background
+	// over the others.
+	Float func(a *App) *mygo.Window
 	// Notch opens the player around the notch of a MacBook's screen, or
 	// returns nil where no screen has a camera housing (#46).
 	Notch func(a *App) *mygo.Window
@@ -273,6 +276,8 @@ type App struct {
 	// (startOf).
 	started    string
 	main, mini *mygo.Window
+	// float is the floating lyrics' window while it is open.
+	float *mygo.Window
 	// retitling is set while the main window's title waits to change.
 	retitling bool
 	tray      *mygo.Tray

@@ -136,10 +136,13 @@ func (a *App) openMain(hidden bool) *mygo.Window {
 			a.main, a.taskbar = nil, nil
 			a.trayHide.forget()
 		}
-		mini := a.mini
+		mini, float := a.mini, a.float
 		a.mu.Unlock()
 		if mini != nil {
 			mini.Close()
+		}
+		if float != nil {
+			float.Close()
 		}
 		a.closeNotch()
 		a.placeStatusLyrics()
@@ -240,6 +243,31 @@ func (a *App) showMini() {
 	a.mu.Unlock()
 }
 
+// toggleFloat opens the floating lyrics, or closes them when open.
+func (a *App) toggleFloat() {
+	a.mu.Lock()
+	float := a.float
+	a.mu.Unlock()
+	if float != nil {
+		float.Close()
+		return
+	}
+	if a.goPlayer.Load() == nil || a.opts.Float == nil {
+		return
+	}
+	float = a.opts.Float(a)
+	float.OnClosed(func() {
+		a.mu.Lock()
+		if a.float == float {
+			a.float = nil
+		}
+		a.mu.Unlock()
+	})
+	a.mu.Lock()
+	a.float = float
+	a.mu.Unlock()
+}
+
 // setupTray adds the tray icon, whose menu controls the player.
 func (a *App) setupTray() {
 	if len(a.opts.TrayIcon) == 0 {
@@ -255,6 +283,7 @@ func (a *App) setupTray() {
 		mygo.Separator(),
 		{Label: "Show Mixyun", Click: func(*mygo.MenuItem, *mygo.Window) { a.showMain() }},
 		{Label: "Mini player", Click: func(*mygo.MenuItem, *mygo.Window) { a.showMini() }},
+		{Label: "Floating window", Click: func(*mygo.MenuItem, *mygo.Window) { a.toggleFloat() }},
 		mygo.Separator(),
 		{Role: mygo.RoleQuit},
 	})

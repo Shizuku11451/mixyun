@@ -354,8 +354,16 @@ func (s *shell) playerSide(c *ui.Context) {
 	s.speedButton(c)
 	s.outputButton(c, room)
 	s.volumeControl(c)
-	if s.iconButton(c, "mini", "mini", locales.PlayerMiniPlayer(), false, 18).Clicked() {
-		s.showMini()
+	// It opens the floating window; its menu, the mini player, which the
+	// full bar has no room for a button of.
+	float := s.iconButton(c, "mini", "mini", locales.PlayerFloat(), false, 18)
+	float.ContextMenu(func(m *ui.Menu) {
+		if m.Item(locales.PlayerMiniPlayer()).Chosen() {
+			s.showMini()
+		}
+	})
+	if float.Clicked() {
+		go s.svc.System.ToggleFloatingLyrics()
 	}
 }
 

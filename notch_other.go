@@ -8,6 +8,10 @@ import "github.com/egoist/mygo"
 // macOS.
 func findHousing() (housing, bool) { return housing{}, false }
 
+// trackPointer does nothing but on macOS, where a window hears the pointer
+// only while its app is active.
+func trackPointer(*mygo.Window) {}
+
 // newNotchHost does nothing but on macOS, where alone the window around
 // the notch opens.
 func newNotchHost(*mygo.Window) notchHost { return noNotchHost{} }

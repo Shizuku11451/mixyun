@@ -7820,6 +7820,26 @@ func (msgs Messages) FirewallTitle() string {
 	return Catalog.Format(msgs.locale, "firewallTitle", nil)
 }
 
+// FloatClose says "Close the floating window"
+// in the language the app shows.
+func FloatClose() string { return In(i18n.Locale()).FloatClose() }
+
+// FloatClose says "Close the floating window"
+// in the language of msgs.
+func (msgs Messages) FloatClose() string {
+	return Catalog.Format(msgs.locale, "floatClose", nil)
+}
+
+// FloatWindowTitle says "Mixyun floating window"
+// in the language the app shows.
+func FloatWindowTitle() string { return In(i18n.Locale()).FloatWindowTitle() }
+
+// FloatWindowTitle says "Mixyun floating window"
+// in the language of msgs.
+func (msgs Messages) FloatWindowTitle() string {
+	return Catalog.Format(msgs.locale, "floatWindowTitle", nil)
+}
+
 // FollowEmpty says "Follow an artist from their page or their menu, and they wait here."
 // in the language the app shows.
 func FollowEmpty() string { return In(i18n.Locale()).FollowEmpty() }
@@ -14402,6 +14422,16 @@ func PlayerDisliked(title string) string { return In(i18n.Locale()).PlayerDislik
 // in the language of msgs.
 func (msgs Messages) PlayerDisliked(title string) string {
 	return Catalog.Format(msgs.locale, "playerDisliked", map[string]any{"title": title})
+}
+
+// PlayerFloat says "Open the floating window"
+// in the language the app shows.
+func PlayerFloat() string { return In(i18n.Locale()).PlayerFloat() }
+
+// PlayerFloat says "Open the floating window"
+// in the language of msgs.
+func (msgs Messages) PlayerFloat() string {
+	return Catalog.Format(msgs.locale, "playerFloat", nil)
 }
 
 // PlayerJumpToHighlight says "Jump to the highlight"

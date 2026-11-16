@@ -105,6 +105,7 @@ func main() {
 		Interface:     Open,
 		Mini:          OpenMini,
 		TaskbarPlayer: OpenTaskbarPlayer,
+		Float:         OpenFloat,
 		Notch:         OpenNotch,
 	})
 	if err != nil {

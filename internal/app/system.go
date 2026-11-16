@@ -155,6 +155,9 @@ func (s *System) ClearArtwork() error { return s.a.artStore.Clear() }
 // ShowMiniPlayer shows the mini player, a small window over the others.
 func (s *System) ShowMiniPlayer() { s.a.showMini() }
 
+// ToggleFloatingLyrics opens the floating lyrics, or closes them when open.
+func (s *System) ToggleFloatingLyrics() { s.a.toggleFloat() }
+
 // ShowMainWindow shows the main window and closes the mini player.
 func (s *System) ShowMainWindow() {
 	s.a.showMain()
