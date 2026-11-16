@@ -109,6 +109,9 @@
 - `mixmusic://` ሊንኮች።
 - **Last.fm፦** የሚሰሙት እያንዳንዱ ትራክ ፕሮፋይልዎን ይቀላቀላል፣ ከመስመር ውጭ
   የተደረጉ scrobbleዎች ተመልሰው መስመር ላይ ሲሆኑ ይላካሉ።
+- **ListenBrainz፦** ያው ነገር፣ ከLast.fm ጋር ወይም ያለ እሱ፣ ወደ ListenBrainz
+  ወይም ወደ የራስዎ ሰርቨር፣ ለምሳሌ Maloja። የወደዷቸው ትራኮች ወደ ማንኛቸውም
+  እንደ love ሊላኩ ይችላሉ።
 - **Discord፦** ፕሮፋይልዎ የሚጫወተውን ከሽፋን ምስሉና ከቀረው ጊዜ ጋር ያሳያል።
 - **ዝማኔዎች፦** MixMusic በሚጀምርበትና በየጥቂት ሰዓታት አዲስ ልቀት መኖሩን
   ይፈትሻል፣ ፊርማውን ያረጋግጣል፣ ሲነግሩት ይጭነዋል፣ ወይም ከመረጡ በራሱ።
@@ -229,10 +232,14 @@ Flatpak MixMusic ን በሳንድቦክስ ውስጥ ያሠራዋል፣ ይህ�
 MixMusic ቅንብሮቹንና ቤተ-መጻሕፍቱን በ`~/.var/app/io.github.fzn0x.mixmusic`
 ውስጥ ያቆያል፣ ከ`.deb`፣ `.rpm`፣ AppImage ወይም ማህደር ቅጂ የተለየ፣ ሁለቱም
 በአንድ ጊዜ ሊሠሩ ይችላሉ። የአንድ ቅጂ ቅንብሮችንና ቤተ-መጻሕፍት ለማምጣት፣
-ሁለቱንም ዝጉ፣ `settings.json`፣ `library.json`፣ `queue.json` እና
-`addons` ፎልደርን ከ`~/.config/MixMusic` ወደ
-`~/.var/app/io.github.fzn0x.mixmusic/config/MixMusic` ገልብጡ፣ እና ወደ
+ሁለቱንም ዝጉ፣ ከዚያ `settings.json`፣ `library.json`፣ `queue.json`፣
+`positions.json`ን እንዲሁም `addons` እና `mix-covers` ፎልደሮችን ከ`~/.config/MixMusic` ወደ
+`~/.var/app/io.github.fzn0x.mixmusic/config/MixMusic` ገልብጡ። መጀመሪያ ሁለቱንም
+ዝጉ፦ እየሠራ ያለ MixMusic `library.json`ንና አብዛኞቹን ሌሎች ፋይሎች በሜሞሪ ውስጥ
+ያቆያል፣ በሚቀጥለው ሲያስቀምጥም የተገለበጠውን ፋይል ይተካዋል። ከዚያ ወደ
 መለያዎችዎ እንደገና ይግቡ፦ መግቢያዎች በሌላው ቅጂ keyring ውስጥ ይቀራሉ።
+[የዳታና የግላዊነት ገጹ](docs/data-and-privacy.md#the-data-folder) እያንዳንዱ ፋይል
+ምን እንደሚይዝ ይናገራል።
 
 በFlatpak ውስጥ፣ ሲገቡ መጀመር በዴስክቶፕዎ በኩል ይሄዳል፣ መጀመሪያ ሊጠይቅዎ
 ይችላል፣ የራስዎ yt-dlp ደግሞ በ`~/.var/app/io.github.fzn0x.mixmusic` ውስጥ
@@ -260,6 +267,9 @@ Flatpak አዲስ ነው፦ በዴስክቶፕዎ ላይ እንዴት እንደ�
   የAPI መለያ ይፍጠሩ (ማንኛውም ስም፣ callback URL አያስፈልግም)፣ የAPI ቁልፉንና
   shared secret ን በSettings › Accounts ውስጥ ይለጥፉ፣ እና MixMusic ን
   በብሮውዘርዎ ያጽድቁ።
+- **ListenBrainz፦** ከ[ListenBrainz ቅንብሮችዎ](https://listenbrainz.org/settings/)
+  ወይም ከራስዎ ሰርቨር የሚያገኙትን user token በSettings › Accounts ውስጥ
+  ይለጥፉ።
 - **Discord፦** የDiscord መተግበሪያ እየሠራ ሳለ ፕሮፋይልዎ የሚያዳምጡትን
   ያሳያል። በSettings › Desktop (ቅንብሮች › ዴስክቶፕ) ውስጥ ያጥፉት።
 
@@ -461,12 +471,18 @@ MixMusic የራሱ መለያ፣ ሰርቨር፣ ትንታኔ ወይም ቴሌሜ
   እንዲተረጉመው።
 - **LRCLIB፦** የሚጫወተው ትራክ ርዕስ፣ አርቲስቶች፣ አልበምና ርዝመት፣ ግጥሙን
   ለማግኘት።
+- **SponsorBlock፦** Skip the parts SponsorBlock marks (SponsorBlock
+  ምልክት ያደረገባቸውን ክፍሎች ዝለል) ሲያበሩ ብቻ፣ የእያንዳንዱ video ID hash
+  የመጀመሪያዎቹ 4 ፊደላት፣ ID ራሱ ፈጽሞ አይላክም፣ ምልክት ያደረገባቸውን
+  ክፍሎች ለማግኘት።
 - **GitHub፦** በሚጀምርበትና በየጥቂት ሰዓታት አዲስ ስሪት መኖሩን መፈተሽ፣
   በSettings › About (ቅንብሮች › ስለ) ውስጥ ሊያጠፉት ይችላሉ፤ ገበያውን ሲከፍቱ
   የማህበረሰብ registry፤ የyt-dlp ውርዶች፤ እና ከጃፓንኛ ግጥም አጠገብ ሮማጂን
   በመጀመሪያ ሲያበሩ የካንጂ ንባቦች መዝገበ ቃላት (11.7 MB)። ሮማጂ በኮምፒውተርዎ
   ላይ ይሠራል፦ ግጥሙ አይላክም።
 - **Last.fm፣** ሲያገናኙት፦ የሚያጫውቱት።
+- **ListenBrainz፣** ወይም የእሱን API የሚያቀርብ የራስዎ ሰርቨር፣ ሲያገናኙት፦
+  የሚያጫውቱት።
 - **Discord፣** ካላጠፉት፦ የሚጫወተው፣ በኮምፒውተርዎ ላይ ወዳለው የDiscord
   መተግበሪያ ይላካል፣ እሱም በፕሮፋይልዎ ላይ ያሳየዋል።
 
@@ -523,7 +539,7 @@ MixMusic የተገነባው በእነዚህ ፕሮጀክቶች ላይ ነው፦
   [appimagetool](https://github.com/AppImage/appimagetool)፣ AppImageዎችን።
 - **[yt-dlp](https://github.com/yt-dlp/yt-dlp)**፣ MixMusic ራሱ ማግኘት
   የማይችላቸውን ትራኮች ድምፅ የሚያገኝ።
-- **[Better Lyrics](https://betterlyrics.org)**.
+- **[Better Lyrics](https://betterlyrics.org)**፣ ቃል በቃል የተመሳሰሉ ግጥሞችን የሚያቆይ አገልግሎት።
 - **[Unison](https://unison.betterlyrics.org)**፣ በUnison Community License ስር ያለ ክፍት፣ በህዝብ
   ተሳትፎ የሚሞላ የግጥም ዳታቤዝ፣ እና **[LRCLIB](https://lrclib.net)**፣ ክፍት
   የተመሳሰሉ ግጥሞች ዳታቤዝ።

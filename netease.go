@@ -19,7 +19,7 @@ func (s *shell) neteaseAccount(c *ui.Context, ne app.NetEaseAccount) {
 				s.hint(c, locales.AccountSettingsNetEaseHint())
 				label := locales.AccountSettingsNetEaseSignInButton()
 				if s.signingIn == "netease" {
-					label = locales.AccountSettingsNetEaseWaitingWindow()
+					label = locales.AccountSettingsWaitingWindow()
 				}
 				if s.button(c, "netease-in", label, true).Disabled(s.signingIn != "").Clicked() {
 					s.account("netease", locales.AccountSettingsNetEaseSignedIn(), func(ctx context.Context) error {

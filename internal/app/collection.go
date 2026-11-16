@@ -35,7 +35,8 @@ func (c *Collection) LikedIDs() []string {
 
 // SetLiked likes or unlikes a track. Spotify tracks are also saved to, or
 // removed from, the user's Spotify library when they signed in, and YouTube
-// Music tracks liked or unliked on YouTube Music. Liking a disliked track
+// Music tracks liked or unliked on YouTube Music; the scrobbling services
+// hear of it as loves, where the settings say to. Liking a disliked track
 // takes the dislike back; the player hears of that from the caller.
 func (c *Collection) SetLiked(ctx context.Context, track media.Track, liked bool) error {
 	track = c.a.asSong(track)
@@ -44,6 +45,7 @@ func (c *Collection) SetLiked(ctx context.Context, track media.Track, liked bool
 	}
 	c.a.syncYouTubeLike(ctx, track, liked)
 	c.a.syncSpotifyLike(ctx, track, liked)
+	c.a.sendLoves(ctx, track, liked)
 	return nil
 }
 
@@ -82,6 +84,7 @@ func (c *Collection) SetDisliked(ctx context.Context, track media.Track, dislike
 	c.a.syncYouTubeDislike(ctx, track, disliked)
 	if unliked {
 		c.a.syncSpotifyLike(ctx, track, false)
+		c.a.sendLoves(ctx, track, false)
 	}
 	return nil
 }
@@ -210,7 +213,7 @@ func (c *Collection) Stats(days int) library.Stats { return c.a.library.Stats(da
 // Daily returns the plays and minutes of each of the last n days.
 func (c *Collection) Daily(n int) []library.DayPlays { return c.a.library.Daily(n) }
 
-// RecapYears lists the years the history has plays in, the latest first.
+// RecapYears lists the years the play log has plays in, the latest first.
 func (c *Collection) RecapYears() []int { return c.a.library.RecapYears() }
 
 // Recap sums up what the user played in a calendar year.

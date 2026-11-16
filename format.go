@@ -27,6 +27,15 @@ func clock(d time.Duration) string {
 	return fmt.Sprintf("%d:%02d", m, s)
 }
 
+// clockLength writes how long a track or an episode lasts, as clock does,
+// but rounded up to the whole second, as YouTube Music lists lengths: a
+// stream 213.26 s long is 3:34, as its row in a list says, where clock
+// would say 3:33 (#718). Less than a millisecond past a second, as a
+// decoder's length may be, doesn't count. Positions keep clock.
+func clockLength(d time.Duration) string {
+	return clock((d.Truncate(time.Millisecond) + time.Second - time.Millisecond).Truncate(time.Second))
+}
+
 // longDuration writes a duration as "1 hr 12 min" or "42 min".
 func longDuration(d time.Duration) string {
 	min := int((d + 30*time.Second) / time.Minute)
@@ -60,6 +69,40 @@ func thousands(n int) string {
 		s = "-" + s
 	}
 	return s
+}
+
+// weekdayName writes the weekday of t in the app's language: "Tue".
+func weekdayName(t time.Time) string {
+	return i18n.FormatDate(i18n.Locale(), t, i18n.DateOptions{Skeleton: "E"})
+}
+
+// monthName writes the month of t in the app's language: "Oct".
+func monthName(t time.Time) string {
+	return i18n.FormatDate(i18n.Locale(), t, i18n.DateOptions{Skeleton: "MMM"})
+}
+
+// dayMonth writes the day and month of t: "20 Oct", or in full "20 October".
+func dayMonth(t time.Time, full bool) string {
+	month := monthName(t)
+	if full {
+		month = i18n.FormatDate(i18n.Locale(), t, i18n.DateOptions{Skeleton: "MMMM"})
+	}
+	return locales.FormatDayMonth(strconv.Itoa(t.Day()), month)
+}
+
+// monthDay writes the month and day of t, as "Oct 20".
+func monthDay(t time.Time) string {
+	return locales.FormatMonthDay(monthName(t), strconv.Itoa(t.Day()))
+}
+
+// monthDayYear writes the date of t with its year, as "Oct 20, 2025".
+func monthDayYear(t time.Time) string {
+	return locales.FormatMonthDayYear(monthName(t), strconv.Itoa(t.Day()), strconv.Itoa(t.Year()))
+}
+
+// monthYear writes the month and year of t, as "Oct 2025".
+func monthYear(t time.Time) string {
+	return locales.FormatMonthYear(monthName(t), strconv.Itoa(t.Year()))
 }
 
 // names joins the names of artists.
@@ -148,46 +191,6 @@ func playsLabel(t media.Track) string {
 		return locales.FormatViews(int(t.Plays), compactCount(t.Plays))
 	}
 	return locales.FormatPlays(int(t.Plays), compactCount(t.Plays))
-}
-
-// monthName writes the month of t in the app's language: "Oct", or in full
-// "October"; "10月" in Chinese.
-func monthName(t time.Time, full bool) string {
-	skeleton := "MMM"
-	if full {
-		skeleton = "MMMM"
-	}
-	return i18n.FormatDate(i18n.Locale(), t, i18n.DateOptions{Skeleton: skeleton})
-}
-
-// weekdayName writes the weekday of t in the app's language: "Tue", "周二".
-func weekdayName(t time.Time) string {
-	return i18n.FormatDate(i18n.Locale(), t, i18n.DateOptions{Skeleton: "E"})
-}
-
-// dayMonth writes the day and month of t: "20 Oct", or in full "20 October".
-func dayMonth(t time.Time, full bool) string {
-	return locales.FormatDayMonth(strconv.Itoa(t.Day()), monthName(t, full))
-}
-
-// monthDay writes the month and day of t, as "Oct 20".
-func monthDay(t time.Time) string {
-	return locales.FormatMonthDay(monthName(t, false), strconv.Itoa(t.Day()))
-}
-
-// monthDayYear writes the date of t with its year, as "Oct 20, 2025".
-func monthDayYear(t time.Time) string {
-	return locales.FormatMonthDayYear(monthName(t, false), strconv.Itoa(t.Day()), strconv.Itoa(t.Year()))
-}
-
-// monthYear writes the month and year of t, as "Oct 2025".
-func monthYear(t time.Time) string {
-	return locales.FormatMonthYear(monthName(t, false), strconv.Itoa(t.Year()))
-}
-
-// weekdayDayMonth writes the weekday, day and month of t, as "Tue 20 Oct".
-func weekdayDayMonth(t time.Time) string {
-	return locales.FormatWeekdayDayMonth(weekdayName(t), strconv.Itoa(t.Day()), monthName(t, false))
 }
 
 // ms is v milliseconds.

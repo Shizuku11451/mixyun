@@ -166,6 +166,9 @@ func (s *shell) searchPage(c *ui.Context, q string) {
 				videos = videos[:min(len(videos), 5)]
 			}
 			empty := locales.SearchNoVideos()
+			if s.searchScope == spotifyScope {
+				empty = locales.SearchOnlyYouTubeVideos()
+			}
 			ui.Column(c).Margin(0, 0, 48).Children(func() {
 				s.trackList(c, "video-results", videos, trackListOptions{art: true, plays: true, empty: empty})
 			})

@@ -55,10 +55,10 @@ func (s *shell) recapView(c *ui.Context, years []int) {
 	r := s.svc.Collection.Recap(years[s.recapPick])
 	size := k.subtitleSize()
 	ui.RichText(c,
-		ui.Span{Text: locales.RecapYouPlayed(strconv.Itoa(r.Year)), Size: size, Weight: 300},
+		ui.Span{Text: locales.RecapYouPlayed(r.Year), Size: size, Weight: 300},
 		ui.Span{Text: locales.RecapTracksPlayed(r.Plays), Size: size, Weight: 400},
 		ui.Span{Text: locales.RecapFor(), Size: size, Weight: 300},
-		ui.Span{Text: locales.RecapMinutes(thousands(r.Minutes)), Size: size, Weight: 400},
+		ui.Span{Text: locales.RecapMinutes(r.Minutes), Size: size, Weight: 400},
 		ui.Span{Text: locales.RecapPeriod(), Size: size, Weight: 300},
 	).MaxWidth(760).Margin(0, 0, 32)
 
@@ -136,15 +136,15 @@ func (s *shell) recapList(c *ui.Context, title string, rows []recapRow) {
 func recapFacts(r library.Recap) []string {
 	var out []string
 	if r.BusiestMonth > 0 {
-		out = append(out, locales.RecapBusiest(monthName(time.Date(r.Year, r.BusiestMonth, 1, 0, 0, 0, 0, time.UTC), true), r.BusiestMinutes))
+		out = append(out, locales.RecapBusiest(r.BusiestMonth.String(), r.BusiestMinutes))
 	}
 	if r.First != nil {
 		out = append(out, locales.RecapBegan(quoted(r.First.Track.Title, names(r.First.Track.Artists)),
-			dayMonth(r.First.PlayedAt.In(recapClock().Location()), true)))
+			r.First.PlayedAt.In(recapClock().Location()).Format("2 January")))
 	}
 	if r.Repeated != nil {
 		out = append(out, locales.RecapRepeated(quoted(r.Repeated.Track.Title, names(r.Repeated.Track.Artists)),
-			strconv.Itoa(r.Repeated.Plays), recapDay(r.Repeated.Date)))
+			r.Repeated.Plays, recapDay(r.Repeated.Date)))
 	}
 	if r.NewKnown {
 		out = append(out, locales.RecapFound(r.NewArtists))
@@ -173,9 +173,9 @@ func recapDay(date string) string {
 // story's name says so, so that both saved in one folder keep apart.
 func recapFileName(r library.Recap, size sharecard.Size) string {
 	if size == sharecard.Story {
-		return fmt.Sprintf("Mixyun %d story", r.Year)
+		return locales.RecapFileNameStory(r.Year)
 	}
-	return fmt.Sprintf("Mixyun %d", r.Year)
+	return locales.RecapFileName(r.Year)
 }
 
 // recapCard builds the card of r in the colours of the current theme: the
@@ -189,7 +189,7 @@ func recapCardOf(r library.Recap, colors sharecard.Colors) cardBuilder {
 		c := sharecard.Card{
 			Size: size, Colors: colors,
 			Lines: []sharecard.Line{
-				{Text: locales.RecapCardHeading(strconv.Itoa(r.Year)), Size: 34, Weight: 600, Ink: colors.Accent},
+				{Text: locales.RecapCardHeading(r.Year), Size: 34, Weight: 600, Ink: colors.Accent},
 				{Text: thousands(r.Minutes), Size: 170, Weight: 700, Gap: 10},
 				{Text: locales.RecapCardMinutes(r.Plays), Size: 42, Weight: 400, Ink: colors.Muted, MaxLines: 2},
 			},

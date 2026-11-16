@@ -1497,7 +1497,7 @@ func TestDayChart(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	days := s.svc.Collection.Stats(statsRanges[0]).Daily
+	days := s.svc.Collection.Stats(statsRanges[0].days).Daily
 	n := len(days)
 	tt := testerOf(t, s, 1280, 1600)
 	show(s, tt, "/stats")

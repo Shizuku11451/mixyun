@@ -69,6 +69,16 @@ of its own.
 - **[yt-dlp](https://github.com/yt-dlp/yt-dlp)**, which finds the audio of
   the tracks MixMusic can't find itself, and the 5.1 surround mixes, and
   reads a browser's YouTube sign-in.
+- **[SponsorBlock](https://sponsor.ajay.app)**, the open, crowdsourced
+  database of the parts of YouTube videos, by Ajay Ramachandran and its
+  contributors, whose sponsor reads, intros, parts without music and
+  highlights MixMusic skips and marks while
+  [Skip the parts SponsorBlock marks](playing-music.md#skipping-parts-of-videos)
+  is on. Its data is under
+  [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/):
+  "Uses SponsorBlock data licensed under CC BY-NC-SA 4.0 from
+  https://sponsor.ajay.app/", as Settings › Playback › Skip parts of
+  videos and Settings › About › Licenses say.
 - **[Deno](https://deno.com)**, **[Node.js](https://nodejs.org)**,
   **[Bun](https://bun.sh)** and **[QuickJS](https://bellard.org/quickjs/)**,
   the JavaScript runtimes yt-dlp solves YouTube's challenges with.
@@ -91,7 +101,8 @@ of its own.
   translates lyrics, and
   romanizes Arabic, while you turn those on.
 - **[LRCLIB](https://lrclib.net)**, the open database of synced lyrics,
-  which MixMusic asks when Unison has none.
+  which MixMusic asks when Unison has none, and whose words timed one by
+  one light as they are sung.
 - **[kagome](https://github.com/ikawaha/kagome)**, by ikawaha, the
   Japanese morphological analyser that reads the kanji of lyrics for
   their romaji, with the IPA dictionary of

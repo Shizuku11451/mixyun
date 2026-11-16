@@ -77,7 +77,7 @@ func (s *shell) stageQueue(c *ui.Context, h float32) {
 	q, at := s.st.Queue, s.st.Index
 	room := min(max(int((h-2*80+gap)/(size+gap)), 0), stageQueueCovers)
 	ui.Column(c.Key("stage-queue")).Width(stageQueueW).Height(h).Shrink(0).AlignItems(ui.Center).Justify(ui.Center).Gap(gap).
-		Label(locales.RailUpNext()).Children(func() {
+		Label(locales.PanelUpNext()).Children(func() {
 		for rank, i := 0, at+1; i < len(q) && rank < room; rank, i = rank+1, i+1 {
 			s.stageQueueCover(c, i, q[i], rank, size)
 		}
@@ -90,7 +90,7 @@ func (s *shell) stageQueue(c *ui.Context, h float32) {
 func (s *shell) stageQueueCover(c *ui.Context, i int, it player.Item, rank int, size float32) {
 	t := it.Track
 	b := s.buttonBase(c.Key("stage-q-"+it.UID)).Size(size, size).Shrink(0).Radius(10).Clip().
-		Label(locales.TilesPlay(t.Title)).Tooltip(t.Title + " · " + names(t.Artists)).Cursor(ui.CursorPointer)
+		Label(locales.TracksPlay(t.Title)).Tooltip(t.Title + " · " + names(t.Artists)).Cursor(ui.CursorPointer)
 	op := max(1-0.09*float32(rank), 0.45)
 	if it.Skip != "" {
 		op = min(op, 0.35)

@@ -15,6 +15,8 @@ import (
 
 func init() { addSettings("desktop", 20, (*shell).assistantSettings) }
 
+// The words of the settings' search, and where the docs tell how to add
+// MixMusic to an assistant.
 const (
 	assistantWords = "ai assistant assistants mcp model context protocol agent llm chat chatbot claude control command server"
 	// assistantHelp is where docs/ai-assistants.md tells how to add

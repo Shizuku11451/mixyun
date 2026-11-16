@@ -16,16 +16,15 @@ import (
 
 // The colours from a file, in Settings › Appearance › Colour and type.
 
-// colorSource is a choice of Colours from a file, and its label.
-type colorSource struct {
+// colorSources are the choices of Colours from a file.
+func colorSources() []struct {
 	source settings.ColorSource
 	label  string
-}
-
-// colorSources are the choices of Colours from a file. A function, so that
-// their labels show in the language chosen.
-func colorSources() []colorSource {
-	return []colorSource{
+} {
+	return []struct {
+		source settings.ColorSource
+		label  string
+	}{
 		{settings.ColorsTheme, locales.ColorFileSourceOff()},
 		{settings.ColorsPywal, "pywal"},
 		{settings.ColorsMatugen, "matugen"},

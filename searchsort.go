@@ -31,17 +31,6 @@ type searchSorting struct {
 	general, albums string
 }
 
-// sortLabel is what the Sort by select calls the order id.
-func sortLabel(id string) string {
-	switch id {
-	case sortMostPlayed:
-		return locales.SearchSortPlayed()
-	case sortNewest:
-		return locales.SearchSortNewest()
-	}
-	return locales.SearchSortBest()
-}
-
 // searchSortOptions are the orders the pivot offers, or none where only
 // the services' own is there: Spotify gives apps no play counts, so with
 // only Spotify chosen, Most played isn't offered, and NetEase Cloud Music
@@ -91,11 +80,25 @@ func (s *shell) sortSelect(c *ui.Context, q, pivot string, scope int) string {
 	for i, o := range options {
 		labels[i] = sortLabel(o)
 	}
-	label := sortLabel(*chosen)
-	if s.selectOf(c.Key("sort"), &label, labels).Width(170).Label(locales.SearchSortBy()).Changed() {
-		*chosen = options[slices.Index(labels, label)]
+	shown := sortLabel(*chosen)
+	if s.selectOf(c.Key("sort"), &shown, labels).Width(170).Label(locales.TrackToolsSortBy()).Changed() {
+		if i := slices.Index(labels, shown); i >= 0 {
+			*chosen = options[i]
+		}
 	}
 	return *chosen
+}
+
+// sortLabel is the name of an order in the language shown: the orders
+// themselves stay as their English names, which the searches hold by.
+func sortLabel(order string) string {
+	switch order {
+	case sortMostPlayed:
+		return locales.SearchSortMostPlayed()
+	case sortNewest:
+		return locales.SearchSortNewest()
+	}
+	return locales.SearchSortBestMatch()
 }
 
 // byPlayed orders by the count of plays or views, the most first, and
@@ -175,6 +178,6 @@ func (s *shell) newestAlbumTiles(c *ui.Context, key string, albums []media.Album
 // sortNote tells, while Most played orders the results of all services,
 // where those with no counts go.
 func (s *shell) sortNote(c *ui.Context) {
-	ui.Text(c, locales.SearchSortNote()).
+	ui.Text(c, locales.SearchSortSpotifyNote()).
 		FontSize(s.lk.smallSize()).TextColor(s.lk.muted).Margin(0, 0, 16)
 }

@@ -15,7 +15,7 @@ work=$(mktemp -d)
 trap 'rm -rf "$work"' EXIT
 cp -R locales "$work/"
 rm "$work/locales/catalog_gen.go"
-echo '{"name": "Mixyun", "i18n": {"dir": "locales", "source": "en"}}' >"$work/mygo.json"
+echo '{"name": "MixMusic", "i18n": {"dir": "locales", "source": "en"}}' >"$work/mygo.json"
 
 go run github.com/egoist/mygo/cmd/mygo i18n check "$work"
 # It warns that the copy has no go.mod, which only the import check needs.

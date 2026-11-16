@@ -16,7 +16,8 @@ func init() { addSettings(desktopRows, 15, (*shell).keepOnTopRow) }
 
 // keepOnTopTitle and keepOnTopDescription tell of the setting, in Settings
 // › On the desktop.
-func keepOnTopTitle() string       { return locales.KeepOnTopTitle() }
+func keepOnTopTitle() string { return locales.KeepOnTopTitle() }
+
 func keepOnTopDescription() string { return locales.KeepOnTopDescription() }
 
 // keepOnTopRow turns keeping the main window on top on and off.

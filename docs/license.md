@@ -65,14 +65,22 @@ Settings › About › Licenses shows each of them in the app.
 
 ## What MixMusic doesn't include
 
-- **Lyrics** come from Better Lyrics, Unison, LRCLIB and YouTube Music as
-  you play, and aren't part of MixMusic. Unison's data is under the
+- **Lyrics** come from Better Lyrics, Unison, LRCLIB, YouTube Music and
+  the captions of videos on YouTube as you play, and aren't part of
+  MixMusic. Unison's data is under the
   [Unison Community License](https://github.com/better-lyrics/unison/blob/main/LICENSE-DATA.md),
   which lets people, non-profits and open-source projects like MixMusic
   use it, and asks apps that show it to credit Unison. Unison asks for the
   person who submitted the lyrics too, and the lyrics panel credits both:
   "lyrics from Unison · submitted by <name>", linked to their pages on
   Unison. Better Lyrics is credited under its own lyrics too.
+- **The parts of videos MixMusic skips** come from SponsorBlock as you
+  play, while you turn it on, and aren't part of MixMusic. SponsorBlock's
+  data is under
+  [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/),
+  which MixMusic credits as SponsorBlock asks, in Settings › Playback ›
+  Skip parts of videos and Settings › About › Licenses: "Uses SponsorBlock
+  data licensed under CC BY-NC-SA 4.0 from https://sponsor.ajay.app/".
 - **yt-dlp and the JavaScript runtimes** are programs of their own, which
   MixMusic runs, under their own licences. MixMusic downloads yt-dlp from
   its releases when you install it.

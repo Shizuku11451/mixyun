@@ -23,28 +23,20 @@ func gapText(noun string, left media.Unplayable, hidden int) string {
 	if n := left.Total(); n > 0 {
 		var kinds []string
 		if left.Local > 0 {
-			kinds = append(kinds, locales.PlaylistGapLocal(left.Local, thousands(left.Local)))
+			kinds = append(kinds, locales.PlaylistGapLocalFiles(left.Local))
 		}
 		if left.Episodes > 0 {
-			kinds = append(kinds, locales.PlaylistGapEpisodes(left.Episodes, thousands(left.Episodes)))
+			kinds = append(kinds, locales.PlaylistGapEpisodes(left.Episodes))
 		}
 		if left.Gone > 0 {
-			kinds = append(kinds, locales.PlaylistGapGone(left.Gone, thousands(left.Gone)))
+			kinds = append(kinds, locales.PlaylistGapGone(left.Gone))
 		}
-		parts = append(parts, locales.PlaylistGapItems(thousands(n), noun, joinAnd(kinds)))
+		parts = append(parts, locales.PlaylistGapCantPlay(thousands(n), noun, and(kinds)))
 	}
 	if hidden > 0 {
-		parts = append(parts, locales.PlaylistGapHidden(hidden, thousands(hidden)))
+		parts = append(parts, locales.PlaylistGapHidden(hidden))
 	}
 	return strings.Join(parts, " ")
-}
-
-// joinAnd lists words as "a, b and c", in the words of the language.
-func joinAnd(words []string) string {
-	if len(words) < 2 {
-		return strings.Join(words, "")
-	}
-	return strings.Join(words[:len(words)-1], locales.StatsComma()) + locales.StatsAnd() + words[len(words)-1]
 }
 
 // gapLine shows gapText under the header of the playlist r reads, once all
@@ -86,7 +78,7 @@ func readShort(p media.Playlist) bool {
 // is left to read on from.
 func (s *shell) shortLine(c *ui.Context, r *playlistRead, noun string) {
 	k := &s.lk
-	text := locales.PlaylistShort(thousands(len(r.p.Tracks)), noun, thousands(r.p.TrackCount))
+	text := locales.PlaylistGapShort(thousands(len(r.p.Tracks)), noun, thousands(r.p.TrackCount))
 	ui.Row(c).Gap(12).Margin(0, 0, 16).Children(func() {
 		ui.Text(c, text).FontSize(k.smallSize()).TextColor(k.muted).MaxWidth(640)
 		if s.button(c, "retry", locales.WidgetsTryAgain(), false).Clicked() {

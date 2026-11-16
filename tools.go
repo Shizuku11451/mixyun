@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"slices"
-	"strconv"
 	"time"
 
 	"github.com/egoist/mygo/ui"
@@ -182,6 +181,11 @@ func ownYTDLPHelp(flatpak bool) string {
 
 func init() { addSettings("playback", 70, (*shell).cacheSettings) }
 
+// cacheRows are the rows of Settings › Playback › Offline cache that
+// register from their features' files, between the covers kept and the
+// cache's size.
+const cacheRows = "playback › Offline cache"
+
 // cacheSettings show what the offline cache holds, and bound it.
 func (s *shell) cacheSettings(c *ui.Context) {
 	k := &s.lk
@@ -220,6 +224,7 @@ func (s *shell) cacheSettings(c *ui.Context) {
 				}()
 			}
 		})
+		s.settingsOf(c, cacheRows)
 		// The sizes the web interface offered, and one of the user's own.
 		sizes := cacheSizes
 		if !slices.Contains(sizes, s.set.CacheSizeMB) {
@@ -256,7 +261,7 @@ func cacheSizeLabel(mb int) string {
 	case mb == 0:
 		return locales.CacheSettingsSizeOff()
 	case mb%1024 == 0:
-		return strconv.Itoa(mb/1024) + " GB"
+		return locales.CacheSizeGB(mb / 1024)
 	}
-	return strconv.Itoa(mb) + " MB"
+	return locales.CacheSizeMB(mb)
 }

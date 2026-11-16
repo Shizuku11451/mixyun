@@ -114,6 +114,9 @@
 - `mixmusic://` لنکس۔
 - **Last.fm:** آپ کا سنا ہوا ہر ٹریک آپ کی پروفائل میں شامل ہو جاتا ہے، اور
   آف لائن ہوئے اسکروبلز آپ کے آن لائن ہوتے ہی بھیج دیے جاتے ہیں۔
+- **ListenBrainz:** یہی، Last.fm کے ساتھ یا اس کے بغیر، ListenBrainz پر یا
+  آپ کے اپنے کسی سرور پر، جیسے Maloja۔ لائک کیے گئے ٹریکس ان میں سے کسی پر بھی
+  love کے طور پر جا سکتے ہیں۔
 - **Discord:** آپ کی پروفائل دکھاتی ہے کہ کیا چل رہا ہے، اس کے آرٹ ورک اور
   باقی وقت کے ساتھ۔
 - **اپڈیٹس:** MixMusic شروع ہونے پر اور ہر چند گھنٹوں بعد نئی ریلیز دیکھتا
@@ -255,11 +258,15 @@ Flatpak، MixMusic کو ایک سینڈ باکس میں چلاتا ہے، جسے
 سیٹنگز اور لائبریری `~/.var/app/io.github.fzn0x.mixmusic` میں رکھتا ہے، جو
 `.deb`، `.rpm`، AppImage یا آرکائیو والی کاپی سے الگ ہے، اور دونوں ایک ساتھ
 چل سکتی ہیں۔ کسی کاپی کی سیٹنگز اور لائبریری ساتھ لانے کے لیے دونوں بند
-کریں، `settings.json`، `library.json`، `queue.json` اور `addons` فولڈر کو
-`~/.config/MixMusic` سے
-`~/.var/app/io.github.fzn0x.mixmusic/config/MixMusic` میں کاپی کریں، اور
-اپنے اکاؤنٹس میں دوبارہ سائن اِن کریں: سائن اِنز دوسری کاپی کی keyring میں
-رہتے ہیں۔
+کریں، پھر `settings.json`، `library.json`، `queue.json`، `positions.json`
+اور `addons` و `mix-covers` فولڈرز کو `~/.config/MixMusic` سے
+`~/.var/app/io.github.fzn0x.mixmusic/config/MixMusic` میں کاپی کریں۔ پہلے
+دونوں بند کریں: چلتا ہوا MixMusic `library.json` اور زیادہ تر دوسری فائلیں
+میموری میں رکھتا ہے اور اگلی بار محفوظ کرتے وقت کاپی کی گئی فائل کی جگہ
+اپنی فائل لکھ دیتا ہے۔ پھر اپنے اکاؤنٹس میں دوبارہ سائن اِن کریں: سائن اِنز
+دوسری کاپی کی keyring میں رہتے ہیں۔
+[ڈیٹا اور پرائیویسی کا صفحہ](docs/data-and-privacy.md#the-data-folder) بتاتا
+ہے کہ ہر فائل میں کیا ہوتا ہے۔
 
 Flatpak میں لاگ اِن پر شروع ہونا آپ کے ڈیسک ٹاپ کے ذریعے ہوتا ہے، جو پہلے
 آپ سے پوچھ سکتا ہے، اور آپ کا اپنا yt-dlp
@@ -289,6 +296,8 @@ Flatpak میں لاگ اِن پر شروع ہونا آپ کے ڈیسک ٹاپ ک
   پر ایک API اکاؤنٹ بنائیں (کوئی بھی نام، کوئی callback URL نہیں)، اس کی API
   key اور shared secret کو Settings › Accounts میں پیسٹ کریں، اور اپنے براؤزر
   میں MixMusic کو منظوری دیں۔
+- **ListenBrainz:** اپنی [ListenBrainz ترتیبات](https://listenbrainz.org/settings/)
+  کا، یا اپنے سرور کا، user token Settings › Accounts میں پیسٹ کریں۔
 - **Discord:** جب تک Discord ایپ چل رہی ہو، آپ کی پروفائل دکھاتی ہے کہ آپ کیا
   سن رہے ہیں۔ اسے Settings › Desktop (ترتیبات › ڈیسک ٹاپ) میں بند کریں۔
 
@@ -527,12 +536,17 @@ MixMusic کا اپنا کوئی اکاؤنٹ، سرور، analytics یا telemet
   (translate) یا رومن (romanize) آن کریں: چلتے ٹریک کے بول، اس کی video ID کے
   ساتھ، جنھیں Unison، Google سے ترجمہ کرواتا ہے۔
 - **LRCLIB:** چلتے ٹریک کا عنوان، فنکار، البم اور دورانیہ، تاکہ اس کے بول ملیں۔
+- **SponsorBlock:** صرف تب جب آپ Skip the parts SponsorBlock marks
+  (SponsorBlock کے نشان زدہ حصے چھوڑیں) آن کریں: ہر video ID کے hash کے پہلے
+  4 حروف، ID کبھی نہیں، تاکہ اس کے نشان زدہ حصے ملیں۔
 - **GitHub:** شروع ہونے پر اور ہر چند گھنٹوں بعد نئے ورژن کی جانچ، جسے آپ
   Settings › About (ترتیبات › تعارف) میں بند کر سکتے ہیں؛ مارکیٹ پلیس کھولنے پر
   کمیونٹی registry؛ yt-dlp کے ڈاؤن لوڈز؛ اور، جاپانی بولوں کے ساتھ romaji پہلی
   بار آن کرنے پر، kanji کی ریڈنگز کی ڈکشنری (11.7 MB)۔ Romaji آپ کے کمپیوٹر پر
   بنتا ہے: بول بھیجے نہیں جاتے۔
 - **Last.fm،** اسے جوڑنے کے بعد: جو آپ چلاتے ہیں۔
+- **ListenBrainz،** یا اس کی API والا آپ کا اپنا سرور، اسے جوڑنے کے بعد: جو
+  آپ چلاتے ہیں۔
 - **Discord،** جب تک آپ اسے بند نہ کریں: جو چل رہا ہے، آپ کے کمپیوٹر پر
   Discord ایپ کو بھیجا جاتا ہے، جو اسے آپ کی پروفائل پر دکھاتی ہے۔
 
@@ -590,7 +604,7 @@ MixMusic ان پروجیکٹس پر بنا ہے:
   [appimagetool](https://github.com/AppImage/appimagetool)، AppImages۔
 - **[yt-dlp](https://github.com/yt-dlp/yt-dlp)،** جو ان ٹریکس کی آواز ڈھونڈتا
   ہے جو MixMusic خود نہیں ڈھونڈ پاتا۔
-- **[Better Lyrics](https://betterlyrics.org)**.
+- **[Better Lyrics](https://betterlyrics.org)،** ایک سروس جو بول لفظ بہ لفظ ہم وقت رکھتی ہے۔
 - **[Unison](https://unison.betterlyrics.org)،** بولوں کا کھلا، عوامی تعاون سے
   بنا ڈیٹا بیس، Unison Community License کے تحت، اور **[LRCLIB](https://lrclib.net)،** ہم وقت
   بولوں کا کھلا ڈیٹا بیس۔

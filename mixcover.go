@@ -116,7 +116,7 @@ func (s *shell) coverOfFile(cv mixCovering) {
 	win := s.win
 	go func() {
 		paths, err := openFileDialog(mygo.OpenDialogOptions{Parent: win, Title: locales.MixCoverChooseFor(cv.title),
-			Filters: []mygo.FileFilter{{Name: locales.MixCoverImages(), Extensions: []string{"png", "jpg", "jpeg", "webp"}}}})
+			Filters: []mygo.FileFilter{{Name: locales.MixCoverImages(), Extensions: []string{"png", "jpg", "jpeg", "gif", "webp"}}}})
 		if err == nil && len(paths) == 0 {
 			return
 		}

@@ -237,7 +237,9 @@ func (s *shell) computerSettings(c *ui.Context) {
 
 // unreadLine tells of the n folders in a folder of music that the last
 // scan couldn't read, whose tracks the library keeps as they were.
-func unreadLine(n int) string { return locales.ComputerSettingsUnread(n) }
+func unreadLine(n int) string {
+	return locales.ComputerSettingsUnread(n)
+}
 
 // folderStatus is what the last scan found of folder.
 func folderStatus(st localfiles.Status, folder string) localfiles.Folder {

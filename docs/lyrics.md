@@ -3,7 +3,7 @@
 
 MixMusic shows synced and word-by-word lyrics for Spotify and YouTube Music tracks, and can translate them or show them in Latin letters.
 
-Lyrics come from Better Lyrics, Unison, LRCLIB and YouTube Music, for the track that plays, whichever service it's from. Nothing needs setting up. The lyrics themselves go to Unison, for their translation or for the romanization of Arabic, only while you turn those on.
+Lyrics come from Better Lyrics, Unison, LRCLIB, YouTube Music and the video's captions on YouTube, for the track that plays, whichever service it's from. Nothing needs setting up, and Settings › Playback › Lyrics chooses and orders the sources. The lyrics themselves go to Unison, for their translation or for the romanization of Arabic, only while you turn those on.
 
 ## Where lyrics show
 
@@ -19,22 +19,49 @@ The panel and the page show the same lyrics, with the same switches above them, 
 The panel says what it found:
 
 - "Looking for the lyrics…" while it looks;
-- "No lyrics found for this track." when none of the sources has any;
-- "Lyrics can't be loaded right now. Check your connection, or try again in a moment.", with try again, when a source is out of reach;
+- "No lyrics found for this track." when none of the sources has any, with try again when some of them couldn't be reached;
+- "Lyrics can't be loaded right now. Check your connection, or try again in a moment.", with try again, when no source could be reached;
 - "This track is instrumental." for a track whose lyrics source says so.
 
 Refresh this page (F5, or ⇧⌘R on macOS) asks again. For a podcast episode, the panel says Details, and shows the episode's description and chapters in place of lyrics: see [Podcasts](podcasts.md#episode-details-and-chapters).
 
 ## Where they come from
 
-MixMusic asks, in order:
+MixMusic asks the sources one at a time, in this order unless you [change it](#choose-and-order-the-sources), and stops at the first that has synced lyrics:
 
-1. **[Better Lyrics](https://betterlyrics.org),** whose service keeps lyrics timed word by word, by the track's title, artists, album and length: only for lyrics timed word by word, and only for tracks that have an album and a length, which it needs to find a song. It keeps the songs people have played with Better Lyrics, so it has some that Unison doesn't. When it has none, is busy or can't be reached, MixMusic goes on to Unison after a wait of 3 seconds at most.
-2. **[Unison](https://unison.betterlyrics.org),** an open, crowdsourced database of lyrics, by the track's video ID, or by its title, artists, album and length. Unison has many lyrics timed word by word. While it's out of reach, MixMusic goes on to LRCLIB after a wait of 3 seconds at most.
-3. **[LRCLIB](https://lrclib.net),** the open database of synced lyrics, by the track's title, artists, album and length: when Unison has no lyrics, can't be reached, or has only plain lyrics where LRCLIB has synced ones.
-4. **YouTube Music:** when neither has any lyrics, or both have only plain ones and YouTube Music's are longer.
+1. **[Better Lyrics](https://betterlyrics.org),** whose service keeps lyrics timed word by word, by the track's title, artists, album and length: only for lyrics timed word by word, and only for tracks that have an album and a length, which it needs to find a song. It keeps the songs people have played with Better Lyrics, so it has some that Unison doesn't. When it has none, is busy or can't be reached, MixMusic goes on after a wait of 3 seconds at most.
+2. **[Unison](https://unison.betterlyrics.org),** an open, crowdsourced database of lyrics, by the track's video ID, or by its title, artists, album and length. Unison has many lyrics timed word by word. While it's out of reach, MixMusic goes on after a wait of 3 seconds at most.
+3. **[LRCLIB](https://lrclib.net),** the open database of synced lyrics, by the track's title, artists, album and length; for a music video, by its song's, [timed to the video](#music-videos). Where LRCLIB has the words of a song timed, they light one by one, as Unison's do.
+4. **YouTube Music:** its own lyrics, as plain text.
+5. **YouTube captions:** the timed captions of the video that plays, for live versions and uploads no lyrics service has. Captions YouTube makes from speech are left out. A Spotify track takes those of its recording on YouTube Music only when the two are as long, give or take 3 seconds, and a file on your computer never asks. MixMusic waits 3 seconds at most for them.
 
-A Spotify track is looked up by the video ID of its [recording on YouTube Music](playing-music.md#how-spotify-tracks-play) once MixMusic has matched one, and by its title, artists, album and length before. The line at the end of the lyrics names where they came from: "lyrics from Better Lyrics", "lyrics from Unison" and so on, with the address of Better Lyrics and Unison.
+Synced lyrics beat plain ones, whichever source has them. Of two sources with plain lyrics, the longer lyrics win, and the source higher in the list wins otherwise. Lyrics of one timed line count as plain.
+
+A Spotify track is looked up by the video ID of its [recording on YouTube Music](playing-music.md#how-spotify-tracks-play) once MixMusic has matched one, and by its title, artists, album and length before. The line at the end of the lyrics names where they came from: "lyrics from Better Lyrics", "lyrics from Unison", "lyrics from YouTube captions" and so on, with the address of Better Lyrics and Unison.
+
+### Choose and order the sources
+
+Settings › Playback › Lyrics lists the sources under **Lyrics sources**, in the order MixMusic asks them, a row each with a switch and what MixMusic sends that source.
+
+- **Switch a source off,** and MixMusic never asks it, nor sends it anything. YouTube Music and the captions switch off too. The last source on can't be switched off.
+- **Move a source** by dragging its row onto another, or with Alt+Up and Alt+Down while its row has the focus.
+- **Reset to default** puts them back in their own order, every one on.
+- **A change** looks the lyrics of the track that plays up again.
+- **Prefer word-by-word lyrics,** off by default: while it's on, lyrics timed word by word from a source lower in the list beat lyrics timed line by line from one above it, so MixMusic asks more sources for the track.
+- **Time lyrics to music videos,** on by default: a music video's lyrics that are its song's move to where the song starts in the video, as [Music videos](#music-videos) tells. Off, they keep the song's times.
+- **Caption language:** the language of the lyrics from YouTube captions. **Original**, the default, is the video's own captions; any language [Translate lyrics to](#translate) offers takes the video's captions in it when it has them, and its own else.
+
+## Music videos
+
+A music video often opens with a scene before its song, or ends with one after it, so lyrics timed for the song would run early in the video. Unison may have lyrics of the video itself, by its video ID, timed for it. When the sources before LRCLIB have none, MixMusic looks for the video's song on YouTube Music, and asks LRCLIB for the song's lyrics, by its title, artists, album and length. Those are timed for the song, so MixMusic times them to the video:
+
+- **It compares the two recordings' audio** on your computer: three stretches of the song, each up to 10 seconds, at a fifth, half and four fifths of it, against the video's audio, at every shift to within 10 ms, up to 2 minutes either way of the shifts that start the song at the video's start and end it at the video's end. Both come from YouTube, signed out, a block at a time as they're read: of the song, only the stretches, and nothing goes to another service. Reading them reports no play and adds nothing to your history.
+- **It takes a shift** only when the song matches clearly: two stretches or more each match the video at a correlation of 0.4 or more, standing clear of their next best match and not at the edge of the shifts searched; those that match agree within 100 ms; and the song plays at its own speed, within 1%.
+- **The lines move by the shift.** A line it moves before 0:00 starts at 0:00. Every view of the lyrics follows, and so does clicking a line, and the plugins, which get the same lyrics.
+- **The first play.** While MixMusic times them, in a few seconds, the lyrics show as below, with the note "Timing these lyrics to the video…", and once it has, they switch in place, with a note such as "Timed to this video (+29.1 s)". It times one video at a time, and gives up after 30 seconds.
+- **It remembers** each video and song in `lyrics-timing.json`, in the [cache folder](data-and-privacy.md#the-cache-folder): a shift for 180 days, and that the song has no clear match for 7, 400 videos at most. A download that fails, or a timing that takes too long, keeps nothing: the lyrics show as below for 10 minutes, and the next time they're looked up after that, MixMusic tries again.
+
+When the song has no clear match, as for a live take, a video that cuts a verse or plays the song a little faster or slower, or a song of one loop over and over, the song's synced lyrics show with their times while the video is as long as the song, give or take 3 seconds, and without them, with the note "Not synced: the song's synced lyrics don't match this video.", when it's longer or shorter. So do they while Time lyrics to music videos is off. An upload YouTube Music has no song of, and a Spotify track that plays through a video, are looked up as any track is, with nothing to time against.
 
 ## Synced and plain lyrics
 
@@ -164,4 +191,4 @@ On a MacBook with a notch, the [notch player's](desktop.md#the-player-around-the
 
 ## Credits
 
-Lyrics from [Better Lyrics](https://betterlyrics.org), whose service keeps lyrics timed word by word, and from [Unison](https://unison.betterlyrics.org), an open, crowdsourced database of lyrics, whose data is under the [Unison Community License](https://github.com/better-lyrics/unison/blob/main/LICENSE-DATA.md): MixMusic, an open-source project, may use it, and shows "Lyrics from Unison (https://unison.betterlyrics.org)" with its lyrics. As Unison asks, the lyrics panel ends Unison's lyrics with "lyrics from Unison · submitted by <name>": Unison links to the song's page there, and the name to the page of the person who submitted the lyrics. A lyrics card made from them names both too. Synced lyrics also come from [LRCLIB](https://lrclib.net), the open database of synced lyrics. Romaji reads kanji with [kagome](https://github.com/ikawaha/kagome) and the IPA dictionary of [kagome-dict](https://github.com/ikawaha/kagome-dict), made from mecab-ipadic.
+Lyrics from [Better Lyrics](https://betterlyrics.org), whose service keeps lyrics timed word by word, and from [Unison](https://unison.betterlyrics.org), an open, crowdsourced database of lyrics, whose data is under the [Unison Community License](https://github.com/better-lyrics/unison/blob/main/LICENSE-DATA.md): MixMusic, an open-source project, may use it, and shows "Lyrics from Unison (https://unison.betterlyrics.org)" with its lyrics. As Unison asks, the lyrics panel ends Unison's lyrics with "lyrics from Unison · submitted by <name>": Unison links to the song's page there, and the name to the page of the person who submitted the lyrics. A lyrics card made from them names both too. Synced lyrics also come from [LRCLIB](https://lrclib.net), the open database of synced lyrics, and from the captions of the videos on YouTube. Romaji reads kanji with [kagome](https://github.com/ikawaha/kagome) and the IPA dictionary of [kagome-dict](https://github.com/ikawaha/kagome-dict), made from mecab-ipadic.

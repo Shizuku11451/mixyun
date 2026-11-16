@@ -3,6 +3,7 @@
 Everything lives in the user's data folder (`%AppData%\MixMusic` on
 Windows, `~/Library/Application Support/MixMusic` on macOS,
 `~/.config/MixMusic` on Linux): `settings.json`, `library.json`,
+`plays.jsonl` (every play, for the stats, [library.md](library.md)),
 `mix-covers/` (the covers the user chose for mixes),
 `queue.json`, `positions.json` (where the user left podcasts' episodes),
 `local-files.json` (the index of the music on the computer),
@@ -24,11 +25,14 @@ and `App.ReloadSettings` applies an edit as Settings applies a change, then
 tells the windows (`App.Watch`). A file with a mistake is told of after a
 second, and kept as `settings.json.broken` if MixMusic quits before it is
 fixed; a `settings.json` that is a link stays one. The
-cache folder holds audio, the covers shown (`artwork/`), the covers of
+cache folder holds audio, the covers shown (`artwork/`), the clips of
+albums' moving covers and each album's match (`moving-covers/`,
+`internal/clips`), the covers of
 the music on the computer (`local-art/`), on Linux the
 cover the desktop's media controls show (`now-playing/`), matches, how loud
 YouTube measured the tracks played (`loudness.json`), the videos YouTube
-labels as made with AI, for 30 days (`ai-labels.json`), the releases of
+labels as made with AI, for 30 days (`ai-labels.json`), where the songs
+of music videos start in them (`lyrics-timing.json`), the releases of
 the artists followed (`releases.json`), the dictionary of
 the readings of kanji romaji downloads (`romaji/`), and yt-dlp's cache,
 and the logs folder the log and the crash reports. The downloads are in a

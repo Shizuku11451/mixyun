@@ -64,7 +64,8 @@ the user left them.
 - **The player.** Episodes never crossfade, the next episode's audio
   isn't fetched ahead, and the queue that ends on an episode stops rather
   than start a radio. Episodes don't scrobble, and the stats leave them
-  out: the history keeps them.
+  out: the history and the play log keep them, which the Plays sort
+  counts.
 - **Speed.** Episodes play at a speed of their own, `podcastSpeed`, and
   songs at `songSpeed`: the player's `speedOf` picks by the track that
   becomes current. The speed button by the player, the mini player's
@@ -85,7 +86,9 @@ the user left them.
   12:34 or 1:02:03. Lines that start or end with a time are chapters
   (`media.ChaptersOf`): the panel lights the one that plays, and the notch
   shows it. Links open only web pages, http and https, and times past the
-  episode's length don't seek.
+  episode's length don't seek. Under the description, the episode's
+  captions on YouTube show as its transcript (`episodetranscript.go`,
+  `Catalog.Transcript`), rows of the same list after the description's.
 - **Follows.** `library.json` keeps the shows the user follows, without
   their episodes, signed in or not; following one saves it on its service
   too, where the user signed in. Signed in, a show saved there, as from

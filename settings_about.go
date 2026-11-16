@@ -66,10 +66,9 @@ func (s *shell) licenseSettings(c *ui.Context) {
 	s.group(c, locales.AboutLicenses(), func() {
 		for i, n := range append(s.svc.System.Notices(), fontNotices()...) {
 			open := s.licenseOpen == i
-			name := noticeName(n)
 			// A license's text shows with its row.
-			s.found(c, name, "", func() {
-				s.row(c, name, "", func() {
+			s.found(c, noticeName(n), "", func() {
+				s.row(c, noticeName(n), "", func() {
 					label := locales.AboutShow()
 					if open {
 						label = locales.AboutHide()
@@ -90,30 +89,26 @@ func (s *shell) licenseSettings(c *ui.Context) {
 	})
 }
 
-// noticeName is the name of the project of a license in the language shown;
-// the fonts' are already.
+// noticeNames say the names of the notices of internal/app, which are
+// English there, in the catalogs.
+var noticeNames = map[string]func() string{
+	"libopus, which decodes Opus audio":                                                          locales.AboutNoticeOpus,
+	"SharpJaad, which decodes AAC audio":                                                         locales.AboutNoticeAac,
+	"go-mp3, which decodes the MP3 files on this computer":                                       locales.AboutNoticeMp3,
+	"jfreymuth/vorbis, which decodes the Vorbis files on this computer":                          locales.AboutNoticeVorbis,
+	"Chromium's Web Audio, which shapes the sound":                                               locales.AboutNoticeWebAudio,
+	"Material Color Utilities, which make the Material themes' colours":                          locales.AboutNoticeMaterialColor,
+	"SponsorBlock's data, the parts of videos Mixyun skips":                                      locales.AboutNoticeSponsorBlock,
+	"Unihan, whose readings of Chinese characters write Chinese lyrics in pinyin":                locales.AboutNoticeUnihan,
+	"pinyin-data and phrase-pinyin-data, the readings of Chinese characters and words in pinyin": locales.AboutNoticePinyin,
+	"kagome, which reads the kanji of Japanese lyrics for their romaji":                          locales.AboutNoticeKagome,
+	"The IPA dictionary (mecab-ipadic), which romaji downloads the first time it's turned on":    locales.AboutNoticeIpadic,
+}
+
+// noticeName is a notice's name in the language shown, or as it's given.
 func noticeName(n app.Notice) string {
-	switch n.ID {
-	case "opus":
-		return locales.AboutNoticeOpus()
-	case "aac":
-		return locales.AboutNoticeAac()
-	case "mp3":
-		return locales.AboutNoticeMp3()
-	case "vorbis":
-		return locales.AboutNoticeVorbis()
-	case "webAudio":
-		return locales.AboutNoticeWebAudio()
-	case "materialColor":
-		return locales.AboutNoticeMaterialColor()
-	case "unihan":
-		return locales.AboutNoticeUnihan()
-	case "pinyin":
-		return locales.AboutNoticePinyin()
-	case "kagome":
-		return locales.AboutNoticeKagome()
-	case "ipadic":
-		return locales.AboutNoticeIpadic()
+	if say, ok := noticeNames[n.Name]; ok {
+		return say()
 	}
 	return n.Name
 }

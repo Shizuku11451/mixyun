@@ -44,6 +44,9 @@ type AccountsStatus struct {
 	YouTube YouTubeAccount `json:"youtube"`
 	NetEase NetEaseAccount `json:"netease"`
 	Lastfm  LastfmAccount  `json:"lastfm"`
+	// ListenBrainz is the connection to ListenBrainz, or to the user's own
+	// server of its API.
+	ListenBrainz ListenBrainzAccount `json:"listenbrainz"`
 }
 
 // Accounts signs the user in and out of their music services.
@@ -93,6 +96,7 @@ func (a *App) knownAccountsStatus() AccountsStatus {
 		Lastfm:  a.lastfmAccount(),
 	}
 	status.Spotify.Profile = spotifyMe
+	status.ListenBrainz = a.listenbrainzAccount()
 	read := false
 	if status.Spotify.SignedIn && spotifyMe == nil {
 		status.Spotify.Error = errs.spotify
@@ -152,7 +156,7 @@ func (a *App) accountsStatus(ctx context.Context) AccountsStatus {
 			sp.Profile = &me
 		}
 	}
-	return AccountsStatus{Spotify: sp, YouTube: a.youtubeAccount(ctx), NetEase: a.neteaseAccount(ctx), Lastfm: a.lastfmAccount()}
+	return AccountsStatus{Spotify: sp, YouTube: a.youtubeAccount(ctx), NetEase: a.neteaseAccount(ctx), Lastfm: a.lastfmAccount(), ListenBrainz: a.listenbrainzAccount()}
 }
 
 // spotifyProfile returns the signed-in Spotify user, asking Spotify once.

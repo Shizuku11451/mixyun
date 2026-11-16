@@ -73,8 +73,9 @@ func (s *shell) nowPlayingPage(c *ui.Context) {
 						ui.Text(c, k.sentence(locales.NowPlayingWaiting())).FontSize(k.smallSize()).TextColor(k.muted)
 					}
 					s.videoToggle(c)
+					s.highlightButton(c)
 					// An episode has details, not lyrics: nothing to show full screen.
-					if !t.IsEpisode() && s.iconButton(c, "now-stage", "expand", locales.LyricsStageTitle(), false, 18).Clicked() {
+					if !t.IsEpisode() && s.iconButton(c, "now-stage", "expand", locales.LyricsFullScreen(), false, 18).Clicked() {
 						s.toggleStage()
 					}
 				})

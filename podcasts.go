@@ -108,10 +108,10 @@ func (s *shell) podcastPage(c *ui.Context, id string) {
 	res := fetch(s, key, func(ctx context.Context) (media.Podcast, error) { return s.svc.Catalog.Podcast(ctx, id) })
 	switch {
 	case !res.done:
-		s.pageLoading(c, "podcast")
+		s.pageLoading(c, locales.PodcastsKind())
 		return
 	case res.err != nil:
-		s.pageProblem(c, "podcast", res.err, key)
+		s.pageProblem(c, locales.PodcastsKind(), res.err, key)
 		return
 	}
 	p := res.value
@@ -174,10 +174,10 @@ func (s *shell) followsPodcast(p media.Podcast) bool {
 		return s.svc.Collection.Follows(p.ID)
 	}
 	// The list is asked for as the page shows, before the user follows or
-	// stops, which then goes into it.
+	// stops, which then goes into it: what came of it, if not all.
 	saved := s.savedOn(p.Source)
 	return s.svc.Collection.Follows(p.ID) || p.Saved ||
-		saved.done && saved.err == nil && slices.ContainsFunc(saved.value, func(x media.Podcast) bool { return x.ID == p.ID })
+		saved.done && listCame(saved.err) && slices.ContainsFunc(saved.value, func(x media.Podcast) bool { return x.ID == p.ID })
 }
 
 // followPodcast follows the podcast of the page of key, or stops: in
@@ -211,23 +211,23 @@ func (s *shell) followPodcast(key string, p media.Podcast, saved *bool, on bool)
 // savedOn returns the podcasts the user saved on the service source, asked
 // for once for Library › Podcasts and the shows' pages.
 func (s *shell) savedOn(source media.Source) *loaded[[]media.Podcast] {
-	get := s.svc.Collection.YouTubePodcasts
 	if source == media.SourceSpotify {
-		get = s.svc.Collection.SpotifyPodcasts
+		return fetch(s, "spotify:podcasts", s.svc.Collection.SpotifyPodcasts)
 	}
-	return fetch(s, string(source)+":podcasts", get)
+	return wholeList(s, "youtube:podcasts", s.svc.Collection.YouTubePodcasts)
 }
 
 // savedChanged writes into the podcasts saved on p's service, as fetched,
 // that the user followed p there or stopped, rather than read the list
 // again, which the service may answer as it was a moment before. A list
-// still on its way, or that failed, is asked for again, once it's needed.
+// still on its way, or that failed, is asked for again, once it's needed;
+// one that came in part takes the change too.
 func (s *shell) savedChanged(p media.Podcast, on bool) {
 	key := string(p.Source) + ":podcasts"
 	l, ok := s.loads[key].(*loaded[[]media.Podcast])
 	switch {
 	case !ok:
-	case !l.done || l.err != nil:
+	case !l.done || !listCame(l.err):
 		s.refetch(key)
 	default:
 		saved := slices.DeleteFunc(slices.Clone(l.value), func(x media.Podcast) bool { return x.ID == p.ID })
@@ -329,7 +329,7 @@ func (s *shell) episodeRow(c *ui.Context, key string, i int, episodes []media.Tr
 		s.sourceMark(c, t.Source, current)
 		duration := ""
 		if t.DurationMs > 0 {
-			duration = clock(ms(t.DurationMs))
+			duration = clockLength(ms(t.DurationMs))
 		}
 		ui.Text(c, duration).FontSize(k.smallSize()).TextColor(sub).FontFeatures("tnum").Width(64).TextAlign(ui.End).Shrink(0)
 		more := s.iconButton(c, key+"-more-"+count(i), "more", locales.PodcastsMoreFor(t.Title), false, 18).Menu(menu)
@@ -553,30 +553,32 @@ func (s *shell) podcastLibrary(c *ui.Context) {
 }
 
 // savedPodcasts is a shelf of the podcasts saved on a service, past those
-// the user follows in MixMusic, which show above.
+// the user follows in MixMusic, which show above. A list that came in
+// part shows what came, and says how much, with Try again.
 func (s *shell) savedPodcasts(c *ui.Context, key, title string, saved *loaded[[]media.Podcast]) {
 	switch {
 	case !saved.done:
 		return
 	case saved.err != nil:
-		s.problem(c, saved.err, func() { s.forget(key + ":podcasts") })
-		return
-	}
-	n := 0
-	for _, p := range saved.value {
-		if !s.svc.Collection.Follows(p.ID) {
-			n++
+		if !s.shortListLine(c, key+"-podcasts", "podcasts", media.Source(key), saved.err, func() { s.refetch(key + ":podcasts") }) {
+			s.problem(c, saved.err, func() { s.forget(key + ":podcasts") })
+			return
 		}
 	}
-	if n == 0 {
+	var shown []int
+	for i, p := range saved.value {
+		if !s.svc.Collection.Follows(p.ID) {
+			shown = append(shown, i)
+		}
+	}
+	if len(shown) == 0 {
 		return
 	}
 	s.shelf(c, key+"-podcasts", title, func() {
-		for i, p := range saved.value {
-			if !s.svc.Collection.Follows(p.ID) {
-				s.podcastTile(c, key+"-podcast-"+count(i), p)
-			}
-		}
+		s.nearShelfTiles(c, key+"-podcasts", len(shown), func(j int) {
+			i := shown[j]
+			s.podcastTile(c, key+"-podcast-"+count(i), saved.value[i])
+		})
 	})
 }
 

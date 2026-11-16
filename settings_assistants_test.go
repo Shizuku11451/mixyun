@@ -78,7 +78,7 @@ func TestAssistantRows(t *testing.T) {
 		t.Fatalf("Settings › Desktop doesn't show AI assistants: %q", tt.Texts())
 	}
 	st := s.svc.System.AssistantStatus()
-	if st.On || tt.HasText(st.Command) || tt.HasText("Configuration") {
+	if st.On || tt.HasText(st.Command) || tt.HasText(locales.AssistantsConfiguration()) {
 		t.Fatalf("off, assistants may connect, or the command shows: %+v", st)
 	}
 	// The switch's label is its row's title, which a click would find
@@ -87,7 +87,7 @@ func TestAssistantRows(t *testing.T) {
 	if st = s.svc.System.AssistantStatus(); !s.svc.Preferences.Get().AssistantControl || !st.On {
 		t.Fatalf("the switch didn't let assistants in: %+v", st)
 	}
-	for _, text := range []string{st.Command, "Configuration", "How to add Mixyun to an assistant", "None now."} {
+	for _, text := range []string{st.Command, locales.AssistantsConfiguration(), locales.AssistantsHowTo(), "None now."} {
 		if !tt.HasText(text) {
 			t.Errorf("on, the page doesn't show %q: %q", text, tt.Texts())
 		}
@@ -99,8 +99,8 @@ func TestAssistantRows(t *testing.T) {
 	was := copyText
 	copyText = func(text string) { copied = append(copied, text) }
 	t.Cleanup(func() { copyText = was })
-	click(t, s, tt, "Copy the command")
-	click(t, s, tt, "Copy the configuration")
+	click(t, s, tt, locales.AssistantsCopyCommand())
+	click(t, s, tt, locales.AssistantsCopyConfig())
 	if len(copied) != 2 || copied[0] != st.Command || copied[1] != st.Config {
 		t.Errorf("copied %q", copied)
 	}

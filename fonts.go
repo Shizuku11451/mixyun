@@ -96,19 +96,35 @@ var fontLicenses = sync.OnceValue(func() map[string]string {
 // fontNotices are the licenses of the faces MixMusic includes, which its
 // copies must reproduce, as those of its code. Settings › About shows them
 // in every frame, and every section does while the user searches the
-// settings, in the language shown.
+// settings: the files are read once, and the names, which the language
+// may change, on each call.
 func fontNotices() []app.Notice {
-	texts := fontLicenses()
+	texts := fontLicenseTexts()
 	var notices []app.Notice
-	for _, f := range []struct{ name, file string }{
-		{locales.FontsSelawik(), "fonts/OFL.txt"},
-		{locales.FontsQuicksand(), "fonts/quicksand-OFL.txt"},
-		{locales.FontsRoboto(), "fonts/robotoflex-OFL.txt"},
-		{locales.FontsArchivo(), "fonts/archivo-OFL.txt"},
+	for _, f := range []struct {
+		name func() string
+		file string
+	}{
+		{locales.FontNoticeInterface, "fonts/OFL.txt"},
+		{locales.FontNoticeMochi, "fonts/quicksand-OFL.txt"},
+		{locales.FontNoticeMaterial, "fonts/robotoflex-OFL.txt"},
+		{locales.FontNoticeWalnut, "fonts/archivo-OFL.txt"},
 	} {
 		if text, ok := texts[f.file]; ok {
-			notices = append(notices, app.Notice{Name: f.name, Text: text})
+			notices = append(notices, app.Notice{Name: f.name(), Text: text})
 		}
 	}
 	return notices
 }
+
+// fontLicenseTexts are the texts of the license files fontNotices names,
+// by file: they are read once.
+var fontLicenseTexts = sync.OnceValue(func() map[string]string {
+	texts := map[string]string{}
+	for _, file := range []string{"fonts/OFL.txt", "fonts/quicksand-OFL.txt", "fonts/robotoflex-OFL.txt", "fonts/archivo-OFL.txt"} {
+		if text, err := fontFiles.ReadFile(file); err == nil {
+			texts[file] = string(text)
+		}
+	}
+	return texts
+})

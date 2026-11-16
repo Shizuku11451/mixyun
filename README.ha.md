@@ -117,6 +117,9 @@ biyu. MixMusic yana haɗa ayyukan biyu a cikin mai kunnawa guda ɗaya:
 - Hanyoyin `mixmusic://`.
 - **Last.fm:** kowace waƙa da ka ji tana shiga bayananka, kuma scrobbles da
   aka yi ba tare da intanet ba ana aika su idan ka dawo kan intanet.
+- **ListenBrainz:** haka ma, tare da Last.fm ko ba tare da shi ba, zuwa
+  ListenBrainz ko sabarka ta kanka, kamar Maloja. Waƙoƙin da ka so za su
+  iya zuwa kowanne daga cikinsu a matsayin loves.
 - **Discord:** bayananka suna nuna abin da ake kunnawa, tare da hotonsa da
   lokacin da ya rage.
 - **Sabuntawa:** MixMusic yana duba sabuwar fitarwa a farawa da kuma bayan
@@ -244,10 +247,15 @@ hanyar sadarwa, sabar sauti, allo da GPU, amma ba ya ganin babban fayil ɗin
 gidanka ko kaɗan. MixMusic yana adana saitunansa da ɗakin waƙoƙinsa a
 `~/.var/app/io.github.fzn0x.mixmusic`, a keɓe daga kwafin `.deb`, `.rpm`,
 AppImage ko kundi, kuma duka biyun na iya gudana a lokaci guda. Don kawo
-saituna da ɗakin waƙoƙin wani kwafi, rufe duka biyun, kwafi `settings.json`,
-`library.json`, `queue.json` da babban fayil ɗin `addons` daga
-`~/.config/MixMusic` zuwa `~/.var/app/io.github.fzn0x.mixmusic/config/MixMusic`,
-sannan ka sake shiga asusunka: shigarwa suna nan a keyring na ɗayan kwafin.
+saituna da ɗakin waƙoƙin wani kwafi, rufe duka biyun, sannan ka kwafi
+`settings.json`, `library.json`, `queue.json`, `positions.json` da manyan
+fayilolin `addons` da `mix-covers` daga `~/.config/MixMusic` zuwa
+`~/.var/app/io.github.fzn0x.mixmusic/config/MixMusic`. Ka rufe duka biyun da
+farko: MixMusic da ke aiki yana riƙe `library.json` da yawancin sauran
+fayiloli a cikin ƙwaƙwalwa, kuma idan ya sake adanawa yana rubutawa a kan
+fayil ɗin da aka kwafa. Sannan ka sake shiga asusunka: shigarwa suna nan a
+keyring na ɗayan kwafin. [Shafin bayanai da sirri](docs/data-and-privacy.md#the-data-folder)
+yana bayyana abin da kowane fayil yake ɗauke da shi.
 
 A Flatpak, farawa idan ka shiga kwamfuta yana bi ta kwamfutarka, wadda za ta
 iya tambayarka da farko, kuma yt-dlp naka na kanka dole ne ya kasance a
@@ -277,6 +285,9 @@ yake aiki a kwamfutarka.
   [last.fm/api/account/create](https://www.last.fm/api/account/create)
   (kowane suna, ba callback URL), liƙa API key da shared secret ɗinsa a
   Settings › Accounts, sannan ka amince da MixMusic a burauzarka.
+- **ListenBrainz:** liƙa user token na
+  [saitunan ListenBrainz ɗinka](https://listenbrainz.org/settings/), ko na
+  sabarka ta kanka, a Settings › Accounts.
 - **Discord:** muddin manhajar Discord tana aiki, bayananka suna nuna abin da
   kake saurara. Kashe shi a Settings › Desktop.
 
@@ -484,6 +495,10 @@ da:
   Unison yake sa Google ta fassara.
 - **LRCLIB:** taken waƙar da ake kunnawa, mawaƙanta, albam ɗinta da tsawonta,
   don samo kalmomin waƙarta.
+- **SponsorBlock:** sai yayin da ka kunna Skip the parts SponsorBlock marks
+  (Tsallake sassan da SponsorBlock ya yi wa alama): haruffa 4 na farko na
+  hash ɗin ID ɗin kowane bidiyo, ba ID ɗin kansa ba, don samo sassan da ya
+  yi wa alama.
 - **GitHub:** duba sabuwar sigar a farawa da kuma bayan kowane ƴan saʼoʼi,
   wanda za ka iya kashewa a Settings › About (Saituna › Game da); rajistar
   alʼumma idan ka buɗe kasuwa; abubuwan zazzagewa na yt-dlp; kuma, a karon
@@ -491,6 +506,8 @@ da:
   karatun kanji (11.7 MB). Ana yin romaji a kwamfutarka: ba a aika kalmomin
   waƙar.
 - **Last.fm,** da zarar ka haɗa shi: abin da kake kunnawa.
+- **ListenBrainz,** ko sabarka ta kanka mai API ɗinsa, da zarar ka haɗa
+  shi: abin da kake kunnawa.
 - **Discord,** sai dai ka kashe shi: abin da ake kunnawa, ana aika shi zuwa
   manhajar Discord a kwamfutarka, wadda take nuna shi a bayananka.
 
@@ -550,7 +567,7 @@ An gina MixMusic a kan waɗannan ayyuka:
   AppImage.
 - **[yt-dlp](https://github.com/yt-dlp/yt-dlp)**, wanda yake samo sautin
   waƙoƙin da MixMusic ba zai iya samowa da kansa ba.
-- **[Better Lyrics](https://betterlyrics.org)**.
+- **[Better Lyrics](https://betterlyrics.org)**, sabis da ke adana kalmomin waƙa masu daidaita kalma bayan kalma.
 - **[Unison](https://unison.betterlyrics.org)**, buɗaɗɗen maʼajiyar kalmomin
   waƙa da jamaʼa ke bayarwa, a ƙarƙashin Unison Community License, da **[LRCLIB](https://lrclib.net)**,
   buɗaɗɗiyar maʼajiyar kalmomin waƙa masu daidaita da waƙar.

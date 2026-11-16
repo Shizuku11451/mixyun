@@ -12,7 +12,7 @@ import (
 )
 
 // pseudoPages are the pages TestPseudoLocale reads under en-XA.
-var pseudoPages = []string{"/", "/library", "/library/liked", "/now-playing", "/search?q=midnight", "/explore", "/roam", "/stats", "/marketplace",
+var pseudoPages = []string{"/", "/library", "/library/liked", "/now-playing", "/search?q=midnight", "/explore", "/stats", "/marketplace",
 	"/settings/appearance", "/settings/playback", "/settings/accounts", "/settings/plugins", "/settings/desktop", "/settings/shortcuts", "/settings/about"}
 
 // english is a text of two English words or more: the pseudo locale accents
@@ -36,14 +36,12 @@ func TestPseudoLocale(t *testing.T) {
 	// shortcut: these sentences put a link or a shortcut between their
 	// pieces, which one message can't hold yet; drop each when it's one.
 	pieced := []string{xa.MarketplaceCommunity(), xa.MenuZoomDescription(), xa.PlaybackSignInSpotifyLead(), xa.EqualizerSpotifyLead(),
-		xa.AccountSettingsSpotifyStep1(), xa.AccountSettingsSpotifyRedirect(), xa.AccountSettingsLastfmStep1A(), xa.DesktopSettingsDiscordBefore()}
+		xa.AccountSettingsSpotifyStep1(), xa.AccountSettingsSpotifyRedirect(), xa.AccountSettingsLastfmStep1A(), xa.DesktopSettingsDiscordBefore(),
+		xa.ListenBrainzSettingsStep1(), xa.DiscordPlaceholdersLabel(), xa.SkipPartsCreditBefore()}
 	s := newTestShell(t)
-	// The themes' and services' names are names, in every language, and the
-	// preview of the lyrics' look shows made-up lyrics.
-	written := map[string]bool{"Walnut Light": true, "Material Dark": true, "youtube music": true}
-	for _, l := range previewLines {
-		written[l] = true
-	}
+	// The themes' and services' names are names, in every language.
+	written := map[string]bool{"Walnut Light": true, "Material Dark": true, "YouTube Music": true, "youtube music": true,
+		"Better Lyrics": true, "CC BY-NC-SA 4.0": true}
 	// Settings › Appearance shows the options of the theme worn alone.
 	for _, th := range s.inv.Themes {
 		for _, o := range th.Options {

@@ -23,8 +23,23 @@
   web player's audio element, but a read of a `Local` source, a file on
   this computer or a download, that fails is the file's failure ("Can't
   read the file"), not the network's.
+  A deck passes over the parts of its track the player tells the engine
+  of by URL (`SetSkips`, `skip.go`), as the sponsor reads and intros
+  SponsorBlock marks (#548), from its own position, on the audio thread:
+  as it reaches one, it holds silent until the engine's loop seeks past
+  it, so that a quantum of the part at most is heard, minimized or not.
+  A deck that starts in one, as Load, Preload and Crossfade start a track,
+  starts at its end, with no gap, and Load takes a preload that did; one
+  that reaches a part that reaches within a second of the end ends there.
+  A part marked on a track more than 2 s longer or shorter is left out,
+  as is one under a second, and those that overlap or touch are joined
+  (`Spans`). Each is passed over once a play, so that seeking back into
+  one plays it, and the events hear of each (`SkipEvents`).
   `MIXMUSIC_STRETCH_WAV=<dir> go test ./internal/audio -run StretchListen`
-  writes the test files at each speed, to listen to.
+  writes the test files at each speed, to listen to. `Stretches`
+  decodes stretches of a file as a deck plays them, from the frame a seek
+  plays from, mixed down to mono, for measuring rather than playing:
+  where a song starts in its music video, to time its lyrics (#565).
   `MIXMUSIC_LIVE=1 go test ./internal/audio -run Live` plays songs of both
   codecs, and a 24/7 live stream, as the app finds them on YouTube,
   against ffmpeg's decode. `Probe` tells whether a deck plays a file, and

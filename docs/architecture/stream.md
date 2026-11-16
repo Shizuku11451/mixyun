@@ -12,6 +12,14 @@
   A `Source` tells whether its audio comes from this computer, a download
   or the cache (`Source.Local`), whose failure the engine words as the
   file's.
+  `Proxy.OpenRanges` reads a video's audio a block at a time instead, as
+  it is read, with range requests of 64 KB that grow to 1 MB as the reads
+  go on: the stretches of a song that time its music video's lyrics
+  (#565), never the rest of it.
+  A read far ahead of the download starts it again there, which would
+  leave the track out of the cache; of a track the engine passes over
+  parts of (#548), the download from the start goes on beside the one
+  from there (`Source.KeepWhole`), so that it still goes to the cache.
   YouTube lists no 5.1 surround audio to the visionOS app, so the direct
   route asks as YouTube's app for Samsung's TVs too, at once, which it
   tells of a video's AC-3 and E-AC-3 (formats 380 and 328). The stream
@@ -77,7 +85,10 @@
   and passwords, and the home folder. Which account's answers tell Premium, the youtube
   package reads (`Client.Premium`).
   The player API also tells how loud YouTube measured each video
-  (`Stream.Loudness`, `Direct.Loudness`). Both list the streams of a
+  (`Stream.Loudness`, `Direct.Loudness`), and lists its captions
+  (`Direct.Captions`, `captions.go`), whose timedtext addresses answer the
+  visionOS client without a proof-of-origin token, and which
+  `Direct.CaptionText` reads in json3. Both list the streams of a
   video's picture beside its audio (`Stream.Videos`), which the now
   playing page plays (`Proxy.Picture`, `Proxy.ServeVideo`): a cluster or
   fragment at a time, as the index at the start of YouTube's DASH

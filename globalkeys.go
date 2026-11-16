@@ -30,8 +30,8 @@ func globalHint(goos string) string {
 	return locales.GlobalKeysHint()
 }
 
-// globalCommandTitle names a command of the global shortcuts in the language
-// shown: the title internal/app gives it is English.
+// globalCommandTitle names a command that global shortcuts run, as the
+// settings and the command palette call it.
 func globalCommandTitle(gc app.GlobalCommand) string {
 	switch gc.ID {
 	case "player.toggle":
@@ -101,7 +101,7 @@ func (s *shell) globalShortcutRowOf(c *ui.Context, gc app.GlobalCommand, keys, p
 			case problem != "":
 				ui.Row(c).Wrap().Gap(12).AlignItems(ui.Center).Children(func() {
 					ui.Text(c, problem).FontSize(k.smallSize()).TextColor(k.danger).MinWidth(0)
-					if s.link(c, "global-retry-"+gc.ID, locales.WidgetsTryAgain()) {
+					if s.link(c, "global-retry-"+gc.ID, locales.EpisodeTryAgain()) {
 						s.svc.Preferences.RetryGlobalShortcuts()
 					}
 				})

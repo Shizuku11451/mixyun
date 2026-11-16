@@ -86,6 +86,7 @@ func (s *shell) dialogs(c *ui.Context) {
 	s.sweepDialogs()
 	s.sweepViews()
 	s.followVideo()
+	s.sweepMovingCovers()
 	s.keepShown(c)
 }
 
@@ -124,6 +125,11 @@ func (s *shell) page(c *ui.Context, r *ui.Route) {
 		s.nowPlayingPage(c)
 	case r.Match("/remote/{id}"):
 		s.remotePage(c, r.Param("id"))
+	case r.Match(roomsPath):
+		r.Title(roomsTitle())
+		s.roomPage(c)
+	case r.Match(roomsPath + "/{id}"):
+		s.roomFoundPage(c, r.Param("id"))
 	case r.Match("/settings"):
 		s.settingsPage(c, "", r.Query("q"))
 	case r.Match("/settings/{tab}"):
@@ -169,7 +175,9 @@ func (s *shell) toasts(c *ui.Context) {
 	for _, n := range s.notes {
 		switch {
 		case n.Settings:
-			c.ToastAction(n.Message, "settings", func() { s.navigate("/settings/playback") })
+			c.ToastAction(n.Message, locales.ShellToastSettings(), func() { s.navigate("/settings/playback") })
+		case n.Undo != nil:
+			c.ToastAction(n.Message, locales.PlayerUndo(), n.Undo)
 		case n.Failure != 0:
 			s.failureToast(c, n)
 		case n.Error:

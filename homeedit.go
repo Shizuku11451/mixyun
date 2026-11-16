@@ -84,13 +84,12 @@ func homeArrangement(layout []settings.HomeShelf, groups []*homeGroup) (full []s
 // homeSourceLabel names where the shelves of source come from, as Home's
 // pivots do: "Yours" for the user's own.
 func homeSourceLabel(source media.Source) string {
-	labels := homeFilterLabels()
-	for i, f := range homeFilters {
-		if f == source {
-			return labels[i]
+	for _, f := range homeFilters {
+		if f.source == source {
+			return f.label()
 		}
 	}
-	return labels[1]
+	return homeFilters[1].label()
 }
 
 // homeEditor is Home as the user edits it, as the package's comment
@@ -236,7 +235,7 @@ func (s *shell) fetchShelfChoices() {
 	col := s.svc.Collection
 	if accounts.YouTube.SignedIn {
 		s.youtubePlaylists()
-		fetch(s, "youtube:artists", col.YouTubeArtists)
+		s.youtubeArtists()
 	}
 	if accounts.Spotify.SignedIn {
 		fetch(s, "spotify:playlists", col.SpotifyPlaylists)
@@ -250,12 +249,10 @@ func (s *shell) fetchShelfChoices() {
 // checked while Home shows it, and choosing it again takes it off; one
 // added goes first, where the user sees it.
 func (s *shell) addShelfMenu(m *ui.Menu, full []settings.HomeShelf) {
-	// item is a shelf's entry: label is what the menu shows, title what the
-	// layout keeps, as English.
-	item := func(m *ui.Menu, key, label, title string) {
+	item := func(m *ui.Menu, key, title string) {
 		i := shelfAt(full, key)
 		on := i >= 0 && !full[i].Hidden
-		if !m.Item(label).Checked(on).Chosen() {
+		if !m.Item(title).Checked(on).Chosen() {
 			return
 		}
 		switch {
@@ -273,16 +270,16 @@ func (s *shell) addShelfMenu(m *ui.Menu, full []settings.HomeShelf) {
 			m.Item(locales.HomeEditNoMixes()).Disabled(true)
 		}
 		for _, p := range mixes {
-			item(m, homePlaylist+p.ID, p.Title, p.Title)
+			item(m, homePlaylist+p.ID, p.Title)
 		}
 	})
 	accounts := s.accounts()
-	playlists := func(title string, l *loaded[[]media.Playlist]) {
+	playlists := func(title string, source media.Source, l *loaded[[]media.Playlist]) {
 		m.Submenu(title, func(m *ui.Menu) {
 			switch {
 			case !l.done:
 				m.Item(locales.HomeEditLoadingPlaylists()).Disabled(true)
-			case l.err != nil:
+			case !listCame(l.err):
 				m.Item(locales.HomeEditLoadFailed()).Disabled(true)
 			case len(l.value) == 0:
 				m.Item(locales.HomeEditNoPlaylists()).Disabled(true)
@@ -293,18 +290,20 @@ func (s *shell) addShelfMenu(m *ui.Menu, full []settings.HomeShelf) {
 					hidden++
 					continue
 				}
-				item(m, homePlaylist+p.ID, p.Title, p.Title)
+				item(m, homePlaylist+p.ID, p.Title)
 			}
 			if hidden > 0 {
 				m.Item(locales.HomeEditSpotifyHidden()).Disabled(true)
 			}
+			// Of a list that came in part, those that came, and how many.
+			s.shortListItem(m, string(source)+":playlists", "playlists", source, l.err)
 		})
 	}
 	if accounts.YouTube.SignedIn {
-		playlists(locales.HomeEditYouTubePlaylist(), s.youtubePlaylists())
+		playlists(locales.HomeEditYouTubePlaylist(), media.SourceYouTube, s.youtubePlaylists())
 	}
 	if accounts.Spotify.SignedIn {
-		playlists(locales.HomeEditSpotifyPlaylist(), fetch(s, "spotify:playlists", s.svc.Collection.SpotifyPlaylists))
+		playlists(locales.HomeEditSpotifyPlaylist(), media.SourceSpotify, fetch(s, "spotify:playlists", s.svc.Collection.SpotifyPlaylists))
 	}
 	m.Submenu(locales.HomeEditArtistReleases(), func(m *ui.Menu) {
 		artists := s.followedEverywhere()
@@ -312,17 +311,18 @@ func (s *shell) addShelfMenu(m *ui.Menu, full []settings.HomeShelf) {
 			m.Item(locales.HomeEditFollowArtist()).Disabled(true)
 		}
 		for _, a := range artists {
-			item(m, homeArtist+a.ID, locales.HomeEditNewFrom(a.Name), "New from "+a.Name)
+			item(m, homeArtist+a.ID, locales.HomeEditNewFrom(a.Name))
 		}
 	})
 	m.Separator()
-	item(m, homeRecent, locales.HomeEditRecent(), "Recently played")
-	item(m, homeTopMonth, locales.HomeEditMostPlayed(), "Most played this month")
-	item(m, homeDownloads, locales.RailDownloads(), "Downloads")
+	item(m, homeRecent, locales.HomeEditRecent())
+	item(m, homeTopMonth, locales.HomeEditMostPlayed())
+	item(m, homeDownloads, locales.RailDownloads())
 }
 
 // followedEverywhere returns the artists the user follows, in MixMusic,
-// then on the services they signed in to, as those were read, each once.
+// then on the services they signed in to, as those were read, whole or in
+// part, each once.
 func (s *shell) followedEverywhere() []media.Artist {
 	artists := s.svc.Collection.FollowedArtists()
 	seen := map[string]bool{}
@@ -330,7 +330,7 @@ func (s *shell) followedEverywhere() []media.Artist {
 		seen[a.ID] = true
 	}
 	for _, key := range []string{"youtube:artists", "spotify:artists"} {
-		if l, ok := s.loads[key].(*loaded[[]media.Artist]); ok && l.done && l.err == nil && s.signedIn(keySource(key)) {
+		if l, ok := s.loads[key].(*loaded[[]media.Artist]); ok && l.done && listCame(l.err) && s.signedIn(keySource(key)) {
 			for _, a := range l.value {
 				if !seen[a.ID] {
 					seen[a.ID] = true

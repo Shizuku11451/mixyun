@@ -16,6 +16,7 @@ import (
 	"github.com/fzn0x/mixmusic/internal/romaji"
 	"github.com/fzn0x/mixmusic/internal/romanize"
 	"github.com/fzn0x/mixmusic/internal/settings"
+	"github.com/fzn0x/mixmusic/internal/sponsorblock"
 	"github.com/fzn0x/mixmusic/internal/spotify"
 	"github.com/fzn0x/mixmusic/internal/tools"
 	"github.com/fzn0x/mixmusic/opus"
@@ -104,16 +105,17 @@ type Notice struct {
 // projects, which its copies must reproduce.
 func (s *System) Notices() []Notice {
 	return []Notice{
-		{ID: "opus", Name: "libopus, which decodes Opus audio", Text: opus.License},
-		{ID: "aac", Name: "SharpJaad, which decodes AAC audio", Text: aac.License},
-		{ID: "mp3", Name: "go-mp3, which decodes the MP3 files on this computer", Text: audio.MP3License},
-		{ID: "vorbis", Name: "jfreymuth/vorbis, which decodes the Vorbis files on this computer", Text: audio.VorbisLicense},
-		{ID: "webAudio", Name: "Chromium's Web Audio, which shapes the sound", Text: audio.License},
-		{ID: "materialColor", Name: "Material Color Utilities, which make the Material themes' colours", Text: hct.License},
-		{ID: "unihan", Name: "Unihan, whose readings of Chinese characters write Chinese lyrics in pinyin", Text: romanize.UnihanLicense},
-		{ID: "pinyin", Name: "pinyin-data and phrase-pinyin-data, the readings of Chinese characters and words in pinyin", Text: romanize.PinyinLicense},
-		{ID: "kagome", Name: "kagome, which reads the kanji of Japanese lyrics for their romaji", Text: romaji.License},
-		{ID: "ipadic", Name: "The IPA dictionary (mecab-ipadic), which romaji downloads the first time it's turned on", Text: romaji.DictionaryNotice},
+		{Name: "libopus, which decodes Opus audio", Text: opus.License},
+		{Name: "SharpJaad, which decodes AAC audio", Text: aac.License},
+		{Name: "go-mp3, which decodes the MP3 files on this computer", Text: audio.MP3License},
+		{Name: "jfreymuth/vorbis, which decodes the Vorbis files on this computer", Text: audio.VorbisLicense},
+		{Name: "Chromium's Web Audio, which shapes the sound", Text: audio.License},
+		{Name: "Material Color Utilities, which make the Material themes' colours", Text: hct.License},
+		{Name: "SponsorBlock's data, the parts of videos Mixyun skips", Text: sponsorblock.License},
+		{Name: "Unihan, whose readings of Chinese characters write Chinese lyrics in pinyin", Text: romanize.UnihanLicense},
+		{Name: "pinyin-data and phrase-pinyin-data, the readings of Chinese characters and words in pinyin", Text: romanize.PinyinLicense},
+		{Name: "kagome, which reads the kanji of Japanese lyrics for their romaji", Text: romaji.License},
+		{Name: "The IPA dictionary (mecab-ipadic), which romaji downloads the first time it's turned on", Text: romaji.DictionaryNotice},
 	}
 }
 
