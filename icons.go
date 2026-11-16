@@ -30,6 +30,8 @@ var iconPaths = map[string]string{
 	"close":        "M5.5 5.5l13 13M18.5 5.5l-13 13",
 	"back":         "M14.5 5.5 8 12l6.5 6.5M8.5 12H20",
 	"forward":      "M9.5 5.5 16 12l-6.5 6.5M15.5 12H4",
+	"lock":         "M5.5 11h13v9.5h-13zM8.5 11V7.5a3.5 3.5 0 0 1 7 0V11",
+	"unlock":       "M5.5 11h13v9.5h-13zM8.5 11V7.5a3.5 3.5 0 0 1 6.8-1.2",
 	"mini":         "M3.5 5h17v14h-17zM11.5 12h7v5h-7z",
 	"statuslyrics": "M3.5 4.5h17v4h-17zM6.5 6.5h7M6 13h12M6 17h8",
 	"expand":       "M4.5 9V4.5H9M15 4.5h4.5V9M19.5 15v4.5H15M9 19.5H4.5V15",

@@ -33,6 +33,9 @@ type Desktop struct {
 	// the size the window keeps of its last run suits it, and the mini
 	// player scales it to the zoom as it opens (#717). 0 before it opened.
 	MiniZoom float64 `json:"miniZoom"`
+	// FloatLocked locks the floating lyrics where they are: they show their
+	// words alone, and let the pointer through but to their unlock button.
+	FloatLocked bool `json:"floatLocked"`
 	// MediaKeys has the keyboard's play, next and previous keys control
 	// MixMusic.
 	MediaKeys bool `json:"mediaKeys"`

@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"sort"
+	"sync"
 	"time"
 
 	"github.com/egoist/mygo"
@@ -27,6 +28,20 @@ const floatHideAfter = 1500 * time.Millisecond
 // again at each size.
 const floatArtMax = 160
 
+// floatPollEvery is how often a locked floating window, which lets the
+// pointer through, looks where the pointer is (floatLock).
+const floatPollEvery = 100 * time.Millisecond
+
+// floatLock is the floating window's lock: whether the window is locked as
+// the setting FloatLocked says (applied), whether the pointer is over it
+// (hover) and over its unlock button (overButton), where that button was
+// the frame before, and stop, which ends the polling of the pointer.
+type floatLock struct {
+	applied, hover, overButton bool
+	button                     ui.Rect
+	stop                       func()
+}
+
 // OpenFloat opens the floating lyrics: a small window of Liquid Glass over
 // the others, which resizes, with the cover of what plays, the line of its
 // lyrics sung now and the one under it, and the song and the transport
@@ -47,7 +62,7 @@ func OpenFloat(a *app.App) *mygo.Window {
 		// glass plugin bends only what the window draws itself, and this
 		// one draws nothing behind its words (macOS 26; older macOS and
 		// Windows 11 get their closest material, Linux none).
-		Vibrancy: mygo.VibrancyGlass,
+		Vibrancy: mygo.VibrancyGlass, // as unlocking puts it back (followFloatLock)
 		// Tinted with the theme's ground, so that the theme's words read on
 		// it whatever the system's appearance.
 		// shortcut: the tint stays the theme's of when it opened; reopen it
@@ -65,7 +80,7 @@ func OpenFloat(a *app.App) *mygo.Window {
 	// glass of a window that is not: keep it drawn as active.
 	s.win.SetActiveAppearance(true)
 	trackPointer(s.win)
-	s.follow()
+	s.follow(func() { s.pollFloatPointer(false) })
 	return s.win
 }
 
@@ -75,7 +90,6 @@ func OpenFloat(a *app.App) *mygo.Window {
 // taller still.
 type floatLayout struct {
 	pad, art, size           float32
-	lines                    int
 	second, bar, meta, times bool
 }
 
@@ -103,10 +117,6 @@ func floatLayoutOf(w, h float32) floatLayout {
 		column -= l.pad
 	}
 	l.size = max(15, min(h*0.16, 34))
-	l.lines = 1
-	if h >= 170 {
-		l.lines = 2
-	}
 	l.meta = h >= 100
 	l.times = column >= 290
 	return l
@@ -114,7 +124,9 @@ func floatLayoutOf(w, h float32) floatLayout {
 
 // floatView draws the floating lyrics. Dragging it anywhere but its
 // buttons moves the window, and its edges resize it; its menu, on a right
-// click, plays or pauses, opens MixMusic or closes it.
+// click, plays or pauses, opens MixMusic, locks it or closes it. Locked
+// (followFloatLock), it shows the lyrics alone, with no ground, and its
+// unlock button while the pointer is over it.
 func (s *shell) floatView(c *ui.Context) {
 	s.st = s.p.State()
 	s.followArtwork()
@@ -123,6 +135,10 @@ func (s *shell) floatView(c *ui.Context) {
 	t.Background = ui.Transparent
 	c.SetTheme(&t)
 	l := floatLayoutOf(c.Size())
+	locked := s.followFloatLock()
+	if locked {
+		l.art, l.bar, l.meta = 0, false, false
+	}
 	cur, ok := s.st.Current()
 	title, artists := k.words(locales.MiniRowNothingPlaying()), locales.MiniRowPlaySomething()
 	ly := floatLyric{at: -2, first: "♪"}
@@ -137,8 +153,16 @@ func (s *shell) floatView(c *ui.Context) {
 		// and the whole window should drag.
 		ground = ui.RGBA(0, 0, 0, 0.01)
 	}
+	if locked {
+		ground = ui.Transparent
+	}
 	root := ui.Row(c).Fill().Background(ground).Radius(22).Padding(l.pad).Gap(l.pad).AlignItems(ui.Center).
 		TextColor(k.text).Font(k.body).DragWindow()
+	if locked {
+		// A dark edge round the white words (floatLyricView), crisp on light
+		// ground as on dark; a blurred shadow alone reads as a smudge on white.
+		root.TextStroke(3, ui.RGBA(0, 0, 0, 0.6)).TextShadow(0, 1, 2, ui.RGBA(0, 0, 0, 0.35))
+	}
 	root.ContextMenu(func(m *ui.Menu) {
 		// The menu plays and pauses too: the transport shows only on hover.
 		if _, label := toggleOf(s.st); ok && m.Item(label).Chosen() {
@@ -146,6 +170,9 @@ func (s *shell) floatView(c *ui.Context) {
 		}
 		if m.Item(locales.MiniRowOpen()).Chosen() {
 			go s.svc.System.ShowMainWindow()
+		}
+		if m.Item(locales.FloatLock()).Chosen() {
+			s.lockFloat(true)
 		}
 		if m.Item(locales.FloatClose()).Chosen() {
 			go s.win.Close()
@@ -164,7 +191,27 @@ func (s *shell) floatView(c *ui.Context) {
 	if c.Preferences().ReduceMotion {
 		rise = 0
 	}
+	unlock := float32(0)
+	if locked {
+		// It stays as the progress does once the pointer leaves.
+		on := s.fl.hover || s.fl.overButton
+		a := ui.Smooth
+		if !on {
+			a.Delay = floatHideAfter
+		}
+		unlock = root.AnimateTo("unlock", b2f(on), a)
+	}
 	root.Children(func() {
+		if unlock > 0.01 {
+			b := s.miniButton(c, "float-unlock", "unlock", locales.FloatUnlock(), false, 28, 16).
+				Absolute().Top(4).Right(4).Background(k.surface).Opacity(unlock)
+			s.fl.button = b.Bounds()
+			if b.Clicked() {
+				s.lockFloat(false)
+			}
+		} else {
+			s.fl.button = ui.Rect{}
+		}
 		if l.art > 0 {
 			s.floatCover(c, cur.Track, ok, l.art)
 		}
@@ -193,7 +240,8 @@ func (s *shell) floatView(c *ui.Context) {
 
 // floatLyricView is the line sung now, lit word by word when the lyrics
 // time their words, over the line under it, as opaque as under. A new line rises in as the
-// last rises out.
+// last rises out. The line keeps to one row: one longer than the window
+// scrolls across it as it is sung (floatScrollBy).
 func (s *shell) floatLyricView(c *ui.Context, id string, ly floatLyric, l floatLayout, under float32) {
 	k := &s.lk
 	tr := ui.ElementTransition{
@@ -206,9 +254,53 @@ func (s *shell) floatLyricView(c *ui.Context, id string, ly floatLyric, l floatL
 		tr = ui.ElementTransition{Duration: -1}
 	}
 	ui.Column(c.Key(floatLineKey{id, ly.at})).Gap(2).MinWidth(0).Transition(tr).Children(func() {
-		s.lyricsText(c, ly.first, l.size, 700, k.accent, ly.words, 0, 0).MaxLines(l.lines).MinWidth(0)
+		second := k.muted
+		view := ui.Box(c).MinWidth(0).AlignItems(ui.Start).Clip()
+		view.Children(func() {
+			var line, sung ui.Element
+			if !s.set.FloatLocked {
+				line = s.lyricsText(c, ly.first, l.size, 700, k.accent, ly.words, 0, 0)
+				sung = line
+			} else {
+				// No ground under them: the cover's colours could be the wallpaper's.
+				white := ui.RGB(255, 255, 255)
+				second = white.Alpha(0.85)
+				text := func() ui.Element { return ui.Text(c, ly.first).FontSize(l.size).FontWeight(700).NoWrap() }
+				if len(ly.words) == 0 {
+					line = text().TextColor(white)
+					sung = line
+				} else {
+					// A line lit word by word paints its glyphs in Draw, under its
+					// own text's edge and shadow: those come from a clear copy
+					// behind it, and it takes none.
+					line = ui.Box(c).Children(func() {
+						text().TextColor(ui.Transparent)
+						sung = s.sungText(c, text(), ly.first, ui.Font{Family: k.body, Size: l.size, Weight: 700}, white, white.Alpha(0.55), ly.words, 0, 0).
+							Absolute().Top(0).Left(0).TextStroke(0, ui.Transparent).TextShadow(0, 0, 0, ui.Transparent)
+					})
+				}
+			}
+			line.NoWrap().Shrink(0)
+			// The widths are the frame before's: a new line starts unscrolled.
+			lineW, viewW := line.Bounds().W, view.Bounds().W
+			if lineW <= viewW || ly.to <= ly.from {
+				return
+			}
+			clock := ui.Local(view, "clock", func() sungLine { return sungLine{} }).follow(s.st, c.Now())
+			if clock.moving {
+				view.Loop("scroll", time.Second, ui.Linear) // a frame each, while it scrolls
+			}
+			at := clock.at(c.Now()) + lyricsLead(s.st.Speed)
+			// Where it is sung: by its words, as they light (sungTextWith
+			// keeps their layout on the line), or else by its time.
+			x := lineW * min(max(float32(at-ly.from)/float32(ly.to-ly.from), 0), 1)
+			if g := ui.Local(sung, "sung", func() sungLine { return sungLine{} }).shaped; len(ly.words) > 0 && g != nil {
+				x = g.sungX(ly.words, at)
+			}
+			line.Translate(-floatScrollBy(x, lineW, viewW), 0)
+		})
 		if l.second && ly.second != "" {
-			ui.Text(c, ly.second).FontSize(max(11, l.size*0.62)).TextColor(k.muted).SingleLine().MinWidth(0).Opacity(under)
+			ui.Text(c, ly.second).FontSize(max(11, l.size*0.62)).TextColor(second).SingleLine().MinWidth(0).Opacity(under)
 		}
 	})
 }
@@ -284,16 +376,124 @@ func (s *shell) floatControls(c *ui.Context, t media.Track, ok bool) {
 		if ok {
 			s.likeButton(c, "float-like", t, 16)
 		}
+		if s.miniButton(c, "float-lock", "lock", locales.FloatLock(), false, 30, 16).Clicked() {
+			s.lockFloat(true)
+		}
 	})
+}
+
+// lockFloat locks the floating window, or unlocks it, in the settings,
+// which every window follows: the floating one with followFloatLock, the
+// tray's and the player bar's items with their checks.
+func (s *shell) lockFloat(on bool) {
+	s.set.FloatLocked = on
+	s.save()
+}
+
+// followFloatLock locks the floating window, or unlocks it, once the
+// setting changed, and reports whether it is locked. Locked, the window
+// lets the pointer through, and shows no glass nor shadow; it looks where
+// the pointer is every floatPollEvery to show its unlock button, and lets
+// the pointer in over that button alone (pollFloatPointer).
+func (s *shell) followFloatLock() bool {
+	on := s.set.FloatLocked
+	if on == s.fl.applied || s.win == nil {
+		return on
+	}
+	s.fl.applied = on
+	w := s.win
+	w.SetHasShadow(!on)
+	w.SetIgnoreMouseEvents(on)
+	if !on {
+		w.SetVibrancy(mygo.VibrancyGlass)
+		s.pollFloatPointer(false)
+		return on
+	}
+	w.SetVibrancy(mygo.VibrancyNone)
+	t, done := time.NewTicker(floatPollEvery), make(chan struct{})
+	go func() {
+		defer t.Stop()
+		for {
+			select {
+			case <-t.C:
+				mygo.RunOnMain(func() { s.pollFloatPointer(true) })
+			case <-done:
+				return
+			}
+		}
+	}()
+	s.fl.stop = sync.OnceFunc(func() { close(done) })
+	return on
+}
+
+// pollFloatPointer looks where the pointer is over the locked floating
+// window: over the window, it shows the unlock button, and over that
+// button, it lets the pointer in, to click it. Called with on false, it
+// stops looking, as the window unlocks or closes. Main thread.
+func (s *shell) pollFloatPointer(on bool) {
+	if !on {
+		if s.fl.stop != nil {
+			s.fl.stop()
+			s.fl.stop = nil
+		}
+		// A poll queued on the main thread before may still run: it finds
+		// the window unlocked, or closed, and looks no more.
+		s.fl.applied, s.fl.hover, s.fl.overButton = false, false, false
+		return
+	}
+	if !s.fl.applied {
+		return
+	}
+	x, y, in := cursorIn(s.win)
+	if over := in && s.fl.button.Contains(x, y); over != s.fl.overButton {
+		s.fl.overButton = over
+		s.win.SetIgnoreMouseEvents(!over)
+	}
+	if in != s.fl.hover {
+		s.fl.hover = in
+		s.win.Invalidate()
+	}
 }
 
 // floatLyric is what the floating lyrics show of the lyrics: the line
 // sung now, its index (-1 before the first, -2 for a note in place of
-// lyrics), its words when the lyrics time them, and the line under it.
+// lyrics), its words when the lyrics time them, the line under it, and
+// when the line is sung from and to.
 type floatLyric struct {
 	at            int
 	first, second string
 	words         []lyrics.Word
+	from, to      time.Duration
+}
+
+// floatScrollBy is how far a line lineW wide scrolls in a window viewW
+// wide once it is sung x into it: none until x is 40% into the window,
+// then as far as keeps x there, and no further than the line's end.
+func floatScrollBy(x, lineW, viewW float32) float32 {
+	return min(max(x-0.4*viewW, 0), max(lineW-viewW, 0))
+}
+
+// sungX is how far into the first row of the line the words are sung at
+// at: the end of the last word sung, or the part sung of the one being
+// sung, as sungLine.light lights them.
+func (g *sungLayout) sungX(words []lyrics.Word, at time.Duration) float32 {
+	if len(g.rows) == 0 {
+		return 0
+	}
+	var x float32
+	for _, cell := range g.rows[0].cells {
+		w := words[cell.word]
+		start, end := ms(w.StartMs), ms(w.EndMs)
+		if at < start {
+			continue
+		}
+		f := float32(1)
+		if at < end {
+			f = float32(at-start) / float32(end-start)
+		}
+		x = max(x, cell.x0+(cell.x1-cell.x0)*f)
+	}
+	return x
 }
 
 // floatLines are the lines of lyrics the floating lyrics show of t, from
@@ -334,6 +534,12 @@ func floatText(lines []lyrics.Line, latin []string, how string, pos time.Duratio
 	f := floatLyric{at: at, first: notchLine(lines, latin, how, at), second: notchUnder(latin, how, at)}
 	if f.second == "" && at+1 < len(lines) {
 		f.second = notchLine(lines, latin, how, at+1)
+	}
+	f.from, f.to = ms(lines[at].TimeMs), ms(lines[at].TimeMs)+5*time.Second
+	if at+1 < len(lines) {
+		f.to = ms(lines[at+1].TimeMs)
+	} else if w := lines[at].Words; len(w) > 0 {
+		f.to = ms(w[len(w)-1].EndMs)
 	}
 	return f
 }

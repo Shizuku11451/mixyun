@@ -10,6 +10,8 @@ import (
 	"time"
 
 	"github.com/egoist/mygo"
+
+	"github.com/fzn0x/mixmusic/internal/settings"
 )
 
 // URLScheme is the scheme of MixMusic's deep links, such as
@@ -276,6 +278,15 @@ func (a *App) setupTray() {
 	cmd := func(c Command) func(*mygo.MenuItem, *mygo.Window) {
 		return func(*mygo.MenuItem, *mygo.Window) { a.command(PlayerCommand{Command: c}) }
 	}
+	// Locked, the floating lyrics let the pointer through: the tray unlocks
+	// them too. MyGo checks it, or not, before it calls Click.
+	lock := &mygo.MenuItem{Label: "Lock floating window", Type: mygo.MenuItemCheckbox, Click: func(it *mygo.MenuItem, _ *mygo.Window) {
+		on := it.IsChecked()
+		if _, err := (&Preferences{a}).Update(func(s *settings.Settings) { s.FloatLocked = on }); err != nil {
+			log.Printf("mixmusic: locking the floating window: %v", err)
+		}
+	}}
+	lock.Checked = a.settings.Get().FloatLocked
 	menu := mygo.NewMenu([]*mygo.MenuItem{
 		{Label: "Play / Pause", Click: cmd(CommandToggle)},
 		{Label: "Next", Click: cmd(CommandNext)},
@@ -284,6 +295,7 @@ func (a *App) setupTray() {
 		{Label: "Show Mixyun", Click: func(*mygo.MenuItem, *mygo.Window) { a.showMain() }},
 		{Label: "Mini player", Click: func(*mygo.MenuItem, *mygo.Window) { a.showMini() }},
 		{Label: "Floating window", Click: func(*mygo.MenuItem, *mygo.Window) { a.toggleFloat() }},
+		lock,
 		mygo.Separator(),
 		{Role: mygo.RoleQuit},
 	})
@@ -300,6 +312,7 @@ func (a *App) setupTray() {
 		// A click shows the window; a right click, the menu.
 		tray.OnClick(a.showMain)
 		tray.OnRightClick(func() {
+			lock.SetChecked(a.settings.Get().FloatLocked) // the floating window locks too
 			tray.SetMenu(menu)
 			tray.PopUpMenu()
 			tray.SetMenu(nil)

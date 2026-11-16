@@ -2231,6 +2231,8 @@
   "firewallShielded": "Windows Firewall blocks every incoming connection on this network, those of the apps it allows too, so other computers and cast devices can't reach Mixyun. Windows Security turns that off, in Firewall & network protection.",
   "firewallTitle": "Windows Firewall",
   "floatClose": "Close the floating window",
+  "floatLock": "Lock the floating window",
+  "floatUnlock": "Unlock the floating window",
   "floatWindowTitle": "Mixyun floating window",
   "followEmpty": "Follow an artist from their page or their menu, and they wait here.",
   "followInMixMusic": "{name}: following in Mixyun",

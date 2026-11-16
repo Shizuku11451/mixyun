@@ -361,6 +361,10 @@ func (s *shell) playerSide(c *ui.Context) {
 		if m.Item(locales.PlayerMiniPlayer()).Chosen() {
 			s.showMini()
 		}
+		// The floating window locks, and unlocks, here too.
+		if m.Item(locales.FloatLock()).Checked(s.set.FloatLocked).Chosen() {
+			s.lockFloat(!s.set.FloatLocked)
+		}
 	})
 	if float.Clicked() {
 		go s.svc.System.ToggleFloatingLyrics()

@@ -7830,6 +7830,26 @@ func (msgs Messages) FloatClose() string {
 	return Catalog.Format(msgs.locale, "floatClose", nil)
 }
 
+// FloatLock says "Lock the floating window"
+// in the language the app shows.
+func FloatLock() string { return In(i18n.Locale()).FloatLock() }
+
+// FloatLock says "Lock the floating window"
+// in the language of msgs.
+func (msgs Messages) FloatLock() string {
+	return Catalog.Format(msgs.locale, "floatLock", nil)
+}
+
+// FloatUnlock says "Unlock the floating window"
+// in the language the app shows.
+func FloatUnlock() string { return In(i18n.Locale()).FloatUnlock() }
+
+// FloatUnlock says "Unlock the floating window"
+// in the language of msgs.
+func (msgs Messages) FloatUnlock() string {
+	return Catalog.Format(msgs.locale, "floatUnlock", nil)
+}
+
 // FloatWindowTitle says "Mixyun floating window"
 // in the language the app shows.
 func FloatWindowTitle() string { return In(i18n.Locale()).FloatWindowTitle() }

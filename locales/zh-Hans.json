@@ -712,6 +712,8 @@
   "firewallShielded": "Windows 防火墙会阻止本网络上的所有入站连接，包括它允许的应用的连接，因此其他电脑和投放设备无法连接到混云。可在 Windows 安全中心的“防火墙和网络保护”中将其关闭。",
   "firewallTitle": "Windows 防火墙",
   "floatClose": "关闭悬浮窗",
+  "floatLock": "锁定悬浮窗",
+  "floatUnlock": "解锁悬浮窗",
   "floatWindowTitle": "混云悬浮窗",
   "followEmpty": "在艺人的页面或菜单中关注艺人后，他们会保存在这里。",
   "followInMixMusic": "已在混云中关注 {name}",

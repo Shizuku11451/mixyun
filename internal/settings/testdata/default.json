@@ -103,6 +103,7 @@
   "keepOnTop": false,
   "miniPanel": "",
   "miniZoom": 0,
+  "floatLocked": false,
   "mediaKeys": true,
   "assistantControl": false,
   "roomName": "",

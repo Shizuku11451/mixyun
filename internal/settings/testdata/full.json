@@ -140,6 +140,7 @@
   "keepOnTop": true,
   "miniPanel": "lyrics",
   "miniZoom": 1.25,
+  "floatLocked": true,
   "mediaKeys": false,
   "assistantControl": true,
   "roomName": "Ana",

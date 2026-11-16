@@ -178,6 +178,8 @@ type shell struct {
 	seeking bool
 	seekTo  float64
 	volume  float64
+	// fl is the floating window's lock, in its shell.
+	fl floatLock
 
 	// narrow is set while the window is at most narrowWidth wide, which
 	// folds the rail; narrowFold is the fold the user gave it there.
