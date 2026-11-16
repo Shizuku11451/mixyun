@@ -17,15 +17,23 @@ const floatVibrancy = mygo.VibrancyNone
 var (
 	procSetWindowCompositionAttribute = floatUser32.NewProc("SetWindowCompositionAttribute")
 	procFloatDwmSetWindowAttribute    = syscall.NewLazyDLL("dwmapi.dll").NewProc("DwmSetWindowAttribute")
+	procFloatSetWindowPos             = floatUser32.NewProc("SetWindowPos")
 )
 
-// Windows 11 outlines a window it rounds the corners of: none while the
-// window is locked, the lyrics alone over the desktop (DWMWA_BORDER_COLOR).
+// Windows 11 outlines a window it rounds the corners of, and shadows it:
+// neither while the window is locked, the lyrics alone over the desktop
+// (DWMWA_BORDER_COLOR, DWMWA_WINDOW_CORNER_PREFERENCE).
 const (
-	dwmwaBorderColor = 34
-	dwmColorDefault  = 0xFFFFFFFF
-	dwmColorNone     = 0xFFFFFFFE
+	dwmwaCornerPreference = 33
+	dwmwaBorderColor      = 34
+	dwmCornerSquare       = 1 // DWMWCP_DONOTROUND
+	dwmCornerRound        = 2 // DWMWCP_ROUND, as mygo rounds it
+	dwmColorDefault       = 0xFFFFFFFF
+	dwmColorNone          = 0xFFFFFFFE
 )
+
+// SetWindowPos's flags that only have DWM draw the window's frame again.
+const swpFrameOnly = 0x1 | 0x2 | 0x4 | 0x10 | 0x20 // NOSIZE NOMOVE NOZORDER NOACTIVATE FRAMECHANGED
 
 // The accent policy of SetWindowCompositionAttribute, which DWM keeps
 // drawing whether the window is active or not (Windows 10 1803 and later).
@@ -51,13 +59,17 @@ func setFloatGlass(w *mygo.Window, on bool) bool {
 	if hwnd == 0 {
 		return false
 	}
-	border := uint32(dwmColorNone)
+	border, corner := uint32(dwmColorNone), uint32(dwmCornerSquare)
 	if on {
-		border = dwmColorDefault
+		border, corner = dwmColorDefault, dwmCornerRound
 	}
-	if procFloatDwmSetWindowAttribute.Find() == nil { // Windows 10 ignores it
+	if procFloatDwmSetWindowAttribute.Find() == nil { // Windows 10 ignores them
+		procFloatDwmSetWindowAttribute.Call(hwnd, dwmwaCornerPreference, uintptr(unsafe.Pointer(&corner)), 4)
 		procFloatDwmSetWindowAttribute.Call(hwnd, dwmwaBorderColor, uintptr(unsafe.Pointer(&border)), 4)
 	}
+	// The window draws through DirectComposition, which DWM's blur doesn't
+	// follow: the frame drawn again, the blur comes and goes at once.
+	defer procFloatSetWindowPos.Call(hwnd, 0, 0, 0, 0, 0, swpFrameOnly)
 	if procSetWindowCompositionAttribute.Find() != nil {
 		return false
 	}
