@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"math"
 	"slices"
 	"strings"
 	"sync"
@@ -100,14 +101,45 @@ func (c *Catalog) SearchYouTube(ctx context.Context, query string) (media.Search
 	return c.a.youtube.SearchWeb(ctx, query)
 }
 
-// Suggestions returns what to suggest for what the user typed: NetEase
-// Cloud Music's searches, songs, albums, artists and playlists, or the recent
-// searches while nothing is typed.
+// Suggestions returns what to suggest for what the user typed: the
+// searches, songs, albums, artists and playlists of NetEase Cloud Music and
+// YouTube Music in turn, NetEase's first, or the recent searches while
+// nothing is typed. It fails only when both did.
 func (c *Catalog) Suggestions(ctx context.Context, input string) (media.Suggestions, error) {
 	if strings.TrimSpace(input) == "" {
 		return media.Suggestions{Searches: c.a.library.Searches()}, nil
 	}
-	return c.a.netease.Suggestions(ctx, input)
+	var (
+		wg           sync.WaitGroup
+		ne, yt       media.Suggestions
+		neErr, ytErr error
+	)
+	wg.Go(func() { ne, neErr = c.a.netease.Suggestions(ctx, input) })
+	wg.Go(func() { yt, ytErr = c.a.youtube.Suggestions(ctx, input) })
+	wg.Wait()
+	if neErr != nil && ytErr != nil {
+		return media.Suggestions{}, neErr
+	}
+	return mergeSuggestions(ne, yt), nil
+}
+
+// mergeSuggestions takes the suggestions of each in turn, the first's
+// leading, keeping one of the searches that differ only in case.
+func mergeSuggestions(lists ...media.Suggestions) media.Suggestions {
+	var searches [][]string
+	var items [][]media.Item
+	for _, l := range lists {
+		searches, items = append(searches, l.Searches), append(items, l.Items)
+	}
+	out := media.Suggestions{Searches: []string{}, Items: interleave(math.MaxInt, items...)}
+	seen := map[string]bool{}
+	for _, v := range interleave(math.MaxInt, searches...) {
+		if k := strings.ToLower(strings.TrimSpace(v)); k != "" && !seen[k] {
+			seen[k] = true
+			out.Searches = append(out.Searches, v)
+		}
+	}
+	return out
 }
 
 // SpotifyHome returns Spotify's shelves of the home page, made of the

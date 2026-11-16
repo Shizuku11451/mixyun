@@ -39,7 +39,8 @@ func searchScopeLabels() []string {
 	return []string{locales.SearchScopeAll(), "Spotify", "网易云音乐", "YouTube Music", "YouTube"}
 }
 
-// interleave alternates the items of lists, so each service leads.
+// interleave alternates the items of lists, so each service leads in turn,
+// the first list's first.
 func interleave[T any](lists ...[]T) []T {
 	n, longest := 0, 0
 	for _, l := range lists {
@@ -69,11 +70,11 @@ func mergeResults(r app.SearchResponse, scope int) media.SearchResults {
 		return r.YouTube
 	}
 	return media.SearchResults{
-		Tracks:    interleave(r.Spotify.Tracks, r.NetEase.Tracks, r.YouTube.Tracks),
-		Videos:    interleave(r.Spotify.Videos, r.NetEase.Videos, r.YouTube.Videos),
-		Albums:    interleave(r.Spotify.Albums, r.NetEase.Albums, r.YouTube.Albums),
-		Artists:   interleave(r.Spotify.Artists, r.NetEase.Artists, r.YouTube.Artists),
-		Playlists: interleave(r.Spotify.Playlists, r.NetEase.Playlists, r.YouTube.Playlists),
+		Tracks:    interleave(r.NetEase.Tracks, r.Spotify.Tracks, r.YouTube.Tracks),
+		Videos:    interleave(r.NetEase.Videos, r.Spotify.Videos, r.YouTube.Videos),
+		Albums:    interleave(r.NetEase.Albums, r.Spotify.Albums, r.YouTube.Albums),
+		Artists:   interleave(r.NetEase.Artists, r.Spotify.Artists, r.YouTube.Artists),
+		Playlists: interleave(r.NetEase.Playlists, r.Spotify.Playlists, r.YouTube.Playlists),
 	}
 }
 
