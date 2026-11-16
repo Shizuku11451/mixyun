@@ -36,7 +36,6 @@ func savedFor(t *testing.T, saved func(id string) bool) func() []string {
 // opens, which then offers to take it out; once taken out, the menu
 // offers to add it. Of a whole list, a song it lacks isn't asked of.
 func TestSongMenuOfAPartialList(t *testing.T) {
-	t.Skip("Mixyun's library has NetEase Cloud Music's tab in place of YouTube Music's")
 	strobe, glosoli := testTracks[2], testTracks[5]
 	asked := savedFor(t, func(id string) bool { return id == glosoli.ID })
 	songsSaved(t, func() error { return nil })

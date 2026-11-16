@@ -260,7 +260,7 @@ func TestInviteCollaborators(t *testing.T) {
 	asks.hold()
 	click(t, s, tt, "invite")
 	tt.Frame()
-	if !textHolds(tt, "Making Lantern songs unlisted: NetEase Cloud Music takes up to half a minute") {
+	if !textHolds(tt, "Making Lantern songs unlisted: YouTube Music takes up to half a minute") {
 		t.Errorf("no toast tells the invite waits for the unlisting: %q", tt.Texts())
 	}
 	asks.release()
@@ -558,7 +558,7 @@ func TestShareMixOnYouTube(t *testing.T) {
 	if err := tt.Click("More"); err != nil {
 		t.Fatal(err)
 	}
-	if err := tt.ChooseMenuItem("Share", "As a NetEase Cloud Music playlist…"); err != nil {
+	if err := tt.ChooseMenuItem("Share", "As a YouTube Music playlist…"); err != nil {
 		t.Fatal(err)
 	}
 	tt.Frame()
@@ -568,7 +568,7 @@ func TestShareMixOnYouTube(t *testing.T) {
 	asks.hold()
 	click(t, s, tt, "share")
 	asks.release()
-	const shared = "Made Night walk on NetEase Cloud Music: copied its link, which anyone can open"
+	const shared = "Made Night walk on YouTube Music: copied its link, which anyone can open"
 	heard(t, s, shared, false)
 	if got := asks.asked(); !slices.Equal(got, []string{"share Night walk 2"}) {
 		t.Errorf("YouTube was asked %q", got)
@@ -593,7 +593,7 @@ func TestShareMixOnYouTube(t *testing.T) {
 		t.Fatal(err)
 	}
 	defer tt.CloseMenu()
-	if err := tt.ChooseMenuItem("Share", "As a NetEase Cloud Music playlist…"); err == nil {
+	if err := tt.ChooseMenuItem("Share", "As a YouTube Music playlist…"); err == nil {
 		t.Error("signed out, Share offers YouTube Music")
 	}
 }
@@ -617,7 +617,6 @@ var tideList = media.Playlist{ID: "yt:PLtide", Source: media.SourceYouTube, Titl
 // library's shelf of collaborations, apart from theirs; and adds a track
 // to it from the track's menu, which tells whose it is.
 func TestYouTubeCollaboration(t *testing.T) {
-	t.Skip("YouTube Music is replaced by NetEase Cloud Music in the UI")
 	_, tt := collabShell(t, signedInTo(true, false), tideList)
 	if items := menuOf(t, tt, tideTracks[0].Title); slices.Contains(items, "Remove from this playlist") {
 		t.Errorf("a track of the owner's offers to go: %q", items)

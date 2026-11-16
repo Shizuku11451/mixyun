@@ -1,7 +1,7 @@
 {
   "@@locale": "en",
   "aboutContribute": "contribute",
-  "aboutDescription": "Spotify and NetEase Cloud Music in one player. This is Shizuku11451's fork of Mixyun, which fzn0x and its contributors make, open source under the MIT license or the GNU GPL, version 3. Your data lives in {dir}.",
+  "aboutDescription": "Spotify, YouTube Music and NetEase Cloud Music in one player. This is Shizuku11451's fork of Mixyun, which fzn0x and its contributors make, open source under the MIT license or the GNU GPL, version 3. Your data lives in {dir}.",
   "@aboutDescription": {
     "placeholders": {
       "dir": {
@@ -375,11 +375,11 @@
   "assistantsTitle": "AI assistants",
   "audioAccount2Change": "You can change this in Settings › Playback › Sound.",
   "audioAccount2NotNow": "not now",
-  "audioAccount2Offer": "Your NetEase Cloud Music account has Premium, whose audio has a higher bitrate. Mixyun can ask for each track's audio as your account to play it. NetEase Cloud Music may flag an account used this way, and tracks may start more slowly. A track it can't get this way plays as before.",
+  "audioAccount2Offer": "Your YouTube Music account has Premium, whose audio has a higher bitrate. Mixyun can ask for each track's audio as your account to play it. YouTube may flag an account used this way, and tracks may start more slowly. A track it can't get this way plays as before.",
   "audioAccount2Title": "play audio as your account",
   "audioAccount2TurnOn": "turn on",
-  "audioAsAccountDesc": "For NetEase Cloud Music VIP's higher bitrate, Mixyun asks for each track's audio as your NetEase Cloud Music account. NetEase Cloud Music may flag an account used this way, and tracks may start more slowly. A track it can't get this way plays as before.",
-  "audioAsAccountSignIn": "For NetEase Cloud Music VIP's higher bitrate, Mixyun asks for each track's audio as your NetEase Cloud Music account. NetEase Cloud Music may flag an account used this way, and tracks may start more slowly. A track it can't get this way plays as before. Sign in to NetEase Cloud Music in accounts first.",
+  "audioAsAccountDesc": "For YouTube Music Premium's higher bitrate, Mixyun asks for each track's audio as your YouTube Music account. YouTube may flag an account used this way, and tracks may start more slowly. A track it can't get this way plays as before.",
+  "audioAsAccountSignIn": "For YouTube Music Premium's higher bitrate, Mixyun asks for each track's audio as your YouTube Music account. YouTube may flag an account used this way, and tracks may start more slowly. A track it can't get this way plays as before. Sign in to YouTube Music in accounts first.",
   "audioAsAccountTitle": "Play audio as your account",
   "cacheSettingsClear": "clear",
   "cacheSettingsClearCovers": "Clear covers",
@@ -572,7 +572,7 @@
   "cmdViewZoomOut": "Zoom out",
   "cmdViewZoomReset": "Reset zoom",
   "collabAddToSpotify": "Add to Spotify playlist",
-  "collabFinding": "Finding the tracks on NetEase Cloud Music…",
+  "collabFinding": "Finding the tracks on YouTube Music…",
   "collabInviteBody": "Collaborators can't open a private playlist. Inviting them makes {title} unlisted: anyone with its link can open it, and it shows on none of your pages.",
   "@collabInviteBody": {
     "placeholders": {
@@ -636,7 +636,7 @@
   "collabMakeItem": "Make collaborative",
   "collabNameLabel": "Name",
   "collabNoneToAdd": "No playlists you can add to",
-  "collabShareAsTitle": "Share as a NetEase Cloud Music playlist",
+  "collabShareAsTitle": "Share as a YouTube Music playlist",
   "collabShareButton": "share",
   "collabShareFailed": "Couldn't share {title}: {error}",
   "@collabShareFailed": {
@@ -649,8 +649,8 @@
       }
     }
   },
-  "collabShareItem": "As a NetEase Cloud Music playlist…",
-  "collabShared": "Made {title} on NetEase Cloud Music: copied its link, which anyone can open",
+  "collabShareItem": "As a YouTube Music playlist…",
+  "collabShared": "Made {title} on YouTube Music: copied its link, which anyone can open",
   "@collabShared": {
     "placeholders": {
       "title": {
@@ -706,7 +706,7 @@
       }
     }
   },
-  "collabUnlisting": "Making {title} unlisted: NetEase Cloud Music takes up to half a minute before it lets collaborators in",
+  "collabUnlisting": "Making {title} unlisted: YouTube Music takes up to half a minute before it lets collaborators in",
   "@collabUnlisting": {
     "placeholders": {
       "title": {
@@ -952,7 +952,7 @@
   },
   "computerCantPlayFile": "Mixyun can't play this file",
   "computerCantPlayFiles": "Mixyun can't play these files",
-  "computerEmptyText": "Add a folder of music, or open files: they play from your computer, beside Spotify and NetEase Cloud Music, in your queue and your mixes. Nothing of them is uploaded.",
+  "computerEmptyText": "Add a folder of music, or open files: they play from your computer, beside Spotify, YouTube Music and NetEase Cloud Music, in your queue and your mixes. Nothing of them is uploaded.",
   "@computerEmptyText": {
     "description": "Empty state of Library › On this computer, before any music is found."
   },
@@ -1304,7 +1304,7 @@
   "discordLinePlaceholder": "nothing",
   "discordLineReset": "reset",
   "discordListenButton": "Listen button",
-  "discordListenButtonDescription": "A button that opens the track on NetEase Cloud Music or Spotify, which the others who see your profile can click. A file on your computer has none.",
+  "discordListenButtonDescription": "A button that opens the track on YouTube Music, NetEase Cloud Music or Spotify, which the others who see your profile can click. A file on your computer has none.",
   "discordListenButtonLabel": "Show a Listen button on Discord",
   "discordListeningTo": "Listening to {name}",
   "@discordListeningTo": {
@@ -1325,7 +1325,7 @@
   "discordSampleTitle": "Song title",
   "discordSecondLine": "Second line",
   "discordServiceBadge": "Service badge",
-  "discordServiceBadgeDescription": "A small mark of NetEase Cloud Music, Spotify or a file on your computer, at the cover's corner, or in its place.",
+  "discordServiceBadgeDescription": "A small mark of YouTube Music, NetEase Cloud Music, Spotify or a file on your computer, at the cover's corner, or in its place.",
   "discordServiceBadgeLabel": "Show the service's badge on Discord",
   "discordTimeBarLabel": "Time played",
   "discordTimeLeft": "Time left",
@@ -1343,8 +1343,8 @@
     }
   },
   "discordYourApplication": "your application",
-  "dislikeNote": "Signed in to NetEase Cloud Music, your dislikes of its songs go there too. Spotify takes no dislikes from apps: those of its tracks stay in Mixyun.",
-  "dislikeNoteSee": "Signed in to NetEase Cloud Music, your dislikes of its songs go there too. Spotify takes no dislikes from apps: those of its tracks stay in Mixyun. See the songs you dislike.",
+  "dislikeNote": "Signed in to YouTube Music, your dislikes of its songs go there too. Spotify takes no dislikes from apps: those of its tracks stay in Mixyun.",
+  "dislikeNoteSee": "Signed in to YouTube Music, your dislikes of its songs go there too. Spotify takes no dislikes from apps: those of its tracks stay in Mixyun. See the songs you dislike.",
   "dislikeSee": "See the songs you dislike",
   "dislikeSeeEnd": ".",
   "dislikeSkip": "Skip songs you dislike",
@@ -1762,7 +1762,7 @@
       }
     }
   },
-  "downloadsStartingTrackSpotify": "Downloading {title}: its recording on NetEase Cloud Music",
+  "downloadsStartingTrackSpotify": "Downloading {title}: its recording on NetEase Cloud Music or YouTube Music",
   "@downloadsStartingTrackSpotify": {
     "description": "Notice when a Spotify track starts downloading from its NetEase Cloud Music recording.",
     "placeholders": {
@@ -1879,7 +1879,7 @@
   "equalizerBands": "Bands",
   "equalizerBandsDesc": "The ten bands of the equalizer and its preamp, in dB: pre 32 64 125 250 500 1k 2k 4k 8k 16k Hz.",
   "equalizerCustom": "Custom",
-  "equalizerDesc": "Shape the sound of NetEase Cloud Music with ten bands and a preamp.",
+  "equalizerDesc": "Shape the sound of YouTube Music and NetEase Cloud Music with ten bands and a preamp.",
   "equalizerPreamp": "pre",
   "equalizerPreset": "Preset",
   "equalizerPresetAcoustic": "Acoustic",
@@ -1891,8 +1891,8 @@
   "equalizerPresetRock": "Rock",
   "equalizerPresetTreble": "Treble boost",
   "equalizerPresetVocal": "Vocal",
-  "equalizerSpotifyLead": "The equalizer works only on NetEase Cloud Music, which Mixyun plays itself, Spotify tracks played from it included. For Spotify, use a system-wide equalizer: ",
-  "equalizerSpotifyNote": "The equalizer works only on NetEase Cloud Music, which Mixyun plays itself, Spotify tracks played from it included. For Spotify, use a system-wide equalizer: Spotify notes that its audio settings can't change while another device plays it.",
+  "equalizerSpotifyLead": "The equalizer works only on YouTube Music and NetEase Cloud Music, which Mixyun plays itself, Spotify tracks played from them included. For Spotify, use a system-wide equalizer: ",
+  "equalizerSpotifyNote": "The equalizer works only on YouTube Music and NetEase Cloud Music, which Mixyun plays itself, Spotify tracks played from them included. For Spotify, use a system-wide equalizer: Spotify notes that its audio settings can't change while another device plays it.",
   "equalizerSpotifyNotes": "Spotify notes",
   "equalizerSpotifyTail": " that its audio settings can't change while another device plays it.",
   "equalizerTitle": "Equalizer",
@@ -1935,7 +1935,7 @@
       }
     }
   },
-  "exploreFinding": "Finding the tracks on NetEase Cloud Music…",
+  "exploreFinding": "Finding the tracks on YouTube Music…",
   "exploreLoadPlaylistsFailed": "Couldn't load your playlists",
   "exploreLoadingPlaylists": "Loading your playlists…",
   "exploreMood": "Mood",
@@ -1951,7 +1951,7 @@
   "exploreNewPlaylist": "New playlist…",
   "exploreNewYouTubePlaylist": "New playlist on YouTube Music",
   "exploreNoPlaylists": "No playlists of yours",
-  "exploreNothingHere": "NetEase Cloud Music shows nothing here right now.",
+  "exploreNothingHere": "YouTube Music shows nothing here right now.",
   "exploreTabCharts": "Charts",
   "exploreTabMoods": "Moods & genres",
   "exploreTabNew": "New",
@@ -2672,7 +2672,7 @@
   "@libraryLiked": {
     "description": "Library pivot: the songs the user liked."
   },
-  "libraryLikedHint": "Tap the heart on any track, from Spotify or NetEase Cloud Music: they all gather here, in one list.",
+  "libraryLikedHint": "Tap the heart on any track, from Spotify, YouTube Music or NetEase Cloud Music: they all gather here, in one list.",
   "@libraryLikedHint": {
     "description": "Empty state of the liked songs: how to like a track."
   },
@@ -2806,7 +2806,7 @@
   "@libraryShuffle": {
     "description": "A button that plays what the page shows shuffled. Lowercase."
   },
-  "librarySongAdded": "Added {title} to your library on NetEase Cloud Music",
+  "librarySongAdded": "Added {title} to your library on YouTube Music",
   "@librarySongAdded": {
     "placeholders": {
       "title": {
@@ -2814,7 +2814,7 @@
       }
     }
   },
-  "librarySongRemoved": "Removed {title} from your library on NetEase Cloud Music",
+  "librarySongRemoved": "Removed {title} from your library on YouTube Music",
   "@librarySongRemoved": {
     "placeholders": {
       "title": {
@@ -2822,7 +2822,7 @@
       }
     }
   },
-  "librarySongsEmpty": "No songs in your library on NetEase Cloud Music. A song's Add to library keeps it here without liking it.",
+  "librarySongsEmpty": "No songs in your library on YouTube Music. A song's Add to library keeps it here without liking it.",
   "@librarySongsEmpty": {
     "description": "Empty state of the NetEase Cloud Music library's songs."
   },
@@ -3864,7 +3864,7 @@
   "panelCopyLink": "Copy link",
   "panelExportCover": "Export cover…",
   "panelFileNotFound": "File not found",
-  "panelFindMatch": "Find another NetEase Cloud Music match",
+  "panelFindMatch": "Find another NetEase Cloud Music or YouTube Music match",
   "panelGoToAlbum": "Go to album",
   "panelGoToArtist": "Go to {name}",
   "@panelGoToArtist": {
@@ -3928,7 +3928,7 @@
       }
     }
   },
-  "panelRadioSources": "Radios start from tracks of Spotify and NetEase Cloud Music",
+  "panelRadioSources": "Radios start from tracks of Spotify, YouTube Music and NetEase Cloud Music",
   "panelRemoveDislike": "Remove the dislike",
   "panelRemoveFromQueue": "Remove from the queue",
   "panelRemoveTrack": "Remove {title} from the queue",
@@ -3987,10 +3987,10 @@
   "playbackOnConnectDesc": "Your Spotify app, or another Spotify device, plays them, at Spotify's own quality. Needs Spotify Premium and a device with Spotify open.",
   "playbackQuality": "Quality",
   "playbackQualityBest": "best",
-  "playbackQualityDesc": "Data saver streams smaller files of NetEase Cloud Music.",
+  "playbackQualityDesc": "Data saver streams smaller files of YouTube Music.",
   "playbackQualitySaver": "data saver",
   "playbackSignInAgain": "sign in again",
-  "playbackSignInAgainBody": "You signed in before Mixyun played Spotify itself, which your sign-in doesn't allow yet. Until you sign in again, Spotify tracks play from NetEase Cloud Music.",
+  "playbackSignInAgainBody": "You signed in before Mixyun played Spotify itself, which your sign-in doesn't allow yet. Until you sign in again, Spotify tracks play from NetEase Cloud Music or YouTube Music.",
   "playbackSignInAgainTitle": "Sign in to Spotify again",
   "playbackSignInSpotify": "Sign in to Spotify in accounts to play your Spotify library.",
   "playbackSignInSpotifyLead": "Sign in to Spotify in ",
@@ -4387,7 +4387,7 @@
   },
   "podcastsEpisodes": "Episodes",
   "podcastsFollow": "follow",
-  "podcastsFollowHint": "Follow a podcast from its page, from Spotify or NetEase Cloud Music, and it waits here.",
+  "podcastsFollowHint": "Follow a podcast from its page, from Spotify or YouTube Music, and it waits here.",
   "podcastsFollowed": "{title}: following",
   "@podcastsFollowed": {
     "placeholders": {
@@ -5265,7 +5265,7 @@
   "searchClear": "clear",
   "searchClearRecent": "Clear the recent searches",
   "searchFindAnything": "Find anything",
-  "searchIntro": "One search looks through NetEase Cloud Music and, once you sign in, Spotify.",
+  "searchIntro": "One search looks through YouTube Music, NetEase Cloud Music and, once you sign in, Spotify.",
   "searchNetEaseOnly": "Searching NetEase Cloud Music and YouTube Music only. ",
   "searchNoSongs": "No songs match.",
   "searchNoVideos": "No videos match.",
@@ -5661,7 +5661,7 @@
       }
     }
   },
-  "speedHint": "Speed changes what Mixyun plays itself: NetEase Cloud Music, and Spotify tracks played from it. Tracks and episodes Spotify plays, in Mixyun or on Spotify Connect, keep their own speed. So do live streams, which play as they're broadcast. The speed button by the player changes it too, for the kind of track that plays.",
+  "speedHint": "Speed changes what Mixyun plays itself: YouTube Music, NetEase Cloud Music, and Spotify tracks played from them. Tracks and episodes Spotify plays, in Mixyun or on Spotify Connect, keep their own speed. So do live streams, which play as they're broadcast. The speed button by the player changes it too, for the kind of track that plays.",
   "speedMenuLabel": "Speed: {what}",
   "@speedMenuLabel": {
     "placeholders": {
@@ -5935,7 +5935,7 @@
     }
   },
   "toolSettingsJSRuntimeNone": "yt-dlp needs Deno, Node.js, Bun or QuickJS to read most YouTube streams. Install one, and Mixyun finds it.",
-  "toolSettingsNotFound": "Not found. Some NetEase Cloud Music tracks play only with it.",
+  "toolSettingsNotFound": "Not found. Some YouTube Music tracks play only with it.",
   "toolSettingsOwn": "Own yt-dlp",
   "toolSettingsOwnFlatpak": "Use a yt-dlp of your own instead. The Flatpak sees only its own folders: put it in ~/.var/app/io.github.fzn0x.mixmusic.",
   "toolSettingsOwnHelp": "Use a yt-dlp of your own, such as your package manager's, instead.",
@@ -6141,7 +6141,7 @@
   },
   "trackInfoFileSource": "A file on this computer",
   "trackInfoFormat": "Format",
-  "trackInfoFormatSpotify": "Play it to see its format, bitrate and the rest: Mixyun finds its recording on NetEase Cloud Music as it plays.",
+  "trackInfoFormatSpotify": "Play it to see its format, bitrate and the rest: Mixyun finds its recording on NetEase Cloud Music or YouTube Music as it plays.",
   "trackInfoFormatStream": "Play it to see its format, bitrate and the rest: Mixyun finds its stream as it plays.",
   "trackInfoFound": "Found",
   "trackInfoHLSPacked": "HLS packed audio",
@@ -6198,7 +6198,7 @@
   "trackInfoPlaysSpotify": "In Spotify's own player, in Mixyun",
   "trackInfoQualitySpotify": "As your Spotify account and Spotify's settings choose: Spotify tells Mixyun nothing of its audio.",
   "trackInfoReading": "Reading what it holds…",
-  "trackInfoRecording": "{title} · {artists}, on NetEase Cloud Music",
+  "trackInfoRecording": "{title} · {artists}",
   "@trackInfoRecording": {
     "placeholders": {
       "title": {
@@ -6218,7 +6218,7 @@
   "trackInfoShowInFinder": "Show in Finder",
   "trackInfoShowInFolder": "Show in its folder",
   "trackInfoSignedIn": "Signed in",
-  "trackInfoSignedInYes": "Yes: asked for as your NetEase Cloud Music account.",
+  "trackInfoSignedInYes": "Yes: asked for as your YouTube Music account.",
   "trackInfoSignedOut": "No: asked for signed out, as no one's account.",
   "trackInfoSource": "Source",
   "trackInfoStereo": "Stereo",

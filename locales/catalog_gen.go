@@ -44,11 +44,11 @@ func (msgs Messages) AboutContribute() string {
 	return Catalog.Format(msgs.locale, "aboutContribute", nil)
 }
 
-// AboutDescription says "Spotify and NetEase Cloud Music in one player. This is Shizuku11451's fork of Mixyun, which fzn0x and its contributor…"
+// AboutDescription says "Spotify, YouTube Music and NetEase Cloud Music in one player. This is Shizuku11451's fork of Mixyun, which fzn0x and …"
 // in the language the app shows.
 func AboutDescription(dir string) string { return In(i18n.Locale()).AboutDescription(dir) }
 
-// AboutDescription says "Spotify and NetEase Cloud Music in one player. This is Shizuku11451's fork of Mixyun, which fzn0x and its contributor…"
+// AboutDescription says "Spotify, YouTube Music and NetEase Cloud Music in one player. This is Shizuku11451's fork of Mixyun, which fzn0x and …"
 // in the language of msgs.
 func (msgs Messages) AboutDescription(dir string) string {
 	return Catalog.Format(msgs.locale, "aboutDescription", map[string]any{"dir": dir})
@@ -2130,11 +2130,11 @@ func (msgs Messages) AudioAccount2NotNow() string {
 	return Catalog.Format(msgs.locale, "audioAccount2NotNow", nil)
 }
 
-// AudioAccount2Offer says "Your NetEase Cloud Music account has Premium, whose audio has a higher bitrate. Mixyun can ask for each track's audio…"
+// AudioAccount2Offer says "Your YouTube Music account has Premium, whose audio has a higher bitrate. Mixyun can ask for each track's audio as yo…"
 // in the language the app shows.
 func AudioAccount2Offer() string { return In(i18n.Locale()).AudioAccount2Offer() }
 
-// AudioAccount2Offer says "Your NetEase Cloud Music account has Premium, whose audio has a higher bitrate. Mixyun can ask for each track's audio…"
+// AudioAccount2Offer says "Your YouTube Music account has Premium, whose audio has a higher bitrate. Mixyun can ask for each track's audio as yo…"
 // in the language of msgs.
 func (msgs Messages) AudioAccount2Offer() string {
 	return Catalog.Format(msgs.locale, "audioAccount2Offer", nil)
@@ -2160,21 +2160,21 @@ func (msgs Messages) AudioAccount2TurnOn() string {
 	return Catalog.Format(msgs.locale, "audioAccount2TurnOn", nil)
 }
 
-// AudioAsAccountDesc says "For NetEase Cloud Music VIP's higher bitrate, Mixyun asks for each track's audio as your NetEase Cloud Music account.…"
+// AudioAsAccountDesc says "For YouTube Music Premium's higher bitrate, Mixyun asks for each track's audio as your YouTube Music account. YouTube…"
 // in the language the app shows.
 func AudioAsAccountDesc() string { return In(i18n.Locale()).AudioAsAccountDesc() }
 
-// AudioAsAccountDesc says "For NetEase Cloud Music VIP's higher bitrate, Mixyun asks for each track's audio as your NetEase Cloud Music account.…"
+// AudioAsAccountDesc says "For YouTube Music Premium's higher bitrate, Mixyun asks for each track's audio as your YouTube Music account. YouTube…"
 // in the language of msgs.
 func (msgs Messages) AudioAsAccountDesc() string {
 	return Catalog.Format(msgs.locale, "audioAsAccountDesc", nil)
 }
 
-// AudioAsAccountSignIn says "For NetEase Cloud Music VIP's higher bitrate, Mixyun asks for each track's audio as your NetEase Cloud Music account.…"
+// AudioAsAccountSignIn says "For YouTube Music Premium's higher bitrate, Mixyun asks for each track's audio as your YouTube Music account. YouTube…"
 // in the language the app shows.
 func AudioAsAccountSignIn() string { return In(i18n.Locale()).AudioAsAccountSignIn() }
 
-// AudioAsAccountSignIn says "For NetEase Cloud Music VIP's higher bitrate, Mixyun asks for each track's audio as your NetEase Cloud Music account.…"
+// AudioAsAccountSignIn says "For YouTube Music Premium's higher bitrate, Mixyun asks for each track's audio as your YouTube Music account. YouTube…"
 // in the language of msgs.
 func (msgs Messages) AudioAsAccountSignIn() string {
 	return Catalog.Format(msgs.locale, "audioAsAccountSignIn", nil)
@@ -2992,11 +2992,11 @@ func (msgs Messages) CollabAddToSpotify() string {
 	return Catalog.Format(msgs.locale, "collabAddToSpotify", nil)
 }
 
-// CollabFinding says "Finding the tracks on NetEase Cloud Music…"
+// CollabFinding says "Finding the tracks on YouTube Music…"
 // in the language the app shows.
 func CollabFinding() string { return In(i18n.Locale()).CollabFinding() }
 
-// CollabFinding says "Finding the tracks on NetEase Cloud Music…"
+// CollabFinding says "Finding the tracks on YouTube Music…"
 // in the language of msgs.
 func (msgs Messages) CollabFinding() string {
 	return Catalog.Format(msgs.locale, "collabFinding", nil)
@@ -3156,11 +3156,11 @@ func (msgs Messages) CollabNoneToAdd() string {
 	return Catalog.Format(msgs.locale, "collabNoneToAdd", nil)
 }
 
-// CollabShareAsTitle says "Share as a NetEase Cloud Music playlist"
+// CollabShareAsTitle says "Share as a YouTube Music playlist"
 // in the language the app shows.
 func CollabShareAsTitle() string { return In(i18n.Locale()).CollabShareAsTitle() }
 
-// CollabShareAsTitle says "Share as a NetEase Cloud Music playlist"
+// CollabShareAsTitle says "Share as a YouTube Music playlist"
 // in the language of msgs.
 func (msgs Messages) CollabShareAsTitle() string {
 	return Catalog.Format(msgs.locale, "collabShareAsTitle", nil)
@@ -3188,21 +3188,21 @@ func (msgs Messages) CollabShareFailed(title string, error string) string {
 	return Catalog.Format(msgs.locale, "collabShareFailed", map[string]any{"title": title, "error": error})
 }
 
-// CollabShareItem says "As a NetEase Cloud Music playlist…"
+// CollabShareItem says "As a YouTube Music playlist…"
 // in the language the app shows.
 func CollabShareItem() string { return In(i18n.Locale()).CollabShareItem() }
 
-// CollabShareItem says "As a NetEase Cloud Music playlist…"
+// CollabShareItem says "As a YouTube Music playlist…"
 // in the language of msgs.
 func (msgs Messages) CollabShareItem() string {
 	return Catalog.Format(msgs.locale, "collabShareItem", nil)
 }
 
-// CollabShared says "Made {title} on NetEase Cloud Music: copied its link, which anyone can open"
+// CollabShared says "Made {title} on YouTube Music: copied its link, which anyone can open"
 // in the language the app shows.
 func CollabShared(title string) string { return In(i18n.Locale()).CollabShared(title) }
 
-// CollabShared says "Made {title} on NetEase Cloud Music: copied its link, which anyone can open"
+// CollabShared says "Made {title} on YouTube Music: copied its link, which anyone can open"
 // in the language of msgs.
 func (msgs Messages) CollabShared(title string) string {
 	return Catalog.Format(msgs.locale, "collabShared", map[string]any{"title": title})
@@ -3310,11 +3310,11 @@ func (msgs Messages) CollabTracks(count int) string {
 	return Catalog.Format(msgs.locale, "collabTracks", map[string]any{"count": count})
 }
 
-// CollabUnlisting says "Making {title} unlisted: NetEase Cloud Music takes up to half a minute before it lets collaborators in"
+// CollabUnlisting says "Making {title} unlisted: YouTube Music takes up to half a minute before it lets collaborators in"
 // in the language the app shows.
 func CollabUnlisting(title string) string { return In(i18n.Locale()).CollabUnlisting(title) }
 
-// CollabUnlisting says "Making {title} unlisted: NetEase Cloud Music takes up to half a minute before it lets collaborators in"
+// CollabUnlisting says "Making {title} unlisted: YouTube Music takes up to half a minute before it lets collaborators in"
 // in the language of msgs.
 func (msgs Messages) CollabUnlisting(title string) string {
 	return Catalog.Format(msgs.locale, "collabUnlisting", map[string]any{"title": title})
@@ -4052,13 +4052,13 @@ func (msgs Messages) ComputerCantPlayFiles() string {
 	return Catalog.Format(msgs.locale, "computerCantPlayFiles", nil)
 }
 
-// ComputerEmptyText says "Add a folder of music, or open files: they play from your computer, beside Spotify and NetEase Cloud Music, in your q…"
+// ComputerEmptyText says "Add a folder of music, or open files: they play from your computer, beside Spotify, YouTube Music and NetEase Cloud M…"
 // in the language the app shows.
 //
 // Empty state of Library › On this computer, before any music is found.
 func ComputerEmptyText() string { return In(i18n.Locale()).ComputerEmptyText() }
 
-// ComputerEmptyText says "Add a folder of music, or open files: they play from your computer, beside Spotify and NetEase Cloud Music, in your q…"
+// ComputerEmptyText says "Add a folder of music, or open files: they play from your computer, beside Spotify, YouTube Music and NetEase Cloud M…"
 // in the language of msgs.
 //
 // Empty state of Library › On this computer, before any music is found.
@@ -5288,13 +5288,13 @@ func (msgs Messages) DiscordListenButton() string {
 	return Catalog.Format(msgs.locale, "discordListenButton", nil)
 }
 
-// DiscordListenButtonDescription says "A button that opens the track on NetEase Cloud Music or Spotify, which the others who see your profile can click. A f…"
+// DiscordListenButtonDescription says "A button that opens the track on YouTube Music, NetEase Cloud Music or Spotify, which the others who see your profile…"
 // in the language the app shows.
 func DiscordListenButtonDescription() string {
 	return In(i18n.Locale()).DiscordListenButtonDescription()
 }
 
-// DiscordListenButtonDescription says "A button that opens the track on NetEase Cloud Music or Spotify, which the others who see your profile can click. A f…"
+// DiscordListenButtonDescription says "A button that opens the track on YouTube Music, NetEase Cloud Music or Spotify, which the others who see your profile…"
 // in the language of msgs.
 func (msgs Messages) DiscordListenButtonDescription() string {
 	return Catalog.Format(msgs.locale, "discordListenButtonDescription", nil)
@@ -5430,13 +5430,13 @@ func (msgs Messages) DiscordServiceBadge() string {
 	return Catalog.Format(msgs.locale, "discordServiceBadge", nil)
 }
 
-// DiscordServiceBadgeDescription says "A small mark of NetEase Cloud Music, Spotify or a file on your computer, at the cover's corner, or in its place."
+// DiscordServiceBadgeDescription says "A small mark of YouTube Music, NetEase Cloud Music, Spotify or a file on your computer, at the cover's corner, or in …"
 // in the language the app shows.
 func DiscordServiceBadgeDescription() string {
 	return In(i18n.Locale()).DiscordServiceBadgeDescription()
 }
 
-// DiscordServiceBadgeDescription says "A small mark of NetEase Cloud Music, Spotify or a file on your computer, at the cover's corner, or in its place."
+// DiscordServiceBadgeDescription says "A small mark of YouTube Music, NetEase Cloud Music, Spotify or a file on your computer, at the cover's corner, or in …"
 // in the language of msgs.
 func (msgs Messages) DiscordServiceBadgeDescription() string {
 	return Catalog.Format(msgs.locale, "discordServiceBadgeDescription", nil)
@@ -5514,21 +5514,21 @@ func (msgs Messages) DiscordYourApplication() string {
 	return Catalog.Format(msgs.locale, "discordYourApplication", nil)
 }
 
-// DislikeNote says "Signed in to NetEase Cloud Music, your dislikes of its songs go there too. Spotify takes no dislikes from apps: those…"
+// DislikeNote says "Signed in to YouTube Music, your dislikes of its songs go there too. Spotify takes no dislikes from apps: those of it…"
 // in the language the app shows.
 func DislikeNote() string { return In(i18n.Locale()).DislikeNote() }
 
-// DislikeNote says "Signed in to NetEase Cloud Music, your dislikes of its songs go there too. Spotify takes no dislikes from apps: those…"
+// DislikeNote says "Signed in to YouTube Music, your dislikes of its songs go there too. Spotify takes no dislikes from apps: those of it…"
 // in the language of msgs.
 func (msgs Messages) DislikeNote() string {
 	return Catalog.Format(msgs.locale, "dislikeNote", nil)
 }
 
-// DislikeNoteSee says "Signed in to NetEase Cloud Music, your dislikes of its songs go there too. Spotify takes no dislikes from apps: those…"
+// DislikeNoteSee says "Signed in to YouTube Music, your dislikes of its songs go there too. Spotify takes no dislikes from apps: those of it…"
 // in the language the app shows.
 func DislikeNoteSee() string { return In(i18n.Locale()).DislikeNoteSee() }
 
-// DislikeNoteSee says "Signed in to NetEase Cloud Music, your dislikes of its songs go there too. Spotify takes no dislikes from apps: those…"
+// DislikeNoteSee says "Signed in to YouTube Music, your dislikes of its songs go there too. Spotify takes no dislikes from apps: those of it…"
 // in the language of msgs.
 func (msgs Messages) DislikeNoteSee() string {
 	return Catalog.Format(msgs.locale, "dislikeNoteSee", nil)
@@ -6554,7 +6554,7 @@ func (msgs Messages) DownloadsStartingTrack(title string) string {
 	return Catalog.Format(msgs.locale, "downloadsStartingTrack", map[string]any{"title": title})
 }
 
-// DownloadsStartingTrackSpotify says "Downloading {title}: its recording on NetEase Cloud Music"
+// DownloadsStartingTrackSpotify says "Downloading {title}: its recording on NetEase Cloud Music or YouTube Music"
 // in the language the app shows.
 //
 // Notice when a Spotify track starts downloading from its NetEase Cloud
@@ -6563,7 +6563,7 @@ func DownloadsStartingTrackSpotify(title string) string {
 	return In(i18n.Locale()).DownloadsStartingTrackSpotify(title)
 }
 
-// DownloadsStartingTrackSpotify says "Downloading {title}: its recording on NetEase Cloud Music"
+// DownloadsStartingTrackSpotify says "Downloading {title}: its recording on NetEase Cloud Music or YouTube Music"
 // in the language of msgs.
 //
 // Notice when a Spotify track starts downloading from its NetEase Cloud
@@ -6854,11 +6854,11 @@ func (msgs Messages) EqualizerCustom() string {
 	return Catalog.Format(msgs.locale, "equalizerCustom", nil)
 }
 
-// EqualizerDesc says "Shape the sound of NetEase Cloud Music with ten bands and a preamp."
+// EqualizerDesc says "Shape the sound of YouTube Music and NetEase Cloud Music with ten bands and a preamp."
 // in the language the app shows.
 func EqualizerDesc() string { return In(i18n.Locale()).EqualizerDesc() }
 
-// EqualizerDesc says "Shape the sound of NetEase Cloud Music with ten bands and a preamp."
+// EqualizerDesc says "Shape the sound of YouTube Music and NetEase Cloud Music with ten bands and a preamp."
 // in the language of msgs.
 func (msgs Messages) EqualizerDesc() string {
 	return Catalog.Format(msgs.locale, "equalizerDesc", nil)
@@ -6974,21 +6974,21 @@ func (msgs Messages) EqualizerPresetVocal() string {
 	return Catalog.Format(msgs.locale, "equalizerPresetVocal", nil)
 }
 
-// EqualizerSpotifyLead says "The equalizer works only on NetEase Cloud Music, which Mixyun plays itself, Spotify tracks played from it included. F…"
+// EqualizerSpotifyLead says "The equalizer works only on YouTube Music and NetEase Cloud Music, which Mixyun plays itself, Spotify tracks played f…"
 // in the language the app shows.
 func EqualizerSpotifyLead() string { return In(i18n.Locale()).EqualizerSpotifyLead() }
 
-// EqualizerSpotifyLead says "The equalizer works only on NetEase Cloud Music, which Mixyun plays itself, Spotify tracks played from it included. F…"
+// EqualizerSpotifyLead says "The equalizer works only on YouTube Music and NetEase Cloud Music, which Mixyun plays itself, Spotify tracks played f…"
 // in the language of msgs.
 func (msgs Messages) EqualizerSpotifyLead() string {
 	return Catalog.Format(msgs.locale, "equalizerSpotifyLead", nil)
 }
 
-// EqualizerSpotifyNote says "The equalizer works only on NetEase Cloud Music, which Mixyun plays itself, Spotify tracks played from it included. F…"
+// EqualizerSpotifyNote says "The equalizer works only on YouTube Music and NetEase Cloud Music, which Mixyun plays itself, Spotify tracks played f…"
 // in the language the app shows.
 func EqualizerSpotifyNote() string { return In(i18n.Locale()).EqualizerSpotifyNote() }
 
-// EqualizerSpotifyNote says "The equalizer works only on NetEase Cloud Music, which Mixyun plays itself, Spotify tracks played from it included. F…"
+// EqualizerSpotifyNote says "The equalizer works only on YouTube Music and NetEase Cloud Music, which Mixyun plays itself, Spotify tracks played f…"
 // in the language of msgs.
 func (msgs Messages) EqualizerSpotifyNote() string {
 	return Catalog.Format(msgs.locale, "equalizerSpotifyNote", nil)
@@ -7126,11 +7126,11 @@ func (msgs Messages) ExploreCreatedOnYouTube(title string) string {
 	return Catalog.Format(msgs.locale, "exploreCreatedOnYouTube", map[string]any{"title": title})
 }
 
-// ExploreFinding says "Finding the tracks on NetEase Cloud Music…"
+// ExploreFinding says "Finding the tracks on YouTube Music…"
 // in the language the app shows.
 func ExploreFinding() string { return In(i18n.Locale()).ExploreFinding() }
 
-// ExploreFinding says "Finding the tracks on NetEase Cloud Music…"
+// ExploreFinding says "Finding the tracks on YouTube Music…"
 // in the language of msgs.
 func (msgs Messages) ExploreFinding() string {
 	return Catalog.Format(msgs.locale, "exploreFinding", nil)
@@ -7216,11 +7216,11 @@ func (msgs Messages) ExploreNoPlaylists() string {
 	return Catalog.Format(msgs.locale, "exploreNoPlaylists", nil)
 }
 
-// ExploreNothingHere says "NetEase Cloud Music shows nothing here right now."
+// ExploreNothingHere says "YouTube Music shows nothing here right now."
 // in the language the app shows.
 func ExploreNothingHere() string { return In(i18n.Locale()).ExploreNothingHere() }
 
-// ExploreNothingHere says "NetEase Cloud Music shows nothing here right now."
+// ExploreNothingHere says "YouTube Music shows nothing here right now."
 // in the language of msgs.
 func (msgs Messages) ExploreNothingHere() string {
 	return Catalog.Format(msgs.locale, "exploreNothingHere", nil)
@@ -9038,13 +9038,13 @@ func (msgs Messages) LibraryLiked() string {
 	return Catalog.Format(msgs.locale, "libraryLiked", nil)
 }
 
-// LibraryLikedHint says "Tap the heart on any track, from Spotify or NetEase Cloud Music: they all gather here, in one list."
+// LibraryLikedHint says "Tap the heart on any track, from Spotify, YouTube Music or NetEase Cloud Music: they all gather here, in one list."
 // in the language the app shows.
 //
 // Empty state of the liked songs: how to like a track.
 func LibraryLikedHint() string { return In(i18n.Locale()).LibraryLikedHint() }
 
-// LibraryLikedHint says "Tap the heart on any track, from Spotify or NetEase Cloud Music: they all gather here, in one list."
+// LibraryLikedHint says "Tap the heart on any track, from Spotify, YouTube Music or NetEase Cloud Music: they all gather here, in one list."
 // in the language of msgs.
 //
 // Empty state of the liked songs: how to like a track.
@@ -9424,33 +9424,33 @@ func (msgs Messages) LibraryShuffle() string {
 	return Catalog.Format(msgs.locale, "libraryShuffle", nil)
 }
 
-// LibrarySongAdded says "Added {title} to your library on NetEase Cloud Music"
+// LibrarySongAdded says "Added {title} to your library on YouTube Music"
 // in the language the app shows.
 func LibrarySongAdded(title string) string { return In(i18n.Locale()).LibrarySongAdded(title) }
 
-// LibrarySongAdded says "Added {title} to your library on NetEase Cloud Music"
+// LibrarySongAdded says "Added {title} to your library on YouTube Music"
 // in the language of msgs.
 func (msgs Messages) LibrarySongAdded(title string) string {
 	return Catalog.Format(msgs.locale, "librarySongAdded", map[string]any{"title": title})
 }
 
-// LibrarySongRemoved says "Removed {title} from your library on NetEase Cloud Music"
+// LibrarySongRemoved says "Removed {title} from your library on YouTube Music"
 // in the language the app shows.
 func LibrarySongRemoved(title string) string { return In(i18n.Locale()).LibrarySongRemoved(title) }
 
-// LibrarySongRemoved says "Removed {title} from your library on NetEase Cloud Music"
+// LibrarySongRemoved says "Removed {title} from your library on YouTube Music"
 // in the language of msgs.
 func (msgs Messages) LibrarySongRemoved(title string) string {
 	return Catalog.Format(msgs.locale, "librarySongRemoved", map[string]any{"title": title})
 }
 
-// LibrarySongsEmpty says "No songs in your library on NetEase Cloud Music. A song's Add to library keeps it here without liking it."
+// LibrarySongsEmpty says "No songs in your library on YouTube Music. A song's Add to library keeps it here without liking it."
 // in the language the app shows.
 //
 // Empty state of the NetEase Cloud Music library's songs.
 func LibrarySongsEmpty() string { return In(i18n.Locale()).LibrarySongsEmpty() }
 
-// LibrarySongsEmpty says "No songs in your library on NetEase Cloud Music. A song's Add to library keeps it here without liking it."
+// LibrarySongsEmpty says "No songs in your library on YouTube Music. A song's Add to library keeps it here without liking it."
 // in the language of msgs.
 //
 // Empty state of the NetEase Cloud Music library's songs.
@@ -13752,11 +13752,11 @@ func (msgs Messages) PanelFileNotFound() string {
 	return Catalog.Format(msgs.locale, "panelFileNotFound", nil)
 }
 
-// PanelFindMatch says "Find another NetEase Cloud Music match"
+// PanelFindMatch says "Find another NetEase Cloud Music or YouTube Music match"
 // in the language the app shows.
 func PanelFindMatch() string { return In(i18n.Locale()).PanelFindMatch() }
 
-// PanelFindMatch says "Find another NetEase Cloud Music match"
+// PanelFindMatch says "Find another NetEase Cloud Music or YouTube Music match"
 // in the language of msgs.
 func (msgs Messages) PanelFindMatch() string {
 	return Catalog.Format(msgs.locale, "panelFindMatch", nil)
@@ -13902,11 +13902,11 @@ func (msgs Messages) PanelRadioLine(line string) string {
 	return Catalog.Format(msgs.locale, "panelRadioLine", map[string]any{"line": line})
 }
 
-// PanelRadioSources says "Radios start from tracks of Spotify and NetEase Cloud Music"
+// PanelRadioSources says "Radios start from tracks of Spotify, YouTube Music and NetEase Cloud Music"
 // in the language the app shows.
 func PanelRadioSources() string { return In(i18n.Locale()).PanelRadioSources() }
 
-// PanelRadioSources says "Radios start from tracks of Spotify and NetEase Cloud Music"
+// PanelRadioSources says "Radios start from tracks of Spotify, YouTube Music and NetEase Cloud Music"
 // in the language of msgs.
 func (msgs Messages) PanelRadioSources() string {
 	return Catalog.Format(msgs.locale, "panelRadioSources", nil)
@@ -14214,11 +14214,11 @@ func (msgs Messages) PlaybackQualityBest() string {
 	return Catalog.Format(msgs.locale, "playbackQualityBest", nil)
 }
 
-// PlaybackQualityDesc says "Data saver streams smaller files of NetEase Cloud Music."
+// PlaybackQualityDesc says "Data saver streams smaller files of YouTube Music."
 // in the language the app shows.
 func PlaybackQualityDesc() string { return In(i18n.Locale()).PlaybackQualityDesc() }
 
-// PlaybackQualityDesc says "Data saver streams smaller files of NetEase Cloud Music."
+// PlaybackQualityDesc says "Data saver streams smaller files of YouTube Music."
 // in the language of msgs.
 func (msgs Messages) PlaybackQualityDesc() string {
 	return Catalog.Format(msgs.locale, "playbackQualityDesc", nil)
@@ -15194,11 +15194,11 @@ func (msgs Messages) PodcastsFollow() string {
 	return Catalog.Format(msgs.locale, "podcastsFollow", nil)
 }
 
-// PodcastsFollowHint says "Follow a podcast from its page, from Spotify or NetEase Cloud Music, and it waits here."
+// PodcastsFollowHint says "Follow a podcast from its page, from Spotify or YouTube Music, and it waits here."
 // in the language the app shows.
 func PodcastsFollowHint() string { return In(i18n.Locale()).PodcastsFollowHint() }
 
-// PodcastsFollowHint says "Follow a podcast from its page, from Spotify or NetEase Cloud Music, and it waits here."
+// PodcastsFollowHint says "Follow a podcast from its page, from Spotify or YouTube Music, and it waits here."
 // in the language of msgs.
 func (msgs Messages) PodcastsFollowHint() string {
 	return Catalog.Format(msgs.locale, "podcastsFollowHint", nil)
@@ -17798,11 +17798,11 @@ func (msgs Messages) SearchFindAnything() string {
 	return Catalog.Format(msgs.locale, "searchFindAnything", nil)
 }
 
-// SearchIntro says "One search looks through NetEase Cloud Music and, once you sign in, Spotify."
+// SearchIntro says "One search looks through YouTube Music, NetEase Cloud Music and, once you sign in, Spotify."
 // in the language the app shows.
 func SearchIntro() string { return In(i18n.Locale()).SearchIntro() }
 
-// SearchIntro says "One search looks through NetEase Cloud Music and, once you sign in, Spotify."
+// SearchIntro says "One search looks through YouTube Music, NetEase Cloud Music and, once you sign in, Spotify."
 // in the language of msgs.
 func (msgs Messages) SearchIntro() string {
 	return Catalog.Format(msgs.locale, "searchIntro", nil)
@@ -19246,11 +19246,11 @@ func (msgs Messages) SpeedAt(speed string) string {
 	return Catalog.Format(msgs.locale, "speedAt", map[string]any{"speed": speed})
 }
 
-// SpeedHint says "Speed changes what Mixyun plays itself: NetEase Cloud Music, and Spotify tracks played from it. Tracks and episodes S…"
+// SpeedHint says "Speed changes what Mixyun plays itself: YouTube Music, NetEase Cloud Music, and Spotify tracks played from them. Trac…"
 // in the language the app shows.
 func SpeedHint() string { return In(i18n.Locale()).SpeedHint() }
 
-// SpeedHint says "Speed changes what Mixyun plays itself: NetEase Cloud Music, and Spotify tracks played from it. Tracks and episodes S…"
+// SpeedHint says "Speed changes what Mixyun plays itself: YouTube Music, NetEase Cloud Music, and Spotify tracks played from them. Trac…"
 // in the language of msgs.
 func (msgs Messages) SpeedHint() string {
 	return Catalog.Format(msgs.locale, "speedHint", nil)
@@ -20216,11 +20216,11 @@ func (msgs Messages) ToolSettingsJSRuntimeNone() string {
 	return Catalog.Format(msgs.locale, "toolSettingsJSRuntimeNone", nil)
 }
 
-// ToolSettingsNotFound says "Not found. Some NetEase Cloud Music tracks play only with it."
+// ToolSettingsNotFound says "Not found. Some YouTube Music tracks play only with it."
 // in the language the app shows.
 func ToolSettingsNotFound() string { return In(i18n.Locale()).ToolSettingsNotFound() }
 
-// ToolSettingsNotFound says "Not found. Some NetEase Cloud Music tracks play only with it."
+// ToolSettingsNotFound says "Not found. Some YouTube Music tracks play only with it."
 // in the language of msgs.
 func (msgs Messages) ToolSettingsNotFound() string {
 	return Catalog.Format(msgs.locale, "toolSettingsNotFound", nil)
@@ -20854,11 +20854,11 @@ func (msgs Messages) TrackInfoFormat() string {
 	return Catalog.Format(msgs.locale, "trackInfoFormat", nil)
 }
 
-// TrackInfoFormatSpotify says "Play it to see its format, bitrate and the rest: Mixyun finds its recording on NetEase Cloud Music as it plays."
+// TrackInfoFormatSpotify says "Play it to see its format, bitrate and the rest: Mixyun finds its recording on NetEase Cloud Music or YouTube Music a…"
 // in the language the app shows.
 func TrackInfoFormatSpotify() string { return In(i18n.Locale()).TrackInfoFormatSpotify() }
 
-// TrackInfoFormatSpotify says "Play it to see its format, bitrate and the rest: Mixyun finds its recording on NetEase Cloud Music as it plays."
+// TrackInfoFormatSpotify says "Play it to see its format, bitrate and the rest: Mixyun finds its recording on NetEase Cloud Music or YouTube Music a…"
 // in the language of msgs.
 func (msgs Messages) TrackInfoFormatSpotify() string {
 	return Catalog.Format(msgs.locale, "trackInfoFormatSpotify", nil)
@@ -21088,13 +21088,13 @@ func (msgs Messages) TrackInfoReading() string {
 	return Catalog.Format(msgs.locale, "trackInfoReading", nil)
 }
 
-// TrackInfoRecording says "{title} · {artists}, on NetEase Cloud Music"
+// TrackInfoRecording says "{title} · {artists}"
 // in the language the app shows.
 func TrackInfoRecording(title string, artists string) string {
 	return In(i18n.Locale()).TrackInfoRecording(title, artists)
 }
 
-// TrackInfoRecording says "{title} · {artists}, on NetEase Cloud Music"
+// TrackInfoRecording says "{title} · {artists}"
 // in the language of msgs.
 func (msgs Messages) TrackInfoRecording(title string, artists string) string {
 	return Catalog.Format(msgs.locale, "trackInfoRecording", map[string]any{"title": title, "artists": artists})
@@ -21190,11 +21190,11 @@ func (msgs Messages) TrackInfoSignedIn() string {
 	return Catalog.Format(msgs.locale, "trackInfoSignedIn", nil)
 }
 
-// TrackInfoSignedInYes says "Yes: asked for as your NetEase Cloud Music account."
+// TrackInfoSignedInYes says "Yes: asked for as your YouTube Music account."
 // in the language the app shows.
 func TrackInfoSignedInYes() string { return In(i18n.Locale()).TrackInfoSignedInYes() }
 
-// TrackInfoSignedInYes says "Yes: asked for as your NetEase Cloud Music account."
+// TrackInfoSignedInYes says "Yes: asked for as your YouTube Music account."
 // in the language of msgs.
 func (msgs Messages) TrackInfoSignedInYes() string {
 	return Catalog.Format(msgs.locale, "trackInfoSignedInYes", nil)

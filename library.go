@@ -12,7 +12,7 @@ import (
 )
 
 // librarySections are the library's pivots, by their paths' last part.
-var librarySections = []string{"liked", "mixes", "podcasts", "artists", "downloads", "computer", "history", "disliked", "spotify", "netease"}
+var librarySections = []string{"liked", "mixes", "podcasts", "artists", "downloads", "computer", "history", "disliked", "spotify", "youtube", "netease"}
 
 // librarySectionLabel is the label of the pivot id of the library.
 func librarySectionLabel(id string) string {
@@ -35,6 +35,8 @@ func librarySectionLabel(id string) string {
 		return locales.LibraryDisliked()
 	case "spotify":
 		return "Spotify"
+	case "youtube":
+		return "YouTube Music"
 	case "netease":
 		return "网易云音乐"
 	}
@@ -49,7 +51,7 @@ func (s *shell) libraryPage(c *ui.Context, tab string) {
 	disliked := s.svc.Collection.Disliked()
 	var ids, labels []string
 	for _, sec := range librarySections {
-		if (sec == "spotify" && !accounts.Spotify.SignedIn) || (sec == "netease" && !accounts.NetEase.SignedIn) ||
+		if (sec == "spotify" && !accounts.Spotify.SignedIn) || (sec == "youtube" && !accounts.YouTube.SignedIn) || (sec == "netease" && !accounts.NetEase.SignedIn) ||
 			(sec == "disliked" && len(disliked) == 0) {
 			continue
 		}
@@ -108,6 +110,8 @@ func (s *shell) libraryPage(c *ui.Context, tab string) {
 			s.dislikedSongs(c, disliked)
 		case "spotify":
 			s.spotifyLibrary(c)
+		case "youtube":
+			s.youtubeLibrary(c)
 		case "netease":
 			s.neteaseLibrary(c)
 		}

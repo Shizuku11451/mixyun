@@ -1296,7 +1296,7 @@ func TestYTDLPMissing(t *testing.T) {
 		t.Fatalf("no offer: %q", tt.Texts())
 	}
 	show(s, tt, "/settings/playback")
-	if !tt.HasText("Not found. Some NetEase Cloud Music tracks play only with it.") {
+	if !tt.HasText("Not found. Some YouTube Music tracks play only with it.") {
 		t.Errorf("settings say %q", tt.Texts())
 	}
 }

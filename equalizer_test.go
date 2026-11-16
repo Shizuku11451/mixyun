@@ -13,7 +13,7 @@ func TestEqualizerNote(t *testing.T) {
 	s := newTestShell(t)
 	tt := testerOf(t, s, 1280, 2400)
 	show(s, tt, "/settings/playback")
-	for _, want := range []string{"works only on NetEase Cloud Music", "use a system-wide equalizer", "Spotify notes"} {
+	for _, want := range []string{"works only on YouTube Music and NetEase Cloud Music", "use a system-wide equalizer", "Spotify notes"} {
 		if !tt.HasText(want) {
 			t.Errorf("the equalizer doesn't say %q", want)
 		}

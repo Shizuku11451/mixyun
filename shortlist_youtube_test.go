@@ -37,7 +37,6 @@ func youtubeLibraryShell(t *testing.T, playlists *loaded[[]media.Playlist], song
 // list again on its Try again; the new playlist link stays. A list cut at
 // the most MixMusic reads says so, with no Try again.
 func TestYouTubeLibraryInPart(t *testing.T) {
-	t.Skip("Mixyun's library has NetEase Cloud Music's tab in place of YouTube Music's")
 	listFor(t, func() ([]media.Playlist, error) { return []media.Playlist{lateNight}, firstOf(1) })
 	playlists := &loaded[[]media.Playlist]{done: true, value: []media.Playlist{lateNight}, err: firstOf(1)}
 	songs := &loaded[[]media.Track]{done: true, value: []media.Track{testTracks[2]}}
@@ -67,7 +66,7 @@ func TestYouTubeLibraryInPart(t *testing.T) {
 	s.loads[youtubeSongsKey] = &loaded[[]media.Track]{done: true, value: []media.Track{testTracks[2]},
 		err: &media.ShortList{Got: 24013, Cut: true, Err: errors.New("youtube music: Mixyun reads no more pages of a list")}}
 	tt.Frame()
-	if !tt.HasText("Showing the first 24,013 songs, as far as MixMusic reads a list") || tt.HasText("try again") {
+	if !tt.HasText("Showing the first 24,013 songs, as far as Mixyun reads a list") || tt.HasText("try again") {
 		t.Errorf("a list cut shows %q", tt.Texts())
 	}
 }
