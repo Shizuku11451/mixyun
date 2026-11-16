@@ -35,11 +35,12 @@ const floatPollEvery = 100 * time.Millisecond
 // floatLock is the floating window's lock: whether the window is locked as
 // the setting FloatLocked says (applied), whether the pointer is over it
 // (hover) and over its unlock button (overButton), where that button was
-// the frame before, and stop, which ends the polling of the pointer.
+// the frame before, stop, which ends the polling of the pointer, and
+// whether the window blurs what is behind it itself (setFloatGlass).
 type floatLock struct {
-	applied, hover, overButton bool
-	button                     ui.Rect
-	stop                       func()
+	applied, hover, overButton, blur bool
+	button                           ui.Rect
+	stop                             func()
 }
 
 // OpenFloat opens the floating lyrics: a small window of Liquid Glass over
@@ -60,9 +61,10 @@ func OpenFloat(a *app.App) *mygo.Window {
 		Transparent: true,
 		// The system's glass, frosting the desktop behind the window: the
 		// glass plugin bends only what the window draws itself, and this
-		// one draws nothing behind its words (macOS 26; older macOS and
-		// Windows 11 get their closest material, Linux none).
-		Vibrancy: mygo.VibrancyGlass, // as unlocking puts it back (followFloatLock)
+		// one draws nothing behind its words (macOS 26; older macOS gets
+		// its closest material, Linux none, and Windows a blur behind it
+		// instead, setFloatGlass).
+		Vibrancy: floatVibrancy, // as unlocking puts it back (followFloatLock)
 		// Tinted with the theme's ground, so that the theme's words read on
 		// it whatever the system's appearance.
 		// shortcut: the tint stays the theme's of when it opened; reopen it
@@ -80,6 +82,12 @@ func OpenFloat(a *app.App) *mygo.Window {
 	// glass of a window that is not: keep it drawn as active.
 	s.win.SetActiveAppearance(true)
 	trackPointer(s.win)
+	if floatVibrancy == mygo.VibrancyNone {
+		mygo.RunOnMain(func() {
+			s.fl.blur = setFloatGlass(s.win, !s.fl.applied) // unless the first frame locked it
+			s.win.Invalidate()
+		})
+	}
 	s.follow(func() { s.pollFloatPointer(false) })
 	return s.win
 }
@@ -147,8 +155,12 @@ func (s *shell) floatView(c *ui.Context) {
 		ly = s.floatLines(cur.Track)
 	}
 	// Where the system draws no glass, as on Linux, the theme's ground.
-	ground := k.bg
-	if c.Vibrancy() {
+	ground, radius := k.bg, float32(22)
+	if s.fl.blur {
+		// Windows' blur takes no tint: the theme's ground over it, as the
+		// tint of macOS's glass, at the corners Windows 11 rounds it to.
+		ground, radius = ui.RGBA(k.bg.R, k.bg.G, k.bg.B, 0.45), 8
+	} else if c.Vibrancy() {
 		// All but clear: a window's clear pixels let the clicks through,
 		// and the whole window should drag.
 		ground = ui.RGBA(0, 0, 0, 0.01)
@@ -156,7 +168,7 @@ func (s *shell) floatView(c *ui.Context) {
 	if locked {
 		ground = ui.Transparent
 	}
-	root := ui.Row(c).Fill().Background(ground).Radius(22).Padding(l.pad).Gap(l.pad).AlignItems(ui.Center).
+	root := ui.Row(c).Fill().Background(ground).Radius(radius).Padding(l.pad).Gap(l.pad).AlignItems(ui.Center).
 		TextColor(k.text).Font(k.body).DragWindow()
 	if locked {
 		// A dark edge round the white words (floatLyricView), crisp on light
@@ -404,12 +416,11 @@ func (s *shell) followFloatLock() bool {
 	w := s.win
 	w.SetHasShadow(!on)
 	w.SetIgnoreMouseEvents(on)
+	s.fl.blur = setFloatGlass(w, !on)
 	if !on {
-		w.SetVibrancy(mygo.VibrancyGlass)
 		s.pollFloatPointer(false)
 		return on
 	}
-	w.SetVibrancy(mygo.VibrancyNone)
 	t, done := time.NewTicker(floatPollEvery), make(chan struct{})
 	go func() {
 		defer t.Stop()
