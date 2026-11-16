@@ -4,6 +4,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/fzn0x/mixmusic/internal/settings"
 	"github.com/fzn0x/mixmusic/lyrics"
 )
 
@@ -27,5 +28,25 @@ func TestLinesAt(t *testing.T) {
 	}
 	if got := clip("ピョンピョンまた", 4); got != "ピョン…" {
 		t.Errorf("clip: %q", got)
+	}
+}
+
+// TestStatusTranslateTo translates the taskbar's lyrics as the lyrics are:
+// for a language the user translates, into the one chosen, and not into
+// their own.
+func TestStatusTranslateTo(t *testing.T) {
+	a := newQuietApp(t, nil)
+	a.settings.Update(func(v *settings.Settings) error {
+		v.LyricsTranslate, v.LyricsTranslateTo = []string{"ja"}, "zh-Hans"
+		return nil
+	})
+	for lang, want := range map[string]string{"ja": "zh-Hans", "en": "", "": ""} {
+		if got := a.statusTranslateTo(lyrics.Lyrics{Language: lang}); got != want {
+			t.Errorf("lyrics in %q translate into %q, want %q", lang, got, want)
+		}
+	}
+	a.settings.Update(func(v *settings.Settings) error { v.LyricsTranslateTo = "ja"; return nil })
+	if got := a.statusTranslateTo(lyrics.Lyrics{Language: "ja"}); got != "" {
+		t.Errorf("lyrics in Japanese translate into their own language: %q", got)
 	}
 }

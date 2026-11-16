@@ -71,6 +71,10 @@ func (l *Lyrics) Show(v LyricsView) { l.l.show(v) }
 // Close closes the window, from any goroutine.
 func (l *Lyrics) Close() { l.l.close() }
 
+// Bounds is where the window is on the screen, in pixels, while it shows;
+// empty while it doesn't. From any goroutine.
+func (l *Lyrics) Bounds() image.Rectangle { return l.l.bounds() }
+
 // Closed tells whether the window is gone: closed, or gone with the
 // taskbar, as Explorer restarts. Another OpenLyrics puts it back.
 func (l *Lyrics) Closed() bool { return l.l.isClosed() }

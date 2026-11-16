@@ -2,6 +2,8 @@
 
 package taskbar
 
+import "image"
+
 // Other systems have no buttons on their taskbar's thumbnails, nor 32-bit
 // Windows here.
 type bar struct{}
@@ -16,3 +18,4 @@ func openLyrics(int, func()) (*lyricsWin, error) { return nil, ErrUnsupported }
 func (*lyricsWin) show(LyricsView)               {}
 func (*lyricsWin) close()                        {}
 func (*lyricsWin) isClosed() bool                { return true }
+func (*lyricsWin) bounds() image.Rectangle       { return image.Rectangle{} }

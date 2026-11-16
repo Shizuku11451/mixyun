@@ -177,6 +177,7 @@ type lyricsWin struct {
 	view    LyricsView
 	closed  bool
 	buttons []rect // the taskbar's, which watchButtons measures
+	at      rect   // where the window shows on the screen; zero while hidden
 
 	// What the window shows, on its thread: to draw again only on change.
 	drawn struct {
@@ -364,6 +365,13 @@ func (l *lyricsWin) isClosed() bool {
 	return l.closed
 }
 
+// bounds is where the window shows on the screen, or empty.
+func (l *lyricsWin) bounds() image.Rectangle {
+	l.mu.Lock()
+	defer l.mu.Unlock()
+	return image.Rect(int(l.at.left), int(l.at.top), int(l.at.right), int(l.at.bottom))
+}
+
 // update puts the window in its place in the taskbar again, and draws the
 // view there, or hides it. The window's thread.
 func (l *lyricsWin) update() {
@@ -375,6 +383,9 @@ func (l *lyricsWin) update() {
 		if visible != 0 {
 			procShowWindow.Call(l.hwnd, swHide)
 		}
+		l.mu.Lock()
+		l.at = rect{}
+		l.mu.Unlock()
 		l.drawn.ok = false
 		l.stopGlide()
 		l.frames(false)
@@ -424,6 +435,9 @@ func (l *lyricsWin) update() {
 	if visible == 0 {
 		procShowWindow.Call(l.hwnd, swShowNoActivate)
 	}
+	l.mu.Lock()
+	l.at = r
+	l.mu.Unlock()
 }
 
 // stopGlide ends the glide, if any. The window's thread.
