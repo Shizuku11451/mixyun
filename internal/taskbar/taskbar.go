@@ -100,11 +100,11 @@ type rect struct{ left, top, right, bottom int32 }
 // embedPlace is where embed puts a window width DIPs wide in the taskbar
 // bar at dpi, clear of its buttons, on the screen as UI Automation has
 // them: in the leftmost gap that takes it whole, or else narrowed into the
-// widest, down to half its width. Windows 11 leaves one between the
+// widest, down to half its width, or else at its left end, over them.
+// Windows 11 leaves one between the
 // widgets and its centred buttons; a taskbar whose buttons stand at the
 // left leaves one after them. It returns x in the taskbar, the width and
-// the height, in pixels; ok is false for a taskbar at a side, or with no
-// room.
+// the height, in pixels; ok is false for a taskbar at a side.
 func embedPlace(bar rect, buttons []rect, width int, dpi uint32) (x, w, h int32, ok bool) {
 	if bar.bottom-bar.top >= bar.right-bar.left {
 		return 0, 0, 0, false
@@ -134,7 +134,12 @@ func embedPlace(bar rect, buttons []rect, width int, dpi uint32) (x, w, h int32,
 		}
 		from = max(from, t[1])
 	}
-	return bestX, bestW, h, bestW > 0 && bestW >= w/2
+	if bestW > 0 && bestW >= w/2 {
+		return bestX, bestW, h, true
+	}
+	// No room between them, as the buttons read: at the left end, over
+	// them, rather than no lyrics, should the reading be wrong.
+	return 0, min(w, end), h, true
 }
 
 // state is what the buttons show: whether the player plays, and whether it

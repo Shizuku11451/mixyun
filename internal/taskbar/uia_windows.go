@@ -7,6 +7,7 @@ package taskbar
 // them, for the lyrics to keep clear of.
 
 import (
+	"log"
 	"runtime"
 	"slices"
 	"syscall"
@@ -85,6 +86,7 @@ func (l *lyricsWin) watchButtons() {
 			l.buttons = b
 			l.mu.Unlock()
 			if changed {
+				log.Printf("taskbar: %d buttons: %v", len(b), b)
 				procPostMessageW.Call(l.hwnd, wmLyricsUpdate, 0, 0)
 			}
 		}

@@ -49,7 +49,7 @@ func TestGlyphs(t *testing.T) {
 
 // TestEmbedPlace puts the window in the leftmost gap of the taskbar's
 // buttons that takes it, scaled by the DPI, else narrowed into the widest,
-// and nowhere on a taskbar at a side or without room.
+// else at the left end, and nowhere on a taskbar at a side.
 func TestEmbedPlace(t *testing.T) {
 	bottom := rect{0, 1032, 1920, 1080}
 	widgets := rect{0, 1032, 160, 1080}
@@ -71,7 +71,7 @@ func TestEmbedPlace(t *testing.T) {
 		"widgets":      {bottom, []rect{widgets, centred, tray}, 96, 168, 360, 48, true},
 		"left buttons": {bottom, []rect{{0, 1032, 600, 1080}, tray}, 96, 608, 360, 48, true},
 		"narrowed":     {rect{0, 1032, 1000, 1080}, []rect{widgets, {440, 1032, 1000, 1080}}, 96, 168, 264, 48, true},
-		"no room":      {rect{0, 1032, 1000, 1080}, []rect{{0, 1032, 1000, 1080}}, 96, 0, 0, 48, false},
+		"no room":      {rect{0, 1032, 1000, 1080}, []rect{{0, 1032, 1000, 1080}}, 96, 0, 360, 48, true},
 		"other bar":    {bottom, []rect{{0, 0, 600, 48}}, 96, 0, 360, 48, true},
 		"hidden":       {bottom, []rect{{0, 0, 0, 0}}, 96, 0, 360, 48, true},
 	} {
