@@ -45,6 +45,7 @@ func Open(a *app.App, hidden bool) *mygo.Window {
 		BackgroundColor: hexColor(s.lk.bg),
 		StateKey:        "main",
 		TitleBarStyle:   titleBarStyle(runtime.GOOS),
+		TitleBarHeight:  48, // the top bar's, which drags the window under it (Windows)
 		Hidden:          hidden,
 		AlwaysOnTop:     s.startOnTop(),
 		Content:         ui.View(s.view),
@@ -86,11 +87,11 @@ func fitIn(r, work mygo.Rectangle) mygo.Rectangle {
 	return r
 }
 
-// titleBarStyle is the main window's title bar on goos: the system's own,
-// whose buttons are drawn as the system draws them, but on macOS, where
-// the traffic lights sit over the window, as in the system's apps.
+// titleBarStyle is the main window's title bar on goos: hidden on macOS,
+// whose traffic lights sit over the window, and on Windows, whose window
+// buttons do too, beside the top bar; the system's own on Linux.
 func titleBarStyle(goos string) mygo.TitleBarStyle {
-	if goos == "darwin" {
+	if goos == "darwin" || goos == "windows" {
 		return mygo.TitleBarHidden
 	}
 	return mygo.TitleBarDefault
