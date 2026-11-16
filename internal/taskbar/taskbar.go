@@ -5,9 +5,11 @@
 package taskbar
 
 import (
+	"cmp"
 	"errors"
 	"image"
 	"image/color"
+	"slices"
 )
 
 // ErrUnsupported is returned where windows have no thumbnail buttons.
@@ -47,7 +49,8 @@ func (b *Bar) Show(playing, track bool) { b.b.show(state{playing, track}) }
 type Lyrics struct{ l *lyricsWin }
 
 // OpenLyrics puts a window width DIPs wide in the primary taskbar, as its
-// child, so that it hides and slides with it and nothing comes over it. It
+// child, so that it hides and slides with it and nothing comes over it,
+// clear of the taskbar's buttons, narrower where they leave less room. It
 // shows nothing until Show. Its cover shows a button that expands under
 // the pointer, and a click on it calls expand, on the window's own thread;
 // the taskbar under the rest of it takes the clicks. It returns
@@ -91,22 +94,43 @@ func inkPixels(px []uint32, ink [3]uint8) {
 type rect struct{ left, top, right, bottom int32 }
 
 // embedPlace is where embed puts a window width DIPs wide in the taskbar
-// bar at dpi: at its left end, where a taskbar with its buttons centred, as
-// Windows 11 has it, leaves room. It returns x in the taskbar, the width
-// and the height, in pixels; ok is false for a taskbar at a side, or too
-// short for the window.
-// shortcut: the taskbar's buttons aren't measured, which a taskbar with
-// its buttons at the left, or the widgets button, puts under the lyrics;
-// read them through UI Automation, as TaskbarLyrics does, if that bothers.
-func embedPlace(bar rect, width int, dpi uint32) (x, w, h int32, ok bool) {
+// bar at dpi, clear of its buttons, on the screen as UI Automation has
+// them: in the leftmost gap that takes it whole, or else narrowed into the
+// widest, down to half its width. Windows 11 leaves one between the
+// widgets and its centred buttons; a taskbar whose buttons stand at the
+// left leaves one after them. It returns x in the taskbar, the width and
+// the height, in pixels; ok is false for a taskbar at a side, or with no
+// room.
+func embedPlace(bar rect, buttons []rect, width int, dpi uint32) (x, w, h int32, ok bool) {
 	if bar.bottom-bar.top >= bar.right-bar.left {
 		return 0, 0, 0, false
 	}
 	if dpi == 0 {
 		dpi = 96
 	}
-	w = int32(width) * int32(dpi) / 96
-	return 0, w, bar.bottom - bar.top, w <= bar.right-bar.left
+	w, h = int32(width)*int32(dpi)/96, bar.bottom-bar.top
+	pad, end := 8*int32(dpi)/96, bar.right-bar.left
+	// What the buttons take of the bar, from its left, padded.
+	var taken [][2]int32
+	for _, b := range buttons {
+		if b.right <= b.left || b.bottom <= bar.top || b.top >= bar.bottom {
+			continue // hidden, or on another taskbar
+		}
+		if l, r := max(b.left-pad-bar.left, 0), min(b.right+pad-bar.left, end); l < r {
+			taken = append(taken, [2]int32{l, r})
+		}
+	}
+	slices.SortFunc(taken, func(a, b [2]int32) int { return cmp.Compare(a[0], b[0]) })
+	from, bestX, bestW := int32(0), int32(0), int32(0)
+	for _, t := range append(taken, [2]int32{end, end}) {
+		if gap := t[0] - from; gap >= w {
+			return from, w, h, true
+		} else if gap > bestW {
+			bestX, bestW = from, gap
+		}
+		from = max(from, t[1])
+	}
+	return bestX, bestW, h, bestW > 0 && bestW >= w/2
 }
 
 // state is what the buttons show: whether the player plays, and whether it

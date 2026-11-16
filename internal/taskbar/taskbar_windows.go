@@ -414,11 +414,11 @@ func newIcon(img *image.NRGBA) uintptr {
 }
 
 // embed makes hwnd a child of Shell_TrayWnd, the primary taskbar, as
-// TaskbarLyrics does, and puts it at its left end (embedPlace), in front
-// of the taskbar's own children.
-// shortcut: Windows 10 takes it over its task list, which TaskbarLyrics
-// squeezes instead; do so if lyrics hide buttons there.
-func embed(hwnd uintptr, width int) bool {
+// TaskbarLyrics does, and puts it clear of the taskbar's buttons
+// (embedPlace), in front of the taskbar's own children.
+// shortcut: Windows 10 takes it over the free end of its task list, which
+// TaskbarLyrics squeezes instead; do so if the buttons there need it.
+func embed(hwnd uintptr, width int, buttons []rect) bool {
 	const (
 		gaParent      = 1
 		wsChild       = 0x40000000
@@ -438,7 +438,7 @@ func embed(hwnd uintptr, width int) bool {
 	if procGetDpiForWindow.Find() == nil {
 		dpi, _, _ = procGetDpiForWindow.Call(bar)
 	}
-	x, w, h, ok := embedPlace(b, width, uint32(dpi))
+	x, w, h, ok := embedPlace(b, buttons, width, uint32(dpi))
 	if !ok {
 		return false
 	}

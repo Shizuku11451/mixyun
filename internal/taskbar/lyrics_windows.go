@@ -67,7 +67,8 @@ const (
 	// 10 and 11, and Latin.
 	lyricsFace = "Microsoft YaHei UI"
 	// lyricsReplace is how often, in milliseconds, the window takes its
-	// place again, as the notification area grows or the taskbar moves.
+	// place again, as the taskbar's buttons come and go or it moves, and
+	// watchButtons measures them again.
 	lyricsReplace = 1000
 	// lyricsGlide is how long a glide takes.
 	lyricsGlide = 250 * time.Millisecond
@@ -172,9 +173,10 @@ type lyricsWin struct {
 	coverAt image.Rectangle
 	hover   bool
 
-	mu     sync.Mutex
-	view   LyricsView
-	closed bool
+	mu      sync.Mutex
+	view    LyricsView
+	closed  bool
+	buttons []rect // the taskbar's, which watchButtons measures
 
 	// What the window shows, on its thread: to draw again only on change.
 	drawn struct {
@@ -239,7 +241,7 @@ func (l *lyricsWin) run(ready chan<- error) {
 	lyricsMu.Lock()
 	lyricsWindows[hwnd] = l
 	lyricsMu.Unlock()
-	if !embed(hwnd, l.width) {
+	if !embed(hwnd, l.width, nil) {
 		lyricsMu.Lock()
 		delete(lyricsWindows, hwnd)
 		lyricsMu.Unlock()
@@ -248,6 +250,7 @@ func (l *lyricsWin) run(ready chan<- error) {
 		return
 	}
 	procSetTimer.Call(hwnd, 1, lyricsReplace, 0)
+	go l.watchButtons()
 	ready <- nil
 	var m winMsg
 	for {
@@ -365,10 +368,10 @@ func (l *lyricsWin) isClosed() bool {
 // view there, or hides it. The window's thread.
 func (l *lyricsWin) update() {
 	l.mu.Lock()
-	v := l.view
+	v, buttons := l.view, l.buttons
 	l.mu.Unlock()
 	visible, _, _ := procIsWindowVisible.Call(l.hwnd)
-	if v.Current == "" || !embed(l.hwnd, l.width) {
+	if v.Current == "" || !embed(l.hwnd, l.width, buttons) {
 		if visible != 0 {
 			procShowWindow.Call(l.hwnd, swHide)
 		}
