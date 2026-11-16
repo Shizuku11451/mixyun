@@ -33,7 +33,7 @@ func (s *shell) view(c *ui.Context) {
 	s.zoomInKey()
 	s.followOnTop()
 	k := &s.lk
-	root := ui.Column(c).Fill().Background(k.bg).TextColor(k.text).Font(k.body)
+	root := ui.Column(c).Fill().Background(k.bg).TextColor(k.text).Font(k.body).DrawOver(s.notePixels)
 	s.ground(c, root)
 	root.Children(func() {
 		// Absolute elements paint above their siblings: the window's

@@ -67,7 +67,7 @@ func (s *shell) taskbarPlayerView(c *ui.Context) {
 			art := ui.Box(c.Key("art")).Size(taskbarPlayerArt, taskbarPlayerArt).Shrink(0).Radius(8).Clip()
 			var b *ui.Bitmap
 			if ok {
-				b = s.art.get(c, artworkURL(cur.Track.Artwork, int(taskbarPlayerArt*s.zoomOf())), s.artPixels(taskbarPlayerArt))
+				b = s.art.get(c, s.artAt(cur.Track.Artwork, taskbarPlayerArt), s.artPixels(taskbarPlayerArt))
 			}
 			if b == nil {
 				art.Background(k.surface3)
