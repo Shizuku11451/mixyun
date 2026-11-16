@@ -15,6 +15,7 @@ import (
 	"github.com/fzn0x/mixmusic/internal/app"
 	"github.com/fzn0x/mixmusic/internal/downloads"
 	"github.com/fzn0x/mixmusic/internal/media"
+	"github.com/fzn0x/mixmusic/locales"
 )
 
 // keptTracks are tracks of real video IDs, which downloads keep files of.
@@ -447,5 +448,23 @@ func TestHomeOfflineDownloads(t *testing.T) {
 	show(s, tt, "/")
 	if n := offers(); n != 0 {
 		t.Errorf("Home online offers the downloads %d times", n)
+	}
+}
+
+// TestLikedDownloadShowsTranslated keeps "Liked songs" in the downloads'
+// index, and shows the liked songs' download in the interface's language.
+func TestLikedDownloadShowsTranslated(t *testing.T) {
+	if got := likedDownload(nil).c.Title; got != "Liked songs" {
+		t.Errorf("the index keeps %q", got)
+	}
+	zh := locales.In("zh-Hans").RailLikedSongs()
+	if zh == "Liked songs" {
+		t.Fatal("zh-Hans doesn't translate railLikedSongs")
+	}
+	if got := shownTitle("liked", "Liked songs"); got != locales.RailLikedSongs() {
+		t.Errorf("liked songs show as %q", got)
+	}
+	if got := shownTitle("album:1", "Blue"); got != "Blue" {
+		t.Errorf("an album shows as %q", got)
 	}
 }

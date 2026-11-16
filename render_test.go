@@ -41,6 +41,9 @@ func TestMain(m *testing.M) {
 	}
 	os.Unsetenv("NO_PROXY")
 	os.Unsetenv("no_proxy")
+	// The tests read English, whatever language the computer prefers, and
+	// never save one over the language chosen in the app.
+	os.Setenv("MYGO_LOCALE", "en")
 	// MyGo works out the languages on the main thread the first time, which
 	// the tests hold: work them out here, before the tests take it.
 	mygo.App.PreferredLanguages()

@@ -1,0 +1,2 @@
+"NSLocalNetworkUsageDescription" = "MixMusic 会查找你网络中的投放设备（如 Chromecast 和 Nest 音箱）以便在其上播放，并查找你其他电脑上的 MixMusic 以便控制它。";
+"NSAudioCaptureUsageDescription" = "MixMusic 会听取它播放的 Spotify 歌曲，用于可视化效果和插件的分析器。它从不录制或发送这些音频。";
