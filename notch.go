@@ -84,6 +84,9 @@ type notch struct {
 	seekTo  float64
 	// artOf is the track whose artwork artURL is.
 	artOf, artURL string
+	// lyricsOf is the track whose line lyricsAt the lyrics went to last.
+	lyricsOf string
+	lyricsAt int
 }
 
 // notchArtPixels is the size the covers load at: the large cover's, at
@@ -547,18 +550,57 @@ func (n *notch) lyrics(c *ui.Context, t media.Track) {
 	// In Latin letters, as the user shows the lyrics of their language
 	// (lyricsromanize.go).
 	latin, how := s.latinLines(t, l.value)
-	line := func(i int) string { return notchLine(lines, latin, how, i) }
-	if at > 0 {
-		ui.Text(c, line(at-1)).FontSize(12).TextColor(notchMuted).SingleLine().MinWidth(0)
-	}
-	ui.Text(c, line(at)).FontSize(15).FontWeight(600).TextColor(notchWhite).MaxLines(2).MinWidth(0)
-	if under := notchUnder(latin, how, at); under != "" {
-		ui.Text(c, under).FontSize(12).TextColor(notchMuted).SingleLine().MinWidth(0)
-	}
-	if at+1 < len(lines) {
-		ui.Text(c, line(at+1)).FontSize(12).TextColor(notchMuted).SingleLine().MinWidth(0)
-	}
+	// Every line is built, each in the same look wherever it is, so that the
+	// song going on to a line moves only paint, never the layout: the list
+	// glides (a scroll), and the line sung grows and brightens (a transform
+	// and a colour). The layout cache and culling keep the lines out of view
+	// almost free. A line from afar, a new track or a panel just opened jump.
+	// As tall as the body inside its padding, so that the lines scroll in it.
+	const tall = notchBody - 6 - 16
+	list := ui.Scroll(c.Key("notch-lyrics")).Height(tall).Shrink(0).Scrollbars(false).Padding(tall/2, 0)
+	fresh := list.Bounds().H == 0
+	glide := !fresh && t.ID == n.lyricsOf && at != n.lyricsAt && at-n.lyricsAt <= 2 && n.lyricsAt-at <= 2
+	moved := fresh || t.ID != n.lyricsOf || at != n.lyricsAt
+	n.lyricsOf, n.lyricsAt = t.ID, at
+	list.Children(func() {
+		// From -1, the ♪ before the first line is sung.
+		for i := -1; i < len(lines); i++ {
+			row := ui.Column(c.Key(notchLyric(i))).Gap(2).MinWidth(0)
+			scale := row.AnimateTo("scale", pick(i == at, 1, notchAside), lyricsSpring)
+			row.Scale(scale, scale).TransformOrigin(0, 0.5)
+			// Dimmer the farther from the line sung.
+			alpha := float32(1)
+			switch max(i-at, at-i) {
+			case 0:
+			case 1:
+				alpha = 0.6
+			default:
+				alpha = 0.3
+			}
+			ink := row.AnimateColor("ink", notchWhite.Alpha(alpha), lyricsFade)
+			if moved && i == at {
+				o := ui.ScrollIntoViewOptions{Block: ui.ScrollCenter}
+				if glide {
+					o.Animation = &lyricsSpring
+				}
+				row.ScrollIntoView(o)
+			}
+			row.Children(func() {
+				ui.Text(c, notchLine(lines, latin, how, i)).FontSize(15).FontWeight(600).TextColor(ink).MaxLines(2).MinWidth(0)
+				if under := notchUnder(latin, how, i); under != "" {
+					ui.Text(c, under).FontSize(13).TextColor(ink).SingleLine().MinWidth(0)
+				}
+			})
+		}
+	})
 }
+
+// notchLyric keys a line of the notch's lyrics.
+type notchLyric int
+
+// notchAside is the size of the lines around the one sung, of its: 12
+// points of 15.
+const notchAside float32 = 0.8
 
 // lerp is the value t of the way from a to b.
 func lerp(a, b, t float32) float32 { return a + (b-a)*t }
