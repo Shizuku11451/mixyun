@@ -71,7 +71,7 @@ const (
 	// watchButtons measures them again.
 	lyricsReplace = 1000
 	// lyricsGlide is how long a glide takes.
-	lyricsGlide = 250 * time.Millisecond
+	lyricsGlide = 450 * time.Millisecond
 )
 
 var (
@@ -511,11 +511,14 @@ func (l *lyricsWin) draw(from, v LyricsView, e float64, at time.Duration, w, h i
 			sweepPixels(px, int(w), box, x, edge, viewCurrentAlpha, viewNextAlpha)
 		}
 	}
-	if pitch := float64(lay.next.top - lay.current.top); e < 1 {
-		paint(from, -int32(math.Round(pitch*e)), true)
+	if pitch := lay.next.top - lay.current.top; e < 1 {
+		// One rounding for both, so the line that rises from next to
+		// current is drawn at the same pixel in each and doesn't shimmer.
+		dy := int32(math.Round(float64(pitch) * e))
+		paint(from, -dy, true)
 		old := slices.Clone(px)
 		clear(px)
-		paint(v, int32(math.Round(pitch*(1-e))), false)
+		paint(v, pitch-dy, false)
 		mixPixels(px, old, e)
 	} else {
 		paint(v, 0, false)

@@ -58,8 +58,14 @@ func TestOver(t *testing.T) {
 
 // TestGlide eases from 0 to 1, and mixes pixels a share of the way.
 func TestGlide(t *testing.T) {
-	if glideEase(0) != 0 || glideEase(1) != 1 || glideEase(0.5) <= 0.5 {
-		t.Errorf("ease: %v %v %v", glideEase(0), glideEase(0.5), glideEase(1))
+	// It starts and ends softly, and goes on without going back.
+	if glideEase(0) != 0 || glideEase(1) != 1 || glideEase(0.5) != 0.5 || glideEase(0.1) >= 0.1 || glideEase(0.9) <= 0.9 {
+		t.Errorf("ease: %v %v %v %v %v", glideEase(0), glideEase(0.1), glideEase(0.5), glideEase(0.9), glideEase(1))
+	}
+	for p := 0.0; p < 1; p += 0.01 {
+		if glideEase(p+0.01) < glideEase(p) {
+			t.Errorf("ease goes back at %v", p)
+		}
 	}
 	px := []uint32{0xFFFFFFFF, 0}
 	mixPixels(px, []uint32{0, 0xFF804000}, 0.5)

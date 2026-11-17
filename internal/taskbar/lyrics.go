@@ -206,8 +206,14 @@ func over(dst uint32, c color.NRGBA) uint32 {
 }
 
 // glideEase is how far, from 0 to 1, a glide p of the way through its time
-// has gone: fast, then slowing to a stop.
-func glideEase(p float64) float64 { return 1 - math.Pow(1-p, 3) }
+// has gone: starting softly, then slowing to a stop, so the lines neither
+// jump off nor halt.
+func glideEase(p float64) float64 {
+	if p < 0.5 {
+		return 4 * p * p * p
+	}
+	return 1 - math.Pow(2-2*p, 3)/2
+}
 
 // mixPixels puts in px, e of the way from old to it, each channel apart.
 func mixPixels(px, old []uint32, e float64) {
