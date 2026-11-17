@@ -13,7 +13,6 @@ All of it works on Windows, macOS and Linux unless a section says otherwise.
 The mini player is a small window that stays on top of your other
 windows, with what plays and the buttons to control it. Open it with:
 
-- the mini player button at the end of the player bar;
 - <kbd>Ctrl</kbd> <kbd>M</kbd> (<kbd>⌘</kbd> <kbd>M</kbd> on macOS), or
   **Mini player** in the command palette;
 - **Mini player** in the tray icon's menu.

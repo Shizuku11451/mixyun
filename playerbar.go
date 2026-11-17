@@ -354,13 +354,9 @@ func (s *shell) playerSide(c *ui.Context) {
 	s.speedButton(c)
 	s.outputButton(c, room)
 	s.volumeControl(c)
-	// It opens the floating window; its menu, the mini player, which the
-	// full bar has no room for a button of.
+	// It opens the floating window.
 	float := s.iconButton(c, "mini", "mini", locales.PlayerFloat(), false, 18)
 	float.ContextMenu(func(m *ui.Menu) {
-		if m.Item(locales.PlayerMiniPlayer()).Chosen() {
-			s.showMini()
-		}
 		// The floating window locks, and unlocks, here too.
 		if m.Item(locales.FloatLock()).Checked(s.set.FloatLocked).Chosen() {
 			s.lockFloat(!s.set.FloatLocked)

@@ -239,23 +239,34 @@ func (s *shell) floatView(c *ui.Context) {
 }
 
 // floatLyricView is the line sung now, lit word by word when the lyrics
-// time their words, over the line under it, as opaque as under. A new line rises in as the
-// last rises out. The line keeps to one row: one longer than the window
+// time their words, over the line under it, as opaque as under. A new
+// line grows out of the line under the last, where it was, as the last
+// rises out: by transforms and opacity alone, so the window lays nothing
+// out on the way. The line keeps to one row: one longer than the window
 // scrolls across it as it is sung (floatScrollBy).
 func (s *shell) floatLyricView(c *ui.Context, id string, ly floatLyric, l floatLayout, under float32) {
 	k := &s.lk
+	small := max(11, l.size*0.62)
+	// From the middle of the line to that of the line under it, about.
+	down := (l.size+small)*0.6 + 2
 	tr := ui.ElementTransition{
-		Animation: &ui.Smooth,
-		Position:  true,
-		Enter:     &ui.Motion{Y: l.size, Opacity: 0},
-		Exit:      &ui.Motion{Y: -l.size, Opacity: 0},
+		Animation: &lyricsSpring,
+		Enter:     &ui.Motion{Y: down, Scale: small / l.size, Opacity: 0.5},
+		Exit:      &ui.Motion{Y: -down, Scale: 0.9, Opacity: 0},
+	}
+	underTr := ui.ElementTransition{
+		Animation: &lyricsSpring,
+		Enter:     &ui.Motion{Y: small, Opacity: 0},
+		Exit:      &ui.Motion{Opacity: 0}, // the new line grows over it
 	}
 	if c.Preferences().ReduceMotion {
 		tr = ui.ElementTransition{Duration: -1}
+		underTr = tr
 	}
-	ui.Column(c.Key(floatLineKey{id, ly.at})).Gap(2).MinWidth(0).Transition(tr).Children(func() {
+	ui.Column(c).Gap(2).MinWidth(0).Children(func() {
 		second := k.muted
-		view := ui.Box(c).MinWidth(0).AlignItems(ui.Start).Clip()
+		view := ui.Box(c.Key(floatLineKey{id, ly.at})).MinWidth(0).AlignItems(ui.Start).
+			TransformOrigin(0, 0.5).Transition(tr)
 		view.Children(func() {
 			var line, sung ui.Element
 			if !s.set.FloatLocked {
@@ -283,6 +294,11 @@ func (s *shell) floatLyricView(c *ui.Context, id string, ly floatLyric, l floatL
 			line.NoWrap().Shrink(0)
 			// The widths are the frame before's: a new line starts unscrolled.
 			lineW, viewW := line.Bounds().W, view.Bounds().W
+			// Only a line wider than the window clips: a clip that grows with
+			// the line costs the GPU a mask each frame of the way.
+			if lineW > viewW {
+				view.Clip()
+			}
 			if lineW <= viewW || ly.to <= ly.from {
 				return
 			}
@@ -300,7 +316,8 @@ func (s *shell) floatLyricView(c *ui.Context, id string, ly floatLyric, l floatL
 			line.Translate(-floatScrollBy(x, lineW, viewW), 0)
 		})
 		if l.second && ly.second != "" {
-			ui.Text(c, ly.second).FontSize(max(11, l.size*0.62)).TextColor(second).SingleLine().MinWidth(0).Opacity(under)
+			ui.Text(c.Key(floatUnderKey{id, ly.at}), ly.second).FontSize(small).TextColor(second).SingleLine().MinWidth(0).
+				Opacity(under).Transition(underTr)
 		}
 	})
 }
@@ -311,6 +328,9 @@ type floatLineKey struct {
 	id string
 	at int
 }
+
+// floatUnderKey is floatLineKey for the line under it.
+type floatUnderKey floatLineKey
 
 // floatCover is the cover of what plays, size DIPs across.
 func (s *shell) floatCover(c *ui.Context, t media.Track, ok bool, size float32) {
