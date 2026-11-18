@@ -488,20 +488,23 @@ func (s *shell) lyricsSettings(c *ui.Context) {
 			}
 		})
 		s.row(c, locales.LyricsSettingsTranslateWith(), locales.LyricsSettingsLLMDesc(), func() {
+			custom := locales.LyricsSettingsLLMCustom()
 			options := []string{"Unison"}
 			chosen := options[0]
+			// A server of no preset, or none yet while it's being typed, is Custom.
+			if s.set.LyricsLLMURL != "" || s.llmCustom {
+				chosen = custom
+			}
 			for _, p := range llmPresets {
 				options = append(options, p.name)
 				if p.url == s.set.LyricsLLMURL {
 					chosen = p.name
 				}
 			}
-			// A server of no preset shows as Custom; it is chosen by typing it.
-			if s.set.LyricsLLMURL != "" && chosen == options[0] {
-				chosen = locales.LyricsSettingsLLMCustom()
-				options = append(options, chosen)
-			}
+			options = append(options, custom)
 			if s.selectOf(c.Key("lyrics-llm-with"), &chosen, options).Width(220).Label(locales.LyricsSettingsTranslateWith()).Changed() {
+				// Custom starts from an empty server, which Unison translates for until it's typed.
+				s.llmCustom = chosen == custom
 				s.set.LyricsLLMURL = ""
 				if i := slices.Index(options, chosen); i > 0 && i <= len(llmPresets) {
 					s.set.LyricsLLMURL = llmPresets[i-1].url
@@ -510,7 +513,7 @@ func (s *shell) lyricsSettings(c *ui.Context) {
 				s.save()
 			}
 		}, "AI", "LLM", "language model", "OpenAI", "Ollama")
-		if s.set.LyricsLLMURL == "" {
+		if s.set.LyricsLLMURL == "" && !s.llmCustom {
 			s.settingsOf(c, lyricsRows)
 			return
 		}
