@@ -30,7 +30,7 @@ folded too.
 | Language | **System**, the default, takes the first of the computer's preferred languages MixMusic has, or else English; each of its languages follows, named in itself. A choice applies at once. |
 | Start and close | **[Close to the tray](desktop.md#close-to-the-tray)**: closing the window keeps the music playing; quit from the tray icon. Off at first. **[Start at login](desktop.md#start-at-login)**: starts MixMusic, hidden, when you sign in to your computer. |
 | [Updates](how-it-works.md#mixmusic-itself) | **Check for updates**, at start and every few hours, and **Install updates without asking**, which downloads them in the background for the next launch. |
-| Advanced › Settings file | **open** opens [`settings.json`](#settingsjson), **show in folder** shows it in its folder; **Reset settings** puts back the settings of a new install, after asking. Your accounts, library and add-ons stay. |
+| Advanced › Settings file | **open** opens `settings.json`, **show in folder** shows it in its folder; **Reset settings** puts back the settings of a new install, after asking. Your accounts, library and add-ons stay. |
 
 Without Install updates without asking, a new version asks in a pop-up:
 **install** it, **later**, which asks again at the next start, or **skip
