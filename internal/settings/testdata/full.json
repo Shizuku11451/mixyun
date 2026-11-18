@@ -117,6 +117,8 @@
   "cacheSizeMb": 4096,
   "movingCoversMb": 512,
   "lyricsTranslateTo": "ja",
+  "lyricsLlmUrl": "https://api.deepseek.com/v1",
+  "lyricsLlmModel": "deepseek-chat",
   "downloadsFolder": "/home/me/Music",
   "downloadOnMetered": true,
   "downloadAdded": false,

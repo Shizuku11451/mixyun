@@ -209,7 +209,7 @@ func (s *shell) lyricsChoicesWith(c *ui.Context, t media.Track, ly lyrics.Lyrics
 			ui.Text(c, failed).FontSize(k.smallSize()).TextColor(k.muted)
 			if s.link(c, "lyrics-translate-again-"+where, locales.WidgetsTryAgain()) {
 				s.svc.Catalog.TranslateAgain()
-				s.forget(translationKey(t, translationInto(ly, to, x.translate)))
+				s.forget(s.translationKey(t, translationInto(ly, to, x.translate)))
 			}
 		})
 	}
@@ -220,7 +220,7 @@ func (s *shell) lyricsChoicesWith(c *ui.Context, t media.Track, ly lyrics.Lyrics
 // language to, as translationInto has it.
 func (s *shell) translation(t media.Track, ly lyrics.Lyrics, to string, translate bool) *loaded[translated] {
 	to = translationInto(ly, to, translate)
-	return fetch(s, translationKey(t, to), func(ctx context.Context) (translated, error) {
+	return fetch(s, s.translationKey(t, to), func(ctx context.Context) (translated, error) {
 		tr, err := s.svc.Catalog.TranslateLyrics(ctx, t, ly, to)
 		return translated{tr, slices.ContainsFunc(tr.Lines, func(l lyrics.TranslatedLine) bool { return l.Romanized != "" })}, err
 	})
@@ -239,8 +239,13 @@ func translationInto(ly lyrics.Lyrics, to string, translate bool) string {
 
 // translationKey is the key translation fetches the translation of a
 // track's lyrics into the language into under.
-func translationKey(t media.Track, into string) string {
-	return "lyrics-translation:" + t.ID + ":" + into
+func (s *shell) translationKey(t media.Track, into string) string {
+	key := "lyrics-translation:" + t.ID + ":" + into
+	// Another language model translates anew.
+	if s.set.LLM() {
+		key += ":" + s.set.LyricsLLMURL + " " + s.set.LyricsLLMModel
+	}
+	return key
 }
 
 // lyricsSwitches shows the choices above lyrics in the language lang:

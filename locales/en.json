@@ -3102,6 +3102,17 @@
   "lyricsRomanizeUnder": "romanized under",
   "lyricsSettingsDesc": "The translate switch beside the lyrics shows them in this language. While it's on, the lyrics of the track playing and its video ID go to Unison, which has Google translate them; nothing is sent while it's off. Lyrics in other scripts show in Latin letters made on this computer, which sends nothing: Japanese in romaji, and the others by the standard of their language. Only Arabic's go to Unison, which romanizes them with the vowels Arabic doesn't write.",
   "lyricsSettingsGroup": "Lyrics",
+  "lyricsSettingsLLMCustom": "Custom",
+  "lyricsSettingsLLMKey": "API key",
+  "lyricsSettingsLLMKeyDesc": "Kept in the system's credential store, and sent only to the server above. A server on this computer, as Ollama's, needs none.",
+  "lyricsSettingsLLMKeyForget": "Forget",
+  "lyricsSettingsLLMKeyKept": "Kept — type to replace it",
+  "lyricsSettingsLLMKeyNone": "None",
+  "lyricsSettingsLLMModel": "Model",
+  "lyricsSettingsLLMModelDesc": "The model the server translates with, by its name there. Until one is named, Unison translates.",
+  "lyricsSettingsLLMURL": "Server",
+  "lyricsSettingsLLMURLDesc": "The base URL of a server that speaks OpenAI's chat completions: https, or http on this computer.",
+  "lyricsSettingsLLMURLInvalid": "That isn't a server MixMusic can send the key to: give a URL of https, or of http on this computer, as http://localhost:11434/v1.",
   "lyricsSettingsSystemLanguage": "System language ({language})",
   "@lyricsSettingsSystemLanguage": {
     "placeholders": {
@@ -3111,6 +3122,8 @@
     }
   },
   "lyricsSettingsTranslate": "Translate lyrics to",
+  "lyricsSettingsTranslateWith": "Translate with",
+  "lyricsSettingsTranslateWithDesc": "Unison has Google translate the lyrics, free and with no key. A language model translates them on a server you choose, with your key, or on this computer, as Ollama does: while the translate switch is on, the lines of the lyrics, their language and the language they translate to go to that server alone, without the video ID.",
   "lyricsShareChosen": "{count, plural, one {# line chosen.} other {# lines chosen.}}",
   "@lyricsShareChosen": {
     "placeholders": {

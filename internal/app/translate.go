@@ -165,8 +165,8 @@ func (t *translations) resume() {
 
 // TranslateLyrics returns the translation of a track's lyrics into the
 // language to, a code of ISO 639-1, with their romanization: the one kept
-// on disk when there is one, else Unison's, which it then keeps. Unison
-// gets the lines of the lyrics, their language when known, and the
+// on disk when there is one, else that of the user's language model, when
+// they chose one, or Unison's, which it then keeps. Unison gets the lines of the lyrics, their language when known, and the
 // track's video ID when MixMusic knows it.
 //
 // After Unison said its translation was rate limited, it isn't asked
@@ -177,15 +177,30 @@ func (c *Catalog) TranslateLyrics(ctx context.Context, track media.Track, l lyri
 	for i, line := range l.Lines {
 		lines[i] = line.Text
 	}
+	// The user's language model, when they chose one, in place of Unison:
+	// its translations are kept apart, by its server and model.
+	// Clean, a hand-edited URL of plain http elsewhere is dropped: the key
+	// goes with each request.
+	set := c.a.settings.Get().Clean().Translation
 	key := translationKey(track.ID, to, lines)
+	if set.LLM() {
+		key = translationKey(track.ID, to+"\x00"+set.LyricsLLMURL+"\x00"+set.LyricsLLMModel, lines)
+	}
 	if tr, ok := c.a.translations.get(key, len(lines)); ok {
 		return tr, nil
 	}
-	if !c.a.translations.ready() {
-		return lyrics.Translation{}, translationError{errHeldOff}
+	var tr lyrics.Translation
+	var err error
+	if set.LLM() {
+		llm := lyrics.LLM{URL: set.LyricsLLMURL, Model: set.LyricsLLMModel, Key: c.a.llm.load()}
+		tr, err = llm.Translate(ctx, lines, to, l.Language)
+	} else {
+		if !c.a.translations.ready() {
+			return lyrics.Translation{}, translationError{errHeldOff}
+		}
+		tr, err = c.a.unison.Translate(ctx, lines, to, l.Language, c.videoID(track))
+		c.a.translations.answered(err)
 	}
-	tr, err := c.a.unison.Translate(ctx, lines, to, l.Language, c.videoID(track))
-	c.a.translations.answered(err)
 	if err != nil {
 		log.Printf("mixmusic: the translation of the lyrics of %s: %v", track.ID, err)
 		return lyrics.Translation{}, translationError{err}

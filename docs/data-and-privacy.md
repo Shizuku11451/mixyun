@@ -116,7 +116,7 @@ AppImage or archive copy's.
 - `releases.json`: the releases of the last year of the artists you
   follow, for [New from artists you follow](library.md#new-releases).
 - `lyrics-translations/`: the translations of lyrics you turned on, by
-  track and language.
+  track and language, and by server and model for a language model's.
 - `lyrics-timing.json`: where the songs of the music videos you played
   start in them, and how fast they play there, for
   [their lyrics](lyrics.md#music-videos), kept 180 days, and the videos
@@ -145,8 +145,9 @@ AppImage or archive copy's.
 
 ### Sign-ins
 
-Your Spotify sign-in, your Last.fm and ListenBrainz connections and the key
-of your YouTube Music session are in the system's credential store, which encrypts them
+Your Spotify sign-in, your Last.fm and ListenBrainz connections, the key
+of your YouTube Music session and the API key of the language model that
+translates lyrics, if you gave one, are in the system's credential store, which encrypts them
 for your account. MixMusic never sees your passwords: you sign in on
 Google's, Spotify's and Last.fm's own pages. Signing in to YouTube Music
 [with your browser](accounts.md#sign-in-with-your-browser) opens it with
@@ -157,11 +158,11 @@ Where the credential store can't keep a secret:
 
 - **On Windows**, as in a session without credentials, the secret is
   encrypted for your Windows account with DPAPI, in
-  `spotify-token.dpapi`, `lastfm.dpapi`, `listenbrainz.dpapi` or
-  `youtube-session-key.dpapi` in the data folder.
+  `spotify-token.dpapi`, `lastfm.dpapi`, `listenbrainz.dpapi`,
+  `youtube-session-key.dpapi` or `lyrics-llm-key.dpapi` in the data folder.
 - **On Linux without a Secret Service**, the secrets are in files only
   your user can read: `spotify-token.json`, `lastfm.json`,
-  `listenbrainz.json` and `youtube-session.json`.
+  `listenbrainz.json`, `youtube-session.json` and `lyrics-llm-key.json`.
 - Once the store can keep them, MixMusic moves them into it, and deletes
   the files.
 
@@ -188,6 +189,7 @@ Where the credential store can't keep a secret:
 | Lyrics, the same way, and the transcript of a podcast episode | YouTube (`www.youtube.com`), signed out | the video ID of the track that plays, or of its recording there, for its captions |
 | Lyrics of a track on this computer | the sources on, but YouTube captions | its title, artists, album and length, as its tags tell, unless they name no artist; never its file |
 | Translate, or romanized Arabic, while it's on beside the lyrics | Unison, which has Google translate them | the lyrics of the track that plays, with its video ID |
+| Translate, while it's on beside the lyrics, with a language model chosen in Settings › Playback › Lyrics › Translate with | the server you chose, as OpenAI's, or Ollama on this computer | the lines of the lyrics of the track that plays, their language, the language they translate to and the instructions MixMusic writes, with your API key; no video ID |
 | Romaji, the first time you turn it on | GitHub | a download of the dictionary of kanji readings; the lyrics stay on your computer |
 | Last.fm, once you connect it | Last.fm | the title, artists, album and length of what you play, and when; with Send likes as loves on, the songs you like and unlike |
 | ListenBrainz, once you connect it | ListenBrainz (`api.listenbrainz.org`), or the server you name | the title, first artist, album and length of what you play, and when, that MixMusic sent it, and for YouTube Music and Spotify tracks the service, the track's page, and Spotify's address and the ISRC where known; with Send likes as loves on, the songs you like and unlike, and the title, artist and album of a song looked up for its love |

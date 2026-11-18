@@ -2,8 +2,11 @@ package settings
 
 import (
 	"math"
+	"net"
+	"net/url"
 	"regexp"
 	"slices"
+	"strings"
 )
 
 // The ways of showing lyrics in Latin letters (LyricsRomanize).
@@ -184,12 +187,49 @@ type Translation struct {
 	// LyricsTranslateTo is the language lyrics translate to, a code of ISO
 	// 639-1; "" is the system's.
 	LyricsTranslateTo string `json:"lyricsTranslateTo"`
+	// LyricsLLMURL is the server of the language model that translates
+	// lyrics in place of Unison: its base URL, as
+	// "https://api.openai.com/v1", of a server that speaks OpenAI's chat
+	// completions; "" leaves translations to Unison. Its API key is kept in
+	// the system's credential store.
+	LyricsLLMURL string `json:"lyricsLlmUrl"`
+	// LyricsLLMModel is the model LyricsLLMURL translates with, as
+	// "gpt-4o-mini".
+	LyricsLLMModel string `json:"lyricsLlmModel"`
 }
 
-// clean is t with the system's language in place of one that isn't one.
+// LLM tells whether a language model translates lyrics.
+func (t Translation) LLM() bool { return t.LyricsLLMURL != "" && t.LyricsLLMModel != "" }
+
+// LLMURL tells whether raw can be the server of a language model: a URL
+// of https, or of http on this computer only (as Ollama's), since the API
+// key goes with each request.
+func LLMURL(raw string) bool {
+	u, err := url.Parse(raw)
+	if err != nil || u.Host == "" {
+		return false
+	}
+	switch u.Scheme {
+	case "https":
+		return true
+	case "http":
+		h := u.Hostname()
+		ip := net.ParseIP(h)
+		return h == "localhost" || ip != nil && ip.IsLoopback()
+	}
+	return false
+}
+
+// clean is t with the system's language in place of one that isn't one,
+// and no language model on a server the key can't go to.
 func (t Translation) clean() Translation {
 	if !languageRe.MatchString(t.LyricsTranslateTo) {
 		t.LyricsTranslateTo = ""
 	}
+	t.LyricsLLMURL = strings.TrimSpace(t.LyricsLLMURL)
+	if !LLMURL(t.LyricsLLMURL) {
+		t.LyricsLLMURL = ""
+	}
+	t.LyricsLLMModel = strings.TrimSpace(t.LyricsLLMModel)
 	return t
 }

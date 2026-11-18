@@ -11196,6 +11196,116 @@ func (msgs Messages) LyricsSettingsGroup() string {
 	return Catalog.Format(msgs.locale, "lyricsSettingsGroup", nil)
 }
 
+// LyricsSettingsLLMCustom says "Custom"
+// in the language the app shows.
+func LyricsSettingsLLMCustom() string { return In(i18n.Locale()).LyricsSettingsLLMCustom() }
+
+// LyricsSettingsLLMCustom says "Custom"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMCustom() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMCustom", nil)
+}
+
+// LyricsSettingsLLMKey says "API key"
+// in the language the app shows.
+func LyricsSettingsLLMKey() string { return In(i18n.Locale()).LyricsSettingsLLMKey() }
+
+// LyricsSettingsLLMKey says "API key"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMKey() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMKey", nil)
+}
+
+// LyricsSettingsLLMKeyDesc says "Kept in the system's credential store, and sent only to the server above. A server on this computer, as Ollama's, nee…"
+// in the language the app shows.
+func LyricsSettingsLLMKeyDesc() string { return In(i18n.Locale()).LyricsSettingsLLMKeyDesc() }
+
+// LyricsSettingsLLMKeyDesc says "Kept in the system's credential store, and sent only to the server above. A server on this computer, as Ollama's, nee…"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMKeyDesc() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMKeyDesc", nil)
+}
+
+// LyricsSettingsLLMKeyForget says "Forget"
+// in the language the app shows.
+func LyricsSettingsLLMKeyForget() string { return In(i18n.Locale()).LyricsSettingsLLMKeyForget() }
+
+// LyricsSettingsLLMKeyForget says "Forget"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMKeyForget() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMKeyForget", nil)
+}
+
+// LyricsSettingsLLMKeyKept says "Kept — type to replace it"
+// in the language the app shows.
+func LyricsSettingsLLMKeyKept() string { return In(i18n.Locale()).LyricsSettingsLLMKeyKept() }
+
+// LyricsSettingsLLMKeyKept says "Kept — type to replace it"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMKeyKept() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMKeyKept", nil)
+}
+
+// LyricsSettingsLLMKeyNone says "None"
+// in the language the app shows.
+func LyricsSettingsLLMKeyNone() string { return In(i18n.Locale()).LyricsSettingsLLMKeyNone() }
+
+// LyricsSettingsLLMKeyNone says "None"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMKeyNone() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMKeyNone", nil)
+}
+
+// LyricsSettingsLLMModel says "Model"
+// in the language the app shows.
+func LyricsSettingsLLMModel() string { return In(i18n.Locale()).LyricsSettingsLLMModel() }
+
+// LyricsSettingsLLMModel says "Model"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMModel() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMModel", nil)
+}
+
+// LyricsSettingsLLMModelDesc says "The model the server translates with, by its name there. Until one is named, Unison translates."
+// in the language the app shows.
+func LyricsSettingsLLMModelDesc() string { return In(i18n.Locale()).LyricsSettingsLLMModelDesc() }
+
+// LyricsSettingsLLMModelDesc says "The model the server translates with, by its name there. Until one is named, Unison translates."
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMModelDesc() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMModelDesc", nil)
+}
+
+// LyricsSettingsLLMURL says "Server"
+// in the language the app shows.
+func LyricsSettingsLLMURL() string { return In(i18n.Locale()).LyricsSettingsLLMURL() }
+
+// LyricsSettingsLLMURL says "Server"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMURL() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMURL", nil)
+}
+
+// LyricsSettingsLLMURLDesc says "The base URL of a server that speaks OpenAI's chat completions: https, or http on this computer."
+// in the language the app shows.
+func LyricsSettingsLLMURLDesc() string { return In(i18n.Locale()).LyricsSettingsLLMURLDesc() }
+
+// LyricsSettingsLLMURLDesc says "The base URL of a server that speaks OpenAI's chat completions: https, or http on this computer."
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMURLDesc() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMURLDesc", nil)
+}
+
+// LyricsSettingsLLMURLInvalid says "That isn't a server MixMusic can send the key to: give a URL of https, or of http on this computer, as http://localho…"
+// in the language the app shows.
+func LyricsSettingsLLMURLInvalid() string { return In(i18n.Locale()).LyricsSettingsLLMURLInvalid() }
+
+// LyricsSettingsLLMURLInvalid says "That isn't a server MixMusic can send the key to: give a URL of https, or of http on this computer, as http://localho…"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMURLInvalid() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMURLInvalid", nil)
+}
+
 // LyricsSettingsSystemLanguage says "System language ({language})"
 // in the language the app shows.
 func LyricsSettingsSystemLanguage(language string) string {
@@ -11216,6 +11326,28 @@ func LyricsSettingsTranslate() string { return In(i18n.Locale()).LyricsSettingsT
 // in the language of msgs.
 func (msgs Messages) LyricsSettingsTranslate() string {
 	return Catalog.Format(msgs.locale, "lyricsSettingsTranslate", nil)
+}
+
+// LyricsSettingsTranslateWith says "Translate with"
+// in the language the app shows.
+func LyricsSettingsTranslateWith() string { return In(i18n.Locale()).LyricsSettingsTranslateWith() }
+
+// LyricsSettingsTranslateWith says "Translate with"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsTranslateWith() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsTranslateWith", nil)
+}
+
+// LyricsSettingsTranslateWithDesc says "Unison has Google translate the lyrics, free and with no key. A language model translates them on a server you choose…"
+// in the language the app shows.
+func LyricsSettingsTranslateWithDesc() string {
+	return In(i18n.Locale()).LyricsSettingsTranslateWithDesc()
+}
+
+// LyricsSettingsTranslateWithDesc says "Unison has Google translate the lyrics, free and with no key. A language model translates them on a server you choose…"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsTranslateWithDesc() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsTranslateWithDesc", nil)
 }
 
 // LyricsShareChosen says "{count, plural, one {# line chosen.} other {# lines chosen.}}"

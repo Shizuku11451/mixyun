@@ -83,6 +83,8 @@
   "cacheSizeMb": 1024,
   "movingCoversMb": 256,
   "lyricsTranslateTo": "",
+  "lyricsLlmUrl": "",
+  "lyricsLlmModel": "",
   "downloadsFolder": "",
   "downloadOnMetered": false,
   "downloadAdded": true,
