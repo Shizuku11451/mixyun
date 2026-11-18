@@ -11588,11 +11588,21 @@ func (msgs Messages) LyricsSettingsGroup() string {
 	return Catalog.Format(msgs.locale, "lyricsSettingsGroup", nil)
 }
 
-// LyricsSettingsLLMDesc says "Lyrics without a translation of their own (NetEase Cloud Music's) are translated by the language model you choose, in…"
+// LyricsSettingsLLMCustom says "Custom"
+// in the language the app shows.
+func LyricsSettingsLLMCustom() string { return In(i18n.Locale()).LyricsSettingsLLMCustom() }
+
+// LyricsSettingsLLMCustom says "Custom"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsLLMCustom() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsLLMCustom", nil)
+}
+
+// LyricsSettingsLLMDesc says "Lyrics without a translation of their own (NetEase Cloud Music's) are translated by Unison, or by a language model yo…"
 // in the language the app shows.
 func LyricsSettingsLLMDesc() string { return In(i18n.Locale()).LyricsSettingsLLMDesc() }
 
-// LyricsSettingsLLMDesc says "Lyrics without a translation of their own (NetEase Cloud Music's) are translated by the language model you choose, in…"
+// LyricsSettingsLLMDesc says "Lyrics without a translation of their own (NetEase Cloud Music's) are translated by Unison, or by a language model yo…"
 // in the language of msgs.
 func (msgs Messages) LyricsSettingsLLMDesc() string {
 	return Catalog.Format(msgs.locale, "lyricsSettingsLLMDesc", nil)
@@ -11638,11 +11648,11 @@ func (msgs Messages) LyricsSettingsLLMModel() string {
 	return Catalog.Format(msgs.locale, "lyricsSettingsLLMModel", nil)
 }
 
-// LyricsSettingsLLMURL says "Translate with a language model"
+// LyricsSettingsLLMURL says "Server"
 // in the language the app shows.
 func LyricsSettingsLLMURL() string { return In(i18n.Locale()).LyricsSettingsLLMURL() }
 
-// LyricsSettingsLLMURL says "Translate with a language model"
+// LyricsSettingsLLMURL says "Server"
 // in the language of msgs.
 func (msgs Messages) LyricsSettingsLLMURL() string {
 	return Catalog.Format(msgs.locale, "lyricsSettingsLLMURL", nil)
@@ -11678,6 +11688,16 @@ func LyricsSettingsTranslate() string { return In(i18n.Locale()).LyricsSettingsT
 // in the language of msgs.
 func (msgs Messages) LyricsSettingsTranslate() string {
 	return Catalog.Format(msgs.locale, "lyricsSettingsTranslate", nil)
+}
+
+// LyricsSettingsTranslateWith says "Translate with"
+// in the language the app shows.
+func LyricsSettingsTranslateWith() string { return In(i18n.Locale()).LyricsSettingsTranslateWith() }
+
+// LyricsSettingsTranslateWith says "Translate with"
+// in the language of msgs.
+func (msgs Messages) LyricsSettingsTranslateWith() string {
+	return Catalog.Format(msgs.locale, "lyricsSettingsTranslateWith", nil)
 }
 
 // LyricsShareChosen says "{count, plural, one {# line chosen.} other {# lines chosen.}}"
