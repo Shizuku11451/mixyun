@@ -1,6 +1,8 @@
 package main
 
 import (
+	"time"
+
 	"github.com/egoist/mygo/ui"
 
 	"github.com/fzn0x/mixmusic/locales"
@@ -122,12 +124,14 @@ func (s *shell) coverBackdrop(c *ui.Context) {
 func (s *shell) visualizer(c *ui.Context, size float32) {
 	k := &s.lk
 	ui.Box(c).Absolute().Left(0).Bottom(0).Size(size, size/3).PassThrough().Label(locales.NowPlayingVisualizer()).Draw(func(p *ui.Painter, r ui.Rect) {
-		p.AnimationFrame()
 		bins := s.svc.Player.NativeAnalyser(false, false).Bytes
 		const bars = 48
 		if len(bins) < bars {
+			// Nothing heard here: look again in a second rather than at every frame.
+			p.After(time.Second)
 			return
 		}
+		p.AnimationFrameRate(60) // bars look as smooth at 60 as at 120 Hz, for half the frames
 		w := r.W / bars
 		for i := range bars {
 			// The lower bins carry the music: spread them over the bars.
