@@ -29,7 +29,7 @@ func TestDiscordStatusRows(t *testing.T) {
 	show(s, tt, "/settings/desktop")
 	var above float32
 	for _, text := range []string{"Show what plays on Discord", "Discord application ID", "Preview", "First line", "Second line",
-		"Cover", "Service badge", "Time left", "Listen button", "Keep while paused", "Start at login"} {
+		"Cover", "Service badge", "Time left", "Listen button", "Keep while paused"} {
 		r, ok := tt.Find(text)
 		if !ok || r.Y <= above {
 			t.Fatalf("Settings › Desktop shows %q out of place: %q", text, tt.Texts())

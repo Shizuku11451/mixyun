@@ -21,7 +21,7 @@ func lyricsSourcesShell(t *testing.T) (*shell, *ui.Tester) {
 	t.Helper()
 	s := newTestShell(t)
 	tt := testerOf(t, s, 1280, 1400)
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/lyrics")
 	if !reveal(tt, "Better Lyrics, on") || !reveal(tt, "YouTube captions, on") {
 		t.Fatalf("Settings › Playback lists no sources of lyrics: %q", tt.Texts())
 	}

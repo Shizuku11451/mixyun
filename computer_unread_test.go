@@ -30,7 +30,7 @@ func TestComputerUnreadFolder(t *testing.T) {
 	localfilestest.DenyRead(t, filepath.Join(music, "Ada Field", "Kites"))
 	rescanned(t, s)
 	tt := testerOf(t, s, 1280, 4000)
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/storage")
 	for _, want := range []string{music, "6 tracks", "1 folder in it can't be read: its tracks stay as they were"} {
 		if !tt.HasText(want) {
 			t.Errorf("no %q in Settings: %q", want, tt.Texts())

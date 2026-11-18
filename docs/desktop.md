@@ -122,7 +122,7 @@ opens the menu.
 
 ### Close to the tray
 
-With **Close to the tray** on, in Settings › Desktop, closing the main
+With **Close to the tray** on, in Settings › General, closing the main
 window keeps the music playing: MixMusic hides in the tray until you show
 it again from the tray icon, by starting MixMusic again, or with a global
 shortcut of your own for **Show MixMusic**. It is off on a new install, so
@@ -296,7 +296,7 @@ application of your own shows them as MixMusic's does.
 
 ## Start at login
 
-**Start at login**, in Settings › Desktop, starts MixMusic when you sign in
+**Start at login**, in Settings › General, starts MixMusic when you sign in
 to your computer, with its window hidden in the tray, from where the tray
 icon shows it. In the Flatpak, it goes through your desktop's background
 portal, which may ask you first.

@@ -3,7 +3,7 @@
 
 MixMusic plays Spotify tracks three ways: in MixMusic through Spotify's own player, on Spotify Connect, or from their recording on YouTube Music.
 
-You choose the way in Settings › Playback › Spotify tracks. Each needs a
+You choose the way in Settings › Content › Spotify tracks. Each needs a
 Spotify sign-in, made with a Spotify app of your own:
 [Spotify](spotify.md) walks you through it, and tells what to do when
 Spotify refuses the sign-in. For the code, read
@@ -86,12 +86,12 @@ or macOS.
   plays this way, and closes when you sign in again or change the
   setting.
 - **Your sign-in.** Playing Spotify in MixMusic needs a permission that
-  sign-ins made before 0.5.0 lack: Settings › Playback asks you to sign in
+  sign-ins made before 0.5.0 lack: Settings › Content asks you to sign in
   again, and until you do, Spotify tracks play from YouTube Music.
 - **The sound.** Spotify's player plays at your volume, on the same curve
   as MixMusic's own, on the system's default device: the
   [output device](playing-music.md#the-output-device) chosen in Settings ›
-  Playback doesn't reach it, as the web view plays it where the system
+  Audio › Output doesn't reach it, as the web view plays it where the system
   does. The equalizer, crossfade, Even loudness and speed don't reach it
   either: Spotify keeps its own loudness and speed. On Windows 10
   build 20348 and later, the visualizer hears it through Windows' process
@@ -126,7 +126,7 @@ A Spotify device plays the track: the Spotify app on this computer, your
 phone, a speaker or a TV. It needs Spotify Premium, and a device with
 Spotify open.
 
-- **Which device.** Settings › Playback › Spotify tracks › Device, or the
+- **Which device.** Settings › Content › Spotify tracks › Device, or the
   devices button of the player bar, chooses it; by default, the active
   device. Open Spotify on a device for it to show there.
 - **How MixMusic follows it.** MixMusic sends the device commands through
@@ -156,7 +156,7 @@ and from YouTube Music the track is YouTube Music's recording.
 
 To listen in lossless:
 
-1. In Settings › Playback › Spotify tracks, choose **On Spotify Connect**,
+1. In Settings › Content › Spotify tracks, choose **On Spotify Connect**,
    and open the Spotify app, on this computer or another device.
 2. Turn Lossless on there:
    - **In the Spotify app on a computer, phone or tablet**: choose your
@@ -169,7 +169,7 @@ To listen in lossless:
 Lossless doesn't cover music videos, podcasts or audiobooks, and a weak
 connection, Bluetooth or a device without lossless can play it lossy.
 [Spotify's help](https://support.spotify.com/article/lossless-audio-quality/)
-tells more. Settings › Playback › Spotify tracks tells the same, under the
+tells more. Settings › Content › Spotify tracks tells the same, under the
 three ways.
 
 ## Premium and development mode

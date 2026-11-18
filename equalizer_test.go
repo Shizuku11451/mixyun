@@ -12,7 +12,7 @@ import (
 func TestEqualizerNote(t *testing.T) {
 	s := newTestShell(t)
 	tt := testerOf(t, s, 1280, 2400)
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/audio")
 	for _, want := range []string{"works only on YouTube Music and NetEase Cloud Music", "use a system-wide equalizer", "Spotify notes"} {
 		if !tt.HasText(want) {
 			t.Errorf("the equalizer doesn't say %q", want)
@@ -31,7 +31,7 @@ func TestEqualizerPreset(t *testing.T) {
 		s := newTestShell(t)
 		s.set.Equalizer.Preset = c.preset
 		tt := testerOf(t, s, 1280, 2400)
-		show(s, tt, "/settings/playback")
+		show(s, tt, "/settings/audio")
 		if !tt.HasText(c.shows) {
 			t.Errorf("with the preset %q, the box doesn't show %q", c.preset, c.shows)
 		}
@@ -49,7 +49,7 @@ func TestEqualizerSliders(t *testing.T) {
 	// Tall enough for the sliders to show whole above the player bar,
 	// under the groups of Playback before them.
 	tt := testerOf(t, s, 1280, 3600)
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/audio")
 	img := tt.Image()
 	near := func(c color.Color, want color.NRGBA) bool {
 		r, g, b, _ := c.RGBA()

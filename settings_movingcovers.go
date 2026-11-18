@@ -6,9 +6,9 @@ import (
 	"github.com/fzn0x/mixmusic/locales"
 )
 
-func init() { addSettings("playback", 42, (*shell).movingCoverSettings) }
+func init() { addSettings("content", 50, (*shell).movingCoverSettings) }
 
-// movingCoverSettings play the covers that move, in Settings › Playback,
+// movingCoverSettings play the covers that move, in Settings › Content,
 // beside the picture of music videos (movingcover.go).
 func (s *shell) movingCoverSettings(c *ui.Context) {
 	s.group(c, locales.MovingCoversGroup(), func() {

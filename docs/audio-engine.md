@@ -102,7 +102,7 @@ time, at most 40 ms ahead of the device. After a second of silence, as
 when you pause, it lets the device go, so that the computer can sleep.
 
 [The output device](playing-music.md#the-output-device) of Settings ›
-Playback has it play on another device. It plays there while the device
+Audio › Output has it play on another device. It plays there while the device
 is there, and checks every second that it still is: once it's gone, the
 engine plays on the default device and says so, and once it's back, the
 engine plays there again. What the device held, 40 ms at most, is
@@ -120,7 +120,7 @@ chosen as it does on the default one.
 - **macOS:** an Audio Queue of Core Audio on the default output. A 5.1
   queue tells Core Audio its channel layout, which maps the channels to
   your speakers. The devices are Core Audio's devices with output
-  channels that Sound settings shows, and a device chosen gets a queue of
+  channels that Output settings shows, and a device chosen gets a queue of
   its own, by its UID.
 - **Linux:** PulseAudio's simple API, which PipeWire serves too, or else
   ALSA's default device. PulseAudio and PipeWire move the stream when the
@@ -139,7 +139,7 @@ while MixMusic runs.
 
 ## Even loudness
 
-Settings › Playback › Sound › Even loudness, on by default, turns loud
+Settings › Audio › Output › Even loudness, on by default, turns loud
 tracks down to one level, so that none jumps out.
 
 - **Where the measure comes from.** YouTube measures the loudness of each
@@ -167,7 +167,7 @@ of 250 ms, the settings of the web player MixMusic had.
 
 **The volume slider** has even steps of loudness: each tenth of it is
 6 dB, down to -40 dB, and one press of the volume keys is about 3 dB.
-That is the Natural curve of Settings › Playback › Volume, the default.
+That is the Natural curve of Settings › Playback › Advanced › Volume, the default.
 On Linear, the gain is the slider's position itself, so that its middle
 is -6 dB, where Natural's is -30 dB. Spotify's own player in MixMusic
 plays at the gain of the same curve, and a Spotify Connect device gets
@@ -178,7 +178,7 @@ on Natural, whatever the curve.
 
 ## The equalizer
 
-Settings › Playback › Equalizer has ten bands and a preamp, each from
+Settings › Audio › Equalizer has ten bands and a preamp, each from
 -12 dB to +12 dB in steps of half a decibel. The lowest band, 32 Hz, is a
 low shelf, the highest, 16 kHz, a high shelf, and the eight between are
 peaking filters at 64, 125, 250, 500 Hz and 1, 2, 4 and 8 kHz, with a Q of
@@ -257,7 +257,7 @@ button is dimmed for them.
 Some tracks on YouTube Music have a 5.1 surround mix beside their stereo
 one, in AC-3 or E-AC-3. While one plays, a 5.1 button shows by the player,
 which plays the surround mix from where the stereo one was. "Play 5.1
-surround when a track has it", in Settings › Playback › Sound and off by
+surround when a track has it", in Settings › Audio › Output and off by
 default, keeps the choice for later tracks. Finding the mix takes yt-dlp
 and a JavaScript runtime: [where the audio comes from](streams.md#surround-mixes-and-what-they-need)
 tells why.
@@ -342,7 +342,7 @@ the visualizer draws nothing, and the log says why.
 
 ## The offline cache
 
-Settings › Playback › Offline cache keeps the tracks you played, so that
+Settings › Storage › Offline cache keeps the tracks you played, so that
 they play again without the network.
 
 - **What goes in.** Each track whose whole audio came, as one you played

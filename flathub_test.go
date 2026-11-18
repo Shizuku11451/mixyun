@@ -40,7 +40,7 @@ func TestBundledYTDLPRow(t *testing.T) {
 	y := tools.Tool{Found: true, Name: "yt-dlp", Path: "/app/bin/yt-dlp", Version: "2026.10.26", Bundled: true}
 	s.loads["tools"] = &loaded[tools.Status]{done: true, value: tools.Status{YTDLP: y}}
 	tt := testerOf(t, s, 1280, 2400)
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/storage")
 	if want := "yt-dlp 2026.10.26 at /app/bin/yt-dlp, which comes with Mixyun and updates with it"; !tt.HasText(want) {
 		t.Errorf("Settings doesn't say %q: %q", want, tt.Texts())
 	}

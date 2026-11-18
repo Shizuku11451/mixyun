@@ -6,7 +6,7 @@ import (
 	"github.com/fzn0x/mixmusic/locales"
 )
 
-func init() { addSettings(soundRows, 80, (*shell).skipDislikedRow) }
+func init() { addSettings(skipRows, 20, (*shell).skipDislikedRow) }
 
 // skipDislikedRow skips the songs the user dislikes, in Settings ›
 // Playback › Sound, and tells where dislikes go.

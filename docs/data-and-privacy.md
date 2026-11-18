@@ -97,10 +97,10 @@ AppImage or archive copy's.
 ### The cache folder
 
 - `audio/`: the offline cache, the tracks you played, as much as
-  Settings › Playback › Offline cache allows (1 GB by default).
+  Settings › Storage › Offline cache allows (1 GB by default).
 - `artwork/`: the covers you saw, up to 256 MB.
 - `moving-covers/`: the clips of albums' moving covers that played, as
-  much as Settings › Playback › Offline cache allows (256 MB by default),
+  much as Settings › Storage › Offline cache allows (256 MB by default),
   and which albums have one, once a source of them is chosen.
 - `local-art/`: a copy of the covers of the music on this computer, which
   a file holds or that is beside it, by its hash.
@@ -180,7 +180,7 @@ Where the credential store can't keep a secret:
 | Covers | the image servers of YouTube, Google and Spotify | the image asked for |
 | Spotify, once you sign in | Spotify (`accounts.spotify.com`, `api.spotify.com`) | what you search and open, your library's changes, and the commands of what plays |
 | Spotify in MixMusic | Spotify's player, loaded from `sdk.scdn.co` | what Spotify's own player sends |
-| Lyrics, from the [sources](lyrics.md#choose-and-order-the-sources) on in Settings › Playback › Lyrics, one at a time in their order, until one has synced lyrics | Better Lyrics (`api.betterlyrics.org`) | the title, first artist, album and length of the track that plays, once it has an album and a length |
+| Lyrics, from the [sources](lyrics.md#choose-and-order-the-sources) on in Settings › Lyrics › Lyrics, one at a time in their order, until one has synced lyrics | Better Lyrics (`api.betterlyrics.org`) | the title, first artist, album and length of the track that plays, once it has an album and a length |
 | Lyrics, the same way | Unison (`unison.betterlyrics.org`) | the video ID of the track that plays, or, without one, its title, artists, album and length |
 | Lyrics, the same way | LRCLIB (`lrclib.net`) | the title, artists, album and length of the track that plays; of a music video, its song's |
 | [Lyrics timed to a music video](lyrics.md#music-videos), while "Time lyrics to music videos" is on | YouTube's player API (`www.youtube.com`) and media servers, signed out | the video IDs of the music video and of its song, once a video, for stretches of their audio: of the song, only those compared. No play is reported |
@@ -198,7 +198,7 @@ Where the credential store can't keep a secret:
 | Listen with friends, while you host a room | each guest's MixMusic, on your network, or over the internet while you let friends outside it join, encrypted, once it proved the code or the link | your name in rooms, what plays, where it is and its volume, and up to 1,000 tracks of the queue, with the tags of your music files, never their paths or their audio; before a guest joins, who hosts, what plays and how many listen; the room's announcement tells your name in rooms to the whole network |
 | Listen with friends, while you're in a room | the host's MixMusic, on your network, or over the internet at the address its link names, encrypted | your name in rooms, and when each track is ready |
 | Listen with friends, while you let friends outside your network join | your router | a request to forward one TCP port, the room's, to your computer, by UPnP, NAT-PMP or PCP, and to let it in at your IPv6 address, renewed while the room lasts and removed as it ends; your invite link, which anyone it reaches can read, carries your router's internet address and the room's port, and your computer's IPv6 address, a temporary one, never one made of its hardware address, or the address you typed for invites in their place |
-| Checks for updates, unless you turn them off in Settings › About | GitHub | a request for the newest release, and its download when you install it |
+| Checks for updates, unless you turn them off in Settings › General | GitHub | a request for the newest release, and its download when you install it |
 | yt-dlp, when you install or update it | GitHub | a request for the version of yt-dlp's latest release, from its page or GitHub's API, and a download of it |
 | The marketplace, when you open it | GitHub | a download of the registry, and of the add-ons you install |
 | Knowing whether the network answers | YouTube and Spotify | a request over HTTPS for an empty answer |
@@ -231,13 +231,13 @@ Where the credential store can't keep a secret:
 
 - **Your history:** the library's history page clears what you played,
   and the plays the stats count.
-- **The cache:** Settings › Playback › Offline cache › Clear tracks and
+- **The cache:** Settings › Storage › Offline cache › Clear tracks and
   Clear covers.
 - **A sign-in:** signing out of a service in Settings › Accounts deletes
   its sign-in.
-- **Your settings:** Settings › Desktop › Reset settings puts back the
+- **Your settings:** Settings › General › Advanced › Settings file puts back the
   settings of a new install. Your accounts, library and add-ons stay.
-- **The downloads:** Settings › Playback › Downloads › Folder moves them
+- **The downloads:** Settings › Storage › Downloads › Folder moves them
   to another folder, with what they hold.
 - **Everything:** sign out of each service, quit MixMusic, then delete
   the data, cache, logs and downloads folders above.

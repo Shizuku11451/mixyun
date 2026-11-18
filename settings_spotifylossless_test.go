@@ -20,7 +20,7 @@ func TestSpotifyLosslessHint(t *testing.T) {
 			t.Fatal(err)
 		}
 		s.refresh()
-		show(s, tt, "/settings/playback")
+		show(s, tt, "/settings/content")
 		hint := spotifyLossless(mode)
 		if !tt.HasText(hint) {
 			t.Errorf("%s: Settings › Playback doesn't tell %q: %q", mode, hint, tt.Texts())

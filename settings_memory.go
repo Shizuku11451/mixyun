@@ -1,6 +1,6 @@
 package main
 
-// Settings › About › Memory use (#384): Record memory use, which is off at
+// Settings › About › Advanced › Memory use (#384): Record memory use, which is off at
 // each start, and while it's on, Save a heap profile. internal/app's
 // memory.go keeps them in the logs folder.
 
@@ -10,10 +10,10 @@ import (
 	"github.com/fzn0x/mixmusic/locales"
 )
 
-func init() { addSettings("about", 15, (*shell).memorySettings) }
+func init() { addSettings(advancedOf("about"), 10, (*shell).memorySettings) }
 
 // memorySettings record how MixMusic uses its memory, for a report of a
-// problem: Settings › About › Memory use.
+// problem: Settings › About › Advanced › Memory use.
 func (s *shell) memorySettings(c *ui.Context) {
 	sys := s.svc.System
 	s.group(c, locales.MemoryUse(), func() {

@@ -18,7 +18,7 @@ import (
 func TestMovingClipsRows(t *testing.T) {
 	none := newTestShell(t)
 	nt := testerOf(t, none, 1280, 4000)
-	show(none, nt, "/settings/playback")
+	show(none, nt, "/settings/storage")
 	if nt.HasText("Moving covers kept") || nt.HasText("Size of moving covers") {
 		t.Error("the clips' rows show with no source of clips")
 	}
@@ -26,7 +26,7 @@ func TestMovingClipsRows(t *testing.T) {
 	s, tt, page, _ := clipShell(t)
 	framesUntil(t, s, tt, page, "mv.load(")
 	tt.SetSize(1280, 4000)
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/storage")
 	var above float32
 	for _, text := range []string{"Covers kept", "Moving covers kept", "Size of moving covers", "Cache size"} {
 		r, ok := tt.Find(text)

@@ -141,7 +141,7 @@ func (s *shell) podcastPage(c *ui.Context, id string) {
 		if p.Source == media.SourceSpotify && !s.svc.Catalog.SpotifyEpisodesPlay() {
 			ui.RichText(c).FontSize(k.smallSize()).TextColor(k.muted).Margin(0, 0, 16).Children(func() {
 				ui.Text(c, locales.PodcastsSpotifyOnlyLead())
-				s.linkOf(c, locales.PodcastsSettingsPlayback(), "/settings/playback")
+				s.linkOf(c, locales.PodcastsSettingsContent(), "/settings/content")
 				ui.Text(c, locales.PodcastsSpotifyOnlyTail())
 			})
 		}

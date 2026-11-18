@@ -175,7 +175,7 @@ func (s *shell) toasts(c *ui.Context) {
 	for _, n := range s.notes {
 		switch {
 		case n.Settings:
-			c.ToastAction(n.Message, locales.ShellToastSettings(), func() { s.navigate("/settings/playback") })
+			c.ToastAction(n.Message, locales.ShellToastSettings(), func() { s.navigate("/settings/content") })
 		case n.Undo != nil:
 			c.ToastAction(n.Message, locales.PlayerUndo(), n.Undo)
 		case n.Failure != 0:

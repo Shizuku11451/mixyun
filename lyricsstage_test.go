@@ -317,7 +317,7 @@ func TestStageKeyboardOpen(t *testing.T) {
 func TestLyricStyleSettings(t *testing.T) {
 	s := newTestShell(t)
 	tt := tester(t, s)
-	show(s, tt, "/settings/appearance")
+	show(s, tt, "/settings/lyrics")
 	// The tests wear the Tiles layout, whose words are lowercase.
 	for _, st := range lyricStyles {
 		if !tt.HasText(s.lk.words(st.title())) {
@@ -341,7 +341,7 @@ func TestLyricBallSwitch(t *testing.T) {
 	if !s.set.LyricsBall {
 		t.Fatal("the ball is off in a new install")
 	}
-	show(s, tt, "/settings/appearance")
+	show(s, tt, "/settings/lyrics")
 	click(t, s, tt, "Show the bouncing ball")
 	if s.set.LyricsBall {
 		t.Error("the switch leaves the ball on")
@@ -357,7 +357,7 @@ func TestLyricBallSwitch(t *testing.T) {
 func TestLyricPreview(t *testing.T) {
 	s := newTestShell(t)
 	tt := tester(t, s)
-	show(s, tt, "/settings/appearance")
+	show(s, tt, "/settings/lyrics")
 	if _, ok := tt.Find("Preview of the full-screen lyrics"); !ok {
 		t.Fatalf("Settings has no preview: %q", tt.Texts())
 	}
@@ -605,7 +605,7 @@ func TestStageRender(t *testing.T) {
 	s.stage.open = false
 	for _, id := range []settings.LyricStyle{settings.LyricStyleSpotlight, settings.LyricStyleGlow, settings.LyricStyleCalm} {
 		s.set.LyricsStyle = id
-		show(s, tt, "/settings/appearance")
+		show(s, tt, "/settings/lyrics")
 		reveal(tt, "Preview of the full-screen lyrics")
 		renderTo(t, s, tt, dir, "preview-"+string(id))
 	}

@@ -6,7 +6,7 @@ import (
 	"github.com/fzn0x/mixmusic/locales"
 )
 
-func init() { addSettings("playback", 45, (*shell).explicitContentSettings) }
+func init() { addSettings("content", 20, (*shell).explicitContentSettings) }
 
 // explicitRows are the rows of Settings › Playback › Explicit content,
 // which register from their features' files.

@@ -51,7 +51,7 @@ func eqPresetLabel(id string) string {
 	return locales.EqualizerPresetFlat()
 }
 
-func init() { addSettings("playback", 50, (*shell).equalizerSettings) }
+func init() { addSettings("audio", 20, (*shell).equalizerSettings) }
 
 // equalizerSettings shape the sound of what MixMusic plays itself.
 func (s *shell) equalizerSettings(c *ui.Context) {

@@ -224,11 +224,12 @@ func dialogCases(s *shell) []dialogCase {
 			open: func(t *testing.T, s *shell, tt *ui.Tester) {
 				st := s.svc.Preferences.Get()
 				st.Autoplay = false
+				st.AdvancedSettings = true
 				if _, err := s.svc.Preferences.Set(st); err != nil {
 					t.Fatal(err)
 				}
 				s.refresh()
-				show(s, tt, "/settings/desktop")
+				show(s, tt, "/settings/general")
 				s.resetting = true
 			},
 			// The page's button is reset too: Enter presses the dialog's,

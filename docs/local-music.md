@@ -10,7 +10,7 @@ with the equalizer, crossfade, speed and the visualizer of
 
 ## Add a folder
 
-Settings › Playback › Music on this computer, or the add a folder button of
+Settings › Storage › Music on this computer, or the add a folder button of
 Library › On this computer, opens your system's folder picker. MixMusic
 reads the folder and the folders in it, and keeps what it finds:
 

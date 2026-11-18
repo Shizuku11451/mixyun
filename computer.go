@@ -1,7 +1,7 @@
 package main
 
 // The music on this computer: Library › On this computer, its folders in
-// Settings › Playback, the files the user opens or drops on the window,
+// Settings › Storage, the files the user opens or drops on the window,
 // and its tracks as the lists show them, greyed once their file is gone.
 
 import (
@@ -76,7 +76,7 @@ func (s *shell) computerLibrary(c *ui.Context) {
 			} else {
 				ui.Text(c, locales.ComputerFromFolders(len(st.Folders)))
 			}
-			s.linkOf(c, k.sentence(locales.ComputerManage()), "/settings/playback")
+			s.linkOf(c, k.sentence(locales.ComputerManage()), "/settings/storage")
 		})
 	})
 	switch computerViews[page.view] {
@@ -184,9 +184,9 @@ func scanLine(st localfiles.Status) string {
 	return locales.ComputerScanReading(st.Read, st.Found)
 }
 
-func init() { addSettings("playback", 85, (*shell).computerSettings) }
+func init() { addSettings("storage", 30, (*shell).computerSettings) }
 
-// computerSettings are Settings › Playback › Music on this computer: the
+// computerSettings are Settings › Storage › Music on this computer: the
 // folders of music the library holds, with how many tracks each holds, how
 // many files MixMusic skipped and how many of the folders in it can't be
 // read, a way to add one, to remove one, and to read them again.

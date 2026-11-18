@@ -262,7 +262,7 @@ func TestTranslateTo(t *testing.T) {
 		t.Errorf("options = %q", options[:3])
 	}
 	tt := testerOf(t, s, 1280, 1800)
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/lyrics")
 	if !tt.HasText("Translate lyrics to") {
 		t.Fatalf("no setting: %q", tt.Texts())
 	}
@@ -283,7 +283,7 @@ func TestLyricsSettingsInBlend(t *testing.T) {
 	}
 	s.refresh()
 	tt := testerOf(t, s, 1280, 1800)
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/lyrics")
 	texts := tt.Texts()
 	if i := slices.Index(texts, "Translate lyrics to"); i < 1 || texts[i-1] != "Lyrics" {
 		t.Errorf("the group of Translate lyrics to isn't titled Lyrics: %q", texts)

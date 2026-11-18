@@ -41,14 +41,14 @@ its **details**. The keyboard reaches **details** in the toast with
   [Play audio as your account](playing-music.md#play-audio-as-your-account)
   plays those. The log says why too. The tracks MixMusic can't find the audio of itself, such as those
   made for children, [need yt-dlp](streams.md#when-yt-dlp-is-needed): check
-  Settings › Playback that it is installed, and a JavaScript runtime found. MixMusic updates the yt-dlp it
+  Settings › Storage › Tools that it is installed, and a JavaScript runtime found. MixMusic updates the yt-dlp it
   installed every day, as an old one stops finding streams; one of your
   own, chosen there, you keep up to date yourself (`yt-dlp -U`, or your
   package manager).
 - **The JavaScript runtime is not found.** Opened from the Finder, the Dock
   or a desktop menu, MixMusic does not get the `PATH` of your terminal. It
   also looks where Homebrew, Deno, Bun, Volta, Scoop and WinGet install;
-  elsewhere, choose the runtime in Settings › Playback.
+  elsewhere, choose the runtime in Settings › Storage › Tools.
 - **YouTube Music signed you out.** Settings › Accounts says so when YouTube
   [ends the session](accounts.md#when-youtube-ends-the-session), as it does
   when you sign out of Google everywhere or change your password. Sign out
@@ -75,7 +75,7 @@ its **details**. The keyboard reaches **details** in the toast with
 - **Spotify plays from YouTube Music, not in MixMusic.** Spotify
   [plays in MixMusic](spotify.md#how-spotify-tracks-play) on Windows and
   macOS, with Premium, and with a sign-in made since MixMusic played
-  Spotify itself: Settings › Playback asks you to sign in again when yours
+  Spotify itself: Settings › Content asks you to sign in again when yours
   is older.
 - **The visualizer stays flat for Spotify on a Mac.** It hears Spotify in
   MixMusic from macOS 14.2 on, once you allowed MixMusic to record what
@@ -94,9 +94,9 @@ its **details**. The keyboard reaches **details** in the toast with
   saves its settings in its place. A file that doesn't read as MixMusic
   starts is kept the same way, and MixMusic starts with the settings of a
   new install: see [Settings](settings.md#when-it-has-a-mistake).
-- **MixMusic takes too much memory.** Turn on Settings › About › Record
-  memory use, and use MixMusic as when it grew: it writes how it uses its
-  memory to `memory.log` each minute, and saves a heap profile once it
+- **MixMusic takes too much memory.** Turn on Settings › About › Advanced ›
+  Memory use › Record memory use, and use MixMusic as when it grew: it writes
+  how it uses its memory to `memory.log` each minute, and saves a heap profile once it
   passes 1 GB, or when you press save a heap profile. Report a problem
   then tells of them: attach them to the issue. They hold only how
   MixMusic uses its memory ([the logs folder](data-and-privacy.md#the-logs-folder)).

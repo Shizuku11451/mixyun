@@ -91,7 +91,7 @@ func (s *shell) toolProblems(c *ui.Context) {
 	}
 }
 
-func init() { addSettings("playback", 90, (*shell).toolSettings) }
+func init() { addSettings("storage", 40, (*shell).toolSettings) }
 
 // toolSettings show the tools MixMusic runs, and install yt-dlp.
 func (s *shell) toolSettings(c *ui.Context) {
@@ -179,9 +179,9 @@ func ownYTDLPHelp(flatpak bool) string {
 	return locales.ToolSettingsOwnHelp()
 }
 
-func init() { addSettings("playback", 70, (*shell).cacheSettings) }
+func init() { addSettings("storage", 20, (*shell).cacheSettings) }
 
-// cacheRows are the rows of Settings › Playback › Offline cache that
+// cacheRows are the rows of Settings › Storage › Offline cache that
 // register from their features' files, between the covers kept and the
 // cache's size.
 const cacheRows = "playback › Offline cache"

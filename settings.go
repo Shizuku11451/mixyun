@@ -13,17 +13,27 @@ import (
 )
 
 // settingsTabs are the settings' sections, by their paths' last part.
-var settingsTabs = []string{"appearance", "playback", "accounts", "plugins", "desktop", "shortcuts", "about"}
+var settingsTabs = []string{"general", "appearance", "playback", "audio", "lyrics", "content", "accounts", "storage", "desktop", "plugins", "shortcuts", "about"}
 
 // settingsTabName names a section of settingsTabs, in the language shown.
 func settingsTabName(tab string) string {
 	switch tab {
+	case "general":
+		return locales.SettingsTabGeneral()
 	case "appearance":
 		return locales.SettingsTabAppearance()
 	case "playback":
 		return locales.SettingsTabPlayback()
+	case "audio":
+		return locales.SettingsTabAudio()
+	case "lyrics":
+		return locales.SettingsTabLyrics()
+	case "content":
+		return locales.SettingsTabContent()
 	case "accounts":
 		return locales.SettingsTabAccounts()
+	case "storage":
+		return locales.SettingsTabStorage()
 	case "plugins":
 		return locales.SettingsTabPlugins()
 	case "desktop":
@@ -62,33 +72,129 @@ func (s *shell) settingsPage(c *ui.Context, tab, q string) {
 		for i, t := range settingsTabs {
 			names[i] = settingsTabName(t)
 		}
-		s.pageHeader(c, locales.SettingsTitle(), names, &pick)
+		// The sections list at the page's left where it has the room, and
+		// show as pivots over it where it hasn't.
+		side := s.paneWidth(c) >= settingsSideMin
+		if side {
+			s.pageHeader(c, locales.SettingsTitle(), nil, nil)
+		} else {
+			s.pageHeader(c, locales.SettingsTitle(), names, &pick)
+		}
+		s.findBox(c, tab, q, current)
+		body := func() {
+			ui.Column(c).Grow(1).MinWidth(0).MaxWidth(880).Children(func() {
+				s.settingsFileProblem(c)
+				if !f.on() {
+					s.sectionSettings(c, settingsTabs[selected])
+					if current {
+						f.reveal = "" // a group the section doesn't show
+					}
+					return
+				}
+				for _, t := range settingsTabs {
+					f.section = t
+					s.sectionSettings(c, t)
+				}
+				f.section = ""
+				if f.found == 0 {
+					s.emptyLine(c, locales.SettingsNoMatch(strings.TrimSpace(q)))
+				}
+			})
+		}
+		if side {
+			ui.Row(c).Gap(40).AlignItems(ui.Start).Children(func() {
+				s.settingsSections(c, names, &pick)
+				body()
+			})
+		} else {
+			body()
+		}
 		if pick != before {
 			s.router.Replace(settingsPath(settingsTabs[pick], ""))
 		}
-		s.findBox(c, tab, q, current)
-		ui.Column(c).MaxWidth(880).Children(func() {
-			s.settingsFileProblem(c)
-			if !f.on() {
-				s.settingsOf(c, settingsTabs[selected])
-				if current {
-					f.reveal = "" // a group the section doesn't show
-				}
-				return
-			}
-			for _, t := range settingsTabs {
-				f.section = t
-				s.settingsOf(c, t)
-			}
-			f.section = ""
-			if f.found == 0 {
-				s.emptyLine(c, locales.SettingsNoMatch(strings.TrimSpace(q)))
-			}
-		})
 		if current {
 			s.findTell(c)
 		}
 	})
+}
+
+// settingsSideMin is the narrowest pane the settings' sections list at
+// the page's left in.
+const settingsSideMin = 760
+
+// settingsSections lists the settings' sections, names, at the page's
+// left: the chosen one, *selected, filled.
+func (s *shell) settingsSections(c *ui.Context, names []string, selected *int) {
+	k := &s.lk
+	ui.Column(c).Width(184).Shrink(0).Gap(2).Role(ui.RoleTabList).Label(locales.SettingsTitle()).Children(func() {
+		for i, name := range names {
+			name := k.sentence(name)
+			b := s.buttonBase(c.Key("section-" + settingsTabs[i])).Role(ui.RoleTab).Label(name).AccessSelected(i == *selected).
+				Height(36).PaddingX(12).Radius(k.radiusSm).Cursor(ui.CursorPointer)
+			fill, ink := ui.Color{}, k.text.Alpha(0.75)
+			switch {
+			case i == *selected:
+				fill, ink = k.selected, k.selectedText
+			case b.Pressed():
+				fill, ink = k.surface3, k.text
+			case b.Hovered():
+				fill, ink = k.surface2, k.text
+			}
+			b.Background(fill)
+			if b.Clicked() {
+				*selected = i
+			}
+			b.Children(func() {
+				ui.Text(c, name).FontSize(k.bodySize()).TextColor(ink).SingleLine().MinWidth(0)
+			})
+		}
+	})
+}
+
+// advancedOf is the place of the groups of section that few change, which
+// fold under Advanced at its foot.
+func advancedOf(section string) string { return section + " › advanced" }
+
+// sectionSettings builds a section of the settings: its groups, then those
+// under Advanced, folded unless the user opened the fold. The search looks
+// through the folded groups too.
+func (s *shell) sectionSettings(c *ui.Context, section string) {
+	s.settingsOf(c, section)
+	place := advancedOf(section)
+	if len(settingsParts[place]) == 0 {
+		return
+	}
+	f := &s.find
+	if f.on() {
+		f.advanced = true
+		s.settingsOf(c, place)
+		f.advanced = false
+		return
+	}
+	k := &s.lk
+	open := s.set.AdvancedSettings
+	label := locales.SettingsAdvanced()
+	b := s.buttonBase(c.Key("advanced-"+section)).Label(label).Expanded(open).Gap(8).Height(36).Margin(0, 0, 16).
+		AlignSelf(ui.Start).Cursor(ui.CursorPointer)
+	ink := k.muted
+	if b.Hovered() {
+		ink = k.text
+	}
+	if b.Clicked() {
+		s.set.AdvancedSettings = !open
+		s.save()
+	}
+	b.Children(func() {
+		chevron := "chevronRight"
+		if open {
+			chevron = "chevronDown"
+		}
+		ui.Icon(c, icon(chevron)).FontSize(16).TextColor(ink)
+		ui.Text(c, k.sentence(label)).FontSize(k.bodySize()).TextColor(ink)
+	})
+	if open {
+		s.settingsOf(c, place)
+	}
 }
 
 // A settingsPart is a part of a place of the settings page, which builds

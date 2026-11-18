@@ -9,10 +9,10 @@ import (
 	"github.com/fzn0x/mixmusic/locales"
 )
 
-func init() { addSettings("playback", 55, (*shell).volumeSettings) }
+func init() { addSettings(advancedOf("playback"), 10, (*shell).volumeSettings) }
 
 // volumeSettings choose the volume's curve, in Settings › Playback ›
-// Volume (#383).
+// Advanced › Volume (#383).
 func (s *shell) volumeSettings(c *ui.Context) {
 	s.group(c, locales.VolumeCurveGroup(), func() {
 		s.row(c, locales.VolumeCurveTitle(), volumeCurveDescription(), func() {

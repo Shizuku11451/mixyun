@@ -109,7 +109,7 @@ func TestSettingsFindMatches(t *testing.T) {
 		{"speakers", []string{"Play 5.1 surround when a track has it"}, []string{"Volume levelling"}},
 		{"startup", []string{"Start at login"}, []string{"Close to the tray"}},
 		{"version", []string{"Version", "This is the newest version"}, []string{"Crossfade"}},
-		{"desktop", []string{"Close to the tray", "Reset settings", "Start at login"}, []string{"Crossfade"}},
+		{"desktop", []string{"Media keys", "Show what plays on Discord"}, []string{"Crossfade", "Close to the tray"}},
 		{"TRAY", []string{"Close to the tray"}, []string{"Media keys", "Crossfade"}},
 		{"aurora", []string{"Aurora", "Theme: Aurora"}, []string{"Mochi", "Crossfade"}},
 		{"lévelling", []string{"Volume levelling"}, []string{"Crossfade"}},
@@ -151,7 +151,7 @@ func TestSettingsFindLocation(t *testing.T) {
 	if got := s.router.Location(); got != "/settings" || s.find.query != "" {
 		t.Errorf("the rail's settings went to %q, the box holding %q", got, s.find.query)
 	}
-	if !tt.HasText("Follow the artwork") || tt.HasText("Close to the tray") {
+	if !tt.HasText("Start at login") || tt.HasText("Crossfade") {
 		t.Errorf("the settings opened show %q", tt.Texts())
 	}
 }
@@ -161,9 +161,9 @@ func TestSettingsFindPivot(t *testing.T) {
 	s := newTestShell(t)
 	tt := testerOf(t, s, 1280, 2400)
 	show(s, tt, settingsPath("appearance", "crossfade"))
-	click(t, s, tt, "desktop")
+	click(t, s, tt, "general")
 	tt.Advance(time.Second)
-	if got := s.router.Location(); got != "/settings/desktop" {
+	if got := s.router.Location(); got != "/settings/general" {
 		t.Errorf("the pivot went to %q", got)
 	}
 	showsOnly(t, tt, "the pivot", []string{"Close to the tray"}, []string{"Crossfade"})
@@ -413,7 +413,7 @@ func TestSettingsFindShowIn(t *testing.T) {
 	if got := s.router.Location(); got != "/settings/playback" {
 		t.Errorf("show in went to %q", got)
 	}
-	showsOnly(t, tt, "the section shown", []string{"Volume levelling", "Crossfade"}, []string{"Show sound in playback"})
+	showsOnly(t, tt, "the section shown", []string{"Crossfade", "Autoplay"}, []string{"Show sound in playback"})
 	click(t, s, tt, "Back")
 	tt.Advance(time.Second)
 	if got := s.router.Location(); got != "/settings/appearance?q=crossfade" || s.find.query != "crossfade" {
@@ -425,15 +425,15 @@ func TestSettingsFindShowIn(t *testing.T) {
 // TestSettingsFindReveal shows a found group in its section, scrolled to
 // it, from the search in another section and in its own.
 func TestSettingsFindReveal(t *testing.T) {
-	for _, from := range []string{"appearance", "playback"} {
+	for _, from := range []string{"appearance", "storage"} {
 		s := newTestShell(t)
 		tt := testerOf(t, s, 1280, 820)
 		show(s, tt, settingsPath(from, "tracks kept"))
-		click(t, s, tt, "Show offline cache in playback")
+		click(t, s, tt, "Show offline cache in storage")
 		tt.Advance(time.Second)
 		s.drain()
 		tt.Frame()
-		if got := s.router.Location(); got != "/settings/playback" {
+		if got := s.router.Location(); got != "/settings/storage" {
 			t.Errorf("from %s, show in went to %q", from, got)
 		}
 		if r, ok := tt.Find("offline cache"); !ok || r.Y < 0 || r.Y > 820 {
@@ -621,7 +621,7 @@ func TestSettingsFindSlides(t *testing.T) {
 	if got := s.router.Location(); got != "/settings/desktop" {
 		t.Errorf("show in went to %q", got)
 	}
-	showsOnly(t, tt, "the section", []string{"Close to the tray", "Search the settings"}, []string{"Show on the desktop in desktop"})
+	showsOnly(t, tt, "the section", []string{"Media keys", "Search the settings"}, []string{"Show on the desktop in desktop"})
 	for _, a := range tt.Announcements() {
 		if strings.Contains(a, "match") {
 			t.Errorf("screen readers heard %q", a)

@@ -1,6 +1,6 @@
 package main
 
-// The sources of lyrics in Settings › Playback › Lyrics: a row a source,
+// The sources of lyrics in Settings › Lyrics › Lyrics: a row a source,
 // with its switch and what it is sent, in the order MixMusic asks them
 // (settings.Lyrics.SourceOrder). A row drags onto another, which it takes
 // the place of, or moves a place up or down with Alt+Up and Alt+Down, as

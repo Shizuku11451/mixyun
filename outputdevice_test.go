@@ -327,7 +327,7 @@ func TestOutputDeviceSetting(t *testing.T) {
 		return []app.OutputDevice{{ID: "hp", Name: "Headphones"}, {ID: "sp", Name: "Speakers", Default: true}}
 	})
 	tt := testerOf(t, s, 1280, 3200)
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/audio")
 	settleOutput(t, s, tt)
 	if !tt.HasText("Output device") || !tt.HasText(outputDescription()) {
 		t.Fatalf("no output device row: %q", tt.Texts())

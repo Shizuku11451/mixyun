@@ -6,7 +6,7 @@ import (
 	"github.com/fzn0x/mixmusic/locales"
 )
 
-func init() { addSettings("playback", 40, (*shell).musicVideoSettings) }
+func init() { addSettings("content", 40, (*shell).musicVideoSettings) }
 
 // musicVideoSettings show the picture of music videos, in Settings ›
 // Playback.

@@ -41,7 +41,7 @@ The installers, the portable zip and the Linux archive update themselves: MixMus
   sudo dnf install gtk3 pulseaudio-libs webkit2gtk4.1 libayatana-appindicator-gtk3 libsecret
   ```
 
-- **yt-dlp, on every system.** MixMusic finds the audio of most YouTube Music tracks itself. For the rest, such as tracks made for children, it runs [yt-dlp](https://github.com/yt-dlp/yt-dlp). Until yt-dlp is there, Home says "Some tracks need yt-dlp", with a button that installs it; Settings › Playback › Tools installs it too, and MixMusic keeps the copy it installed up to date. yt-dlp needs a JavaScript runtime: [Deno](https://deno.com), Node.js, Bun or QuickJS, which MixMusic finds once you install one. The Flatpak has Node.js. [Where the audio streams come from](streams.md#when-yt-dlp-is-needed) tells which tracks need it.
+- **yt-dlp, on every system.** MixMusic finds the audio of most YouTube Music tracks itself. For the rest, such as tracks made for children, it runs [yt-dlp](https://github.com/yt-dlp/yt-dlp). Until yt-dlp is there, Home says "Some tracks need yt-dlp", with a button that installs it; Settings › Storage › Tools installs it too, and MixMusic keeps the copy it installed up to date. yt-dlp needs a JavaScript runtime: [Deno](https://deno.com), Node.js, Bun or QuickJS, which MixMusic finds once you install one. The Flatpak has Node.js. [Where the audio streams come from](streams.md#when-yt-dlp-is-needed) tells which tracks need it.
 
 MixMusic opens on Home in the [Blend layout](look-and-feel.md#layouts). Your settings and library stay in a [data folder](data-and-privacy.md#the-data-folder) of your own: `%AppData%\MixMusic` on Windows, `~/Library/Application Support/MixMusic` on macOS and `~/.config/MixMusic` on Linux.
 

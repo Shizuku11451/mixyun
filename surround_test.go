@@ -47,7 +47,7 @@ func TestSurroundButton(t *testing.T) {
 func TestSurroundSetting(t *testing.T) {
 	s := newTestShell(t)
 	tt := testerOf(t, s, 1280, 3200)
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/audio")
 	if !tt.HasText("Play 5.1 surround when a track has it") || !tt.HasText(surroundDescription()) {
 		t.Fatalf("no 5.1 surround row: %q", tt.Texts())
 	}

@@ -499,7 +499,7 @@ func (s *shell) downloadsFolderLine(c *ui.Context, st downloads.Status) {
 			s.openDownloads()
 		}
 		if s.link(c, "downloads-settings", locales.DownloadsSettings()) {
-			s.navigate("/settings/playback")
+			s.navigate("/settings/storage")
 		}
 	})
 }
@@ -632,9 +632,9 @@ func (s *shell) downloadedTile(c *ui.Context, key string, v downloads.Collection
 	}
 }
 
-func init() { addSettings("playback", 80, (*shell).downloadSettings) }
+func init() { addSettings("storage", 10, (*shell).downloadSettings) }
 
-// downloadSettings show the downloads in Settings › Playback: what they
+// downloadSettings show the downloads in Settings › Storage: what they
 // hold, their folder, and whether they go on over a metered connection.
 func (s *shell) downloadSettings(c *ui.Context) {
 	k := &s.lk
@@ -680,7 +680,7 @@ func (s *shell) downloadSettings(c *ui.Context) {
 	})
 }
 
-// downloadRows are the rows of Settings › Playback › Downloads that
+// downloadRows are the rows of Settings › Storage › Downloads that
 // register from their features' files, after its own.
 const downloadRows = "playback › Downloads"
 

@@ -39,6 +39,9 @@ type Desktop struct {
 	// MediaKeys has the keyboard's play, next and previous keys control
 	// MixMusic.
 	MediaKeys bool `json:"mediaKeys"`
+	// AdvancedSettings opens the fold of each section of the settings that
+	// holds what few change. It is closed at first.
+	AdvancedSettings bool `json:"advancedSettings"`
 	// AssistantControl lets the AI assistants of this computer control
 	// MixMusic over MCP (#477), through the command they start. It is off
 	// at first.

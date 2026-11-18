@@ -1295,7 +1295,7 @@ func TestYTDLPMissing(t *testing.T) {
 	if !tt.HasText("Some tracks need yt-dlp") || !tt.HasText("install yt-dlp") {
 		t.Fatalf("no offer: %q", tt.Texts())
 	}
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/storage")
 	if !tt.HasText("Not found. Some YouTube Music tracks play only with it.") {
 		t.Errorf("settings say %q", tt.Texts())
 	}
@@ -1405,7 +1405,7 @@ func TestSettingsKeep(t *testing.T) {
 	}
 	s.refresh()
 	tt := tester(t, s)
-	for _, path := range []string{"/settings/playback", "/settings/appearance", "/settings/desktop", "/settings/about"} {
+	for _, path := range []string{"/settings/content", "/settings/appearance", "/settings/desktop", "/settings/about"} {
 		s.navigate(path)
 		s.drain()
 		tt.Frame()
@@ -1414,7 +1414,7 @@ func TestSettingsKeep(t *testing.T) {
 	if got := s.svc.Preferences.Get().SpotifyPlayback; got != settings.SpotifyPlaybackHere {
 		t.Errorf("showing the settings made Spotify playback %q", got)
 	}
-	click(t, s, tt, "playback")
+	click(t, s, tt, "content")
 	click(t, s, tt, "in mixyun, from netease cloud music or youtube music")
 	if got := s.svc.Preferences.Get().SpotifyPlayback; got != settings.SpotifyPlaybackMatch {
 		t.Errorf("choosing YouTube Music made Spotify playback %q", got)

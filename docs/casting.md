@@ -34,7 +34,7 @@ rather than play on, and the rooms of
   cover, title and artist on the device's screen.
 - **Spotify tracks** played from YouTube Music, as they are with **In
   MixMusic, from YouTube Music** in
-  [Settings › Playback › Spotify tracks](playing-music.md#how-spotify-tracks-play):
+  [Settings › Content › Spotify tracks](playing-music.md#how-spotify-tracks-play):
   the device plays their recording on YouTube Music.
 - **Your [downloads](library.md#downloads) and the
   [offline cache](library.md#the-offline-cache)**: MixMusic sends the
@@ -75,7 +75,7 @@ cast, your system may ask about it:
 - **Windows**: Windows Defender Firewall may ask whether MixMusic may take
   connections from your network. Allow it on private networks, such as the
   one at home. When a cast device can't reach MixMusic, **Settings ›
-  Desktop › Windows Firewall** tells why, and its **Allow** lets MixMusic
+  Desktop › Advanced › Windows Firewall** tells why, and its **Allow** lets MixMusic
   in on private networks, as
   [remote control's firewall part](remote-control.md#firewalls-and-the-local-network)
   tells.

@@ -1,6 +1,6 @@
 # Explicit content
 
-Hide explicit content, in Settings › Playback › Explicit content
+Hide explicit content, in Settings › Content › Explicit content
 (`hideExplicit`, #427), keeps the songs, videos and albums marked explicit
 out of the lists the services make, and from playing. The user's own lists
 keep them, dimmed.

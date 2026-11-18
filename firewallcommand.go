@@ -1,6 +1,6 @@
 package main
 
-// The copy of MixMusic that Settings › Desktop › Windows Firewall's Allow
+// The copy of MixMusic that Settings › Desktop › Advanced › Windows Firewall's Allow
 // starts as administrator (#496): MixMusic --allow-firewall lets the
 // MixMusic it is in on private networks, and ends.
 

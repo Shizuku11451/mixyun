@@ -381,6 +381,10 @@
   "audioAsAccountDesc": "For YouTube Music Premium's higher bitrate, Mixyun asks for each track's audio as your YouTube Music account. YouTube may flag an account used this way, and tracks may start more slowly. A track it can't get this way plays as before.",
   "audioAsAccountSignIn": "For YouTube Music Premium's higher bitrate, Mixyun asks for each track's audio as your YouTube Music account. YouTube may flag an account used this way, and tracks may start more slowly. A track it can't get this way plays as before. Sign in to YouTube Music in accounts first.",
   "audioAsAccountTitle": "Play audio as your account",
+  "audioOutputGroup": "Output",
+  "@audioOutputGroup": {
+    "description": "Settings › Audio: the group of the output device, loudness and surround."
+  },
   "cacheSettingsClear": "clear",
   "cacheSettingsClearCovers": "Clear covers",
   "cacheSettingsClearTracks": "Clear tracks",
@@ -976,7 +980,7 @@
   },
   "computerManage": "manage",
   "@computerManage": {
-    "description": "Link to Settings › Playback, from the songs' line. Lowercase."
+    "description": "Link to Settings › Storage, from the songs' line. Lowercase."
   },
   "computerNoMatch": "No song matches “{query}”.",
   "@computerNoMatch": {
@@ -1152,6 +1156,10 @@
         "type": "String"
       }
     }
+  },
+  "contentSkipGroup": "Songs to skip",
+  "@contentSkipGroup": {
+    "description": "Settings › Content: the group of skipping songs made with AI and songs you dislike."
   },
   "controlNotRunning": "Mixyun isn't running",
   "copiesAbout": "Copies of one song show once, and play the best: lossless before lossy, then the higher bitrate and sample rate. What you play, like and mix of them follows the song, and stays when a copy goes.",
@@ -2378,6 +2386,10 @@
         "type": "String"
       }
     }
+  },
+  "generalStartGroup": "Start and close",
+  "@generalStartGroup": {
+    "description": "Settings › General: the group of starting at login and closing to the tray."
   },
   "globalKeysAnnounce": "Press the keys of the global shortcut of {title}. Escape cancels, Backspace removes it.",
   "@globalKeysAnnounce": {
@@ -4458,10 +4470,13 @@
       }
     }
   },
-  "podcastsSettingsPlayback": "Settings › Playback",
+  "podcastsSettingsContent": "Settings › Content",
+  "@podcastsSettingsContent": {
+    "description": "Split around the link to Settings › Content."
+  },
   "podcastsSpotifyOnlyLead": "Spotify's podcasts play only from Spotify: choose In Mixyun, from Spotify or On Spotify Connect in ",
   "@podcastsSpotifyOnlyLead": {
-    "description": "Split around the link to Settings › Playback."
+    "description": "Split around the link to Settings › Content."
   },
   "podcastsSpotifyOnlyTail": ".",
   "podcastsUnfollowed": "{title}: no longer following",
@@ -5336,6 +5351,10 @@
       }
     }
   },
+  "settingsAdvanced": "Advanced",
+  "@settingsAdvanced": {
+    "description": "The fold at the foot of a section of the settings that holds what few change."
+  },
   "settingsFileAdjusted": "Put {names} back in range.",
   "@settingsFileAdjusted": {
     "placeholders": {
@@ -5450,10 +5469,15 @@
   "@settingsTabAppearance": {
     "description": "A section of the settings, lowercase as the pivots are."
   },
+  "settingsTabAudio": "audio",
+  "settingsTabContent": "content",
   "settingsTabDesktop": "desktop",
+  "settingsTabGeneral": "general",
+  "settingsTabLyrics": "lyrics",
   "settingsTabPlayback": "playback",
   "settingsTabPlugins": "plugins",
   "settingsTabShortcuts": "shortcuts",
+  "settingsTabStorage": "storage",
   "settingsTitle": "Settings",
   "shareCopied": "Copied the link",
   "shareCopyLink": "Copy link",
@@ -6352,7 +6376,7 @@
       }
     }
   },
-  "updateOfferHaveAuto": "You have {version}. To install new versions without this question, turn on install updates without asking in Settings › About.",
+  "updateOfferHaveAuto": "You have {version}. To install new versions without this question, turn on install updates without asking in Settings › General.",
   "@updateOfferHaveAuto": {
     "placeholders": {
       "version": {

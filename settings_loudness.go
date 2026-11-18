@@ -7,9 +7,9 @@ import (
 	"github.com/fzn0x/mixmusic/locales"
 )
 
-func init() { addSettings(soundRows, 30, (*shell).loudnessRow) }
+func init() { addSettings(audioRows, 20, (*shell).loudnessRow) }
 
-// loudnessRow turns loud tracks down to one level, in Settings › Playback
+// loudnessRow turns loud tracks down to one level, in Settings › Audio
 // › Sound.
 func (s *shell) loudnessRow(c *ui.Context) {
 	even := locales.LoudnessEvenDesc()
@@ -23,10 +23,10 @@ func (s *shell) loudnessRow(c *ui.Context) {
 	})
 }
 
-func init() { addSettings(soundRows, 40, (*shell).levellingRow) }
+func init() { addSettings(audioRows, 30, (*shell).levellingRow) }
 
 // levellingRow squeezes loud and quiet moments closer together, in
-// Settings › Playback › Sound.
+// Settings › Audio › Output.
 func (s *shell) levellingRow(c *ui.Context) {
 	s.row(c, locales.LoudnessLevelling(), locales.LoudnessLevellingDesc(), func() {
 		if s.switchOf(c.Key("normalize"), &s.set.Normalize).Label(locales.LoudnessLevelling()).Changed() {

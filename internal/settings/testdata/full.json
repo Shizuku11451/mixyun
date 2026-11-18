@@ -142,6 +142,7 @@
   "miniZoom": 1.25,
   "floatLocked": true,
   "mediaKeys": false,
+  "advancedSettings": true,
   "assistantControl": true,
   "roomName": "Ana",
   "roomSongs": "add",

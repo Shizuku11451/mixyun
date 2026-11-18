@@ -11,11 +11,31 @@ there's nothing to save.
 
 ## The pages of Settings
 
-Settings has seven sections, named across its top: Appearance, Playback,
-Accounts, Plugins, Desktop, Shortcuts and About. Each is a list of groups,
-and each group a list of rows.
+Settings has twelve sections: General, Appearance, Playback, Audio,
+Lyrics, Content, Accounts, Storage, Desktop, Plugins, Shortcuts and About.
+In a wide window they're listed at the page's left, in a narrow one across
+its top. Each is a list of groups, and each group a list of rows.
+
+What few change folds under **Advanced**, at the foot of its section,
+closed at first; opened, it stays open in every section until you close
+it. [Finding a setting by typing](#find-a-setting-by-typing) finds what's
+folded too.
 
 ![Settings on its Playback section: the seven sections across the top, the search the settings box under them, and the Spotify tracks group, with In MixMusic, from Spotify, On Spotify Connect and In MixMusic, from YouTube Music, the one chosen](shots/playback.webp)
+
+### General
+
+| Group | What's there |
+|---|---|
+| Language | **System**, the default, takes the first of the computer's preferred languages MixMusic has, or else English; each of its languages follows, named in itself. A choice applies at once. |
+| Start and close | **[Close to the tray](desktop.md#close-to-the-tray)**: closing the window keeps the music playing; quit from the tray icon. Off at first. **[Start at login](desktop.md#start-at-login)**: starts MixMusic, hidden, when you sign in to your computer. |
+| [Updates](how-it-works.md#mixmusic-itself) | **Check for updates**, at start and every few hours, and **Install updates without asking**, which downloads them in the background for the next launch. |
+| Advanced › Settings file | **open** opens [`settings.json`](#settingsjson), **show in folder** shows it in its folder; **Reset settings** puts back the settings of a new install, after asking. Your accounts, library and add-ons stay. |
+
+Without Install updates without asking, a new version asks in a pop-up:
+**install** it, **later**, which asks again at the next start, or **skip
+this version**. The `.deb`, the `.rpm`, the AppImage and the Flatpak can't
+replace their own files, so they offer the new version's download instead.
 
 ### Appearance
 
@@ -23,11 +43,9 @@ How MixMusic looks; [Look and feel](look-and-feel.md) tells all of it.
 
 | Group | What's there |
 |---|---|
-| Language | **System**, the default, takes the first of the computer's preferred languages MixMusic has, or else English; each of its languages follows, named in itself. A choice applies at once. |
 | [Layout](look-and-feel.md#layouts) | Blend, Expressive, Crate or Tiles. |
 | [Theme](look-and-feel.md#themes) | **Follow the computer**, with **In light mode** and **In dark mode**; a card for each theme; **get more themes**, which opens the marketplace, and **open themes folder**. Themes that didn't load are listed with the reason. |
 | [*Theme* options](look-and-feel.md#theme-options) | The options of a built-in theme that has some, as Aurora's drifting lights and glass blur. |
-| [Lyrics style](lyrics.md#full-screen-lyrics) | The style of the full-screen lyrics: Spotlight (the default), Glow, Focus, Simple, Bold or Calm; the size of their text; the bouncing ball and how it goes from a line to the next; a small preview of them; and a button that shows the lyrics. |
 | Colour and type | **[Colours from a file](look-and-feel.md#colours-from-a-file)** (pywal, matugen or a file of your own) and its **Colour file**, **[Follow the artwork](look-and-feel.md#the-accent-and-the-artwork)**, **Accent colour**, **[Zoom](look-and-feel.md#density-text-size-and-zoom)**, **Text size**, **Density**, **Icons only in the sidebar** and **Wavy progress bar**. |
 
 ### Playback
@@ -36,18 +54,43 @@ How MixMusic plays; [Playing music](playing-music.md) tells all of it.
 
 | Group | What's there |
 |---|---|
-| [Spotify tracks](playing-music.md#how-spotify-tracks-play) | How Spotify tracks play: **In MixMusic, from Spotify** (Premium, on Windows and macOS), **On Spotify Connect**, with the **Device** that plays them, or **In MixMusic, from YouTube Music**. Under them, how to hear Spotify in [lossless](spotify-playback.md#lossless), which On Spotify Connect alone plays. See [Spotify](spotify.md). |
-| Sound | **[Output device](playing-music.md#the-output-device)** (System default, or a device by name), **[Quality](playing-music.md#data-saver)** (best, or data saver), **[Play audio as your account](playing-music.md#play-audio-as-your-account)** (off at first, for YouTube Music Premium's higher bitrate), **[Crossfade](playing-music.md#crossfade-and-gapless-playback)** (off, or 1 to 12 seconds), **[Even loudness](playing-music.md#even-loudness-volume-levelling-and-the-volume)**, **Volume levelling**, **Play 5.1 surround when a track has it**, **[Autoplay](playing-music.md#autoplay-and-radios)**, **[Skip songs made with AI](playing-music.md#skipping-songs-made-with-ai)** and **[Skip songs you dislike](playing-music.md#dislikes-and-skipping)**. |
+| Sound | **[Quality](playing-music.md#data-saver)** (best, or data saver), **[Play audio as your account](playing-music.md#play-audio-as-your-account)** (off at first, for YouTube Music Premium's higher bitrate), **[Crossfade](playing-music.md#crossfade-and-gapless-playback)** (off, or 1 to 12 seconds) and **[Autoplay](playing-music.md#autoplay-and-radios)**. |
 | [Speed](playing-music.md#speed) | **Songs** and **Podcasts**, each from 0.5× to 3×, at the tracks' own pitch, with **normal** to go back to 1×. |
+| [Skip parts of videos](playing-music.md#skipping-parts-of-videos) | **Skip the parts SponsorBlock marks**, off at first; once on, a box for each kind of part, **Non-music parts**, **Sponsor** and **Self-promotion** ticked at first, **Reminders to like or subscribe**, **Intro**, **Outro**, **Preview or recap**, **Hook or greeting** and **Filler**, **Highlight**, ticked at first, and the **Server**, SponsorBlock's own or the https address of a mirror. |
+| Advanced › [Volume](playing-music.md#even-loudness-volume-levelling-and-the-volume) | **Volume curve**: Natural, even steps of loudness, or Linear, where the level grows evenly along the slider. |
+
+### Audio
+
+| Group | What's there |
+|---|---|
+| Output | **[Output device](playing-music.md#the-output-device)** (System default, or a device by name), **[Even loudness](playing-music.md#even-loudness-volume-levelling-and-the-volume)**, **Volume levelling** and **Play 5.1 surround when a track has it**. |
+| [Equalizer](playing-music.md#the-equalizer) | The **Equalizer** switch, a **Preset** (Flat, Bass boost, Treble boost, Vocal, Electronic, Rock, Acoustic, Late night or Lo-fi), and the preamp and ten bands, from −12 to +12 dB. |
+
+### Lyrics
+
+| Group | What's there |
+|---|---|
+| [Lyrics](lyrics.md#translate) | **Translate lyrics to**: the language the translate switch beside the lyrics shows them in. **[Lyrics sources](lyrics.md#choose-and-order-the-sources)**: Better Lyrics, Unison, LRCLIB, YouTube Music and YouTube captions, each with a switch, in the order MixMusic asks them, which dragging a row or Alt+Up and Alt+Down changes, with **reset to default**. **Prefer word-by-word lyrics**, **[Time lyrics to music videos](lyrics.md#music-videos)**, and **Caption language**: Original, or one of the languages lyrics translate to. |
+| [Lyrics style](lyrics.md#full-screen-lyrics) | The style of the full-screen lyrics: Spotlight (the default), Glow, Focus, Simple, Bold or Calm; the size of their text; the bouncing ball and how it goes from a line to the next; a small preview of them; and a button that shows the lyrics. |
+
+### Content
+
+What plays, and from where.
+
+| Group | What's there |
+|---|---|
+| [Spotify tracks](playing-music.md#how-spotify-tracks-play) | How Spotify tracks play: **In MixMusic, from Spotify** (Premium, on Windows and macOS), **On Spotify Connect**, with the **Device** that plays them, or **In MixMusic, from YouTube Music**. Under them, how to hear Spotify in [lossless](spotify-playback.md#lossless), which On Spotify Connect alone plays. See [Spotify](spotify.md). |
+| [Explicit content](playing-music.md#hiding-explicit-content) | **[Prefer clean versions](playing-music.md#versions-of-an-album)**: an album that comes explicit and clean shows its clean version, and opens on it. **[Hide explicit content](playing-music.md#hiding-explicit-content)**: the songs, albums and videos marked explicit don't show where the services list music, and never play; Prefer clean versions stays on meanwhile. |
+| Songs to skip | **[Skip songs made with AI](playing-music.md#skipping-songs-made-with-ai)** and **[Skip songs you dislike](playing-music.md#dislikes-and-skipping)**. |
 | [Music videos](playing-music.md#the-picture-of-music-videos) | **Show the video of music videos**, on the now playing page. |
 | [Moving covers](playing-music.md#moving-covers) | **Show moving covers**: GIF covers move on the now playing page and a mix's page. Off at first. |
-| [Explicit content](playing-music.md#hiding-explicit-content) | **[Prefer clean versions](playing-music.md#versions-of-an-album)**: an album that comes explicit and clean shows its clean version, and opens on it. **[Hide explicit content](playing-music.md#hiding-explicit-content)**: the songs, albums and videos marked explicit don't show where the services list music, and never play; Prefer clean versions stays on meanwhile. |
-| [Equalizer](playing-music.md#the-equalizer) | The **Equalizer** switch, a **Preset** (Flat, Bass boost, Treble boost, Vocal, Electronic, Rock, Acoustic, Late night or Lo-fi), and the preamp and ten bands, from −12 to +12 dB. |
-| [Volume](playing-music.md#even-loudness-volume-levelling-and-the-volume) | **Volume curve**: Natural, even steps of loudness, or Linear, where the level grows evenly along the slider. |
-| [Lyrics](lyrics.md#translate) | **Translate lyrics to**: the language the translate switch beside the lyrics shows them in. **[Lyrics sources](lyrics.md#choose-and-order-the-sources)**: Better Lyrics, Unison, LRCLIB, YouTube Music and YouTube captions, each with a switch, in the order MixMusic asks them, which dragging a row or Alt+Up and Alt+Down changes, with **reset to default**. **Prefer word-by-word lyrics**, **[Time lyrics to music videos](lyrics.md#music-videos)**, and **Caption language**: Original, or one of the languages lyrics translate to. |
-| [Offline cache](library.md#the-offline-cache) | **Tracks kept** and **Covers kept**, each with **clear**, and the cache's **Size**: off, 512 MB, 1 GB, 4 GB or 16 GB. |
-| [Skip parts of videos](playing-music.md#skipping-parts-of-videos) | **Skip the parts SponsorBlock marks**, off at first; once on, a box for each kind of part, **Non-music parts**, **Sponsor** and **Self-promotion** ticked at first, **Reminders to like or subscribe**, **Intro**, **Outro**, **Preview or recap**, **Hook or greeting** and **Filler**, **Highlight**, ticked at first, and the **Server**, SponsorBlock's own or the https address of a mirror. |
+
+### Storage
+
+| Group | What's there |
+|---|---|
 | [Downloads](library.md#where-they-are) | How many tracks are downloaded and how much room they take, with **show**; their **Folder**, with **open** and **change**; **Download on metered connections** and **Download songs added later**. |
+| [Offline cache](library.md#the-offline-cache) | **Tracks kept** and **Covers kept**, each with **clear**, and the cache's **Size**: off, 512 MB, 1 GB, 4 GB or 16 GB. |
 | [Music on this computer](local-music.md#add-a-folder) | **Folders**, with **add a folder** and **rescan**, then each folder of music, with how many tracks it holds, how many files were skipped and how many folders in it can't be read, and **remove**. Under the folders, each one MixMusic can't watch for changes, as one on a network drive, says why: its changes show after a **rescan**. |
 | [Tools](how-it-works.md#yt-dlp-and-the-javascript-runtime) | **yt-dlp**, which MixMusic installs and keeps up to date, the **JavaScript runtime** it runs with (found by itself, or Deno, Node.js, Bun or QuickJS), and **Own yt-dlp**, the path to one of yours. |
 
@@ -74,7 +117,6 @@ The **On the desktop** group:
 
 | Row | What it does |
 |---|---|
-| [Close to the tray](desktop.md#close-to-the-tray) | Closing the window keeps the music playing; quit from the tray icon. Off at first. |
 | Media keys | The keyboard's play, next and previous keys control MixMusic. On at first. |
 | [Notifications](desktop.md#notifications) | Tells what starts playing while neither MixMusic's window nor the mini player is in front. On at first. |
 | [Show what plays in the window title](desktop.md#the-window-title) | The window's title names the track that plays. On at first. |
@@ -82,9 +124,6 @@ The **On the desktop** group:
 | [Player around the notch](desktop.md#the-player-around-the-notch) | The player around a MacBook's notch. On at first, and shown only on Macs with a notch. |
 | [Keep on top](desktop.md#keep-the-window-on-top) | MixMusic's window stays above your other windows. Off at first. |
 | [Now playing for overlays](stream-overlay.md) | A server on this computer, on `127.0.0.1` only, that tells what plays to the overlay of a stream: with **Overlay port** and the addresses to copy. Off at first. |
-| [Start at login](desktop.md#start-at-login) | Starts MixMusic, hidden, when you sign in to your computer. |
-| Settings file | **open** opens `settings.json`, **show in folder** shows it in its folder. |
-| Reset settings | Puts back the settings of a new install, after asking. Your accounts, library and add-ons stay. |
 
 [On the desktop](desktop.md) tells what each does.
 
@@ -109,8 +148,8 @@ address on a VPN you both run.
 [Friends outside your network](listen-with-friends.md#friends-outside-your-network)
 tells more.
 
-The **Windows Firewall** group, on Windows: **Connections from your
-network** tells whether other computers and cast devices on your network
+The **Windows Firewall** group, under Advanced and on Windows:
+**Connections from your network** tells whether other computers and cast devices on your network
 can reach MixMusic, for remote control and casting, and why not when they
 can't, with **allow** when MixMusic's own rules can let them in, and
 **network settings** on a public network.
@@ -135,23 +174,18 @@ themes and the plugins' commands. See
 | Group | What's there |
 |---|---|
 | MixMusic | The **Version**, with the system and how this copy was [installed](getting-started.md#install); whether a newer version is out, with **what's new** and **install** (or its download, for a copy that can't replace itself); the folder your [data](data-and-privacy.md#where-mixmusic-keeps-its-data) lives in; and **source code**, **contribute**, **report a problem** and **open logs folder** (see [Troubleshooting](troubleshooting.md)). |
-| Memory use | **Record memory use**, for a report of MixMusic taking too much memory: while it's on, MixMusic writes how it uses its memory to `memory.log` in [the logs folder](data-and-privacy.md#the-logs-folder) each minute, and saves a heap profile there once it passes 1 GB, and **save a heap profile** saves one at once. It's off again at the next start. |
-| [Updates](how-it-works.md#mixmusic-itself) | **Check for updates**, at start and every few hours, and **Install updates without asking**, which downloads them in the background for the next launch. |
 | [Recent playback errors](troubleshooting.md#tracks-that-fail-to-play) | The last 10 tracks that couldn't play since MixMusic started, the latest first, with the time and why, each with **details**: what was tried, and **copy**. |
 | Licenses | The licenses of the code and the typefaces MixMusic includes, each with **show**: see [License](license.md) and [Credits](credits.md). |
+| Advanced › Memory use | **Record memory use**, for a report of MixMusic taking too much memory: while it's on, MixMusic writes how it uses its memory to `memory.log` in [the logs folder](data-and-privacy.md#the-logs-folder) each minute, and saves a heap profile there once it passes 1 GB, and **save a heap profile** saves one at once. It's off again at the next start. |
 
 ![Settings › About: the MixMusic group, with the version, MixMusic 0.5.9 · windows amd64 · portable, "This is the newest version" with Check again, where your data lives, its folder covered here, and the Source code, Contribute, Report a problem and Open logs folder buttons; then Updates, with Check for updates on and Install updates without asking off](shots/about.webp)
 
-Without Install updates without asking, a new version asks in a pop-up:
-**install** it, **later**, which asks again at the next start, or **skip
-this version**. The `.deb`, the `.rpm`, the AppImage and the Flatpak can't
-replace their own files, so they offer the new version's download instead.
 **report a problem** opens a new issue on GitHub with your version,
 system, theme and plugins filled in.
 
 ## Find a setting by typing
 
-The **search the settings** box, under the sections' names, finds settings
+The **search the settings** box, at the top of each section, finds settings
 as you type: by their name, their description, their group or their
 section, regardless of case, accents or spelling, so "color" finds Accent
 colour. Each setting found keeps its control, so you change it right there.
@@ -177,7 +211,7 @@ MixMusic keeps your settings in `settings.json`, in its
 | Linux | `~/.config/MixMusic/settings.json` |
 | Linux, the Flatpak | `~/.var/app/io.github.fzn0x.mixmusic/config/MixMusic/settings.json` |
 
-Settings › Desktop › Settings file opens it, or shows it in its folder, and
+Settings › General › Advanced › Settings file opens it, or shows it in its folder, and
 so does **Open the settings file** in the command palette. Settings › About
 names the data folder. You can keep the file with your dotfiles: a
 `settings.json` that is a link to another file stays a link.

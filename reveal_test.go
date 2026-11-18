@@ -41,7 +41,7 @@ func reveal(tt *ui.Tester, label string) bool {
 func TestReveal(t *testing.T) {
 	s := newTestShell(t)
 	tt := tester(t, s)
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/storage")
 	if err := tt.Click("Cache size"); err == nil {
 		t.Fatal("the cache's size shows without scrolling: the test needs a row out of view")
 	}

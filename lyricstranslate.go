@@ -14,7 +14,7 @@ import (
 	"github.com/fzn0x/mixmusic/lyrics"
 )
 
-// translateLanguages are the languages Settings › Playback offers to
+// translateLanguages are the languages Settings › Lyrics offers to
 // translate lyrics to, by their codes of ISO 639-1.
 var translateLanguages = []struct {
 	code string
@@ -48,7 +48,7 @@ func romanizeNames(romaji bool) [3]string {
 }
 
 // translateTarget is the language lyrics translate to: the one chosen in
-// Settings › Playback, else the system's.
+// Settings › Lyrics, else the system's.
 func (s *shell) translateTarget() string {
 	if s.set.LyricsTranslateTo != "" {
 		return s.set.LyricsTranslateTo
@@ -368,11 +368,11 @@ func (s *shell) translateOptions() []string {
 	return options
 }
 
-// lyricsRows are the rows of Settings › Playback › Lyrics after
+// lyricsRows are the rows of Settings › Lyrics › Lyrics after
 // Translate lyrics to, which register from their features' files.
 const lyricsRows = "playback › Lyrics"
 
-func init() { addSettings("playback", 60, (*shell).lyricsSettings) }
+func init() { addSettings("lyrics", 10, (*shell).lyricsSettings) }
 
 // lyricsSettings chooses the language lyrics translate to, and shows the
 // other rows of the lyrics.

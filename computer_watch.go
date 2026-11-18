@@ -6,7 +6,7 @@ import (
 	"github.com/fzn0x/mixmusic/locales"
 )
 
-// unwatchedFolders tells, in Settings › Playback › Music on this computer,
+// unwatchedFolders tells, in Settings › Storage › Music on this computer,
 // of each folder of music MixMusic can't watch for changes, as one on a
 // network drive, and why: what changes in it shows after a rescan, or once
 // MixMusic starts again. The others are watched, and show what changes in

@@ -28,7 +28,7 @@ func TestNotchRow(t *testing.T) {
 	t.Cleanup(func() { hasNotch = was })
 	show(s, tt, "/settings/desktop")
 	var above float32
-	for _, text := range []string{"Show what plays on Discord", label, "Start at login"} {
+	for _, text := range []string{"Show what plays on Discord", label} {
 		r, ok := tt.Find(text)
 		if !ok || r.Y <= above {
 			t.Fatalf("Settings › Desktop shows %q out of place: %q", text, tt.Texts())

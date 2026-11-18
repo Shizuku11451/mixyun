@@ -163,11 +163,11 @@ func TestAlbumVersionsSearchAndLibrary(t *testing.T) {
 }
 
 // TestCleanVersionsSetting turns on Prefer clean versions in Settings ›
-// Playback.
+// Content.
 func TestCleanVersionsSetting(t *testing.T) {
 	s := newTestShell(t)
 	tt := testerOf(t, s, 1280, 3200)
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/content")
 	const label = "Prefer clean versions"
 	if s.svc.Preferences.Get().CleanVersions {
 		t.Fatal("on at first")

@@ -68,14 +68,14 @@ token moves into it and the file goes.
 
 ## How Spotify tracks play
 
-Settings › Playback chooses:
+Settings › Content › Spotify tracks chooses:
 
 - **In MixMusic, from Spotify** (the default on Windows and macOS). MixMusic plays the track
   itself, with Spotify's Web Playback SDK, at Spotify's own quality, and no
   Spotify app needs to be open: MixMusic shows among your Spotify devices
   while it plays. It needs Spotify Premium, and Windows or macOS, whose
   webviews play Spotify's protected audio: WebView2 with Widevine, and
-  macOS's with FairPlay. WebKitGTK on Linux can't, so Settings › Playback
+  macOS's with FairPlay. WebKitGTK on Linux can't, so Settings › Content
   greys this way out there
   ([what each system can do](architecture/spotify-here.md)). The
   equalizer and crossfade leave Spotify's audio as it is, as on Spotify
@@ -87,7 +87,7 @@ Settings › Playback chooses:
   later once you allow MixMusic to record what other apps play, as macOS
   asks the first time.
   Sign-ins made before MixMusic played Spotify itself do not allow it:
-  Settings › Playback asks you to sign in again. When Spotify cannot play
+  Settings › Content asks you to sign in again. When Spotify cannot play
   here, MixMusic plays the track from YouTube Music instead, and says why.
 - **On Spotify Connect** (the default on Linux). A Spotify device plays the track: your
   Spotify app on this computer, your phone, a speaker. It needs Spotify
@@ -102,7 +102,7 @@ Settings › Playback chooses:
   crossfade and the visualizer. It works without Premium. When a match is
   wrong, choose **Find another YouTube Music match** in the track's menu.
 
-![Settings › Playback › Spotify tracks: In MixMusic, from Spotify, On Spotify Connect and In MixMusic, from YouTube Music, the one chosen, each with a line on what it needs, and a link to sign in to Spotify in accounts](shots/playback.webp)
+![Settings › Content › Spotify tracks: In MixMusic, from Spotify, On Spotify Connect and In MixMusic, from YouTube Music, the one chosen, each with a line on what it needs, and a link to sign in to Spotify in accounts](shots/playback.webp)
 
 [How Spotify tracks play](spotify-playback.md), under How it works, tells
 what each way does inside.

@@ -78,7 +78,7 @@ It tells what MixMusic knows without asking a service: play a track to see its f
 
 Spotify and YouTube Music list an album that came out explicit and clean twice, and its editions, as a deluxe or a remastered one, beside it. On an artist's page, in the search and in the library, MixMusic shows one tile for the album, which says how many versions it has, as "2019 · 3 versions".
 
-- **The tile** opens the album on its explicit version, and its play button plays that one. With **Prefer clean versions** on, in [Settings › Playback](settings.md#playback), it shows and opens the clean one.
+- **The tile** opens the album on its explicit version, and its play button plays that one. With **Prefer clean versions** on, in [Settings › Content](settings.md#content), it shows and opens the clean one.
 - **The album's page** has a switch of its versions under its head, named as the titles name them, as Explicit, Clean, Deluxe Edition or Remastered 2009, and Standard for the album as it first came out. The page keeps the version you chose until you open the album from its tile again.
 - **On Spotify,** whose lists don't tell which version is explicit, the page reads every version first, and tells by their tracks.
 
@@ -86,7 +86,7 @@ Albums are versions of one when they're of the same service and the same artists
 
 ## Hiding explicit content
 
-**Hide explicit content**, in [Settings › Playback](settings.md#playback) › Explicit content and off by default, keeps the songs, albums and videos marked explicit out of MixMusic, as for a child's computer or a shared room. It's kept as `hideExplicit` in settings.json.
+**Hide explicit content**, in [Settings › Content](settings.md#content) › Explicit content and off by default, keeps the songs, albums and videos marked explicit out of MixMusic, as for a child's computer or a shared room. It's kept as `hideExplicit` in settings.json.
 
 - **They don't show** in the search and what the search box suggests, on Home and its shelves, in Explore, on artists' pages, in the playlists and mixes of others, as the mixes YouTube Music makes for you, among the songs suggested for a playlist, among the new releases of the artists you follow, or in radios and autoplay.
 - **Your own lists keep them:** your mixes and playlists, your liked songs, the library, the songs on this computer, an album's page and the queue list them dimmed, with their "e" and "hidden by your settings".
@@ -131,14 +131,14 @@ A radio plays tracks like one you choose, from YouTube Music.
 
 ## Even loudness, volume levelling and the volume
 
-- **Even loudness,** in Settings › Playback › Sound and on by default, turns loud YouTube Music tracks down to one level (-14 LKFS) from their first note, using YouTube's own measure of each, so none jumps out. Quiet recordings keep their level. Loud masters play 4 to 7 dB quieter than without it: turn up your system's volume, or turn Even loudness off, if they sound too quiet. A track keeps its level offline too, once measured. Spotify tracks that Spotify plays keep Spotify's own loudness, and live streams play at their own level, as YouTube measures none. [The audio engine](audio-engine.md#even-loudness) tells how it's done.
+- **Even loudness,** in Settings › Audio › Output and on by default, turns loud YouTube Music tracks down to one level (-14 LKFS) from their first note, using YouTube's own measure of each, so none jumps out. Quiet recordings keep their level. Loud masters play 4 to 7 dB quieter than without it: turn up your system's volume, or turn Even loudness off, if they sound too quiet. A track keeps its level offline too, once measured. Spotify tracks that Spotify plays keep Spotify's own loudness, and live streams play at their own level, as YouTube measures none. [The audio engine](audio-engine.md#even-loudness) tells how it's done.
 - **Volume levelling,** off by default, squeezes loud and quiet moments closer together as they play, and lifts quiet recordings.
 - **The volume slider** has even steps of loudness: each tenth of it is 6 dB, and ↑ or ↓ changes it by about 3 dB. The mouse wheel over it turns it up and down, M mutes, and the speaker button beside it mutes and unmutes.
-- **Volume curve,** in Settings › Playback › Volume: **Natural**, the default, gives the slider those even steps of loudness. On **Linear**, the level grows evenly along the slider: its middle plays at half the level, 6 dB down rather than 30, and the steps near the top are small, those near the foot large. The slider stays where it is when you change the curve; how loud that is changes. Spotify tracks play on the same curve, in MixMusic and on Spotify Connect, and the volume keys, the mouse wheel and the mini player's volume follow it too.
+- **Volume curve,** in Settings › Playback › Advanced › Volume: **Natural**, the default, gives the slider those even steps of loudness. On **Linear**, the level grows evenly along the slider: its middle plays at half the level, 6 dB down rather than 30, and the steps near the top are small, those near the foot large. The slider stays where it is when you change the curve; how loud that is changes. Spotify tracks play on the same curve, in MixMusic and on Spotify Connect, and the volume keys, the mouse wheel and the mini player's volume follow it too.
 
 ## The equalizer
 
-Settings › Playback › Equalizer shapes the sound of what MixMusic plays itself.
+Settings › Audio › Equalizer shapes the sound of what MixMusic plays itself.
 
 ![Settings › Playback scrolled to the Equalizer group: the Equalizer switch turned on, the Preset menu set to Custom, and the sliders of the preamp and the ten bands from 32 Hz to 16 kHz, each with its gain above it](shots/equalizer.webp)
 
@@ -171,11 +171,11 @@ Dislike a song you never want to hear again:
 
 A disliked song that plays moves on at once, and a toast's undo takes the dislike back and goes back to the song where it was. From then on, the queue passes over the song as it moves on, forward and back, radios leave it out, and the play buttons of albums, playlists, mixes and artists start at their first song you don't dislike. A song you pick yourself still plays, and Up next shows the songs it skips.
 
-A song is liked or disliked, not both: disliking a liked song unlikes it, on Spotify too. Signed in to YouTube Music, your dislikes of its songs go there too; Spotify takes none from apps, so those of its tracks stay in MixMusic. Library › Disliked lists them all (see [Your library](library.md#disliked-songs)), and "Skip songs you dislike" in Settings › Playback › Sound turns the skipping off.
+A song is liked or disliked, not both: disliking a liked song unlikes it, on Spotify too. Signed in to YouTube Music, your dislikes of its songs go there too; Spotify takes none from apps, so those of its tracks stay in MixMusic. Library › Disliked lists them all (see [Your library](library.md#disliked-songs)), and "Skip songs you dislike" in Settings › Content › Songs to skip turns the skipping off.
 
 ## Skipping songs made with AI
 
-"Skip songs made with AI", in Settings › Playback › Sound and off by default, passes over the songs YouTube labels as made with AI, as the queue moves on by itself: at the end of a song, on Next and Previous, in autoplay's radios, and from the play and shuffle buttons of a list.
+"Skip songs made with AI", in Settings › Content › Songs to skip and off by default, passes over the songs YouTube labels as made with AI, as the queue moves on by itself: at the end of a song, on Next and Previous, in autoplay's radios, and from the play and shuffle buttons of a list.
 
 - YouTube labels only some of them, so others still play.
 - A song you pick by name plays anyway.
@@ -210,7 +210,7 @@ YouTube's live streams play, such as its 24/7 radio channels, from about 15 seco
 
 ## The picture of music videos
 
-Music videos can show their picture on the now playing page, in place of the cover. Turn on "Show the video of music videos" in Settings › Playback › Music videos, press the video button beside the play and next buttons of the now playing page while a music video plays, or use the command "Show or hide the video of music videos".
+Music videos can show their picture on the now playing page, in place of the cover. Turn on "Show the video of music videos" in Settings › Content › Music videos, press the video button beside the play and next buttons of the now playing page while a music video plays, or use the command "Show or hide the video of music videos".
 
 - The picture is muted and follows MixMusic's own sound, pausing and seeking with it.
 - It shows only for official music videos and other uploads, never for songs or live streams.
@@ -221,7 +221,7 @@ Music videos can show their picture on the now playing page, in place of the cov
 
 ## Moving covers
 
-A cover that's a GIF can move. Turn on "Show moving covers" in Settings › Playback › Moving covers, or use the command "Show or hide moving covers". It's off at first.
+A cover that's a GIF can move. Turn on "Show moving covers" in Settings › Content › Moving covers, or use the command "Show or hide moving covers". It's off at first.
 
 - **Which covers move:** a mix's cover you chose as a GIF, with [Change cover…](library.md#mixes), and the GIF of music on this computer: inside its file, or beside it as `cover.gif`, `folder.gif`, `front.gif` or `album.gif`, when no still of that name is there.
 - **Where they move:** in the now playing page's sleeve, where the GIF pauses with the music, and in the head of the mix's page. Everywhere else, as on tiles, the first frame shows.
@@ -229,11 +229,11 @@ A cover that's a GIF can move. Turn on "Show moving covers" in Settings › Play
 - **What it costs:** a GIF is read once, and its frames are drawn as they come due, with no web view. A GIF of 60 frames of 600 pixels square, the largest a mix keeps, takes about 22 MB while its page shows, and about half a millisecond of the processor a frame. A GIF no page showed for half a minute is let go.
 - **The picture of music videos** shows in place of the cover, moving or not, while it plays.
 
-Albums' own moving covers, the short clips that loop in place of their cover, wait for a source of them to be chosen. Once one is, they loop muted in the sleeve, in a loop mode of the picture of music videos, and keep in **Moving covers kept**, in Settings › Playback › Offline cache.
+Albums' own moving covers, the short clips that loop in place of their cover, wait for a source of them to be chosen. Once one is, they loop muted in the sleeve, in a loop mode of the picture of music videos, and keep in **Moving covers kept**, in Settings › Storage › Offline cache.
 
 ## The output device
 
-MixMusic plays on the system's default output device, and moves to the new one when you change it in your system's sound settings. To play music on headphones or a DAC while calls and the system's sounds stay on the speakers, choose the device MixMusic plays on: **Output device**, at the top of Settings › Playback › Sound.
+MixMusic plays on the system's default output device, and moves to the new one when you change it in your system's sound settings. To play music on headphones or a DAC while calls and the system's sounds stay on the speakers, choose the device MixMusic plays on: **Output device**, at the top of Settings › Audio › Output.
 
 - **The choices** are **System default**, which names the device it is now, and each output device of your computer by the name your system gives it. Two of one name, as two monitors of one model, are told apart by a number. The refresh button beside it looks for devices again.
 - **The speaker button** beside the volume chooses too, where the window is wide enough for it beside the player bar's other buttons, and while there's a choice to make: more than one device, or one chosen. It turns to the accent while a device is chosen, and its tip names it.
@@ -245,7 +245,7 @@ MixMusic plays on the system's default output device, and moves to the new one w
 
 ## 5.1 surround
 
-Some YouTube Music tracks have a 5.1 surround mix beside their stereo one. While one plays, a 5.1 button shows by the player: pressing it plays the surround mix from where the stereo one was, and pressing it again goes back to stereo. The choice stays for later tracks, as "Play 5.1 surround when a track has it" in Settings › Playback › Sound, which the button turns on and off. It's off by default.
+Some YouTube Music tracks have a 5.1 surround mix beside their stereo one. While one plays, a 5.1 button shows by the player: pressing it plays the surround mix from where the stereo one was, and pressing it again goes back to stereo. The choice stays for later tracks, as "Play 5.1 surround when a track has it" in Settings › Audio › Output, which the button turns on and off. It's off by default.
 
 - A track doesn't wait to learn whether it has a 5.1 mix: it starts at once, and the 5.1 button may show a moment later, once YouTube has said so. With 5.1 on, the track then plays its surround mix from where it is.
 - Nor does it wait for its surround mix: with 5.1 on, or as you press 5.1, it plays in stereo while the mix is found and YouTube starts serving it, a few seconds the first time, and goes on in 5.1 from where it is then. A mix found before, or in the offline cache, plays at once. A mix that can't be had leaves the track in stereo, and MixMusic says why. Before 0.5.11, the track was silent meanwhile.
@@ -256,9 +256,9 @@ Some YouTube Music tracks have a 5.1 surround mix beside their stereo one. While
 
 ## How Spotify tracks play
 
-"How Spotify tracks play", in Settings › Playback › Spotify tracks, has three choices. Signing in to Spotify comes first: see [Spotify](spotify.md). [How Spotify tracks play](spotify-playback.md), under How it works, tells what each way does inside.
+"How Spotify tracks play", in Settings › Content › Spotify tracks, has three choices. Signing in to Spotify comes first: see [Spotify](spotify.md). [How Spotify tracks play](spotify-playback.md), under How it works, tells what each way does inside.
 
-- **In MixMusic, from Spotify,** the default on Windows and macOS. MixMusic plays the track itself, at Spotify's own quality, with no Spotify app open, and shows among your Spotify devices while it plays. It needs Spotify Premium, and Windows or macOS, whose web views can play Spotify's protected audio; on Linux the choice is greyed out and says why. A sign-in made before MixMusic played Spotify itself doesn't allow it: Settings › Playback then asks you to sign in again, and until you do, Spotify tracks play from YouTube Music.
+- **In MixMusic, from Spotify,** the default on Windows and macOS. MixMusic plays the track itself, at Spotify's own quality, with no Spotify app open, and shows among your Spotify devices while it plays. It needs Spotify Premium, and Windows or macOS, whose web views can play Spotify's protected audio; on Linux the choice is greyed out and says why. A sign-in made before MixMusic played Spotify itself doesn't allow it: Settings › Content then asks you to sign in again, and until you do, Spotify tracks play from YouTube Music.
 - **On Spotify Connect,** the default on Linux. A Spotify device plays the track: your Spotify app on this computer, your phone or a speaker. It needs Spotify Premium and a device with Spotify open. The Device row under the choice, or the devices button by the player, picks the device; by default, the active one. The player bar says "on Spotify".
 - **In MixMusic, from YouTube Music.** MixMusic plays the track's recording on YouTube Music, with the equalizer, crossfade and the visualizer. It works without Premium. The player bar says "via YouTube Music", and Find another YouTube Music match in the track's menu looks again when the recording is wrong. In `settings.json`, this is `"spotifyPlayback": "match"`.
 
@@ -279,14 +279,14 @@ Quality, in Settings › Playback › Sound, chooses between best and data saver
 YouTube serves YouTube Music Premium's audio of a higher bitrate, near 256 kbit/s rather than near 130, only to a request made as a Premium account. MixMusic asks for each track's audio signed out, so a Premium member hears what everyone hears, unless they turn on **Play audio as your account**, in Settings › Playback › Sound, beside Quality. It's off at first.
 
 - **What it risks.** YouTube may flag an account used this way, as it's asked through [yt-dlp](streams.md#as-your-account), and tracks may start more slowly: yt-dlp takes a few seconds where YouTube's player API takes a moment.
-- **When it asks as your account.** While you're [signed in to YouTube Music](accounts.md#youtube-music), with the best quality: data saver gains nothing from Premium. yt-dlp needs a JavaScript runtime for it, which Settings › Playback › Tools shows. It asks as the first Google account of your session, so while MixMusic uses [another Google account](accounts.md#several-google-accounts-and-brand-channels) of it, tracks are asked for signed out.
+- **When it asks as your account.** While you're [signed in to YouTube Music](accounts.md#youtube-music), with the best quality: data saver gains nothing from Premium. yt-dlp needs a JavaScript runtime for it, which Settings › Storage › Tools shows. It asks as the first Google account of your session, so while MixMusic uses [another Google account](accounts.md#several-google-accounts-and-brand-channels) of it, tracks are asked for signed out.
 - **A track never fails for it.** When YouTube gives nothing that plays as your account, or turns the request down, or refuses the audio it gave, the track is found signed out, as without the switch.
 - **The offer.** When MixMusic sees that your YouTube Music account has Premium, it offers once to turn the switch on, saying what it risks. It never turns it on by itself.
 - Tracks played before, and kept in the [offline cache](library.md#the-offline-cache), play as they were kept. [Downloads](library.md#how-they-download) are asked for as your account too while it's on.
 
 ## Without the network
 
-- **The [offline cache](library.md#the-offline-cache)** keeps the tracks you played, as much as Settings › Playback › Offline cache allows, and they play again without the network. Downloads play without it too: see [Your library](library.md#downloads).
+- **The [offline cache](library.md#the-offline-cache)** keeps the tracks you played, as much as Settings › Storage › Offline cache allows, and they play again without the network. Downloads play without it too: see [Your library](library.md#downloads).
 - **While you're offline,** the queue skips the tracks that aren't downloaded or cached, without an error for each, and waits for the network only once none is left. A toast says that your downloads still play, and Home offers to open them.
 - **When the network drops** partway through a song, the song waits for it, and plays on from where it stopped once it's back. The player bar says that it waits for the network, and the play button chooses whether the song plays then. Songs whose audio MixMusic holds still play meanwhile.
 - **A downloaded song, or one on this computer, that can't be read,** as a damaged file or one on a drive unplugged, doesn't wait for the network, which wouldn't help: MixMusic tries it again at once, and then moves on, saying why, as File not found or Can't read the file.

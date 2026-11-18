@@ -41,7 +41,7 @@ func TestKeepOnTopRow(t *testing.T) {
 	tt := testerOf(t, s, 1280, 2400)
 	show(s, tt, "/settings/desktop")
 	var above float32
-	for _, text := range []string{"Show what plays on Discord", keepOnTopTitle(), keepOnTopDescription(), "Start at login"} {
+	for _, text := range []string{"Show what plays on Discord", keepOnTopTitle(), keepOnTopDescription()} {
 		r, ok := tt.Find(text)
 		if !ok || r.Y <= above {
 			t.Fatalf("Settings › Desktop shows %q out of place: %q", text, tt.Texts())
