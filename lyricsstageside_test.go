@@ -48,17 +48,27 @@ func stageQueueWith(t *testing.T, src artSource) (*shell, *ui.Tester) {
 	return s, tt
 }
 
-// TestStageQueueCovers shows the covers of the tracks next in the queue,
-// those after the one playing and no others, and plays the one that is
-// clicked: by its place in the whole queue, which is not its place among the
-// covers.
+// TestStageQueueCovers shows the covers of the queue around the track
+// playing: the one played before it, the one playing, labelled as playing,
+// and those next. A click on a cover plays it by its place in the whole
+// queue, which is not its place among the covers, and a click on the one
+// playing does nothing.
 func TestStageQueueCovers(t *testing.T) {
 	s, tt := stageQueueOn(t)
 	for i, tr := range testTracks {
-		_, shows := tt.Find("Play " + tr.Title)
-		if want := i >= 2; shows != want {
-			t.Errorf("the cover of track %d, %q, shows %v, not %v", i, tr.Title, shows, want)
+		_, plays := tt.Find("Play " + tr.Title)
+		_, playing := tt.Find(tr.Title + ", playing")
+		if plays != (i != 1) || playing != (i == 1) {
+			t.Errorf("track %d, %q: a cover to play it %v, the one playing %v", i, tr.Title, plays, playing)
 		}
+	}
+	if err := tt.Click(testTracks[1].Title + ", playing"); err != nil {
+		t.Fatalf("clicking the cover playing: %v", err)
+	}
+	s.drain()
+	tt.Frame()
+	if st := s.p.State(); st.Index != 1 {
+		t.Errorf("a click on the cover playing moved the queue to %d", st.Index)
 	}
 	if err := tt.Click("Play " + testTracks[4].Title); err != nil {
 		t.Fatalf("clicking a cover: %v; the window shows %q", err, tt.Texts())
@@ -68,6 +78,28 @@ func TestStageQueueCovers(t *testing.T) {
 	tt.Frame()
 	if !s.stage.open {
 		t.Error("a cover closed the stage")
+	}
+}
+
+// TestStageQueueWindow keeps the entry playing at a third of the strip, with
+// empty spots above it near the queue's start, and the queue from its start
+// with nothing playing.
+func TestStageQueueWindow(t *testing.T) {
+	for _, c := range []struct{ n, at, room, blank, from, to int }{
+		{20, 10, 10, 0, 7, 17},
+		{20, 1, 10, 2, 0, 8},
+		{20, 0, 10, 3, 0, 7},
+		{20, 19, 10, 0, 16, 20},
+		{4, 2, 10, 1, 0, 4},
+		{20, -1, 10, 0, 0, 10},
+		{20, 5, 1, 0, 5, 6},
+		{20, 5, 0, 0, 0, 0},
+		{0, -1, 10, 0, 0, 0},
+	} {
+		blank, from, to := stageQueueWindow(c.n, c.at, c.room)
+		if blank != c.blank || from != c.from || to != c.to {
+			t.Errorf("stageQueueWindow(%d, %d, %d) = %d, %d, %d, not %d, %d, %d", c.n, c.at, c.room, blank, from, to, c.blank, c.from, c.to)
+		}
 	}
 }
 
