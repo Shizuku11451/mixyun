@@ -68,8 +68,11 @@ func TestFloatLayout(t *testing.T) {
 	if l := floatLayoutOf(260, 64); l.art != 0 || l.second || l.bar {
 		t.Errorf("at its least: %+v; want the line sung alone", l)
 	}
-	if l := floatLayoutOf(800, 400); l.art > floatArtMax || l.size > 34 {
+	if l := floatLayoutOf(800, 400); l.art > floatArtMax || l.size > 64 {
 		t.Errorf("large: %+v; want the cover and the words no larger than their most", l)
+	}
+	if small, large := floatLayoutOf(460, 128), floatLayoutOf(800, 300); large.size < small.size*1.3 || large.art < small.art*1.5 {
+		t.Errorf("large %+v against small %+v; want the words and the cover to grow with the window", large, small)
 	}
 }
 

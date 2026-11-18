@@ -26,7 +26,7 @@ const floatHideAfter = 1500 * time.Millisecond
 // floatArtMax is the most DIPs across the cover is shown at: it is fetched
 // so once, and drawn smaller as the window shrinks, rather than fetched
 // again at each size.
-const floatArtMax = 160
+const floatArtMax = 320
 
 // floatPollEvery is how often a locked floating window, which lets the
 // pointer through, looks where the pointer is (floatLock).
@@ -109,14 +109,21 @@ func floatLayoutOf(w, h float32) floatLayout {
 	if !l.bar {
 		room = w - 3*l.pad - 200
 	}
-	if a := min(inner, w*0.3, floatArtMax, room); a >= 40 {
+	if a := min(inner, w*0.28, floatArtMax, room); a >= 40 {
 		l.art = a
 	}
 	column := w - 2*l.pad - l.art
 	if l.art > 0 {
 		column -= l.pad
 	}
-	l.size = max(15, min(h*0.16, 34))
+	// The words grow with the room the window gives them, so that a large
+	// window is not mostly empty: about a third of its height with the line
+	// under, half without, and narrow enough to show a few words across.
+	share := float32(0.3)
+	if !l.second {
+		share = 0.5
+	}
+	l.size = max(15, min(inner*share, column*0.09, 64))
 	l.meta = h >= 100
 	l.times = column >= 290
 	return l
@@ -217,9 +224,10 @@ func (s *shell) floatView(c *ui.Context) {
 		}
 		ui.Column(c).Grow(1).AlignSelf(ui.Stretch).MinWidth(0).Children(func() {
 			if l.meta {
+				meta := max(11, l.size*0.38)
 				ui.Row(c).Gap(6).MinWidth(0).Children(func() {
-					ui.Text(c, title).FontSize(11).FontWeight(600).SingleLine().Shrink(0).MaxWidth(180)
-					ui.Text(c, artists).FontSize(11).TextColor(k.muted).SingleLine().MinWidth(0)
+					ui.Text(c, title).FontSize(meta).FontWeight(600).SingleLine().Shrink(0).MaxWidth(meta * 16)
+					ui.Text(c, artists).FontSize(meta).TextColor(k.muted).SingleLine().MinWidth(0)
 				})
 			}
 			ui.Column(c).Grow(1).MinHeight(0).Justify(ui.Center).Clip().Children(func() {
