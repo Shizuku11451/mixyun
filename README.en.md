@@ -6,7 +6,7 @@
 
 <h1 align="center">Mixyun</h1>
 
-<p align="center"><strong>Mixyun is a fork of <a href="https://github.com/fzn0x/mixmusic">MixMusic</a> that plays NetEase Cloud Music and Spotify, with a Chinese interface. <a href="README.md">中文说明</a> describes it; the rest of this page is MixMusic's, and still speaks of YouTube Music, which Mixyun replaced.</strong></p>
+<p align="center"><strong>Mixyun is a fork of <a href="https://github.com/fzn0x/mixmusic">MixMusic</a> that adds NetEase Cloud Music beside YouTube Music and Spotify, with a Simplified Chinese interface and floating, notch and taskbar lyrics. <a href="README.md">中文说明</a> describes it; the rest of this page is MixMusic's.</strong></p>
 
 <p align="center"><strong>One player for YouTube Music and Spotify.</strong></p>
 
