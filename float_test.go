@@ -154,3 +154,34 @@ func TestFloatLockedLegible(t *testing.T) {
 		t.Errorf("%d white pixels: the words are covered", white)
 	}
 }
+
+// TestFloatLineGrows grows the next line out of where it showed under the
+// line sung, up to that line's place, as the line sung goes.
+func TestFloatLineGrows(t *testing.T) {
+	s := newTestShell(t)
+	s.loads["lyrics:"+testTracks[0].ID] = &loaded[lyrics.Lyrics]{done: true, value: lyrics.Lyrics{Synced: true, Source: "Unison", Lines: lanternLines}}
+	s.p.PlayTracks(testTracks, 0)
+	s.settle(t, func(st player.State) bool { return st.Playing && !st.Loading })
+	s.p.Time(3500*time.Millisecond, 200*time.Second)
+	s.settle(t, func(st player.State) bool { return st.Position == 3500*time.Millisecond })
+	tt := ui.NewTester(s.floatView, 460, 128)
+	tt.Frame()
+	tt.Advance(time.Second)
+	sung, ok := tt.Find("Lanterns drifting home")
+	under, ok2 := tt.Find("Quiet harbour")
+	if !ok || !ok2 || under.Y <= sung.Y {
+		t.Fatalf("the lines at %v and %v; it shows %q", sung, under, tt.Texts())
+	}
+	s.p.Time(60500*time.Millisecond, 200*time.Second)
+	s.settle(t, func(st player.State) bool { return st.Position == 60500*time.Millisecond })
+	tt.Frame()
+	start, _ := tt.Find("Quiet harbour")
+	tt.Advance(time.Second)
+	end, ok := tt.Find("Quiet harbour")
+	if !ok || start.Y < end.Y+4 || end.H < under.H*1.3 || start.H > end.H*0.8 {
+		t.Errorf("the next line from %v to %v; it was %v under %v", start, end, under, sung)
+	}
+	if tt.HasText("Lanterns drifting home") {
+		t.Error("the line sung before stays")
+	}
+}

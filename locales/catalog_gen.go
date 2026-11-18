@@ -14504,16 +14504,6 @@ func (msgs Messages) PlayerLooking() string {
 	return Catalog.Format(msgs.locale, "playerLooking", nil)
 }
 
-// PlayerMiniPlayer says "Open the mini player"
-// in the language the app shows.
-func PlayerMiniPlayer() string { return In(i18n.Locale()).PlayerMiniPlayer() }
-
-// PlayerMiniPlayer says "Open the mini player"
-// in the language of msgs.
-func (msgs Messages) PlayerMiniPlayer() string {
-	return Catalog.Format(msgs.locale, "playerMiniPlayer", nil)
-}
-
 // PlayerNext says "Next"
 // in the language the app shows.
 func PlayerNext() string { return In(i18n.Locale()).PlayerNext() }

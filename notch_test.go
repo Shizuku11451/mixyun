@@ -214,20 +214,39 @@ func TestNotchControls(t *testing.T) {
 	s.settle(t, func(st player.State) bool { return st.Playing })
 	x := newNotchTest(t, s, testHousing)
 	x.openPanel()
-	if !x.tt.HasText("Paper boats on the river") || !x.tt.HasText("Carry what the morning said") || x.tt.HasText("Lanterns lean across the water") {
-		t.Errorf("at the start, the lyrics show %q", x.tt.Texts())
+	// The line sung sits in the middle of the lyrics, between the panel's
+	// padding, the line before above it and the line after below.
+	sung := func(when, line, before, after string) {
+		t.Helper()
+		mid := float32(testHousing.H) + 6 + (notchBody-6-16)/2
+		r, ok := x.tt.Find(line)
+		if !ok || r.Y+r.H/2 < mid-4 || r.Y+r.H/2 > mid+4 {
+			t.Errorf("%s, %q isn't in the middle (%v) of the lyrics: %+v", when, line, mid, r)
+		}
+		if b, ok := x.tt.Find(before); before != "" && (!ok || b.Y >= r.Y) {
+			t.Errorf("%s, %q isn't above %q: %+v", when, before, line, b)
+		}
+		if a, ok := x.tt.Find(after); !ok || a.Y <= r.Y {
+			t.Errorf("%s, %q isn't below %q: %+v", when, after, line, a)
+		}
 	}
+	sung("at the start", "Paper boats on the river", "♪", "Carry what the morning said")
 	s.p.Seek(61 * time.Second)
 	s.settle(t, func(st player.State) bool { return st.Position >= 61*time.Second })
+	// The lyrics glide there, as the window draws on.
 	x.frame()
-	for _, want := range []string{"Carry what the morning said", "Lanterns lean across the water", "Folding light into the bend", "1:01", "3:31"} {
+	if r, _ := x.tt.Find("Lanterns lean across the water"); r.Y+r.H/2 < float32(testHousing.H)+6+(notchBody-6-16)/2+4 {
+		t.Errorf("after a seek, the line sung jumped to the middle rather than glide: %+v", r)
+	}
+	for range 10 {
+		x.tt.Advance(100 * time.Millisecond)
+	}
+	for _, want := range []string{"1:01", "3:31"} {
 		if !x.tt.HasText(want) {
 			t.Errorf("after a seek, the panel doesn't show %q: %q", want, x.tt.Texts())
 		}
 	}
-	if x.tt.HasText("Paper boats on the river") {
-		t.Errorf("after a seek, the lyrics show a line two before: %q", x.tt.Texts())
-	}
+	sung("after a seek", "Lanterns lean across the water", "Carry what the morning said", "Folding light into the bend")
 
 	x.click("Pause")
 	s.settle(t, func(st player.State) bool { return !st.Playing })
