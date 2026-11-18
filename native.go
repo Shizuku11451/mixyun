@@ -86,11 +86,13 @@ func fitIn(r, work mygo.Rectangle) mygo.Rectangle {
 	return r
 }
 
-// titleBarStyle is the main window's title bar on goos: the system's own,
-// whose buttons are drawn as the system draws them, but on macOS, where
-// the traffic lights sit over the window, as in the system's apps.
+// titleBarStyle is the main window's title bar on goos: hidden on macOS
+// and Windows, where the page fills the window and the system's buttons sit
+// over it (the traffic lights; minimize, maximize and close as Windows 11
+// draws them), and the system's own elsewhere, where the desktop decides
+// which buttons show.
 func titleBarStyle(goos string) mygo.TitleBarStyle {
-	if goos == "darwin" {
+	if goos == "darwin" || goos == "windows" {
 		return mygo.TitleBarHidden
 	}
 	return mygo.TitleBarDefault

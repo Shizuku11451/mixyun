@@ -159,7 +159,18 @@ func (s *shell) lyricStage(c *ui.Context) {
 			}
 		})
 		s.stageClose(c)
+		s.stageDrag(c)
 	})
+}
+
+// stageDrag is the strip along the top of the stage that drags the window
+// under a hidden title bar, as the top bar does, clear of the window's
+// buttons. Absolute, and last, it paints and takes the pointer above the
+// lyrics there.
+func (s *shell) stageDrag(c *ui.Context) {
+	if bar := c.TitleBar(); bar.Height > 0 {
+		ui.Box(c.Key("stage-drag")).Absolute().Top(0).Left(bar.Left).Right(bar.Right).Height(bar.Height).DragWindow()
+	}
 }
 
 // stageGround paints the ground of the stage on its panel: the track's cover,
@@ -218,9 +229,14 @@ func (s *shell) stageCover(c *ui.Context, t media.Track, size float32, st lyricS
 	})
 }
 
-// stageClose is the button that closes the stage, at its top right.
+// stageClose is the button that closes the stage, at its top right, or,
+// where the window's buttons take that corner (Windows), below them.
 func (s *shell) stageClose(c *ui.Context) {
-	b := s.buttonBase(c.Key("stage-close")).Absolute().Top(20).Right(20).Size(40, 40).Radius(20).Label(locales.LyricsStageClose()).Cursor(ui.CursorPointer).Tooltip(locales.LyricsStageCloseTip())
+	top := float32(20)
+	if bar := c.TitleBar(); bar.Right > 0 {
+		top = bar.Height + 8
+	}
+	b := s.buttonBase(c.Key("stage-close")).Absolute().Top(top).Right(20).Size(40, 40).Radius(20).Label(locales.LyricsStageClose()).Cursor(ui.CursorPointer).Tooltip(locales.LyricsStageCloseTip())
 	if b.Hovered() {
 		b.Background(stageInk.Alpha(0.16))
 	}
