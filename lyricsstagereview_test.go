@@ -20,7 +20,7 @@ import (
 func TestLyricSizeSliderReachesTheEnds(t *testing.T) {
 	s := newTestShell(t)
 	tt := testerOf(t, s, 1280, 3000)
-	show(s, tt, "/settings/appearance")
+	show(s, tt, "/settings/lyrics")
 	reveal(tt, "Lyrics text size")
 	slider := func() ui.Rect {
 		t.Helper()

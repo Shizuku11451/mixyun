@@ -18,7 +18,7 @@ import (
 // and macOS, whose webviews decrypt Spotify's audio.
 var spotifyPlaysHere = app.SpotifyPlaysHere()
 
-func init() { addSettings("playback", 10, (*shell).spotifyTrackSettings) }
+func init() { addSettings("content", 10, (*shell).spotifyTrackSettings) }
 
 // spotifyTrackSettings choose how Spotify tracks play, and where.
 func (s *shell) spotifyTrackSettings(c *ui.Context) {

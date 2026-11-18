@@ -51,6 +51,8 @@ type settingsFind struct {
 	q              string
 	cur            []string
 	section, group string
+	// advanced tells that the groups that build fold under Advanced.
+	advanced       bool
 	links          func()
 	head, whole    bool
 	inside         bool
@@ -181,7 +183,7 @@ func (s *shell) findHead(c *ui.Context) {
 		return
 	}
 	f.head = false
-	section, group, links := f.section, f.group, f.links
+	section, group, links, advanced := f.section, f.group, f.links, f.advanced
 	s.sectionHead(c, group, func() {
 		// Screen readers hear the group in the link's name, as the
 		// groups of a section show a link each.
@@ -189,6 +191,10 @@ func (s *shell) findHead(c *ui.Context) {
 		in := s.linkOf(c.Key("find-in-"+section), locales.SettingsShowIn(name), "").FontSize(s.lk.smallSize()).
 			Label(locales.SettingsShowGroupIn(s.lk.words(group), name))
 		if in.Clicked() {
+			if advanced && !s.set.AdvancedSettings {
+				s.set.AdvancedSettings = true
+				s.save()
+			}
 			f.reveal = group
 			s.navigate(settingsPath(section, ""))
 		}

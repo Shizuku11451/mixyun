@@ -1,6 +1,6 @@
 package main
 
-// Time lyrics to music videos, in Settings › Playback › Lyrics (#565): the
+// Time lyrics to music videos, in Settings › Lyrics › Lyrics (#565): the
 // lyrics of a music video that are its song's move to where the song
 // starts in the video, which the app measures (internal/app's
 // lyricsvideo.go), and show in place as they're timed.

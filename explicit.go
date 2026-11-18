@@ -1,6 +1,6 @@
 package main
 
-// Hide explicit content, in Settings › Playback › Explicit content (#427).
+// Hide explicit content, in Settings › Content › Explicit content (#427).
 // The lists the services make leave out the songs, videos and albums
 // marked explicit, one filter for each kind of list, as the pages read
 // them: what a search found and what the search box suggests, the shelves

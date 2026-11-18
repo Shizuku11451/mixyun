@@ -37,8 +37,8 @@
   same browser installed otherwise (`youtube_cookies_flatpak.go`).
   [packaging/flathub](../../packaging/flathub) builds MixMusic from source
   for Flathub, whose build leaves a mark that `flathub.go` tells it by:
-  Flathub updates it, so Settings › About offers no download, and it runs
-  the yt-dlp of its manifest rather than download one.
+  Flathub updates it, so Settings › General › Updates offers no download,
+  and it runs the yt-dlp of its manifest rather than download one.
 - **`internal/taskbar`** puts previous, play or pause, and next on the
   thumbnail of the main window's taskbar button on Windows, through the
   shell's ITaskbarList3, and takes their clicks in a window procedure in
@@ -53,10 +53,10 @@
   may hold, and has Go write a crash to `crash.log` there, which the next
   start keeps as `crash-<time>.log` and offers to report. Its
   `MemoryRecorder` records memory use while the user has Settings ›
-  About › Record memory use on (`internal/app`'s `memory.go`, off at each
-  start): a line of `ReadMemory` in `memory.log` each minute, the Go
-  heap's figures and the process's resident size where the system tells
-  it cheaply (`/proc/self/statm` on Linux, `GetProcessMemoryInfo` on
+  About › Advanced › Memory use › Record memory use on (`internal/app`'s
+  `memory.go`, off at each start): a line of `ReadMemory` in `memory.log` each
+  minute, the Go heap's figures and the process's resident size where the system
+  tells it cheaply (`/proc/self/statm` on Linux, `GetProcessMemoryInfo` on
   Windows, with its private bytes, `proc_pid_rusage` on macOS, with its
   footprint), and a heap profile (`WriteHeapProfile`) when asked, and
   once as the memory passes 1 GB, the newest five kept. Capture mode's

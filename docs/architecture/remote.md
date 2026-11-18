@@ -274,7 +274,7 @@ MixMusic's executable through its COM interface, `INetFwPolicy2`, which
 needs no administrator: whether it's on for the networks the computer is
 on, whether those are public, whether an organization's policy decides,
 whether it blocks every incoming connection, and the inbound rules of the
-executable. Settings › Desktop › Windows Firewall shows it, read again
+executable. Settings › Desktop › Advanced › Windows Firewall shows it, read again
 after remote control turns on, after Allow, and at most every 5 seconds
 while the settings show. **Allow** starts MixMusic again with
 `--allow-firewall`, through `ShellExecuteEx`'s `runas`, so Windows asks

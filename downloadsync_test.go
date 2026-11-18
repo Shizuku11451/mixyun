@@ -242,7 +242,7 @@ func TestDownloadAddedLiked(t *testing.T) {
 func TestDownloadAddedSetting(t *testing.T) {
 	s := newTestShell(t)
 	tt := testerOf(t, s, 1280, 3000)
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/storage")
 	// The switch, not what holds its row too, as the page.
 	const label = "Download songs added later"
 	focused := func() bool { return tt.Focused(label) && !tt.Focused(downloadAddedAbout()) }

@@ -6,10 +6,10 @@ import (
 	"github.com/fzn0x/mixmusic/locales"
 )
 
-func init() { addSettings(soundRows, 50, (*shell).surroundRow) }
+func init() { addSettings(audioRows, 40, (*shell).surroundRow) }
 
 // surroundRow plays the 5.1 surround mix of the tracks that have one, in
-// Settings › Playback › Sound.
+// Settings › Audio › Output.
 func (s *shell) surroundRow(c *ui.Context) {
 	s.row(c, locales.SurroundTitle(), surroundDescription(), func() {
 		if s.switchOf(c.Key("surround"), &s.set.Surround).Label(locales.SurroundTitle()).Changed() {
@@ -18,5 +18,5 @@ func (s *shell) surroundRow(c *ui.Context) {
 	})
 }
 
-// surroundDescription tells what 5.1 surround does, in Settings › Playback.
+// surroundDescription tells what 5.1 surround does, in Settings › Audio.
 func surroundDescription() string { return locales.SurroundDescription() }

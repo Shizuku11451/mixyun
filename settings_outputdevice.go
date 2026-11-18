@@ -8,10 +8,22 @@ import (
 	"github.com/fzn0x/mixmusic/locales"
 )
 
-func init() { addSettings(soundRows, 5, (*shell).outputDeviceRow) }
+func init() { addSettings("audio", 10, (*shell).outputSettings) }
+
+// audioRows are the rows of Settings › Audio › Output, which register from
+// their features' files.
+const audioRows = "audio › Output"
+
+// outputSettings are where and how the sound comes out: the device, its
+// loudness and surround.
+func (s *shell) outputSettings(c *ui.Context) {
+	s.group(c, locales.AudioOutputGroup(), func() { s.settingsOf(c, audioRows) })
+}
+
+func init() { addSettings(audioRows, 10, (*shell).outputDeviceRow) }
 
 // outputDeviceRow chooses the device MixMusic's own player plays on, in
-// Settings › Playback › Sound: the system's default, or a device by name.
+// Settings › Audio › Output: the system's default, or a device by name.
 func (s *shell) outputDeviceRow(c *ui.Context) {
 	description := outputDescription()
 	if s.set.OutputDevice.ID != "" && s.svc.Player.OutputFallback() {

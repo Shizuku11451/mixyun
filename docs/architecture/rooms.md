@@ -425,7 +425,7 @@ no relay: guests reach the host's computer directly.
   address and a code, which the guest proves as on the network. One that
   can't reach a room outside is told the likely causes: a router that
   doesn't forward the port, a firewall, or a room that ended.
-- **Firewalls.** The rule of Settings › Desktop › Windows Firewall lets
+- **Firewalls.** The rule of Settings › Desktop › Advanced › Windows Firewall lets
   in any address on private and domain networks, which a forwarded port
   is; macOS's firewall must allow MixMusic's incoming connections, and on
   Linux ufw or firewalld must let the port in.
@@ -447,7 +447,7 @@ room on one; the other finds it on mDNS, on the same computer, in its
 devices menu: join it with the code, or paste the invite link on its
 Listen with friends page, as a link opens the copy that registered
 `mixmusic://`. Both play
-aloud: one on headphones and one on speakers, as Settings › Playback ›
+aloud: one on headphones and one on speakers, as Settings › Audio › Output ›
 Output device chooses, tells them apart.
 
 ## Not yet

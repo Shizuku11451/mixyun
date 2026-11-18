@@ -23,7 +23,7 @@ YouTube Music's podcasts play with no account. Spotify's play [from Spotify itse
 
 ![The page of the Lex Fridman Podcast, a YouTube Music show: its cover, its authors and description, the Play and Following buttons and the More button, then its episodes, newest first, each with the day it came out and its length](shots/show.webp)
 
-A Spotify show's page says so when Spotify tracks play from YouTube Music: Spotify's podcasts play only from Spotify, so choose In MixMusic, from Spotify or On Spotify Connect in [Settings › Playback](playing-music.md#how-spotify-tracks-play).
+A Spotify show's page says so when Spotify tracks play from YouTube Music: Spotify's podcasts play only from Spotify, so choose In MixMusic, from Spotify or On Spotify Connect in [Settings › Content › Spotify tracks](playing-music.md#how-spotify-tracks-play).
 
 ## An episode's menu
 
@@ -64,7 +64,7 @@ Signed in to YouTube Music, MixMusic and YouTube Music go on from each other's p
 
 ## Spotify's episodes
 
-- **They play only from Spotify,** with ["How Spotify tracks play"](spotify.md#how-spotify-tracks-play) in Settings › Playback set to In MixMusic, from Spotify (on Windows and macOS) or On Spotify Connect, either of which needs Spotify Premium. YouTube Music has no recording of them.
+- **They play only from Spotify,** with ["How Spotify tracks play"](spotify.md#how-spotify-tracks-play) in Settings › Content › Spotify tracks set to In MixMusic, from Spotify (on Windows and macOS) or On Spotify Connect, either of which needs Spotify Premium. YouTube Music has no recording of them.
 - **Where you left them:** Spotify tells MixMusic where you left an episode on another device. A sign-in to Spotify made before MixMusic had podcasts doesn't allow it: [sign in to Spotify](spotify.md#sign-in) again once, in Settings › Accounts.
 - **Speed:** Spotify plays its episodes at their own speed, so the speed button is dimmed while one plays.
 
@@ -77,7 +77,7 @@ Where a song shows its lyrics, an episode shows its details: in the [side panel]
 - **Links** open in your browser.
 - **Chapters:** lines that start or end with a time are chapters, and the chapter that plays lights up as the episode goes on. On a MacBook with a notch, the [notch player](desktop.md#the-player-around-the-notch) shows it, with the chapters before and after it.
 - **Where they come from:** YouTube Music's Details tab, or Spotify, asked for the first time they show, and kept: a refresh doesn't ask again.
-- **Transcript:** under the description, an episode of YouTube Music shows its captions on YouTube as a transcript, made from speech when it has no other, while [YouTube captions](lyrics.md#choose-and-order-the-sources) is on in Settings › Playback › Lyrics. Each line shows its time, the line said now lights up, and a click on a line plays the episode from there.
+- **Transcript:** under the description, an episode of YouTube Music shows its captions on YouTube as a transcript, made from speech when it has no other, while [YouTube captions](lyrics.md#choose-and-order-the-sources) is on in Settings › Lyrics › Lyrics. Each line shows its time, the line said now lights up, and a click on a line plays the episode from there.
 
 ![Now playing an episode of the Lex Fridman Podcast, at 1:09 of 3:34:26: its cover with the visualizer on the left, and under the player its details: the show, 1.3M views, Oct 26 and 3 hr 34 min, then its description with its links](shots/episode.webp)
 

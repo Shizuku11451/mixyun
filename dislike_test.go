@@ -197,7 +197,7 @@ func TestSkipSwitch(t *testing.T) {
 		t.Fatal(err)
 	}
 	tt := testerOf(t, s, 1280, 3200)
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/content")
 	for _, want := range []string{"Skip songs you dislike", "Songs you dislike don't play when the queue moves on, and radios leave them out.",
 		"See the songs you dislike"} {
 		if !tt.HasText(want) {
@@ -243,7 +243,8 @@ func TestSkipSwitchFound(t *testing.T) {
 		want, not []string
 	}{
 		{"dislike", []string{row, dislikesNote(), link}, []string{"Crossfade"}},
-		{"skip songs", []string{row}, []string{dislikesNote(), "Crossfade"}},
+		// Settings › Content › Songs to skip holds the words: all of it shows.
+		{"skip songs", []string{row, dislikesNote()}, []string{"Crossfade"}},
 		{"takes no dislikes", []string{dislikesNote(), link}, []string{row, "Crossfade"}},
 	} {
 		show(s, tt, settingsPath("", c.q))

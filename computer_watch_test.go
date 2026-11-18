@@ -42,11 +42,11 @@ func TestComputerUnwatched(t *testing.T) {
 		return nil, localfiles.ErrNetworkDrive
 	})
 	tt := testerOf(t, s, 1280, 4000)
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/storage")
 	want := "Mixyun can't watch " + music + " for changes: it's on a network drive. Rescan to see what changed in it."
 	until(t, s, tt, "the folder unwatched", func() bool { return tt.HasText(want) && tt.HasText("1 track") })
 	// The search of the settings finds it.
-	show(s, tt, "/settings/playback?q=network+drive")
+	show(s, tt, "/settings/storage?q=network+drive")
 	until(t, s, tt, "the folder unwatched, searched", func() bool { return tt.HasText(want) })
 }
 
@@ -58,7 +58,7 @@ func TestComputerWatched(t *testing.T) {
 		return func() {}, nil
 	})
 	tt := testerOf(t, s, 1280, 4000)
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/storage")
 	until(t, s, tt, "the folder watched", func() bool { return watched.Load() && tt.HasText("1 track") })
 	for _, text := range tt.Texts() {
 		if strings.Contains(text, "can't watch") {

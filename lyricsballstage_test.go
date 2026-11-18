@@ -211,7 +211,7 @@ func TestStageBallNeedsTheNextLineTimedByWords(t *testing.T) {
 func TestLyricBallMotionSettings(t *testing.T) {
 	s := newTestShell(t)
 	tt := testerOf(t, s, 1280, 3000)
-	show(s, tt, "/settings/appearance")
+	show(s, tt, "/settings/lyrics")
 	if !tt.HasText("Ball between lines") || !tt.HasText(ballMotionOf(settings.LyricBallMix).about()) {
 		t.Fatalf("Settings doesn't offer the motion between lines: %q", tt.Texts())
 	}

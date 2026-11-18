@@ -56,7 +56,7 @@
   name one plays on it while it's there, checks every second that it
   still is, plays on the default device meanwhile, and tells `Moved`
   each time it moves. `internal/app/outputdevice.go` keeps the device
-  Settings › Playback chose, opens the engine's outputs on it, has the
+  Settings › Audio › Output chose, opens the engine's outputs on it, has the
   engine open its output again (`Engine.ReopenOutput`) when the choice
   changes, and tells the windows when the device goes away and comes
   back. The player bar's device button and `outputChoices` and
@@ -73,7 +73,7 @@
   the visualizer and the plugins' analyser read while Spotify plays. It
   hears only while they read it; on macOS, which asks the user once, the
   tap is of WebKit's GPU process ([Spotify here](spotify-here.md#macos)).
-- **`internal/volume`** has the volume's curves, which Settings › Playback
+- **`internal/volume`** has the volume's curves, which Settings › Playback › Advanced
   › Volume chooses between (#383): Natural, each tenth of the slider 6 dB
   down to -40 dB, and Linear, whose gain is the slider's position. The
   player keeps the position, as settings.json does whatever the curve

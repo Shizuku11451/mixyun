@@ -210,7 +210,7 @@ them out, as on your network.
   and in Settings › Desktop › Listen with friends, opens the Listen with
   friends page, which takes an invite link, or a room's address, with its
   port, and its code.
-- **Firewalls.** On Windows, the rule that Settings › Desktop › Windows
+- **Firewalls.** On Windows, the rule that Settings › Desktop › Advanced › Windows
   Firewall adds lets in any address on private and domain networks, so a
   forwarded port works. On macOS, the firewall must allow MixMusic's
   incoming connections, and on Linux, ufw or firewalld must let the port

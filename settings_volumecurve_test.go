@@ -16,13 +16,14 @@ func TestVolumeCurveRow(t *testing.T) {
 	s.settle(t, volumeNear(0.5))
 	// The window's own height: the page scrolls to the row, wherever the
 	// settings above it put it.
+	openAdvanced(t, s)
 	tt := tester(t, s)
 	show(s, tt, "/settings/playback")
 	if !reveal(tt, "Volume curve") {
 		t.Fatalf("the row doesn't come into view: %q", tt.Texts())
 	}
 	var above float32
-	for _, text := range []string{"Spotify notes", "Volume curve", volumeCurveDescription(), "Translate lyrics to"} {
+	for _, text := range []string{"Advanced", "Volume curve", volumeCurveDescription()} {
 		r, ok := tt.Find(text)
 		if !ok || r.H <= 0 || r.Y <= above {
 			t.Fatalf("Settings › Playback shows %q out of place, at %v: %q", text, r, tt.Texts())

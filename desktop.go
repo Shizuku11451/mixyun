@@ -26,7 +26,6 @@ func (s *shell) desktopSettings(c *ui.Context) {
 				}
 			}, words...)
 		}
-		toggle("tray", locales.DesktopSettingsTrayTitle(), locales.DesktopSettingsTrayAbout(), &s.set.CloseToTray, "minimize background")
 		toggle("media-keys", locales.DesktopSettingsMediaKeysTitle(), locales.DesktopSettingsMediaKeysAbout(), &s.set.MediaKeys)
 		toggle("notifications", locales.DesktopSettingsNotificationsTitle(), locales.DesktopSettingsNotificationsAbout(), &s.set.Notifications)
 		toggle("title", locales.DesktopSettingsTitleTitle(), locales.DesktopSettingsTitleAbout(), &s.set.ShowInTitle)
@@ -46,6 +45,20 @@ func (s *shell) desktopSettings(c *ui.Context) {
 			}, "Discord shows the name of Mixyun's application. To show another, create one in the developer portal and paste its application ID.")
 		}
 		s.settingsOf(c, desktopRows)
+	})
+}
+
+func init() { addSettings("general", 20, (*shell).startSettings) }
+
+// startSettings are how Mixyun starts and closes: at login, and to the
+// tray.
+func (s *shell) startSettings(c *ui.Context) {
+	s.group(c, locales.GeneralStartGroup(), func() {
+		s.row(c, locales.DesktopSettingsTrayTitle(), locales.DesktopSettingsTrayAbout(), func() {
+			if s.switchOf(c.Key("tray"), &s.set.CloseToTray).Label(locales.DesktopSettingsTrayTitle()).Changed() {
+				s.save()
+			}
+		}, "minimize background")
 		s.row(c, locales.DesktopSettingsLogin(), "", func() {
 			// The system says, beside the main thread.
 			login := fetch(s, "openAtLogin", func(context.Context) (bool, error) { return s.svc.Preferences.OpenAtLogin(), nil })
@@ -63,6 +76,15 @@ func (s *shell) desktopSettings(c *ui.Context) {
 				}()
 			}
 		}, "startup launch")
+	})
+}
+
+func init() { addSettings(advancedOf("general"), 10, (*shell).settingsFileSettings) }
+
+// settingsFileSettings open settings.json, and put the settings back as
+// they come.
+func (s *shell) settingsFileSettings(c *ui.Context) {
+	s.group(c, locales.DesktopSettingsSettingsFile(), func() {
 		s.row(c, locales.DesktopSettingsSettingsFile(), locales.DesktopSettingsSettingsFileAbout(), func() {
 			if s.button(c, "settings-file-open", locales.DesktopSettingsOpen(), false).Clicked() {
 				s.openSettingsFile()
@@ -209,7 +231,7 @@ func (s *shell) setShortcut(cmd command, keys string) {
 	s.save()
 }
 
-func init() { addSettings("about", 20, (*shell).updateSettings) }
+func init() { addSettings("general", 30, (*shell).updateSettings) }
 
 // updateSettings check for new versions, and install them without asking.
 func (s *shell) updateSettings(c *ui.Context) {

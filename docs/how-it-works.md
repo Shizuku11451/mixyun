@@ -26,7 +26,8 @@ on Linux) opens only for three things, and only while it's needed:
   itself. It opens at the first Spotify track that plays there.
 - **Google's sign-in page**, when you sign in to YouTube Music.
 - **The picture of music videos**, when "Show the video of music videos"
-  is on in Settings › Playback. It closes a minute after the last picture.
+  is on in Settings › Content › Music videos. It closes a minute after the last
+  picture.
 
 MixMusic builds without a C compiler: it calls the system's libraries
 while it runs, for the audio output, the media controls, the tray and the
@@ -59,7 +60,7 @@ When you play a YouTube Music track, this happens:
    it starts at once when its turn comes.
 
 A Spotify track plays one of three ways, which you choose in Settings ›
-Playback › Spotify tracks: in MixMusic through Spotify's own player, on a
+Content › Spotify tracks: in MixMusic through Spotify's own player, on a
 Spotify Connect device, or from its recording on YouTube Music through
 MixMusic's own engine. [How Spotify tracks play](spotify-playback.md)
 compares them.
@@ -102,7 +103,7 @@ talks to:
   word by word, first, then [Unison](https://unison.betterlyrics.org), an open,
   crowdsourced database of lyrics, then [LRCLIB](https://lrclib.net), then
   YouTube Music's own lyrics, then the captions of the video on YouTube:
-  Settings › Playback › Lyrics changes the order, and switches sources
+  Settings › Lyrics › Lyrics changes the order, and switches sources
   off. Unison also translates lyrics, through Google, and romanizes
   Arabic, but only while you turn those on.
 - **Latin letters for lyrics** are made on your computer for every other
@@ -151,7 +152,7 @@ what each of these gets.
 - **When it looks.** MixMusic asks GitHub for its newest release 10
   seconds after it starts, then every 6 hours, and when the computer
   wakes after a check was due. A check that fails is tried again an hour
-  later. Settings › About › Updates has the switches: Check for updates,
+  later. Settings › General › Updates has the switches: Check for updates,
   and Install updates without asking. A development copy, run with
   `bun run dev`, never looks.
 - **What it offers.** A new version asks to install in a pop-up, unless
@@ -171,11 +172,11 @@ what each of these gets.
 ### yt-dlp and the JavaScript runtime
 
 MixMusic needs yt-dlp for some tracks, and yt-dlp needs a JavaScript
-runtime to solve the challenges YouTube sends. Settings › Playback ›
+runtime to solve the challenges YouTube sends. Settings › Storage ›
 Tools shows both.
 
 - **MixMusic's own yt-dlp** is the one you install from Settings ›
-  Playback or Home. MixMusic downloads it from yt-dlp's releases on
+  Storage or Home. MixMusic downloads it from yt-dlp's releases on
   GitHub, checks it against the checksums the release publishes, and
   keeps it in the `bin` folder of its data folder. On macOS it installs
   yt-dlp's unpacked build, which starts in 0.2 seconds rather than 8. A
@@ -184,7 +185,7 @@ Tools shows both.
 - **A yt-dlp of your own**, from a package manager, pip, Homebrew or
   winget, or the one you name under Own yt-dlp, is never changed.
   MixMusic asks GitHub for the latest release at most every 6 hours, and
-  when yours is older, Home and Settings › Playback say so, with the
+  when yours is older, Home and Settings › Storage say so, with the
   command that updates it when its folder tells how you installed it.
   They also offer MixMusic's own instead.
 - **The JavaScript runtime** is yours: MixMusic installs none. It looks

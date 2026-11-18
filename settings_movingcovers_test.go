@@ -12,7 +12,7 @@ import (
 func TestMovingCoverRow(t *testing.T) {
 	s := newTestShell(t)
 	tt := testerOf(t, s, 1280, 4000)
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/content")
 	videos, ok := tt.Find("Show the video of music videos")
 	if !ok {
 		t.Fatalf("no music videos' row: %q", tt.Texts())

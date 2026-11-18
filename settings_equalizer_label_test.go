@@ -23,7 +23,7 @@ func TestEqualizerHalfDecibels(t *testing.T) {
 	s.set.Equalizer.Gains = make([]float64, 10)
 	s.set.Equalizer.Gains[1], s.set.Equalizer.Gains[2] = -0.5, 3
 	tt := testerOf(t, s, 1280, 3600)
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/audio")
 	for _, want := range []string{"+1.5", "-0.5", "+3"} {
 		if !tt.HasText(want) {
 			t.Errorf("no number %q: %q", want, tt.Texts())

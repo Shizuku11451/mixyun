@@ -52,6 +52,7 @@ func (f *fakeFirewall) set(s firewall.State) {
 func firewallShell(t *testing.T, f *fakeFirewall) (*shell, *ui.Tester) {
 	t.Helper()
 	s := newTestShellOf(t, func(o *app.Options) { o.Firewall = f.app() })
+	openAdvanced(t, s)
 	tt := testerOf(t, s, 1280, 2400)
 	show(s, tt, "/settings/desktop")
 	return s, tt
@@ -160,6 +161,7 @@ func TestFirewallNone(t *testing.T) {
 func TestRemoteFirewallHint(t *testing.T) {
 	f := &fakeFirewall{state: firewall.State{On: true, Blocked: true, Asks: true}}
 	s := newRemoteShellOf(t, remotetest.New(), "Desktop", func(o *app.Options) { o.Firewall = f.app() })
+	openAdvanced(t, s)
 	tt := testerOf(t, s, 1280, 2400)
 	show(s, tt, "/settings/desktop")
 	const hint = "Windows Firewall keeps the other computers from reaching this one."

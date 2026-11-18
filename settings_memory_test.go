@@ -18,10 +18,11 @@ import (
 func TestRecordMemoryRow(t *testing.T) {
 	s := newTestShell(t)
 	t.Cleanup(func() { _ = s.svc.System.RecordMemory(false) })
+	openAdvanced(t, s)
 	tt := testerOf(t, s, 1280, 2400)
 	show(s, tt, "/settings/about")
 	var above float32
-	for _, text := range []string{"report a problem", locales.MemoryRecordTitle(), locales.MemoryRecordAbout(), "licenses"} {
+	for _, text := range []string{"report a problem", "licenses", locales.MemoryRecordTitle(), locales.MemoryRecordAbout()} {
 		r, ok := tt.Find(text)
 		if !ok || r.Y <= above {
 			t.Fatalf("Settings › About shows %q out of place: %q", text, tt.Texts())

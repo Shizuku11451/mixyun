@@ -297,7 +297,7 @@ func TestHideExplicitQueue(t *testing.T) {
 func TestHideExplicitSetting(t *testing.T) {
 	s := newTestShell(t)
 	tt := testerOf(t, s, 1280, 3600)
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/content")
 	const label = "Hide explicit content"
 	if a, ok := tt.AccessByRole(ui.RoleSwitch, "Prefer clean versions"); !ok || a.Checked || a.Disabled {
 		t.Fatalf("Prefer clean versions at first: %+v, %v", a, ok)

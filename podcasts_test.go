@@ -268,7 +268,7 @@ func TestSpotifyPodcastFromYouTube(t *testing.T) {
 	s.loads["podcast:sp:s1"] = &loaded[media.Podcast]{done: true, value: sp}
 	tt := testerOf(t, s, 1280, 1000)
 	show(s, tt, podcastPath("sp:s1"))
-	if !showsText(tt.Texts(), "Settings › Playback") || !tt.HasText("Monday") || !showsText(tt.Texts(), "Nov 2026") {
+	if !showsText(tt.Texts(), "Settings › Content") || !tt.HasText("Monday") || !showsText(tt.Texts(), "Nov 2026") {
 		t.Errorf("the page shows %q", tt.Texts())
 	}
 }

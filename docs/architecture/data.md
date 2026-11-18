@@ -36,7 +36,7 @@ of music videos start in them (`lyrics-timing.json`), the releases of
 the artists followed (`releases.json`), the dictionary of
 the readings of kanji romaji downloads (`romaji/`), and yt-dlp's cache,
 and the logs folder the log and the crash reports. The downloads are in a
-folder of their own, which the user can move in Settings › Playback
+folder of their own, which the user can move in Settings › Storage › Downloads
 (`downloadsFolder` in `settings.json`): by default
 `%LocalAppData%\MixMusic\downloads` on Windows,
 `~/Library/Application Support/MixMusic/downloads` on macOS, and

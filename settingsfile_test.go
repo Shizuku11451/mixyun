@@ -143,9 +143,9 @@ func TestFileNotes(t *testing.T) {
 // the command palette.
 func TestSettingsFileRow(t *testing.T) {
 	s := fileShell(t)
-	// Tall enough for Discord's rows above the file's.
+	openAdvanced(t, s)
 	tt := testerOf(t, s, 1280, 2400)
-	show(s, tt, "/settings/desktop")
+	show(s, tt, "/settings/general")
 	click(t, s, tt, "open")
 	wasOpened(t, "open")
 	click(t, s, tt, "show in folder")

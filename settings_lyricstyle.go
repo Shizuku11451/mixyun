@@ -21,7 +21,7 @@ func lyricStyleChoices() []choice {
 	return out
 }
 
-func init() { addSettings("appearance", 35, (*shell).lyricStyleSettings) }
+func init() { addSettings("lyrics", 20, (*shell).lyricStyleSettings) }
 
 // lyricStyleSettings choose how the full-screen lyrics look: their style, the
 // size of their text and whether a ball hops over the words, with a preview

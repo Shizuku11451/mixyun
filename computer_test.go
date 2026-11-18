@@ -169,7 +169,7 @@ func TestComputerMissingFile(t *testing.T) {
 func TestComputerSettings(t *testing.T) {
 	s, music := computerShell(t, settings.LayoutTiles, "mix")
 	tt := testerOf(t, s, 1280, 4000)
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/storage")
 	for _, want := range []string{"music on this computer", music, "6 tracks"} {
 		if !tt.HasText(want) {
 			t.Errorf("no %q in Settings", want)
@@ -256,7 +256,7 @@ func TestRenderComputer(t *testing.T) {
 			s.loads["search:kites"] = &loaded[app.SearchResponse]{done: true}
 			show(s, tt, searchPath("kites"))
 			twice(tt, "search")
-			show(s, tt, "/settings/playback?q=music+on+this+computer")
+			show(s, tt, "/settings/storage?q=music+on+this+computer")
 			twice(tt, "settings")
 		}
 	}

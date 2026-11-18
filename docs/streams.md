@@ -61,7 +61,7 @@ player API won't give it:
 yt-dlp runs signed out too, unless you ask for
 [your account's audio](#as-your-account), with its own cache in MixMusic's cache folder,
 for at most 90 seconds a track. Install it, and choose the JavaScript
-runtime, in Settings › Playback › Tools;
+runtime, in Settings › Storage › Tools;
 [how it updates](how-it-works.md#yt-dlp-and-the-javascript-runtime) is on
 the first page of this section. When yt-dlp finds no stream, MixMusic says
 why in plain words, such as "this track is not available in your
@@ -243,7 +243,7 @@ or E-AC-3, format 328.
 
 ## The picture of music videos
 
-Turn on "Show the video of music videos" in Settings › Playback › Music
+Turn on "Show the video of music videos" in Settings › Content › Music
 videos, or press the video button by the transport while one plays.
 
 - **What shows it.** It shows only for official music videos and other
@@ -276,10 +276,10 @@ MixMusic keeps audio on disk two ways:
 |---|---|---|
 | What | tracks you played, once their whole audio came | tracks, albums, playlists, mixes and liked songs you download |
 | How long | until it is full: the tracks played least recently go first | until you remove them |
-| Where | `audio` in the cache folder | the downloads folder, which Settings › Playback › Downloads can move |
+| Where | `audio` in the cache folder | the downloads folder, which Settings › Storage › Downloads can move |
 | Quality | the quality they played in | the quality of Settings › Playback |
 | 5.1 | kept beside the stereo audio, while 5.1 is on | stereo only |
-| Clearing | Settings › Playback › Offline cache › Clear tracks | Remove download in its menu, or remove all downloads in Library › Downloads |
+| Clearing | Settings › Storage › Offline cache › Clear tracks | Remove download in its menu, or remove all downloads in Library › Downloads |
 
 - **Which comes first.** A track plays from its download, then from the
   cache, then from YouTube. Downloading a track the cache holds moves it
@@ -339,5 +339,5 @@ bot", which it asks of a visitor it doesn't trust.
   YouTube Music alone doesn't change it, as MixMusic asks for streams
   signed out. With Play audio as your account on, yt-dlp asks as your
   account first, at the best quality. An old yt-dlp fails more often as YouTube changes: Settings ›
-  Playback › Tools shows whether yours is up to date.
+  Storage › Tools shows whether yours is up to date.
   [Troubleshooting](troubleshooting.md) has more.

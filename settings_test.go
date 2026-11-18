@@ -171,7 +171,7 @@ func TestCacheOff(t *testing.T) {
 	// The window's own height: click scrolls the page to the cache's size,
 	// below the groups of Playback before it, however many they are.
 	tt := tester(t, s)
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/storage")
 	if !tt.HasText("1 GB at most.") {
 		t.Fatalf("the cache's size isn't shown: %q", tt.Texts())
 	}
@@ -221,7 +221,7 @@ func TestTitleSwitch(t *testing.T) {
 func TestSkipAISwitch(t *testing.T) {
 	s := newTestShell(t)
 	tt := testerOf(t, s, 1280, 3200)
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/content")
 	const label = "Skip songs made with AI"
 	const description = "Skips the tracks YouTube labels as made with AI. YouTube labels only some of them, so others still play."
 	if !tt.HasText(description) {
@@ -284,7 +284,7 @@ func TestCoversKept(t *testing.T) {
 	store.Close()
 	// Tall enough for Settings › Playback down to the offline cache.
 	tt := testerOf(t, s, 1280, 4000)
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/storage")
 	if !tt.HasText("1 cover in ") {
 		t.Fatalf("the covers kept aren't shown: %q", tt.Texts())
 	}
@@ -393,7 +393,7 @@ func TestEvenLoudness(t *testing.T) {
 			t.Fatal(err)
 		}
 		s.refresh()
-		show(s, tt, "/settings/playback")
+		show(s, tt, "/settings/audio")
 		if !tt.HasText(says) || says == line && tt.HasText(spotify[1:]) {
 			t.Errorf("with Spotify %s, the row doesn't say %q: %q", mode, says, tt.Texts())
 		}

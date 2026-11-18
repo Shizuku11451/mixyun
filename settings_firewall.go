@@ -1,6 +1,6 @@
 package main
 
-// Settings › Desktop › Windows Firewall (#496): whether other computers
+// Settings › Desktop › Advanced › Windows Firewall (#496): whether other computers
 // and cast devices on the network the computer is on reach MixMusic, for
 // remote control and casting; why not when they don't; and Allow, which
 // lets them in on private networks with an administrator's approval.
@@ -16,7 +16,7 @@ import (
 	"github.com/fzn0x/mixmusic/locales"
 )
 
-func init() { addSettings("desktop", 17, (*shell).firewallSettings) }
+func init() { addSettings(advancedOf("desktop"), 10, (*shell).firewallSettings) }
 
 // firewallStale is how long what the firewall does is kept before it's
 // read again, at the next frame: the user may answer Windows' question, or

@@ -112,7 +112,7 @@ it on, your system may ask about it:
 
 - **Windows**: Windows Defender Firewall asks whether MixMusic may take
   connections from your network. Allow it on private networks, such as the
-  one at home. MixMusic's **Settings › Desktop › Windows Firewall** then
+  one at home. MixMusic's **Settings › Desktop › Advanced › Windows Firewall** then
   tells whether the other computers on your network can reach it, and why
   not when they can't:
   - **Cancel**, or closing the question, makes Windows block MixMusic.

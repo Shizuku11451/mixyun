@@ -11,7 +11,7 @@ import (
 	"github.com/fzn0x/mixmusic/locales"
 )
 
-func init() { addSettings("appearance", 5, (*shell).languageSettings) }
+func init() { addSettings("general", 10, (*shell).languageSettings) }
 
 // languageSettings choose the language MixMusic shows: System, which
 // follows the computer's languages, or one of its catalogs' (locales/),

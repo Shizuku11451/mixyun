@@ -211,7 +211,7 @@ func TestDownloadSettings(t *testing.T) {
 	s, dir := newKeptShell(t, keptTracks...)
 	// The downloads are far down the page.
 	tt := testerOf(t, s, 1280, 3000)
-	show(s, tt, "/settings/playback")
+	show(s, tt, "/settings/storage")
 	for _, want := range []string{"downloads", "Folder", dir, "Download on metered connections", "2 tracks in "} {
 		if !tt.HasText(want) {
 			t.Errorf("the settings don't show %q", want)
@@ -394,7 +394,7 @@ func TestRenderDownloads(t *testing.T) {
 	renderTo(t, s, tt, dir, "album-downloads")
 	// The downloads are far down the settings.
 	tall := ui.NewTester(s.view, 1280, 2600)
-	s.navigate("/settings/playback")
+	s.navigate("/settings/storage")
 	renderTo(t, s, tall, dir, "settings-downloads")
 }
 

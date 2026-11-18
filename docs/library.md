@@ -191,7 +191,7 @@ A playlist, an album, a mix or your liked songs that you downloaded download the
 - Over a hundred songs at once, or a gigabyte, wait for you to choose Download more, as a notice tells.
 - A song that failed isn't tried again, and one whose download you removed isn't downloaded again: Download more still offers them.
 - Songs taken out of a playlist stay downloaded with it until you remove its download, which removes them too.
-- "Download songs added later", in Settings › Playback › Downloads, turns it off.
+- "Download songs added later", in Settings › Storage › Downloads, turns it off.
 
 ### Export to a folder
 
@@ -205,7 +205,7 @@ Take your downloads, and the music on this computer, to a phone or another playe
 
 ### Where they are
 
-Settings › Playback › Downloads shows how many tracks the downloads hold and their size, with Show, which opens Library › Downloads, and:
+Settings › Storage › Downloads shows how many tracks the downloads hold and their size, with Show, which opens Library › Downloads, and:
 
 - **Folder:** where they are, with open, change and, once you moved it, use the default. Moving the downloads asks first, and they wait meanwhile. By default, the folder is `%LocalAppData%\MixMusic\downloads` on Windows, `~/Library/Application Support/MixMusic/downloads` on macOS and `~/.local/share/MixMusic/downloads` on Linux: never a folder the system treats as a cache, whose files cleaning tools delete.
 - **Download on metered connections:** off by default, so that downloads wait on a phone's hotspot and the like.
@@ -217,7 +217,7 @@ When the network goes while you have downloads, a toast says that they still pla
 
 ## The offline cache
 
-Apart from downloads, MixMusic keeps the tracks you played, so that they play again without the network. Settings › Playback › Offline cache shows it:
+Apart from downloads, MixMusic keeps the tracks you played, so that they play again without the network. Settings › Storage › Offline cache shows it:
 
 - **Tracks kept:** how many tracks the cache holds and their size, with Clear. Clearing the cache leaves your downloads.
 - **Covers kept:** the covers you saw, up to 256 MB, which show again without the network, with Clear.

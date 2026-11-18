@@ -2190,6 +2190,22 @@ func (msgs Messages) AudioAsAccountTitle() string {
 	return Catalog.Format(msgs.locale, "audioAsAccountTitle", nil)
 }
 
+// AudioOutputGroup says "Output"
+// in the language the app shows.
+//
+// Settings › Audio: the group of the output device, loudness and
+// surround.
+func AudioOutputGroup() string { return In(i18n.Locale()).AudioOutputGroup() }
+
+// AudioOutputGroup says "Output"
+// in the language of msgs.
+//
+// Settings › Audio: the group of the output device, loudness and
+// surround.
+func (msgs Messages) AudioOutputGroup() string {
+	return Catalog.Format(msgs.locale, "audioOutputGroup", nil)
+}
+
 // CacheSettingsClear says "clear"
 // in the language the app shows.
 func CacheSettingsClear() string { return In(i18n.Locale()).CacheSettingsClear() }
@@ -4105,13 +4121,13 @@ func (msgs Messages) ComputerInLibrary(folder string) string {
 // ComputerManage says "manage"
 // in the language the app shows.
 //
-// Link to Settings › Playback, from the songs' line. Lowercase.
+// Link to Settings › Storage, from the songs' line. Lowercase.
 func ComputerManage() string { return In(i18n.Locale()).ComputerManage() }
 
 // ComputerManage says "manage"
 // in the language of msgs.
 //
-// Link to Settings › Playback, from the songs' line. Lowercase.
+// Link to Settings › Storage, from the songs' line. Lowercase.
 func (msgs Messages) ComputerManage() string {
 	return Catalog.Format(msgs.locale, "computerManage", nil)
 }
@@ -4494,6 +4510,22 @@ func ComputerUnwatched(folder string, reason string) string {
 // in the language of msgs.
 func (msgs Messages) ComputerUnwatched(folder string, reason string) string {
 	return Catalog.Format(msgs.locale, "computerUnwatched", map[string]any{"folder": folder, "reason": reason})
+}
+
+// ContentSkipGroup says "Songs to skip"
+// in the language the app shows.
+//
+// Settings › Content: the group of skipping songs made with AI and songs
+// you dislike.
+func ContentSkipGroup() string { return In(i18n.Locale()).ContentSkipGroup() }
+
+// ContentSkipGroup says "Songs to skip"
+// in the language of msgs.
+//
+// Settings › Content: the group of skipping songs made with AI and songs
+// you dislike.
+func (msgs Messages) ContentSkipGroup() string {
+	return Catalog.Format(msgs.locale, "contentSkipGroup", nil)
 }
 
 // ControlNotRunning says "Mixyun isn't running"
@@ -8126,6 +8158,22 @@ func FormatWeekdayDayMonth(weekday string, day string, month string) string {
 // in the language of msgs.
 func (msgs Messages) FormatWeekdayDayMonth(weekday string, day string, month string) string {
 	return Catalog.Format(msgs.locale, "formatWeekdayDayMonth", map[string]any{"weekday": weekday, "day": day, "month": month})
+}
+
+// GeneralStartGroup says "Start and close"
+// in the language the app shows.
+//
+// Settings › General: the group of starting at login and closing to the
+// tray.
+func GeneralStartGroup() string { return In(i18n.Locale()).GeneralStartGroup() }
+
+// GeneralStartGroup says "Start and close"
+// in the language of msgs.
+//
+// Settings › General: the group of starting at login and closing to the
+// tray.
+func (msgs Messages) GeneralStartGroup() string {
+	return Catalog.Format(msgs.locale, "generalStartGroup", nil)
 }
 
 // GlobalKeysAnnounce says "Press the keys of the global shortcut of {title}. Escape cancels, Backspace removes it."
@@ -15474,26 +15522,30 @@ func (msgs Messages) PodcastsSavedOn(source string) string {
 	return Catalog.Format(msgs.locale, "podcastsSavedOn", map[string]any{"source": source})
 }
 
-// PodcastsSettingsPlayback says "Settings › Playback"
+// PodcastsSettingsContent says "Settings › Content"
 // in the language the app shows.
-func PodcastsSettingsPlayback() string { return In(i18n.Locale()).PodcastsSettingsPlayback() }
+//
+// Split around the link to Settings › Content.
+func PodcastsSettingsContent() string { return In(i18n.Locale()).PodcastsSettingsContent() }
 
-// PodcastsSettingsPlayback says "Settings › Playback"
+// PodcastsSettingsContent says "Settings › Content"
 // in the language of msgs.
-func (msgs Messages) PodcastsSettingsPlayback() string {
-	return Catalog.Format(msgs.locale, "podcastsSettingsPlayback", nil)
+//
+// Split around the link to Settings › Content.
+func (msgs Messages) PodcastsSettingsContent() string {
+	return Catalog.Format(msgs.locale, "podcastsSettingsContent", nil)
 }
 
 // PodcastsSpotifyOnlyLead says "Spotify's podcasts play only from Spotify: choose In Mixyun, from Spotify or On Spotify Connect in "
 // in the language the app shows.
 //
-// Split around the link to Settings › Playback.
+// Split around the link to Settings › Content.
 func PodcastsSpotifyOnlyLead() string { return In(i18n.Locale()).PodcastsSpotifyOnlyLead() }
 
 // PodcastsSpotifyOnlyLead says "Spotify's podcasts play only from Spotify: choose In Mixyun, from Spotify or On Spotify Connect in "
 // in the language of msgs.
 //
-// Split around the link to Settings › Playback.
+// Split around the link to Settings › Content.
 func (msgs Messages) PodcastsSpotifyOnlyLead() string {
 	return Catalog.Format(msgs.locale, "podcastsSpotifyOnlyLead", nil)
 }
@@ -18144,6 +18196,22 @@ func (msgs Messages) SettingsAddonProblem(kind string, folder string, error stri
 	return Catalog.Format(msgs.locale, "settingsAddonProblem", map[string]any{"kind": kind, "folder": folder, "error": error})
 }
 
+// SettingsAdvanced says "Advanced"
+// in the language the app shows.
+//
+// The fold at the foot of a section of the settings that holds what few
+// change.
+func SettingsAdvanced() string { return In(i18n.Locale()).SettingsAdvanced() }
+
+// SettingsAdvanced says "Advanced"
+// in the language of msgs.
+//
+// The fold at the foot of a section of the settings that holds what few
+// change.
+func (msgs Messages) SettingsAdvanced() string {
+	return Catalog.Format(msgs.locale, "settingsAdvanced", nil)
+}
+
 // SettingsFileAdjusted says "Put {names} back in range."
 // in the language the app shows.
 func SettingsFileAdjusted(names string) string { return In(i18n.Locale()).SettingsFileAdjusted(names) }
@@ -18408,6 +18476,26 @@ func (msgs Messages) SettingsTabAppearance() string {
 	return Catalog.Format(msgs.locale, "settingsTabAppearance", nil)
 }
 
+// SettingsTabAudio says "audio"
+// in the language the app shows.
+func SettingsTabAudio() string { return In(i18n.Locale()).SettingsTabAudio() }
+
+// SettingsTabAudio says "audio"
+// in the language of msgs.
+func (msgs Messages) SettingsTabAudio() string {
+	return Catalog.Format(msgs.locale, "settingsTabAudio", nil)
+}
+
+// SettingsTabContent says "content"
+// in the language the app shows.
+func SettingsTabContent() string { return In(i18n.Locale()).SettingsTabContent() }
+
+// SettingsTabContent says "content"
+// in the language of msgs.
+func (msgs Messages) SettingsTabContent() string {
+	return Catalog.Format(msgs.locale, "settingsTabContent", nil)
+}
+
 // SettingsTabDesktop says "desktop"
 // in the language the app shows.
 func SettingsTabDesktop() string { return In(i18n.Locale()).SettingsTabDesktop() }
@@ -18416,6 +18504,26 @@ func SettingsTabDesktop() string { return In(i18n.Locale()).SettingsTabDesktop()
 // in the language of msgs.
 func (msgs Messages) SettingsTabDesktop() string {
 	return Catalog.Format(msgs.locale, "settingsTabDesktop", nil)
+}
+
+// SettingsTabGeneral says "general"
+// in the language the app shows.
+func SettingsTabGeneral() string { return In(i18n.Locale()).SettingsTabGeneral() }
+
+// SettingsTabGeneral says "general"
+// in the language of msgs.
+func (msgs Messages) SettingsTabGeneral() string {
+	return Catalog.Format(msgs.locale, "settingsTabGeneral", nil)
+}
+
+// SettingsTabLyrics says "lyrics"
+// in the language the app shows.
+func SettingsTabLyrics() string { return In(i18n.Locale()).SettingsTabLyrics() }
+
+// SettingsTabLyrics says "lyrics"
+// in the language of msgs.
+func (msgs Messages) SettingsTabLyrics() string {
+	return Catalog.Format(msgs.locale, "settingsTabLyrics", nil)
 }
 
 // SettingsTabPlayback says "playback"
@@ -18446,6 +18554,16 @@ func SettingsTabShortcuts() string { return In(i18n.Locale()).SettingsTabShortcu
 // in the language of msgs.
 func (msgs Messages) SettingsTabShortcuts() string {
 	return Catalog.Format(msgs.locale, "settingsTabShortcuts", nil)
+}
+
+// SettingsTabStorage says "storage"
+// in the language the app shows.
+func SettingsTabStorage() string { return In(i18n.Locale()).SettingsTabStorage() }
+
+// SettingsTabStorage says "storage"
+// in the language of msgs.
+func (msgs Messages) SettingsTabStorage() string {
+	return Catalog.Format(msgs.locale, "settingsTabStorage", nil)
 }
 
 // SettingsTitle says "Settings"
