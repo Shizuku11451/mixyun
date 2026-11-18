@@ -15,9 +15,6 @@ import (
 )
 
 var (
-	ole32               = syscall.NewLazyDLL("ole32.dll")
-	procCoInitializeEx  = ole32.NewProc("CoInitializeEx")
-	procCoUninitialize  = ole32.NewProc("CoUninitialize")
 	procGetModuleHandle = syscall.NewLazyDLL("kernel32.dll").NewProc("GetModuleHandleW")
 
 	procSendMessageW = user32.NewProc("SendMessageW")

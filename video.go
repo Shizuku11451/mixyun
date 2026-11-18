@@ -344,7 +344,8 @@ func (s *shell) sleeve(c *ui.Context, t media.Track, size float32) {
 	if s.clipSleeve(c, t, size) {
 		return
 	}
-	ui.Box(c).Size(size, size).Shrink(0).Children(func() {
+	// Clipped as the cover is, so the visualizer's corner bars keep to its rounded corners.
+	ui.Box(c).Size(size, size).Shrink(0).Radius(s.lk.radiusSm).Clip().Children(func() {
 		s.movingCover(c, "sleeve", t.Artwork, size, s.st.Playing && !s.st.Buffering, locales.CollectionMovingCover(t.Title))
 		if s.st.Playing {
 			s.visualizer(c, size)

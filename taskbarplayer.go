@@ -9,7 +9,7 @@ import (
 )
 
 // The player the cover of the taskbar's lyrics expands, on Windows: a
-// panel over the left end of the taskbar, as the lyrics are, with the
+// panel over the taskbar's lyrics, with the
 // cover, the title, the artists and the service, the transport, and the
 // progress, which seeks. It closes as it loses the keyboard, as a flyout
 // of the taskbar does, on Escape, and on another click on the cover.
@@ -24,14 +24,22 @@ const (
 )
 
 // OpenTaskbarPlayer opens the player above the primary display's taskbar,
-// at its left end.
+// over the middle of its lyrics, or at its left end without them.
 func OpenTaskbarPlayer(a *app.App) *mygo.Window {
 	registerFonts()
 	s := newShell(a, a.GoPlayer())
-	work := mygo.Screen.PrimaryDisplay().WorkArea
+	d := mygo.Screen.PrimaryDisplay()
+	work := d.WorkArea
+	x := work.X + taskbarPlayerGap
+	if r := a.TaskbarLyricsBounds(); !r.Empty() && d.ScaleFactor > 0 {
+		// The lyrics' pixels in the DIPs of the primary display, whose
+		// pixels start at the screen's origin.
+		mid := d.Bounds.X + int(float64(r.Min.X+r.Max.X)/2/d.ScaleFactor)
+		x = min(max(mid-taskbarPlayerWidth/2, work.X+taskbarPlayerGap), work.X+work.Width-taskbarPlayerWidth-taskbarPlayerGap)
+	}
 	s.attach(mygo.NewWindow(mygo.WindowOptions{
 		Title:           locales.MiniWindowTitle(),
-		X:               work.X + taskbarPlayerGap,
+		X:               x,
 		Y:               work.Y + work.Height - taskbarPlayerHeight - taskbarPlayerGap,
 		Width:           taskbarPlayerWidth,
 		Height:          taskbarPlayerHeight,

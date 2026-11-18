@@ -12,6 +12,7 @@ import (
 	"image"
 	"log"
 	"runtime"
+	"slices"
 	"sort"
 	"sync"
 	"time"
@@ -38,6 +39,11 @@ type statusLyrics struct {
 	// are nil meanwhile, and for a track without timed lyrics.
 	track string
 	lines []lyrics.Line
+	// ly is the track's lyrics, for their translation into transTo, the
+	// language asked for, "" for none, whose lines are trans once it came.
+	ly      lyrics.Lyrics
+	transTo string
+	trans   []lyrics.TranslatedLine
 	// cover is the track's cover, for the taskbar, once it loaded; nil
 	// meanwhile, and for a track without one.
 	cover image.Image
@@ -132,6 +138,7 @@ func (a *App) statusView(t media.Track, st player.State) taskbar.LyricsView {
 	s.mu.Lock()
 	if s.track != t.ID {
 		s.track, s.lines, s.cover = t.ID, nil, nil
+		s.ly, s.transTo, s.trans = lyrics.Lyrics{}, "", nil
 		go a.loadStatusLyrics(t)
 		if runtime.GOOS == "windows" {
 			go a.loadStatusCover(t)
@@ -141,11 +148,25 @@ func (a *App) statusView(t media.Track, st player.State) taskbar.LyricsView {
 	if s.seen.IsZero() || st.Position != s.pos || moving != s.moving {
 		s.pos, s.seen, s.moving = st.Position, time.Now(), moving
 	}
-	lines, cover, seen := s.lines, s.cover, s.seen
+	// The taskbar shows the line's translation under it, as the lyrics
+	// do, for lyrics of a language the user translates.
+	if runtime.GOOS == "windows" && s.lines != nil {
+		if to := a.statusTranslateTo(s.ly); to != s.transTo {
+			s.transTo, s.trans = to, nil
+			if to != "" {
+				go a.loadStatusTranslation(t, s.ly, to)
+			}
+		}
+	}
+	lines, cover, seen, trans := s.lines, s.cover, s.seen, s.trans
 	s.mu.Unlock()
-	cur, next, words := linesAt(lines, st.Position+statusLead(st.Speed))
+	pos := st.Position + statusLead(st.Speed)
+	cur, next, words := linesAt(lines, pos)
 	if cur == "" {
 		return taskbar.LyricsView{}
+	}
+	if i := lineIndex(lines, pos); i >= 0 && i < len(trans) && trans[i].Text != "" {
+		next = trans[i].Text
 	}
 	v := taskbar.LyricsView{Current: cur, Next: next, Cover: cover}
 	if runtime.GOOS == "windows" && len(words) > 0 {
@@ -211,10 +232,54 @@ func (a *App) loadStatusLyrics(t media.Track) {
 	s := &a.status
 	s.mu.Lock()
 	if s.track == t.ID {
-		s.lines = l.Lines
+		s.lines, s.ly = l.Lines, l
 	}
 	s.mu.Unlock()
 	a.placeStatusLyrics()
+}
+
+// statusTranslateTo is the language ly translate to in the taskbar, as
+// the lyrics translate them, or "" for none.
+func (a *App) statusTranslateTo(ly lyrics.Lyrics) string {
+	set := a.settings.Get()
+	if !slices.Contains(set.LyricsTranslate, ly.Language) {
+		return ""
+	}
+	to := set.LyricsTranslateTo
+	if to == "" {
+		to = (&System{a}).Language()
+	}
+	if to == ly.Language {
+		return ""
+	}
+	return to
+}
+
+// loadStatusTranslation asks for the translation of t's lyrics ly into to,
+// which TranslateLyrics keeps, and logs when it fails.
+func (a *App) loadStatusTranslation(t media.Track, ly lyrics.Lyrics, to string) {
+	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+	defer cancel()
+	tr, err := (&Catalog{a}).TranslateLyrics(ctx, t, ly, to)
+	if err != nil || len(tr.Lines) != len(ly.Lines) {
+		return
+	}
+	s := &a.status
+	s.mu.Lock()
+	if s.track == t.ID && s.transTo == to {
+		s.trans = tr.Lines
+	}
+	s.mu.Unlock()
+	a.placeStatusLyrics()
+}
+
+// TaskbarLyricsBounds is where the taskbar's lyrics show on the screen, in
+// pixels, or empty. Main thread.
+func (a *App) TaskbarLyricsBounds() image.Rectangle {
+	if a.status.bar == nil {
+		return image.Rectangle{}
+	}
+	return a.status.bar.Bounds()
 }
 
 // taskbarLyricsWidth is how wide the lyrics are in Windows' taskbar, in
@@ -280,7 +345,7 @@ func linesAt(lines []lyrics.Line, pos time.Duration) (cur, next string, words []
 	if len(lines) == 0 {
 		return "", "", nil
 	}
-	at := sort.Search(len(lines), func(i int) bool { return time.Duration(lines[i].TimeMs)*time.Millisecond > pos }) - 1
+	at := lineIndex(lines, pos)
 	cur = "♪"
 	if at >= 0 && lines[at].Text != "" {
 		cur, words = lines[at].Text, lines[at].Words
@@ -291,6 +356,12 @@ func linesAt(lines []lyrics.Line, pos time.Duration) (cur, next string, words []
 		}
 	}
 	return cur, "", words
+}
+
+// lineIndex is the index of the line of timed lyrics sung at pos, -1
+// before the first.
+func lineIndex(lines []lyrics.Line, pos time.Duration) int {
+	return sort.Search(len(lines), func(i int) bool { return time.Duration(lines[i].TimeMs)*time.Millisecond > pos }) - 1
 }
 
 // statusLead is how far ahead of the position a line shows, as the

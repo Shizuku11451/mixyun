@@ -185,7 +185,11 @@ func (s *shell) lyricsChoicesWith(c *ui.Context, t media.Track, ly lyrics.Lyrics
 		x.romanize = romanize
 	}
 	// The share link shows with the switches, whatever they offer.
-	if !o.quiet {
+	switch {
+	case o.quiet:
+	case where == "page":
+		s.lyricsRail(c, t, ly, lang, canTranslate, canRomanize, &x)
+	default:
 		s.lyricsSwitches(c, ly, lang, where, canTranslate, canRomanize, &x, func() { s.lyricsShareStart(c, t, where) })
 	}
 	if x.ja && x.romanize != "" {
@@ -254,7 +258,8 @@ func (s *shell) translationKey(t media.Track, into string) string {
 // synced or as plain text, when they are synced; translated, when they
 // can be; and in Latin letters, under each line or in its place, when
 // they can be; and, last, share, which starts sharing lines. It changes x
-// as the user chooses.
+// as the user chooses. The now playing page has them at the side instead
+// (lyricsRail).
 func (s *shell) lyricsSwitches(c *ui.Context, ly lyrics.Lyrics, lang, where string, canTranslate, canRomanize bool, x *lyricsExtra, share func()) {
 	ui.Row(c).Padding(0, 24, 8).GapX(16).GapY(8).Wrap().AlignItems(ui.Center).Shrink(0).Children(func() {
 		if ly.Synced {
@@ -270,38 +275,20 @@ func (s *shell) lyricsSwitches(c *ui.Context, ly lyrics.Lyrics, lang, where stri
 		if canTranslate {
 			on := x.translate
 			if s.lyricsSwitch(c, "lyrics-translate-"+where, locales.LyricsTranslate(), locales.LyricsTranslateLyrics(), locales.LyricsTranslateTip(), &on) {
-				x.translate = on
-				s.set.LyricsTranslate = slices.DeleteFunc(slices.Clone(s.set.LyricsTranslate), func(l string) bool { return l == lang })
-				if on {
-					s.set.LyricsTranslate = append(s.set.LyricsTranslate, lang)
-				}
-				s.save()
+				s.setTranslate(x, lang, on)
 			}
 		}
 		defer share()
 		if !canRomanize {
 			return
 		}
-		// The switch and its ways go on one line. Japanese is romaji, kept
-		// as "ja" though MixMusic couldn't tell the lyrics' language.
+		// The switch and its ways go on one line.
 		ui.Row(c).Gap(16).AlignItems(ui.Center).Shrink(0).Children(func() {
-			as, tip := lang, locales.LyricsRomanizeTip()
-			switch {
-			case x.ja:
-				as, tip = "ja", locales.LyricsRomajiTip()
-			case unisonFirst[x.local]:
-				as, tip = x.local, locales.LyricsUnisonFirstTip()
-			case x.local != "":
-				as, tip = x.local, locales.LyricsLocalTip()
-			}
+			as, tip := romanizeAs(x, lang)
 			names := romanizeNames(as == "ja")
 			on := x.romanize != ""
 			if s.lyricsSwitch(c, "lyrics-romanize-"+where, names[0], locales.LyricsShowInLatin(), tip, &on) {
-				x.romanize = ""
-				if on {
-					x.romanize = settings.RomanizeUnder
-				}
-				s.setRomanize(as, x.romanize)
+				s.romanizeLyrics(x, as, on, settings.RomanizeUnder)
 			}
 			if x.romanize == "" {
 				return
@@ -311,14 +298,103 @@ func (s *shell) lyricsSwitches(c *ui.Context, ly lyrics.Lyrics, lang, where stri
 				mode = 1
 			}
 			if s.segmented(c, "lyrics-romanize-mode-"+where, locales.LyricsShowInLatin(), &mode, names[1], names[2]) {
-				x.romanize = settings.RomanizeUnder
+				how := settings.RomanizeUnder
 				if mode == 1 {
-					x.romanize = settings.RomanizeOnly
+					how = settings.RomanizeOnly
 				}
-				s.setRomanize(as, x.romanize)
+				s.romanizeLyrics(x, as, true, how)
 			}
 		})
 	})
+}
+
+// lyricsRailWidth is the width of the now playing page's column of lyrics
+// choices, which the lyrics keep clear of.
+const lyricsRailWidth = 40
+
+// lyricsRail is lyricsSwitches on the now playing page: a column of icon
+// buttons at the right of the lyrics of t, lit while on, which leaves the
+// lyrics the room above them. Showing in Latin letters under each line or
+// in its place is its button's menu.
+func (s *shell) lyricsRail(c *ui.Context, t media.Track, ly lyrics.Lyrics, lang string, canTranslate, canRomanize bool, x *lyricsExtra) {
+	ui.Column(c.Key("lyrics-rail")).Absolute().Top(0).Bottom(0).Right(0).Width(lyricsRailWidth).Gap(8).Justify(ui.Center).AlignItems(ui.Center).Children(func() {
+		if ly.Synced {
+			plain := s.set.LyricsPlain
+			shown := locales.LyricsSynced()
+			if plain {
+				shown = locales.LyricsPlainText()
+			}
+			if s.untippedIconButton(c, "lyrics-mode-page", "clock", locales.LyricsShowAs(), !plain, 18).Tooltip(shown).Clicked() {
+				s.set.LyricsPlain = !plain
+				s.save()
+			}
+		}
+		if canTranslate {
+			if s.untippedIconButton(c, "lyrics-translate-page", "translate", locales.LyricsTranslateLyrics(), x.translate, 18).Tooltip(locales.LyricsTranslateTip()).Clicked() {
+				s.setTranslate(x, lang, !x.translate)
+			}
+		}
+		if canRomanize {
+			as, tip := romanizeAs(x, lang)
+			names := romanizeNames(as == "ja")
+			b := s.untippedIconButton(c, "lyrics-romanize-page", "romanize", names[0], x.romanize != "", 18).Tooltip(tip)
+			b.ContextMenu(func(m *ui.Menu) {
+				if m.Item(names[1]).Checked(x.romanize == settings.RomanizeUnder).Chosen() {
+					s.romanizeLyrics(x, as, true, settings.RomanizeUnder)
+				}
+				if m.Item(names[2]).Checked(x.romanize == settings.RomanizeOnly).Chosen() {
+					s.romanizeLyrics(x, as, true, settings.RomanizeOnly)
+				}
+			})
+			if b.Clicked() {
+				s.romanizeLyrics(x, as, x.romanize == "", settings.RomanizeUnder)
+			}
+		}
+		picking := s.lyricPick.picking(t.ID)
+		if s.iconButton(c, "lyrics-share-start-page", "share", locales.LyricsShareLines(), picking, 18).Clicked() {
+			s.lyricPick = lyricsPick{}
+			if !picking {
+				s.lyricPick = lyricsPick{on: true, track: t.ID}
+			}
+		}
+	})
+}
+
+// setTranslate translates the lyrics in the language lang, or stops, as
+// on says, from now on.
+func (s *shell) setTranslate(x *lyricsExtra, lang string, on bool) {
+	x.translate = on
+	s.set.LyricsTranslate = slices.DeleteFunc(slices.Clone(s.set.LyricsTranslate), func(l string) bool { return l == lang })
+	if on {
+		s.set.LyricsTranslate = append(s.set.LyricsTranslate, lang)
+	}
+	s.save()
+}
+
+// romanizeAs returns the language whose lyrics x shows in Latin letters,
+// of lyrics MixMusic tells are in lang, and the tip of its switch.
+// Japanese is romaji, kept as "ja" though MixMusic couldn't tell the
+// lyrics' language.
+func romanizeAs(x *lyricsExtra, lang string) (string, string) {
+	switch {
+	case x.ja:
+		return "ja", locales.LyricsRomajiTip()
+	case unisonFirst[x.local]:
+		return x.local, locales.LyricsUnisonFirstTip()
+	case x.local != "":
+		return x.local, locales.LyricsLocalTip()
+	}
+	return lang, locales.LyricsRomanizeTip()
+}
+
+// romanizeLyrics shows the lyrics of the language as in Latin letters as how
+// says, while on, or as they are written, from now on.
+func (s *shell) romanizeLyrics(x *lyricsExtra, as string, on bool, how string) {
+	x.romanize = ""
+	if on {
+		x.romanize = how
+	}
+	s.setRomanize(as, x.romanize)
 }
 
 // lyricsSwitch is a switch above the lyrics with its label, and tip,

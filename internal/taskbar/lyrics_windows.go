@@ -67,10 +67,11 @@ const (
 	// 10 and 11, and Latin.
 	lyricsFace = "Microsoft YaHei UI"
 	// lyricsReplace is how often, in milliseconds, the window takes its
-	// place again, as the notification area grows or the taskbar moves.
+	// place again, as the taskbar's buttons come and go or it moves, and
+	// watchButtons measures them again.
 	lyricsReplace = 1000
 	// lyricsGlide is how long a glide takes.
-	lyricsGlide = 250 * time.Millisecond
+	lyricsGlide = 450 * time.Millisecond
 )
 
 var (
@@ -172,9 +173,11 @@ type lyricsWin struct {
 	coverAt image.Rectangle
 	hover   bool
 
-	mu     sync.Mutex
-	view   LyricsView
-	closed bool
+	mu      sync.Mutex
+	view    LyricsView
+	closed  bool
+	buttons []rect // the taskbar's, which watchButtons measures
+	at      rect   // where the window shows on the screen; zero while hidden
 
 	// What the window shows, on its thread: to draw again only on change.
 	drawn struct {
@@ -239,7 +242,7 @@ func (l *lyricsWin) run(ready chan<- error) {
 	lyricsMu.Lock()
 	lyricsWindows[hwnd] = l
 	lyricsMu.Unlock()
-	if !embed(hwnd, l.width) {
+	if !embed(hwnd, l.width, nil) {
 		lyricsMu.Lock()
 		delete(lyricsWindows, hwnd)
 		lyricsMu.Unlock()
@@ -248,6 +251,7 @@ func (l *lyricsWin) run(ready chan<- error) {
 		return
 	}
 	procSetTimer.Call(hwnd, 1, lyricsReplace, 0)
+	go l.watchButtons()
 	ready <- nil
 	var m winMsg
 	for {
@@ -361,17 +365,27 @@ func (l *lyricsWin) isClosed() bool {
 	return l.closed
 }
 
+// bounds is where the window shows on the screen, or empty.
+func (l *lyricsWin) bounds() image.Rectangle {
+	l.mu.Lock()
+	defer l.mu.Unlock()
+	return image.Rect(int(l.at.left), int(l.at.top), int(l.at.right), int(l.at.bottom))
+}
+
 // update puts the window in its place in the taskbar again, and draws the
 // view there, or hides it. The window's thread.
 func (l *lyricsWin) update() {
 	l.mu.Lock()
-	v := l.view
+	v, buttons := l.view, l.buttons
 	l.mu.Unlock()
 	visible, _, _ := procIsWindowVisible.Call(l.hwnd)
-	if v.Current == "" || !embed(l.hwnd, l.width) {
+	if v.Current == "" || !embed(l.hwnd, l.width, buttons) {
 		if visible != 0 {
 			procShowWindow.Call(l.hwnd, swHide)
 		}
+		l.mu.Lock()
+		l.at = rect{}
+		l.mu.Unlock()
 		l.drawn.ok = false
 		l.stopGlide()
 		l.frames(false)
@@ -421,6 +435,9 @@ func (l *lyricsWin) update() {
 	if visible == 0 {
 		procShowWindow.Call(l.hwnd, swShowNoActivate)
 	}
+	l.mu.Lock()
+	l.at = r
+	l.mu.Unlock()
 }
 
 // stopGlide ends the glide, if any. The window's thread.
@@ -494,11 +511,14 @@ func (l *lyricsWin) draw(from, v LyricsView, e float64, at time.Duration, w, h i
 			sweepPixels(px, int(w), box, x, edge, viewCurrentAlpha, viewNextAlpha)
 		}
 	}
-	if pitch := float64(lay.next.top - lay.current.top); e < 1 {
-		paint(from, -int32(math.Round(pitch*e)), true)
+	if pitch := lay.next.top - lay.current.top; e < 1 {
+		// One rounding for both, so the line that rises from next to
+		// current is drawn at the same pixel in each and doesn't shimmer.
+		dy := int32(math.Round(float64(pitch) * e))
+		paint(from, -dy, true)
 		old := slices.Clone(px)
 		clear(px)
-		paint(v, int32(math.Round(pitch*(1-e))), false)
+		paint(v, pitch-dy, false)
 		mixPixels(px, old, e)
 	} else {
 		paint(v, 0, false)

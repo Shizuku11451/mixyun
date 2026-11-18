@@ -47,23 +47,35 @@ func TestGlyphs(t *testing.T) {
 	}
 }
 
-// TestEmbedPlace puts the window at the taskbar's left end, scaled by the
-// DPI, and nowhere on a taskbar at a side or too short for it.
+// TestEmbedPlace puts the window in the leftmost gap of the taskbar's
+// buttons that takes it, scaled by the DPI, else narrowed into the widest,
+// else at the left end, and nowhere on a taskbar at a side.
 func TestEmbedPlace(t *testing.T) {
+	bottom := rect{0, 1032, 1920, 1080}
+	widgets := rect{0, 1032, 160, 1080}
+	centred := rect{760, 1032, 1160, 1080}
+	tray := rect{1700, 1032, 1920, 1080}
 	for name, c := range map[string]struct {
 		bar     rect
+		buttons []rect
 		dpi     uint32
 		x, w, h int32
 		ok      bool
 	}{
-		"bottom":    {rect{0, 1032, 1920, 1080}, 96, 0, 360, 48, true},
-		"hidpi":     {rect{0, 1032, 1920, 1080}, 144, 0, 540, 48, true},
-		"no dpi":    {rect{0, 1032, 1920, 1080}, 0, 0, 360, 48, true},
-		"top":       {rect{0, 0, 1920, 48}, 96, 0, 360, 48, true},
-		"side":      {rect{0, 0, 48, 1080}, 96, 0, 0, 0, false},
-		"too short": {rect{0, 1032, 300, 1080}, 96, 0, 360, 48, false},
+		"bottom":       {bottom, nil, 96, 0, 360, 48, true},
+		"hidpi":        {bottom, nil, 144, 0, 540, 48, true},
+		"no dpi":       {bottom, nil, 0, 0, 360, 48, true},
+		"top":          {rect{0, 0, 1920, 48}, nil, 96, 0, 360, 48, true},
+		"side":         {rect{0, 0, 48, 1080}, nil, 96, 0, 0, 0, false},
+		"too short":    {rect{0, 1032, 300, 1080}, nil, 96, 0, 300, 48, true},
+		"widgets":      {bottom, []rect{widgets, centred, tray}, 96, 168, 360, 48, true},
+		"left buttons": {bottom, []rect{{0, 1032, 600, 1080}, tray}, 96, 608, 360, 48, true},
+		"narrowed":     {rect{0, 1032, 1000, 1080}, []rect{widgets, {440, 1032, 1000, 1080}}, 96, 168, 264, 48, true},
+		"no room":      {rect{0, 1032, 1000, 1080}, []rect{{0, 1032, 1000, 1080}}, 96, 0, 360, 48, true},
+		"other bar":    {bottom, []rect{{0, 0, 600, 48}}, 96, 0, 360, 48, true},
+		"hidden":       {bottom, []rect{{0, 0, 0, 0}}, 96, 0, 360, 48, true},
 	} {
-		x, w, h, ok := embedPlace(c.bar, 360, c.dpi)
+		x, w, h, ok := embedPlace(c.bar, c.buttons, 360, c.dpi)
 		if ok != c.ok || ok && (x != c.x || w != c.w || h != c.h) {
 			t.Errorf("%s: %d %d %d %v, want %d %d %d %v", name, x, w, h, ok, c.x, c.w, c.h, c.ok)
 		}

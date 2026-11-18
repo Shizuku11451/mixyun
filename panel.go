@@ -490,6 +490,11 @@ func (s *shell) lyricsWith(c *ui.Context, o lyricsOptions) {
 		_, wh := c.Size()
 		list.Padding(0.38*wh, 0)
 	}
+	if where == "page" {
+		// Clear of the choices at their side (lyricsRail), which leave no room
+		// for a scrollbar: the lyrics follow the song, and scroll all the same.
+		list.Padding(0, lyricsRailWidth, 0, 0).Scrollbars(false)
+	}
 	// Lyrics the user scrolls, to read back say, stop following the song
 	// for a while, and never pull the page they're on.
 	list.HandleInput(func(ev ui.InputEvent) bool {
