@@ -19,19 +19,19 @@ import (
 func (s *shell) playerBar(c *ui.Context) {
 	k := &s.lk
 	bar := ui.Row(c).Height(k.player).Shrink(0).Padding(0, 24, 0, 16).Gap(24)
+	// Over the cover's backdrop, the bar has no ground of its own: the backdrop shows through.
+	bare := s.onBackdrop()
 	if k.floating {
 		shade := 0.16
 		if k.dark {
 			shade = 0.4
 		}
-		bar.Margin(0, floatMargin, floatMargin).Padding(0, 20, 0, 9).Radius(k.radius).Background(col(over(nrgba(k.surface2), nrgba(k.bg)))).
-			Shadow(0, 6, 20, -6, ui.RGBA(0, 0, 0, float32(shade)))
-	} else {
+		bar.Margin(0, floatMargin, floatMargin).Padding(0, 20, 0, 9).Radius(k.radius)
+		if !bare {
+			bar.Background(col(over(nrgba(k.surface2), nrgba(k.bg)))).Shadow(0, 6, 20, -6, ui.RGBA(0, 0, 0, float32(shade)))
+		}
+	} else if !bare {
 		bar.Background(k.surface).BorderWidth(1, 0, 0, 0).BorderColor(k.border)
-	}
-	if s.onBackdrop() {
-		// Over the cover's backdrop, the bar is a shade of it.
-		bar.Background(withAlpha(k.bg, 0.3))
 	}
 	bar.Children(func() {
 		ui.Row(c).Grow(1).Basis(0).MinWidth(220).Gap(12).Children(func() { s.nowPlayingInfo(c) })
