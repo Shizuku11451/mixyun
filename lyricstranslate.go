@@ -444,6 +444,23 @@ func (s *shell) translateOptions() []string {
 	return options
 }
 
+// llmPresets are the servers Translate with offers, each that speaks
+// OpenAI's chat completions at its base URL. Ollama and LM Studio run on
+// this computer and take no key.
+var llmPresets = []struct{ name, url string }{
+	{"OpenAI", "https://api.openai.com/v1"},
+	{"OpenRouter", "https://openrouter.ai/api/v1"},
+	{"Google Gemini", "https://generativelanguage.googleapis.com/v1beta/openai"},
+	{"DeepSeek", "https://api.deepseek.com/v1"},
+	{"Groq", "https://api.groq.com/openai/v1"},
+	{"Mistral", "https://api.mistral.ai/v1"},
+	{"xAI", "https://api.x.ai/v1"},
+	{"Together AI", "https://api.together.xyz/v1"},
+	{"NVIDIA NIM", "https://integrate.api.nvidia.com/v1"},
+	{"Ollama", "http://localhost:11434/v1"},
+	{"LM Studio", "http://localhost:1234/v1"},
+}
+
 // lyricsRows are the rows of Settings › Lyrics › Lyrics after
 // Translate lyrics to, which register from their features' files.
 const lyricsRows = "playback › Lyrics"
@@ -470,7 +487,34 @@ func (s *shell) lyricsSettings(c *ui.Context) {
 				s.save()
 			}
 		})
-		s.row(c, locales.LyricsSettingsLLMURL(), locales.LyricsSettingsLLMDesc(), func() {
+		s.row(c, locales.LyricsSettingsTranslateWith(), locales.LyricsSettingsLLMDesc(), func() {
+			options := []string{"Unison"}
+			chosen := options[0]
+			for _, p := range llmPresets {
+				options = append(options, p.name)
+				if p.url == s.set.LyricsLLMURL {
+					chosen = p.name
+				}
+			}
+			// A server of no preset shows as Custom; it is chosen by typing it.
+			if s.set.LyricsLLMURL != "" && chosen == options[0] {
+				chosen = locales.LyricsSettingsLLMCustom()
+				options = append(options, chosen)
+			}
+			if s.selectOf(c.Key("lyrics-llm-with"), &chosen, options).Width(220).Label(locales.LyricsSettingsTranslateWith()).Changed() {
+				s.set.LyricsLLMURL = ""
+				if i := slices.Index(options, chosen); i > 0 && i <= len(llmPresets) {
+					s.set.LyricsLLMURL = llmPresets[i-1].url
+				}
+				delete(s.drafts, "lyrics-llm-url")
+				s.save()
+			}
+		}, "AI", "LLM", "language model", "OpenAI", "Ollama")
+		if s.set.LyricsLLMURL == "" {
+			s.settingsOf(c, lyricsRows)
+			return
+		}
+		s.row(c, locales.LyricsSettingsLLMURL(), "", func() {
 			in, _ := s.settingInput(c, "lyrics-llm-url", s.set.LyricsLLMURL, func(v string) {
 				if v != "" && !settings.LLMURL(v) {
 					// Kept, it would be dropped unseen, and Unison would translate.
