@@ -83,7 +83,7 @@ func (s *shell) failureDetails(c *ui.Context, f player.Failure) ui.Element {
 				ui.Text(c, locales.FailureStepNumbered(i+1, failureStep(st, pr))).FontSize(k.smallSize()).Selectable()
 			}
 			if f.Stopped {
-				ui.Text(c, failureStopped()).FontSize(k.smallSize()).TextColor(k.muted)
+				ui.Text(c, locales.FailureStopped()).FontSize(k.smallSize()).TextColor(k.muted)
 			}
 		})
 		copied = s.button(c, "failure-copy-"+strconv.Itoa(f.ID), locales.OverlayCopy(), false).Label(locales.FailureCopyLabel())

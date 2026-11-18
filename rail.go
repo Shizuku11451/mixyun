@@ -25,7 +25,7 @@ type navItem struct {
 var nav = []navItem{
 	{"home", locales.RailHome, "home", "/"},
 	{"search", locales.RailSearch, "search", "/search"},
-	{"explore", locales.RailExplore, "compass", "/explore"},
+	{"explore", locales.ExploreTitle, "compass", "/explore"},
 	{"roam", locales.RoamTitle, "shuffle", "/roam"},
 	{"library", locales.RailLibrary, "library", "/library"},
 	{"stats", locales.RailStats, "stats", "/stats"},
@@ -531,7 +531,7 @@ func (s *shell) liveCard(c *ui.Context, t, next media.Track, size float32) {
 // the square.
 func (s *shell) liveFace(c *ui.Context, art []media.Image, size float32) {
 	k := &s.lk
-	if b := s.art.get(c, artworkURL(art, int(size*s.zoomOf())), s.artPixels(size)); b != nil {
+	if b := s.art.get(c, s.artAt(art, size), s.artPixels(size)); b != nil {
 		ui.Image(c, b).Size(size, size).Fit(ui.Cover).Radius(k.radiusSm)
 		return
 	}

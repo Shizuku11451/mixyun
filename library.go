@@ -12,7 +12,7 @@ import (
 )
 
 // librarySections are the library's pivots, by their paths' last part.
-var librarySections = []string{"liked", "mixes", "podcasts", "artists", "downloads", "computer", "history", "disliked", "spotify", "netease"}
+var librarySections = []string{"liked", "mixes", "podcasts", "artists", "downloads", "computer", "history", "disliked", "spotify", "youtube", "netease"}
 
 // librarySectionLabel is the label of the pivot id of the library.
 func librarySectionLabel(id string) string {
@@ -35,6 +35,8 @@ func librarySectionLabel(id string) string {
 		return locales.LibraryDisliked()
 	case "spotify":
 		return "Spotify"
+	case "youtube":
+		return "YouTube Music"
 	case "netease":
 		return "网易云音乐"
 	}
@@ -49,7 +51,7 @@ func (s *shell) libraryPage(c *ui.Context, tab string) {
 	disliked := s.svc.Collection.Disliked()
 	var ids, labels []string
 	for _, sec := range librarySections {
-		if (sec == "spotify" && !accounts.Spotify.SignedIn) || (sec == "netease" && !accounts.NetEase.SignedIn) ||
+		if (sec == "spotify" && !accounts.Spotify.SignedIn) || (sec == "youtube" && !accounts.YouTube.SignedIn) || (sec == "netease" && !accounts.NetEase.SignedIn) ||
 			(sec == "disliked" && len(disliked) == 0) {
 			continue
 		}
@@ -108,6 +110,8 @@ func (s *shell) libraryPage(c *ui.Context, tab string) {
 			s.dislikedSongs(c, disliked)
 		case "spotify":
 			s.spotifyLibrary(c)
+		case "youtube":
+			s.youtubeLibrary(c)
 		case "netease":
 			s.neteaseLibrary(c)
 		}
@@ -231,12 +235,13 @@ func (s *shell) history(c *ui.Context) {
 }
 
 // serviceLibrary shows a service's playlists, albums and followed artists,
-// then its liked songs.
+// then its liked songs. A list that came in part shows what came, and
+// says how much, with Try again.
 func (s *shell) serviceLibrary(c *ui.Context, key string,
 	playlists *loaded[[]media.Playlist], albums *loaded[[]media.Album], artists *loaded[[]media.Artist],
 	liked func(c *ui.Context)) {
 	for _, l := range []error{playlists.err, albums.err, artists.err} {
-		if l != nil {
+		if _, short := media.Short(l); l != nil && !short {
 			s.problem(c, l, func() {
 				s.forget(key + ":playlists")
 				s.forget(key + ":albums")
@@ -245,12 +250,17 @@ func (s *shell) serviceLibrary(c *ui.Context, key string,
 			break
 		}
 	}
+	source := media.Source(key)
+	s.shortListLine(c, key+"-playlists", "playlists", source, playlists.err, func() { s.refetch(key + ":playlists") })
+	s.shortListLine(c, key+"-albums", "albums", source, albums.err, func() { s.refetch(key + ":albums") })
+	s.shortListLine(c, key+"-artists", "artists", source, artists.err, func() { s.refetch(key + ":artists") })
 	if !playlists.done || !albums.done || !artists.done {
 		s.loading(c)
 	}
-	// The user makes playlists on YouTube Music: theirs show, if none yet.
+	// The user makes playlists on YouTube Music: theirs show, if none yet,
+	// or those that came of a list that came in part.
 	var links func()
-	if key == "youtube" && playlists.done && playlists.err == nil {
+	if key == "youtube" && playlists.done && listCame(playlists.err) {
 		links = func() {
 			if s.link(c, "new-youtube-playlist", locales.LibraryNewPlaylist()) {
 				s.promptName(locales.LibraryNewYouTubePlaylist(), locales.RailName(), "", locales.RailCreate(), func(name string) {
@@ -267,25 +277,36 @@ func (s *shell) serviceLibrary(c *ui.Context, key string,
 		more = s.youtubeLibraryItems
 	}
 	// The playlists of others the user collaborates on have a shelf of
-	// their own.
-	if slices.ContainsFunc(playlists.value, func(p media.Playlist) bool { return !collaboration(p) }) || links != nil {
+	// their own. Each shelf builds the tiles near the view alone, for a
+	// library of hundreds.
+	var own []int
+	for i, p := range playlists.value {
+		if !collaboration(p) {
+			own = append(own, i)
+		}
+	}
+	if len(own) > 0 || links != nil {
 		s.shelfWith(c, key+"-playlists", locales.LibraryPlaylists(), links, func() {
-			for i, p := range playlists.value {
-				if !collaboration(p) {
-					s.playlistTileWith(c, key+"-playlist-"+count(i), p, more)
-				}
-			}
+			s.nearShelfTiles(c, key+"-playlists", len(own), func(j int) {
+				i := own[j]
+				s.playlistTileWith(c, key+"-playlist-"+count(i), playlists.value[i], more)
+			})
 		})
 	}
 	s.collaborationsShelf(c, key, playlists.value, more)
 	if len(albums.value) > 0 {
-		s.shelf(c, key+"-albums", locales.LibraryAlbums(), func() { s.albumTiles(c, key+"-album", albums.value) })
+		s.shelf(c, key+"-albums", locales.LibraryAlbums(), func() {
+			groups := s.albumGroups(key+"-album", albums.value)
+			s.nearShelfTiles(c, key+"-albums", len(groups), func(i int) {
+				s.albumTile(c, key+"-album-"+count(i), s.preferredVersion(groups[i]))
+			})
+		})
 	}
 	if len(artists.value) > 0 {
 		s.shelf(c, key+"-artists", locales.LibraryArtistsFollowed(), func() {
-			for i, a := range artists.value {
-				s.artistTile(c, key+"-artist-"+count(i), a)
-			}
+			s.nearShelfTiles(c, key+"-artists", len(artists.value), func(i int) {
+				s.artistTile(c, key+"-artist-"+count(i), artists.value[i])
+			})
 		})
 	}
 	liked(c)
@@ -346,8 +367,8 @@ func (s *shell) youtubeLibrary(c *ui.Context) {
 	col := s.svc.Collection
 	s.serviceLibrary(c, "youtube",
 		s.youtubePlaylists(),
-		fetch(s, "youtube:albums", col.YouTubeAlbums),
-		fetch(s, "youtube:artists", col.YouTubeArtists),
+		s.youtubeAlbums(),
+		s.youtubeArtists(),
 		func(c *ui.Context) {
 			s.youtubeSongsList(c)
 			s.sectionTitle(c, locales.LibraryLikedOnYouTube())
@@ -362,7 +383,7 @@ func (s *shell) youtubeLibrary(c *ui.Context) {
 				r := s.readOn("youtube:liked", liked)
 				s.readLine(c, r, "list")
 				if len(r.p.Tracks) > 0 || !r.reading {
-					s.trackList(c, "youtube-liked", r.p.Tracks, trackListOptions{art: true, album: true, empty: locales.LibraryNoYouTubeLiked()})
+					s.trackList(c, "youtube-liked", r.p.Tracks, trackListOptions{art: true, album: true, empty: locales.LibraryNoLikedOnYouTube()})
 				}
 			}
 		})

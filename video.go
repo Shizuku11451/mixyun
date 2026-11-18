@@ -98,7 +98,8 @@ func videoSend(prev videoSent, want videoWant, now time.Time) bool {
 	switch {
 	case src != prev.src, want.active != prev.active, want.playing != prev.playing, want.rate != prev.rate, want.filter != prev.filter:
 		return true
-	case !want.active || src == "":
+	case !want.active || src == "", want.src.Loop:
+		// A clip that loops follows no clock.
 		return false
 	case want.playing:
 		return now.Sub(prev.at) >= videoEvery
@@ -331,17 +332,21 @@ func (s *shell) videoTrack() (media.Track, bool) {
 	return s.st.Source.Track, true
 }
 
-// sleeve is the now playing page's sleeve, size wide: the cover, with the
-// visualizer over its foot while it plays, or the picture of the music
-// video that plays.
+// sleeve is the now playing page's sleeve, size wide: the cover, which
+// moves while it plays when it's a GIF that moves (movingcover.go), with
+// the visualizer over its foot, the clip of its album that loops
+// (movingclip.go), or the picture of the music video that plays.
 func (s *shell) sleeve(c *ui.Context, t media.Track, size float32) {
 	if rec, ok := s.videoTrack(); ok {
 		s.videoSleeve(c, t, rec, size)
 		return
 	}
+	if s.clipSleeve(c, t, size) {
+		return
+	}
 	// Clipped as the cover is, so the visualizer's corner bars keep to its rounded corners.
 	ui.Box(c).Size(size, size).Shrink(0).Radius(s.lk.radiusSm).Clip().Children(func() {
-		s.cover(c, "sleeve", t.Artwork, size, false)
+		s.movingCover(c, "sleeve", t.Artwork, size, s.st.Playing && !s.st.Buffering, locales.CollectionMovingCover(t.Title))
 		if s.st.Playing {
 			s.visualizer(c, size)
 		}
@@ -442,7 +447,7 @@ func (s *shell) videoCover(c *ui.Context, images []media.Image, w, h float32) {
 	frame := ui.Box(c.Key("sleeve")).Size(w, h).Shrink(0)
 	var b *ui.Bitmap
 	if s.inView(c, frame) {
-		b = s.art.get(c, artworkURL(images, int(w*s.zoomOf())), s.artPixels(w))
+		b = s.art.get(c, s.artAt(images, w), s.artPixels(w))
 	}
 	if b == nil {
 		frame.Background(s.lk.surface3)
@@ -559,7 +564,7 @@ func openVideoPage(win *mygo.Window) (*mygo.WebView, []string, error) {
 func (s *shell) videoTold(st videoStatus) {
 	v := &s.video
 	v.status = st
-	if st.Failed == "" {
+	if st.Failed == "" || s.clipTold(st) {
 		return
 	}
 	if src := s.st.Source; src != nil {

@@ -17,7 +17,7 @@ func TestSpeedSettings(t *testing.T) {
 	s := newTestShell(t)
 	tt := testerOf(t, s, 1280, 3200)
 	show(s, tt, "/settings/playback")
-	for _, want := range []string{"speed", "Songs", "Their own speed.", "Speed changes what Mixyun plays itself: NetEase Cloud Music, and Spotify tracks played from it.", "So do live streams, which play as they're broadcast."} {
+	for _, want := range []string{"speed", "Songs", "Their own speed.", "Speed changes what Mixyun plays itself: YouTube Music, NetEase Cloud Music, and Spotify tracks played from them.", "So do live streams, which play as they're broadcast."} {
 		if !tt.HasText(want) {
 			t.Errorf("the settings don't say %q", want)
 		}

@@ -27,7 +27,7 @@ Like a track with the heart in the player bar, on the now playing page, in the [
 - **Signed in, a like reaches the service too:** a Spotify track is saved to your Spotify library, and a YouTube Music track is liked on YouTube Music.
 - **Liking a song you disliked** takes the dislike back.
 - **The list** has Play, Shuffle and Download, a box that searches it and a Sort menu: the list's own order, Title, Artist, Length or Plays. What you search shows how many tracks of the list match.
-- **Plays** puts the songs you played most in MixMusic first, as your [history](#history-and-recently-played) counts them, over its last 1,000 plays; songs played as often, and those not played, keep the list's order. The list follows the plays as they're counted.
+- **Plays** puts the songs you played most in MixMusic first, as the [stats](#stats) count them, every play; songs played as often, and those not played, keep the list's order. The list follows the plays as they're counted.
 
 The songs you liked on a service before, or in its own app, are in that service's pivot of the library: Liked on Spotify, in pages that Load more adds to, and Liked on YouTube Music.
 
@@ -54,8 +54,9 @@ Your mixes show in the sidebar under Your mixes, with how many tracks each holds
 
 A mix shows the cover of its first song that has one, until you choose another.
 
-- **Change cover…**, in the More menu of the mix's page, or in the menu of its tile in Library › Mixes and on Home, opens a dialog: **choose an image…** opens a PNG, JPEG or WebP file of yours, and the covers of the mix's songs below are a click away.
+- **Change cover…**, in the More menu of the mix's page, or in the menu of its tile in Library › Mixes and on Home, opens a dialog: **choose an image…** opens a PNG, JPEG, GIF or WebP file of yours, and the covers of the mix's songs below are a click away.
 - **The cover** shows cut to a centred square, on the mix's page and its tiles. MixMusic keeps a copy of it, at most 600 pixels across, in `mix-covers` in your [data folder](data-and-privacy.md#the-data-folder): the file you chose can move or go.
+- **A GIF that moves** is kept so too, every frame of it, beside a still of its first frame, which the tiles show. With [Show moving covers](playing-music.md#moving-covers) on, it moves in the head of the mix's page.
 - **Use the songs' covers**, in the same dialog, goes back to them. Deleting the mix deletes its cover too.
 
 ## Artists you follow
@@ -83,6 +84,7 @@ Signed in to YouTube Music, Library › YouTube Music has your Playlists, with a
 - **Save** an album or a playlist with Save on its page, which then says Saved; pressing it again takes it out of your library. **Follow** an artist with Follow on their page, which subscribes on YouTube Music.
 - **Make a playlist** with new playlist in Library › YouTube Music, with Add to YouTube Music playlist › New playlist… in a track's menu, or with Save as a YouTube Music playlist in an album's or a playlist's More menu. Spotify tracks are found on YouTube Music first.
 - **Add a track** with Add to YouTube Music playlist in its menu, then one of your playlists, or one you collaborate on, which names who made it: it lists those you can add to. Tracks of either service go in. A song the playlist holds already YouTube Music doesn't add again: the toast says Already in, with Add anyway, which adds it a second time, as YouTube Music's own Add anyway does. Other refusals say what they are, as a playlist that may be another account's, or a sign-in YouTube Music no longer accepts.
+- **All of them show,** however many playlists, albums, artists, songs and podcasts you keep on YouTube Music, up to 1,000 pages of each list, some 24,000 items: MixMusic reads them a page at a time, so a large library takes a while to come, and tries a page that fails again a few times. YouTube Music doesn't say how long a list is, so a list that still came in part shows what came and says how much, as "Showing the first 1,200 songs", with Try again; so does Add to YouTube Music playlist. A list longer than 1,000 pages says it shows as far as MixMusic reads a list. While Songs in your library is still coming, or came in part, a song's menu asks YouTube Music whether you keep it, so that a song saved long ago offers Remove from library.
 - **Take a track out** of a playlist of yours with Remove from this playlist, in its menu on the playlist's page. Of one you collaborate on, YouTube Music lets you take out the tracks you added alone, which have it.
 - **Put a playlist of yours in order**, or one you collaborate on, as you do a mix, once its tracks are all read: it changes on YouTube Music too. When YouTube Music refuses a move, a toast says so and the playlist shows as YouTube keeps it.
 - **Delete a playlist you made** with Delete from YouTube Music…, in the More menu of its page or of its tile in Library › YouTube Music. It asks first, since the playlist goes from YouTube too and can't come back: to keep its tracks, copy it into a mix first. Mixes copied from it, and the queue, keep their tracks.
@@ -96,6 +98,7 @@ Signed in to Spotify, Library › Spotify has your Playlists, the Playlists you 
 
 - **Save** an album or a playlist, and **follow** an artist, from their pages, as for YouTube Music: it happens on Spotify.
 - **Add a track** of Spotify's with Add to Spotify playlist in its menu, then one of your playlists, or one you collaborate on, which names who made it. Spotify's playlists hold Spotify's tracks alone: to mix in YouTube Music's, copy the playlist into a mix.
+- **All of them show,** however many playlists, albums, artists and podcasts you keep on Spotify: MixMusic reads every page of each list, and tries a page that fails again a few times. A list that still came in part shows what came, and says how much, as "Showing 200 of 250 playlists", with Try again; so do Add to Spotify playlist and Add a shelf. Home's Spotify shelves show your first 50 playlists and albums, so that Home doesn't wait.
 - **Put a playlist in order** as you do a mix, your own or one you collaborate on, once its tracks are all read: it changes on Spotify too, one move at a time. A playlist that holds what MixMusic doesn't show, as podcast episodes or the local files of Spotify's app, doesn't move. When Spotify refuses a move, a toast says so and the playlist shows as Spotify keeps it.
 - Spotify shows an app in development mode, as your Spotify app is, the tracks of the playlists you own or collaborate on, not of playlists others made: a search leaves those out, and one you follow shows what Spotify tells of it, with a way to play it on Spotify. [Spotify](spotify.md#what-spotify-allows-apps) lists the other limits.
 
@@ -122,7 +125,7 @@ MixMusic reads playlists of up to 20,000 tracks, and the songs you liked on YouT
 
 ## The header that stays
 
-Scrolled down a playlist, an album, an artist or your liked songs, the top bar shows what you're in: its cover, its name, and Play, Shuffle and Download, which fade in as the page's head scrolls away. In a narrow window, the name shortens, and Download moves into the bar's menu.
+Scrolled down a playlist, an album, an artist or your liked songs, the top bar shows what you're in: its cover, its name, and Play, Shuffle and Download, which fade in as the page's head scrolls away. An artist's has no Download, and a Spotify artist's, whose Play plays their top songs, no Shuffle. In a narrow window, the name shortens, and Download moves into the bar's menu.
 
 The search and Sort of a playlist's tracks, and of your liked and disliked songs, stay pinned under the top bar while the list scrolls, and what you search or sort there shows from the list's start.
 
@@ -143,7 +146,7 @@ The Stats page, in the sidebar, shows what you listened to, This week, This mont
 - The mix, two rings of each service's share;
 - your top artists, as circles, and your top tracks.
 
-Tracks count as in the history. Podcast episodes stay out of the stats, and clearing the history starts them over.
+Tracks count as in the history, every play: MixMusic keeps each in `plays.jsonl` in your [data folder](data-and-privacy.md#the-data-folder), which grows by about 1 MB a year at 10 plays a day. Of the plays before MixMusic kept them all, the stats count the last 1,000, which the history held. Podcast episodes stay out of the stats, and clearing the history starts them over.
 
 ### Your year
 
@@ -151,9 +154,9 @@ Next to Stats' ranges, Your year looks back at one calendar year of your history
 
 - how many tracks you played and the minutes you listened;
 - your top five songs, artists and albums;
-- the month you listened most, the song the year began with, the song you played most often in one day, and how many new artists you found, which are those you hadn't played before the year, when your history reaches back that far.
+- the month you listened most, the song the year began with, the song you played most often in one day, and how many new artists you found, which are those you hadn't played before the year, when your plays reach back that far.
 
-**Save image** saves a card of the year as a PNG, a square for a chat or a feed, and **Save image for a story** a tall one, with your top artists and albums too. Both are in your theme's colours. The history keeps your last 1,000 plays, so an older year shows what that still holds.
+**Save image** saves a card of the year as a PNG, a square for a chat or a feed, and **Save image for a story** a tall one, with your top artists and albums too. Both are in your theme's colours. Your year counts every play of the year, as the stats do; a year before MixMusic kept every play shows what the last 1,000 plays of the history held of it.
 
 ## Downloads
 
@@ -219,5 +222,6 @@ Apart from downloads, MixMusic keeps the tracks you played, so that they play ag
 - **Tracks kept:** how many tracks the cache holds and their size, with Clear. Clearing the cache leaves your downloads.
 - **Covers kept:** the covers you saw, up to 256 MB, which show again without the network, with Clear.
 - **Size:** Off, 512 MB, 1 GB (the default), 4 GB or 16 GB. Off keeps no tracks.
+- **Moving covers kept**, once albums' [moving covers](playing-music.md#moving-covers) come: the clips that played, which loop again without the network, with Clear, in a store of their own, so that they never push covers out. Each album's clip is looked for once, and so is an album found to have none. Their **Size** is Off, 64, 128, 256 (the default) or 512 MB, 1, 2, 4 or 8 GB, or Unlimited; Off keeps only the clip that plays.
 
 The cache keeps how loud YouTube measured each track too, for [Even loudness](playing-music.md#even-loudness-volume-levelling-and-the-volume) offline. Live streams aren't kept in it, and a track's 5.1 surround mix is kept beside its stereo audio. [The audio engine](audio-engine.md#the-offline-cache) tells how it fills and empties.

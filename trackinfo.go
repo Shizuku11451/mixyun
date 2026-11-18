@@ -209,7 +209,7 @@ func trackFacts(t media.Track, info app.TrackInfo) []infoRow {
 		rows = append(rows, infoRow{locales.TrackInfoPlays(), where, false},
 			infoRow{locales.PlaybackQuality(), locales.TrackInfoQualitySpotify(), false})
 		if t.DurationMs > 0 {
-			rows = append(rows, infoRow{locales.TrackInfoLength(), clock(ms(t.DurationMs)), false})
+			rows = append(rows, infoRow{locales.TrackInfoLength(), clockLength(ms(t.DurationMs)), false})
 		}
 		return append(rows, infoRow{locales.TrackInfoLoudness(), locales.TrackInfoLoudnessSpotify(), false})
 	}
@@ -329,11 +329,11 @@ func lengthOf(t media.Track, info app.TrackInfo, f audio.Format) string {
 	case st != nil && st.Live:
 		return locales.TrackInfoLive()
 	case f.Duration > 0:
-		return clock(f.Duration)
+		return clockLength(f.Duration)
 	case st != nil && st.Duration > 0:
-		return clock(st.Duration)
+		return clockLength(st.Duration)
 	case t.DurationMs > 0:
-		return clock(ms(t.DurationMs))
+		return clockLength(ms(t.DurationMs))
 	}
 	return ""
 }

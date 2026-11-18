@@ -31,11 +31,7 @@ func (s *shell) pluginSettings(c *ui.Context) {
 			s.hint(c, locales.PluginSettingsNone())
 		}
 		for _, p := range s.inv.Plugins {
-			desc := locales.PluginSettingsBy(p.Author)
-			if p.Description != "" {
-				desc = locales.PluginSettingsDescribed(p.Description, p.Author)
-			}
-			desc = strings.TrimSpace(desc)
+			desc := strings.TrimSpace(locales.PluginSettingsDescribed(p.Description, p.Author))
 			if f := s.plugins.Failure(p.ID); f != "" {
 				desc = locales.PluginSettingsFailed(desc, f)
 			}

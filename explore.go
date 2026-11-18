@@ -28,7 +28,12 @@ func moodPath(params string) string { return "/mood/" + url.PathEscape(params) }
 // explorePage shows what is new on YouTube Music, its charts, and its
 // moods and genres, each opening on playlists of its own.
 func (s *shell) explorePage(c *ui.Context, tab string) {
-	selected := max(slices.Index(exploreTabs, tab), 0)
+	selected := 0
+	for i, t := range exploreTabs {
+		if t == tab {
+			selected = i
+		}
+	}
 	s.pageScroll(c, func() {
 		before := selected
 		s.pageHeader(c, locales.ExploreTitle(), exploreTabLabels(), &selected)
@@ -139,7 +144,7 @@ var listOnYouTube = func(s *shell, ctx context.Context) ([]media.Playlist, error
 // Music, which the library shows and the track menu adds to.
 func (s *shell) youtubePlaylists() *loaded[[]media.Playlist] {
 	list := listOnYouTube
-	return fetch(s, "youtube:playlists", func(ctx context.Context) ([]media.Playlist, error) { return list(s, ctx) })
+	return wholeList(s, "youtube:playlists", func(ctx context.Context) ([]media.Playlist, error) { return list(s, ctx) })
 }
 
 // keepYouTubePlaylists fetches the user's playlists on YouTube Music once
@@ -174,7 +179,7 @@ func (s *shell) addToMenus(m *ui.Menu, tracks []media.Track) {
 			// Only until the answer the window asked for ahead comes.
 			m.Item(locales.ExploreLoadingPlaylists()).Disabled(true)
 			return
-		case own.err != nil:
+		case !listCame(own.err):
 			// Asked again, as a refresh asks, unless they already are:
 			// they may be there the next time the menu opens.
 			own.refresh()
@@ -198,6 +203,8 @@ func (s *shell) addToMenus(m *ui.Menu, tracks []media.Track) {
 		if len(editable) == 0 {
 			m.Item(locales.ExploreNoPlaylists()).Disabled(true)
 		}
+		// Of a list that came in part, those that came, and how many.
+		s.shortListItem(m, "youtube:playlists", "playlists", media.SourceYouTube, own.err)
 	})
 }
 

@@ -23,8 +23,8 @@ const (
 	// frameless window's borders take 8 DIPs of it at the sides and the
 	// foot.
 	miniRoom = 280
-	// The mini player's window at 100%: the size it opens at, and the
-	// least it takes.
+	// The mini player's window at 100%: the size it opens at, scaled by
+	// the zoom (miniSize), and the least it takes.
 	miniWidth, miniHeight       = 420, 132
 	miniMinWidth, miniMinHeight = 340, 112
 )
@@ -35,13 +35,14 @@ const (
 func OpenMini(a *app.App) *mygo.Window {
 	registerFonts()
 	s := newShell(a, a.GoPlayer())
+	w, h, minW, minH, maxH := miniSize(s.set.Zoom)
 	s.attach(mygo.NewWindow(mygo.WindowOptions{
 		Title:       locales.MiniWindowTitle(),
-		Width:       miniWidth,
-		Height:      miniHeight,
-		MinWidth:    miniMinWidth,
-		MinHeight:   miniMinHeight,
-		MaxHeight:   miniArt,
+		Width:       w,
+		Height:      h,
+		MinWidth:    minW,
+		MinHeight:   minH,
+		MaxHeight:   maxH,
 		Frameless:   true,
 		AlwaysOnTop: true,
 		// The whole window drags it: a double click on it doesn't spread
@@ -85,7 +86,7 @@ func (s *shell) miniView(c *ui.Context) {
 	_, ok := s.st.Current()
 	// A click in it leaves the focus where it was: the mini player runs no
 	// shortcuts (#38), and Space would press the button clicked last again.
-	root := ui.Column(c).Fill().Background(k.bg).TextColor(k.text).Font(k.body).DragWindow().KeepFocus()
+	root := ui.Column(c).Fill().Background(k.bg).TextColor(k.text).Font(k.body).DragWindow().KeepFocus().DrawOver(s.notePixels)
 	// The panel above the player comes after it, for Tab, as below it.
 	if !s.mini.below {
 		root.Reverse()
@@ -125,7 +126,7 @@ func (s *shell) miniArtwork(c *ui.Context, side, h float32) {
 	art := ui.Box(c.Key("mini-art")).Size(side, h).Shrink(0).Clip()
 	var b *ui.Bitmap
 	if cur, ok := s.st.Current(); ok {
-		b = s.art.get(c, artworkURL(cur.Track.Artwork, int(miniArt*s.zoomOf())), s.artPixels(miniArt))
+		b = s.art.get(c, s.artAt(cur.Track.Artwork, miniArt), s.artPixels(miniArt))
 	}
 	if b == nil {
 		art.Background(s.lk.surface3)
@@ -175,7 +176,7 @@ func (s *shell) miniBody(c *ui.Context, w float32) {
 				case ok && s.st.Live:
 					ui.Text(c, k.sentence(locales.PlayerLive())).FontSize(k.captionSize()).TextColor(k.accent).Shrink(0).SingleLine()
 				case ok:
-					ui.Text(c, clock(s.st.Position)+" / "+clock(s.miniDuration())).FontSize(k.captionSize()).
+					ui.Text(c, clock(s.st.Position)+" / "+clockLength(s.miniDuration())).FontSize(k.captionSize()).
 						TextColor(k.muted).FontFeatures("tnum").Shrink(0).SingleLine()
 				}
 				s.miniPanelButtons(c)
@@ -280,15 +281,43 @@ func (s *shell) applyMiniZoom(c *ui.Context) {
 	if z == was || s.win == nil {
 		return
 	}
+	// As it opens, the window has the size its last run left, which suits
+	// the zoom that run ended at, or its size at this zoom when it keeps
+	// none (OpenMini): scaled from that zoom, it suits this one (#717).
+	from := was
+	if from == 0 {
+		from = s.set.MiniZoom
+	}
 	// After the frame, as closing it is (#37), and in turn with the moves
 	// of the panel's window, which read its size.
 	win := s.win
-	mygo.App.WhenReady(func() { fitMini(win, was, z, s.miniLimits()) })
+	mygo.App.WhenReady(func() { fitMini(win, from, z, s.miniLimits()) })
+	s.keepMiniZoom(z)
+}
+
+// keepMiniZoom keeps the zoom z the mini player's window is now sized
+// for, which the size the window keeps for its next run suits (#717).
+func (s *shell) keepMiniZoom(z float64) {
+	if s.set.MiniZoom != z {
+		s.set.MiniZoom = z
+		s.save()
+	}
+}
+
+// miniSize is the size of the mini player's window at the zoom z, and its
+// least and largest, which it opens at when it keeps no size of its own,
+// as the first time it opens (#717).
+func miniSize(z float64) (w, h, minW, minH, maxH int) {
+	if z <= 0 {
+		z = 1
+	}
+	scale := func(n float32) int { return int(float64(n)*z + 0.5) }
+	return scale(miniWidth), scale(miniHeight), scale(miniMinWidth), scale(miniMinHeight), scale(miniArt)
 }
 
 // fitMini sizes the mini player's window for the zoom z, from the zoom
-// was, 0 when it just opened: at the size its last run left it. Its least
-// and largest heights are lim's, at 100%.
+// was its size suits, 0 for one not known: it keeps the size then, but
+// for its least and largest. Those heights are lim's, at 100%.
 func fitMini(win *mygo.Window, was, z float64, lim miniLimit) {
 	scale := func(n float32) int { return int(float64(n)*z + 0.5) }
 	win.SetMinimumSize(scale(miniMinWidth), scale(lim.min))

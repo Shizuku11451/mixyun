@@ -55,7 +55,7 @@ func TestSearchVideosOfSpotify(t *testing.T) {
 	s.searchScope = 1
 	tt := testerOf(t, s, 1280, 1800)
 	show(s, tt, searchPath("boiler room"))
-	if !showsText(tt.Texts(), "No videos match.") {
+	if !showsText(tt.Texts(), "Only YouTube Music has videos.") {
 		t.Errorf("the Videos pivot of Spotify says %q", tt.Texts())
 	}
 }

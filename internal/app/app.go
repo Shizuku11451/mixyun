@@ -21,6 +21,7 @@ import (
 	"github.com/fzn0x/mixmusic/internal/artwork"
 	"github.com/fzn0x/mixmusic/internal/audio"
 	"github.com/fzn0x/mixmusic/internal/cast"
+	"github.com/fzn0x/mixmusic/internal/clips"
 	"github.com/fzn0x/mixmusic/internal/diag"
 	"github.com/fzn0x/mixmusic/internal/downloads"
 	"github.com/fzn0x/mixmusic/internal/library"
@@ -81,6 +82,9 @@ type Options struct {
 	// lyrics expands, above the taskbar, which closes as it loses the
 	// keyboard (Windows).
 	TaskbarPlayer func(a *App) *mygo.Window
+	// Float opens the floating lyrics, a window without a background
+	// over the others.
+	Float func(a *App) *mygo.Window
 	// Notch opens the player around the notch of a MacBook's screen, or
 	// returns nil where no screen has a camera housing (#46).
 	Notch func(a *App) *mygo.Window
@@ -95,6 +99,9 @@ type Options struct {
 	// romaji downloads, comes from: romaji.DictionaryURL when empty. Tests
 	// give their own.
 	RomajiURL string
+	// Clips finds the clips of the albums' moving covers: none while it's
+	// nil, as until a source of them is chosen (#569).
+	Clips ClipSource
 	// CastBrowse, when set, finds the cast devices on the network in place
 	// of mDNS: tests set it.
 	CastBrowse func(ctx context.Context) ([]cast.Device, error)
@@ -106,6 +113,10 @@ type Options struct {
 	// listen and keep its key in place of the network and the credential
 	// store: tests set it (remote.go).
 	Remote *RemoteOptions
+	// Room, when set, has the rooms of Listen with friends find each other
+	// and listen in place of the network, and play in step without the
+	// engine: tests set it (room.go).
+	Room *RoomOptions
 	// Firewall, when set, reads and changes the firewall in place of
 	// Windows Defender Firewall; one with no Check is none: tests set it
 	// (firewall.go).
@@ -158,18 +169,24 @@ type App struct {
 	loudness     *loudnessBook
 	matcher      *match.Matcher
 	labels       *labelCache
+	parts        *partCache
 	lyrics       *lyrics.Client
 	unison       *lyrics.Unison
 	llm          llmKeyStore
 	betterLyrics *lyrics.BetterLyrics
+	// captions reads the captions of videos, which lyrics come from too.
+	captions     *stream.Direct
 	translations *translations
 	romaji       *romaji.Dictionary
 	addons       *addons.Manager
 	storage      *addons.Storage
 	lyricsMemo   *memo[lyrics.Lyrics]
+	// lyricsTiming times music videos' lyrics to them (lyricsvideo.go).
+	lyricsTiming lyricsTiming
 	related      *memo[[]media.Shelf]
 	artwork      *artwork.Client
 	artStore     *artwork.Store
+	clips        *clips.Store // the clips of moving covers (movingcovers.go)
 	colors       *memo[string]
 	// colorFile follows the colour file the settings name.
 	colorFile colorFile
@@ -206,6 +223,9 @@ type App struct {
 	// remote is remote control's: the server, the computers found and
 	// paired, and the one controlled (remote.go).
 	remote remoteState
+	// room is Listen with friends': the room this computer hosts, the one
+	// it is a guest of, and the rooms found (room.go).
+	room roomState
 	// output is the audio output device the engine plays on.
 	output outputState
 	// videoPage is the page of the main window that plays the picture of
@@ -250,10 +270,14 @@ type App struct {
 	spotifyMe  *spotify.Profile
 	neteaseMe  *netease.Profile
 	nowPlaying NowPlaying
+	// listenbrainz is the ListenBrainz connection, beside Last.fm's.
+	listenbrainz listenbrainzState
 	// started is the ID of the track whose start the reports told last
 	// (startOf).
 	started    string
 	main, mini *mygo.Window
+	// float is the floating lyrics' window while it is open.
+	float *mygo.Window
 	// retitling is set while the main window's title waits to change.
 	retitling bool
 	tray      *mygo.Tray
@@ -315,6 +339,10 @@ func New(opts Options) (*App, error) {
 	if err != nil {
 		return nil, fmt.Errorf("opening AI labels: %w", err)
 	}
+	marked, err := store.Open(filepath.Join(opts.CacheDir, "sponsorblock.json"), map[string]keptParts{})
+	if err != nil {
+		return nil, fmt.Errorf("opening the parts SponsorBlock marks: %w", err)
+	}
 	s := a.settings.Get().Clean()
 
 	a.youtube = youtube.New()
@@ -333,6 +361,8 @@ func New(opts Options) (*App, error) {
 	}
 	a.lastfmStore = lastfmStore{newSecretStore(opts.DataDir, lastfmSecret, "lastfm.json", "lastfm.dpapi")}
 	a.openLastfm()
+	a.listenbrainz.store = listenbrainzStore{newSecretStore(opts.DataDir, listenbrainzSecret, "listenbrainz.json", "listenbrainz.dpapi")}
+	a.openListenBrainz()
 	a.tools = tools.New(filepath.Join(opts.DataDir, "bin"))
 	a.tools.Bundled = bundledYTDLP()
 	a.resolver = stream.NewResolver(a.tools, filepath.Join(opts.CacheDir, "yt-dlp"))
@@ -362,10 +392,12 @@ func New(opts Options) (*App, error) {
 	// A track NetEase Cloud Music doesn't have plays from YouTube Music.
 	a.matcher.Fallback = a.youtube
 	a.labels = newLabelCache(a.youtube.MadeWithAI, aiLabels, time.Now)
-	userAgent := "Mixyun/" + opts.Version + " (https://github.com/fzn0x/mixmusic)"
+	userAgent := a.userAgent()
+	a.parts = a.newSponsorBlock(userAgent, marked)
 	a.lyrics = lyrics.New(userAgent)
 	a.unison = lyrics.NewUnison(userAgent)
 	a.betterLyrics = lyrics.NewBetterLyrics(userAgent)
+	a.captions = direct
 	a.translations = newTranslations(filepath.Join(opts.CacheDir, "lyrics-translations"))
 	a.llm.key = jsonSecret[string]{newSecretStore(opts.DataDir, llmSecret, "lyrics-llm-key.json", "lyrics-llm-key.dpapi")}
 	a.romaji = newRomaji(opts, userAgent)
@@ -373,6 +405,7 @@ func New(opts Options) (*App, error) {
 	a.related = newMemo[[]media.Shelf](100)
 	a.episodeDetails = newMemo[media.EpisodeDetails](100)
 	a.artStore = artwork.NewStore(filepath.Join(opts.CacheDir, "artwork"), artworkLimit)
+	a.clips = clips.NewStore(filepath.Join(opts.CacheDir, "moving-covers"), clipLimit(s.MovingCoversMB))
 	a.artwork = artwork.New()
 	a.artwork.Store = a.artStore
 	a.colors = newMemo[string](500)
@@ -392,6 +425,7 @@ func (a *App) apply(s settings.Settings) {
 	a.resolver.SetQuality(stream.Quality(s.Quality))
 	a.resolver.SetAsAccount(s.AudioAsAccount)
 	a.cache.SetLimit(int64(s.CacheSizeMB) << 20)
+	a.clips.SetLimit(clipLimit(s.MovingCoversMB))
 	a.downloads.SetMetered(a.metered.Load(), s.DownloadOnMetered)
 	a.followLocalFiles(s)
 	if a.auth.ClientID() != s.SpotifyClientID {
@@ -412,7 +446,8 @@ func (a *App) apply(s settings.Settings) {
 	a.applyOverlay(s)
 	a.applyAssistants(s)
 	if p := a.goPlayer.Load(); p != nil {
-		p.SettingsChanged(s)
+		// A guest of a room plays as its host does (roomfollow.go).
+		p.SettingsChanged(a.roomSettings(s))
 		a.applyEngine(s)
 	}
 	if s.SpotifyPlayback != settings.SpotifyPlaybackHere {

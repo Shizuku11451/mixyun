@@ -384,7 +384,7 @@ func TestSpeedButtonFits(t *testing.T) {
 		s.p.PlayTracks(testTracks[:1], 0)
 		s.settle(t, func(st player.State) bool { return st.Playing })
 		tt := testerOf(t, s, 940, 600)
-		for _, label := range []string{"Speed: 1.75×", "Volume", "Open the mini player"} {
+		for _, label := range []string{"Speed: 1.75×", "Volume", "Open the floating window"} {
 			if r, ok := tt.Find(label); !ok || r.W == 0 || r.X+r.W > 940 {
 				t.Errorf("%s: %q is at %v, out of a window 940 wide", layout, label, r)
 			}

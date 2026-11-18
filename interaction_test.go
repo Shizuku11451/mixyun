@@ -1296,7 +1296,7 @@ func TestYTDLPMissing(t *testing.T) {
 		t.Fatalf("no offer: %q", tt.Texts())
 	}
 	show(s, tt, "/settings/playback")
-	if !tt.HasText("Not found. Some NetEase Cloud Music tracks play only with it.") {
+	if !tt.HasText("Not found. Some YouTube Music tracks play only with it.") {
 		t.Errorf("settings say %q", tt.Texts())
 	}
 }
@@ -1497,7 +1497,7 @@ func TestDayChart(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	days := s.svc.Collection.Stats(statsRanges[0]).Daily
+	days := s.svc.Collection.Stats(statsRanges[0].days).Daily
 	n := len(days)
 	tt := testerOf(t, s, 1280, 1600)
 	show(s, tt, "/stats")
@@ -1798,10 +1798,10 @@ func TestLiveTileTurns(t *testing.T) {
 	}
 }
 
-// TestTitleBarStyle gives the main window the system's own title bar, but
-// on macOS, whose traffic lights sit over the window.
+// TestTitleBarStyle hides the main window's title bar on macOS and Windows,
+// whose buttons sit over the window, and keeps the system's own on Linux.
 func TestTitleBarStyle(t *testing.T) {
-	for goos, want := range map[string]mygo.TitleBarStyle{"windows": mygo.TitleBarDefault, "linux": mygo.TitleBarDefault, "darwin": mygo.TitleBarHidden} {
+	for goos, want := range map[string]mygo.TitleBarStyle{"windows": mygo.TitleBarHidden, "linux": mygo.TitleBarDefault, "darwin": mygo.TitleBarHidden} {
 		if got := titleBarStyle(goos); got != want {
 			t.Errorf("the title bar on %s is %q, want %q", goos, got, want)
 		}

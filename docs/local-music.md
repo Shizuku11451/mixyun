@@ -108,8 +108,10 @@ list.
   keeps those from playing.
 - **Covers:** the cover a file holds, the front cover when it holds
   several, else an image beside it named cover, folder, front or album
-  (`.jpg`, `.png` or `.webp`). MixMusic keeps a copy of each in its cache
-  folder, never beside your music.
+  (`.jpg`, `.png` or `.webp`, else `.gif`). MixMusic keeps a copy of each
+  in its cache folder, never beside your music. A GIF, in the file or
+  beside it, moves on the now playing page while
+  [Show moving covers](playing-music.md#moving-covers) is on.
 
 MixMusic changes a file only when you edit its tags, as below.
 
@@ -248,16 +250,19 @@ folder's `local-art`.
 A track on this computer is treated as any other by the features that send
 what plays, as their settings say:
 
-- **[Last.fm](accounts.md)**, once you connect it, scrobbles its title,
-  artists, album and length. A track of no artist isn't scrobbled.
+- **[Last.fm](accounts.md)** and
+  **[ListenBrainz](accounts.md#listenbrainz)**, once you connect them,
+  scrobble its title, artists, album and length. A track of no artist
+  isn't scrobbled.
 - **Discord**, unless you turn it off in Settings › Desktop, shows its
   title and artists, or [the lines you chose](desktop.md#what-your-discord-status-shows),
   without a cover or a Listen button: with the service's badge on, a
   record's badge takes the cover's place.
-- **[Lyrics](lyrics.md)**, when you show them, are looked for on Better Lyrics,
-  Unison and LRCLIB by its title, artists, album and length.
+- **[Lyrics](lyrics.md)**, when you show them, are looked for on the
+  [sources](lyrics.md#choose-and-order-the-sources) that are on, by its
+  title, artists, album and length, but never in YouTube's captions.
 
 A file that names no artist, as a voice memo, shows by its file's name,
-which may be anything: Last.fm and the lyrics hear nothing of it.
+which may be anything: Last.fm, ListenBrainz and the lyrics hear nothing of it.
 
 [Your data and privacy](data-and-privacy.md) lists every feature's.

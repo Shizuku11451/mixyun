@@ -149,6 +149,15 @@ func playlistDownload(p media.Playlist) *downloadHead {
 		Artwork: p.Artwork, Total: p.TrackCount}, tracks: p.Tracks}
 }
 
+// shownTitle is the collection's title as the interface shows it: liked
+// songs keep "Liked songs" in the downloads' index, and show it translated.
+func shownTitle(id, title string) string {
+	if id == "liked" {
+		return locales.RailLikedSongs()
+	}
+	return title
+}
+
 func likedDownload(liked []media.Track) *downloadHead {
 	return &downloadHead{c: downloads.Collection{ID: "liked", Kind: "liked", Title: "Liked songs", Source: media.SourceLocal}, tracks: liked}
 }
@@ -165,7 +174,7 @@ type downloadAction struct {
 // missing tracks its page holds now, or done.
 func (s *shell) downloadOf(d *downloadHead) downloadAction {
 	v, held := s.kept.Collection(d.c.ID)
-	title := d.c.Title
+	title := shownTitle(d.c.ID, d.c.Title)
 	remove := func(question string) func() {
 		return func() {
 			s.ask(locales.DownloadsRemoveTitle(), question, locales.LibraryRemove(), func() {
@@ -231,9 +240,9 @@ func (s *shell) downloadCollection(d *downloadHead) {
 	}
 	s.confirmDownload(tracks, func() {
 		s.svc.Downloads.AddCollection(d.c, tracks)
-		msg := locales.DownloadsCollection(d.c.Title)
+		msg := locales.DownloadsCollection(shownTitle(d.c.ID, d.c.Title))
 		if d.c.Total > len(d.tracks) {
-			msg = locales.DownloadsCollectionPartial(d.c.Title, len(d.tracks), d.c.Total)
+			msg = locales.DownloadsCollectionPartial(shownTitle(d.c.ID, d.c.Title), len(d.tracks), d.c.Total)
 		}
 		s.notes = append(s.notes, notice(msg))
 	})
@@ -444,7 +453,7 @@ func (s *shell) downloadsLibrary(c *ui.Context) {
 	tracks := s.downloadedTracks()
 	title := locales.DownloadsTracks()
 	if col, ok := s.kept.Collection(s.downloadsOf); ok {
-		title = col.Title
+		title = shownTitle(col.ID, col.Title)
 	}
 	s.sectionHead(c, title, func() {
 		if s.downloadsOf != "" && s.link(c, "downloads-all", locales.DownloadsShowAll()) {
@@ -596,12 +605,12 @@ func (s *shell) downloadedTile(c *ui.Context, key string, v downloads.Collection
 		sub = locales.DownloadsTileTracks(len(v.Tracks))
 	}
 	art := v.Artwork
-	open, play := s.artTile(c, key, art, v.Title, sub, v.Source, false, s.downloadsOf == v.ID, true, func(m *ui.Menu) {
+	open, play := s.artTile(c, key, art, shownTitle(v.ID, v.Title), sub, v.Source, false, s.downloadsOf == v.ID, true, func(m *ui.Menu) {
 		if m.Item(locales.DownloadsMenuShowTracks()).Chosen() {
 			s.downloadsOf = v.ID
 		}
 		if m.Item(locales.DownloadsMenuRemove()).Chosen() {
-			s.ask(locales.DownloadsRemoveTitle(), locales.DownloadsRemoveQuestion(v.Title),
+			s.ask(locales.DownloadsRemoveTitle(), locales.DownloadsRemoveQuestion(shownTitle(v.ID, v.Title)),
 				locales.LibraryRemove(), func() { s.svc.Downloads.RemoveCollection(v.ID) })
 		}
 	})

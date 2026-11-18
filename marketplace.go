@@ -11,12 +11,12 @@ import (
 	"github.com/fzn0x/mixmusic/locales"
 )
 
-var marketTabs = []string{"themes", "plugins"}
-
-// marketTabLabels are the names of marketTabs, in the language the app shows.
+// marketTabLabels are the names of the tabs, in marketTabs' order.
 func marketTabLabels() []string {
 	return []string{locales.MarketplaceThemes(), locales.MarketplacePlugins()}
 }
+
+var marketTabs = []string{"themes", "plugins"}
 
 // marketplacePage shows the themes and plugins of the community registry.
 func (s *shell) marketplacePage(c *ui.Context, tab string) {
@@ -68,17 +68,18 @@ func (s *shell) marketplacePage(c *ui.Context, tab string) {
 		})
 	})
 	if s.confirm(c, "install-plugin", &s.confirmingPlugin, locales.MarketplaceInstallTitle(s.pluginToInstall.Name),
-		locales.MarketplaceWarning()+permissions(s.pluginToInstall),
+		warningOf(s.pluginToInstall),
 		locales.MarketplaceInstall()) {
 		s.install(addons.KindPlugin, s.pluginToInstall)
 	}
 }
 
-func permissions(e addons.Entry) string {
+// warningOf is what installing a plugin asks, with what it asks for.
+func warningOf(e addons.Entry) string {
 	if len(e.Permissions) == 0 {
-		return ""
+		return locales.MarketplaceWarning()
 	}
-	return locales.MarketplaceAsksFor(strings.Join(e.Permissions, ", "))
+	return locales.MarketplaceWarningAsks(strings.Join(e.Permissions, ", "))
 }
 
 // installed returns the version of an add-on installed, and whether it's

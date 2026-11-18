@@ -19,9 +19,8 @@ func (s *shell) notchRow(c *ui.Context) {
 	if !hasNotch() {
 		return
 	}
-	title := locales.NotchTitle()
-	s.row(c, title, notchDescription(), func() {
-		if s.switchOf(c.Key("notch"), &s.set.NotchPlayer).Label(title).Changed() {
+	s.row(c, locales.NotchTitle(), notchDescription(), func() {
+		if s.switchOf(c.Key("notch"), &s.set.NotchPlayer).Label(locales.NotchTitle()).Changed() {
 			s.save()
 		}
 	}, "notch dynamic island menu bar camera")

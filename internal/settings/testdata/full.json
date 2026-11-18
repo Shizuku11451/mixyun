@@ -22,6 +22,21 @@
   "coverBackdropVeil": 0.7,
   "panel": "lyrics",
   "lyricsPlain": true,
+  "lyricsSources": [
+    {
+      "key": "lrclib"
+    },
+    {
+      "key": "betterlyrics",
+      "off": true
+    },
+    {
+      "key": "unison"
+    }
+  ],
+  "lyricsPreferWords": true,
+  "lyricsTimeVideos": false,
+  "lyricsCaptionLanguage": "de",
   "lyricsStyle": "bold",
   "lyricsSize": 1.3,
   "lyricsBall": false,
@@ -67,9 +82,20 @@
   "podcastSpeed": 1.5,
   "skipDisliked": false,
   "skipAi": true,
+  "skipParts": {
+    "on": true,
+    "kinds": [
+      "sponsor",
+      "intro",
+      "filler"
+    ],
+    "highlight": false,
+    "server": "https://sponsor.example"
+  },
   "cleanVersions": true,
   "hideExplicit": true,
   "musicVideos": true,
+  "movingCovers": true,
   "equalizer": {
     "enabled": true,
     "preset": "bass",
@@ -90,6 +116,7 @@
   "volumeCurve": "linear",
   "volume": 0.5,
   "cacheSizeMb": 4096,
+  "movingCoversMb": 512,
   "lyricsTranslateTo": "ja",
   "lyricsLlmUrl": "https://api.deepseek.com/v1",
   "lyricsLlmModel": "deepseek-chat",
@@ -102,6 +129,9 @@
   ],
   "spotifyClientId": "0123456789abcdef",
   "scrobbling": false,
+  "lastfmLoves": true,
+  "listenbrainzScrobbling": false,
+  "listenbrainzLoves": true,
   "youtubeChannel": "112233445566778899",
   "youtubeHistory": false,
   "closeToTray": true,
@@ -109,8 +139,18 @@
   "showInTitle": false,
   "keepOnTop": true,
   "miniPanel": "lyrics",
+  "miniZoom": 1.25,
+  "floatLocked": true,
   "mediaKeys": false,
   "assistantControl": true,
+  "roomName": "Ana",
+  "roomSongs": "add",
+  "roomGuestControl": true,
+  "roomAskJoin": true,
+  "roomFollowVolume": true,
+  "roomAnywhere": true,
+  "roomPort": 41234,
+  "roomAddress": "desk.tail1234.ts.net",
   "showOnDiscord": false,
   "discordAppId": "123456789012345678",
   "discordFirstLine": "{artist} · {title}",

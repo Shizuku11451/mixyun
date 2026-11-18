@@ -23,6 +23,7 @@ How MixMusic looks; [Look and feel](look-and-feel.md) tells all of it.
 
 | Group | What's there |
 |---|---|
+| Language | **System**, the default, takes the first of the computer's preferred languages MixMusic has, or else English; each of its languages follows, named in itself. A choice applies at once. |
 | [Layout](look-and-feel.md#layouts) | Blend, Expressive, Crate or Tiles. |
 | [Theme](look-and-feel.md#themes) | **Follow the computer**, with **In light mode** and **In dark mode**; a card for each theme; **get more themes**, which opens the marketplace, and **open themes folder**. Themes that didn't load are listed with the reason. |
 | [*Theme* options](look-and-feel.md#theme-options) | The options of a built-in theme that has some, as Aurora's drifting lights and glass blur. |
@@ -39,20 +40,24 @@ How MixMusic plays; [Playing music](playing-music.md) tells all of it.
 | Sound | **[Output device](playing-music.md#the-output-device)** (System default, or a device by name), **[Quality](playing-music.md#data-saver)** (best, or data saver), **[Play audio as your account](playing-music.md#play-audio-as-your-account)** (off at first, for YouTube Music Premium's higher bitrate), **[Crossfade](playing-music.md#crossfade-and-gapless-playback)** (off, or 1 to 12 seconds), **[Even loudness](playing-music.md#even-loudness-volume-levelling-and-the-volume)**, **Volume levelling**, **Play 5.1 surround when a track has it**, **[Autoplay](playing-music.md#autoplay-and-radios)**, **[Skip songs made with AI](playing-music.md#skipping-songs-made-with-ai)** and **[Skip songs you dislike](playing-music.md#dislikes-and-skipping)**. |
 | [Speed](playing-music.md#speed) | **Songs** and **Podcasts**, each from 0.5× to 3×, at the tracks' own pitch, with **normal** to go back to 1×. |
 | [Music videos](playing-music.md#the-picture-of-music-videos) | **Show the video of music videos**, on the now playing page. |
+| [Moving covers](playing-music.md#moving-covers) | **Show moving covers**: GIF covers move on the now playing page and a mix's page. Off at first. |
 | [Explicit content](playing-music.md#hiding-explicit-content) | **[Prefer clean versions](playing-music.md#versions-of-an-album)**: an album that comes explicit and clean shows its clean version, and opens on it. **[Hide explicit content](playing-music.md#hiding-explicit-content)**: the songs, albums and videos marked explicit don't show where the services list music, and never play; Prefer clean versions stays on meanwhile. |
 | [Equalizer](playing-music.md#the-equalizer) | The **Equalizer** switch, a **Preset** (Flat, Bass boost, Treble boost, Vocal, Electronic, Rock, Acoustic, Late night or Lo-fi), and the preamp and ten bands, from −12 to +12 dB. |
 | [Volume](playing-music.md#even-loudness-volume-levelling-and-the-volume) | **Volume curve**: Natural, even steps of loudness, or Linear, where the level grows evenly along the slider. |
-| [Lyrics](lyrics.md#translate) | **Translate lyrics to**: the language the translate switch beside the lyrics shows them in. |
+| [Lyrics](lyrics.md#translate) | **Translate lyrics to**: the language the translate switch beside the lyrics shows them in. **[Lyrics sources](lyrics.md#choose-and-order-the-sources)**: Better Lyrics, Unison, LRCLIB, YouTube Music and YouTube captions, each with a switch, in the order MixMusic asks them, which dragging a row or Alt+Up and Alt+Down changes, with **reset to default**. **Prefer word-by-word lyrics**, **[Time lyrics to music videos](lyrics.md#music-videos)**, and **Caption language**: Original, or one of the languages lyrics translate to. |
 | [Offline cache](library.md#the-offline-cache) | **Tracks kept** and **Covers kept**, each with **clear**, and the cache's **Size**: off, 512 MB, 1 GB, 4 GB or 16 GB. |
+| [Skip parts of videos](playing-music.md#skipping-parts-of-videos) | **Skip the parts SponsorBlock marks**, off at first; once on, a box for each kind of part, **Non-music parts**, **Sponsor** and **Self-promotion** ticked at first, **Reminders to like or subscribe**, **Intro**, **Outro**, **Preview or recap**, **Hook or greeting** and **Filler**, **Highlight**, ticked at first, and the **Server**, SponsorBlock's own or the https address of a mirror. |
 | [Downloads](library.md#where-they-are) | How many tracks are downloaded and how much room they take, with **show**; their **Folder**, with **open** and **change**; **Download on metered connections** and **Download songs added later**. |
 | [Music on this computer](local-music.md#add-a-folder) | **Folders**, with **add a folder** and **rescan**, then each folder of music, with how many tracks it holds, how many files were skipped and how many folders in it can't be read, and **remove**. Under the folders, each one MixMusic can't watch for changes, as one on a network drive, says why: its changes show after a **rescan**. |
 | [Tools](how-it-works.md#yt-dlp-and-the-javascript-runtime) | **yt-dlp**, which MixMusic installs and keeps up to date, the **JavaScript runtime** it runs with (found by itself, or Deno, Node.js, Bun or QuickJS), and **Own yt-dlp**, the path to one of yours. |
 
 ### Accounts
 
-Your YouTube Music, Spotify and Last.fm accounts: signing in and out, the
-YouTube Music channel you use, the switch that adds what you play to your
-YouTube Music history, and the switch that pauses scrobbling.
+Your YouTube Music, Spotify, Last.fm and ListenBrainz accounts: signing in
+and out, the YouTube Music channel you use, the switch that adds what you
+play to your YouTube Music history, and for each scrobbling service the
+switch that pauses scrobbling, how many scrobbles wait, and **Send likes as
+loves**.
 [Accounts](accounts.md) tells each step.
 
 ### Plugins
@@ -88,6 +93,21 @@ lets the other computers with MixMusic on your network find this one,
 pair with it by a code it shows, and control it; and the computers
 paired, each with **Remove**. [Remote control](remote-control.md) tells
 more.
+
+The **Listen with friends** group: **start a room**, or open the room you
+host or are in; **Your name in rooms**, what the others see you as, your
+computer's name when empty; and **Follow the host's volume**, off at
+first, which plays a room's tracks at its host's volume.
+[Listen with friends](listen-with-friends.md) tells more.
+
+In it too, for friends outside your network: **Join a room…**, which
+opens the page that takes an invite link, or a room's address and code;
+**Port for rooms**, the TCP port your rooms listen on, picked at random
+as your first room opens and kept; and **Address for invites**, empty at
+first, which invites carry in place of what your router tells, as an
+address on a VPN you both run.
+[Friends outside your network](listen-with-friends.md#friends-outside-your-network)
+tells more.
 
 The **Windows Firewall** group, on Windows: **Connections from your
 network** tells whether other computers and cast devices on your network
@@ -316,6 +336,7 @@ while you're not typing in a text field. The ID is the command's name in
 | Zoom out | <kbd>Ctrl</kbd> <kbd>-</kbd> | <kbd>⌘</kbd> <kbd>-</kbd> | `view.zoomOut` |
 | Reset zoom | <kbd>Ctrl</kbd> <kbd>0</kbd> | <kbd>⌘</kbd> <kbd>0</kbd> | `view.zoomReset` |
 | Show or hide the video of music videos | none | none | `view.video` |
+| Show or hide [moving covers](playing-music.md#moving-covers) | none | none | `view.movingCovers` |
 
 ### Add-ons and settings
 

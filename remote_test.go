@@ -110,7 +110,7 @@ func TestRemoteInDevicesMenu(t *testing.T) {
 	pc := found(t, lap, "Desktop")
 	tt.Frame()
 	click(t, lap, tt, "Cast to a device")
-	want := []string{"This computer", "-", "Desktop · Mixyun"}
+	want := []string{"This computer", "-", "Desktop · Mixyun", "-", "Join a room…"}
 	if got := tt.Menu(); !slices.Equal(got, want) {
 		t.Errorf("menu %q, want %q", got, want)
 	}

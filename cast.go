@@ -16,9 +16,10 @@ const roomCast = 40
 
 // castShown reports whether the player bar shows the cast button: while a
 // cast device, or a computer with MixMusic's remote control on, is on the
-// network, or the player plays on a cast device.
+// network, or the player plays on a cast device, or a room of Listen with
+// friends runs or is found.
 func (s *shell) castShown() bool {
-	if len(s.svc.Player.CastDevices()) > 0 || len(s.a.Remote().Computers()) > 0 {
+	if len(s.svc.Player.CastDevices()) > 0 || len(s.a.Remote().Computers()) > 0 || s.roomsShown() {
 		return true
 	}
 	_, on := s.svc.Player.CastingTo()
@@ -60,11 +61,14 @@ func (s *shell) castButton(c *ui.Context) {
 			}
 		}
 		s.remoteItems(m)
+		s.roomItems(m)
+		s.joinRoomItem(m)
 	})
 	if b.Clicked() {
 		// The menu opens on what was found, and finds again beside it.
 		s.svc.Player.FindCastDevices()
 		s.a.Remote().Find()
+		s.a.Rooms().Find()
 	}
 }
 

@@ -10,13 +10,12 @@ import (
 	"github.com/fzn0x/mixmusic/locales"
 )
 
-// homeFilters are the home page's pivots, and the sources they keep;
-// homeFilterLabels are their names, in the language the app shows.
-var homeFilters = []media.Source{"", media.SourceLocal, media.SourceSpotify, media.SourceNetEase, media.SourceYouTube}
-
-func homeFilterLabels() []string {
-	return []string{locales.HomeFilterEverything(), locales.HomeFilterYours(), "Spotify", "网易云音乐", "YouTube Music"}
-}
+// homeFilters are the home page's pivots, and the sources they keep.
+var homeFilters = []struct {
+	label  func() string
+	source media.Source
+}{{locales.HomeFilterEverything, ""}, {locales.HomeFilterYours, media.SourceLocal}, {func() string { return "Spotify" }, media.SourceSpotify},
+	{func() string { return "网易云音乐" }, media.SourceNetEase}, {func() string { return "YouTube Music" }, media.SourceYouTube}}
 
 // networkOnline tells whether the network answers, as last checked; tests
 // answer for it.
@@ -33,7 +32,11 @@ func (s *shell) homePage(c *ui.Context) {
 			s.homeEditor(c)
 			return
 		}
-		s.pageHeader(c, locales.HomeTitle(), homeFilterLabels(), &s.homeFilter)
+		labels := make([]string, len(homeFilters))
+		for i, f := range homeFilters {
+			labels[i] = f.label()
+		}
+		s.pageHeader(c, locales.HomeTitle(), labels, &s.homeFilter)
 		s.toolProblems(c)
 		accounts := fetch(s, "accounts", func(ctx context.Context) (app.AccountsStatus, error) { return s.svc.Accounts.Status(ctx), nil })
 
@@ -84,7 +87,7 @@ func (s *shell) homePage(c *ui.Context) {
 		// The user's own shelves show at once, then those of each service
 		// once they came: one that still loads holds back those after it,
 		// which would move once it came (homePlaces).
-		source := homeFilters[s.homeFilter]
+		source := homeFilters[s.homeFilter].source
 		layout := s.set.HomeShelves
 		shown, failed := 0, false
 		for _, p := range homePlaces(layout, s.homeGroups(layout), source) {

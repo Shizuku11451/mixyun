@@ -38,7 +38,7 @@ func (s *shell) miniSeek(c *ui.Context, w float32) {
 	hi := max(dur.Seconds(), 1)
 	at := time.Duration(s.seekTo * float64(time.Second))
 	seek := ui.SliderBase(c.Key("mini-seek"), &s.seekTo, 0, hi).Absolute().Left(0).Bottom(0).Size(w, miniSeekRoom).
-		Label(locales.PlayerSeek()).Value(locales.MiniSeekValue(clock(at), clock(dur))).Disabled(s.st.Loading).Cursor(ui.CursorPointer)
+		Label(locales.PlayerSeek()).Value(locales.MiniSeekValue(clock(at), clockLength(dur))).Disabled(s.st.Loading).Cursor(ui.CursorPointer)
 	_, _, held := seek.Dragged()
 	if !held && (s.seeking || seek.Changed()) {
 		s.p.Seek(time.Duration(s.seekTo * float64(time.Second)))
@@ -92,12 +92,14 @@ func (s *shell) miniSeek(c *ui.Context, w float32) {
 			if !waving {
 				p.Fill(ui.Rect{X: x, Y: y, W: part, H: 2}, rest, 0)
 			}
+			s.paintMarks(p, ui.Rect{X: r.X, Y: y, W: r.W, H: 2}, dur, rtl)
 			return
 		}
 		if !waving {
 			p.Fill(ui.Rect{X: r.X, Y: y, W: r.W, H: 4}, thick, 2)
 			p.Fill(ui.Rect{X: x, Y: y, W: part, H: 4}, rest, 2)
 		}
+		s.paintMarks(p, ui.Rect{X: r.X, Y: y, W: r.W, H: line}, dur, rtl)
 		knob := r.X + part
 		if rtl {
 			knob = r.X + r.W - part
@@ -117,10 +119,15 @@ func (s *shell) miniSeek(c *ui.Context, w float32) {
 		}
 		tip = time.Duration(float64(f) * float64(dur))
 	}
-	const tw, th = 52, 20
+	tw, th := float32(52), float32(20)
+	label := clock(tip)
+	// Over a part the player passes over, its kind too.
+	if mark, ok := s.markAt(float64(tip)/float64(max(dur, 1)), dur, float64(6/max(w, 1))); ok {
+		label, tw = mark, max(min(220, w-4), tw)
+	}
 	x := min(max(px-tw/2, 2), w-tw-2)
 	ui.Box(c.Key("mini-seek-time")).Absolute().Left(x).Bottom(miniSeekRoom+2).Size(tw, th).Radius(k.radiusSm).
 		Background(k.raised).Border(1, k.border).Center().PassThrough().AccessHidden(true).Children(func() {
-		ui.Text(c, clock(tip)).FontSize(k.captionSize()).FontFeatures("tnum").TextColor(k.text).SingleLine()
+		ui.Text(c, label).FontSize(k.captionSize()).FontFeatures("tnum").TextColor(k.text).SingleLine()
 	})
 }

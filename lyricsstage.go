@@ -81,7 +81,7 @@ func (s *shell) toggleStage() {
 	case !ok:
 		s.notes = append(s.notes, notice(locales.CmdPlayFirst()))
 	case cur.Track.IsEpisode():
-		s.notes = append(s.notes, notice(locales.LyricsStageNoEpisode()))
+		s.notes = append(s.notes, notice(locales.LyricsStagePodcast()))
 	default:
 		s.stage.open = true
 	}
@@ -123,13 +123,13 @@ func (s *shell) lyricStage(c *ui.Context) {
 	ui.DialogBase(c, &s.stage.open, func(_, panel ui.Element) {
 		// The panel fills the window, so that no click falls on the backdrop,
 		// which would close the stage.
-		panel.Size(w, h).Label(locales.LyricsStageTitle()).Clip()
+		panel.Size(w, h).Label(locales.LyricsFullScreen()).Clip()
 		// The focus starts on a point that is nothing to press, without a
 		// ring, so that Enter, pressed by a user who opened the stage with
 		// its keys, doesn't press the close button, which would have the
 		// focus. Not the panel: DialogBase makes it clickable, and a click
 		// takes Space, which plays and pauses.
-		ui.Box(c.Key("stage-focus")).Absolute().Top(0).Left(0).Size(1, 1).Label(locales.LyricsStageTitle()).Focusable().AutoFocus().FocusRing(false)
+		ui.Box(c.Key("stage-focus")).Absolute().Top(0).Left(0).Size(1, 1).Label(locales.LyricsFullScreen()).Focusable().AutoFocus().FocusRing(false)
 		s.stageGround(c, panel, t, style)
 		s.stageKeys(c)
 		margin := max(24, 0.03*w)
@@ -159,31 +159,55 @@ func (s *shell) lyricStage(c *ui.Context) {
 			}
 		})
 		s.stageClose(c)
+		s.stageDrag(c)
 	})
 }
 
-// stageGround paints the ground of the stage on its panel, from the track's
-// cover, small, which the GPU blends between the pixels of as it stretches
-// it (as the grounds of Aurora and Glasshouse are: groundLights).
+// stageDrag is the strip along the top of the stage that drags the window
+// under a hidden title bar, as the top bar does, clear of the window's
+// buttons. Absolute, and last, it paints and takes the pointer above the
+// lyrics there.
+func (s *shell) stageDrag(c *ui.Context) {
+	if bar := c.TitleBar(); bar.Height > 0 {
+		ui.Box(c.Key("stage-drag")).Absolute().Top(0).Left(bar.Left).Right(bar.Right).Height(bar.Height).DragWindow()
+	}
+}
+
+// stageGround paints the ground of the stage on its panel: the track's cover,
+// blurred to a wash of its colours (as coverBackdrop's is), overhanging the
+// panel by three sigma so the blur's transparent rim falls outside it, under
+// the scrim; under the stage's other children, as absolute ones paint
+// above those in the flow. Stretched alone, a small cover shows its pixels on a big window.
 func (s *shell) stageGround(c *ui.Context, panel ui.Element, t media.Track, st lyricStyle) {
+	const sigma, size = 60, 96 // the blur hides detail: a small bitmap does
 	var b *ui.Bitmap
 	if len(t.Artwork) > 0 {
-		b = s.art.get(c, artworkURL(t.Artwork, 64), 64)
+		b = s.art.get(c, artworkURL(t.Artwork, size), size)
 	}
-	accent := s.lk.accent
-	panel.Background(ui.Color{A: 255}).Draw(func(p *ui.Painter, r ui.Rect) { paintStageGround(p, r, b, accent, st.scrim) })
+	panel.Background(ui.Color{A: 255})
+	if b == nil {
+		accent := s.lk.accent
+		panel.Draw(func(p *ui.Painter, r ui.Rect) { paintStageGround(p, r, nil, accent, st.scrim) })
+		return
+	}
+	ui.Image(c.Key("stage-ground"), b).Absolute().Top(-3 * sigma).Right(-3 * sigma).Bottom(-3 * sigma).Left(-3 * sigma).Fit(ui.Cover).Blur(sigma).PassThrough().ZIndex(-1)
+	ui.Box(c.Key("stage-veil")).Absolute().Top(0).Right(0).Bottom(0).Left(0).PassThrough().ZIndex(-1).Draw(func(p *ui.Painter, r ui.Rect) { paintStageVeil(p, r, st.scrim) })
 }
 
 // paintStageGround paints the ground of the stage on r: the cover b,
-// stretched over it, then a dark layer of the scrim's strength, and a
-// gradient that darkens its foot. Without a cover, the accent's light stands
-// in for it.
+// stretched over it, then the veil. Without a cover, the accent's light
+// stands in for it.
 func paintStageGround(p *ui.Painter, r ui.Rect, b *ui.Bitmap, accent ui.Color, scrim float32) {
 	if b != nil {
 		p.Image(b, r, ui.Cover)
 	} else {
 		p.Fill(r, accent.Alpha(0.4), 0)
 	}
+	paintStageVeil(p, r, scrim)
+}
+
+// paintStageVeil darkens r by the scrim's strength, and its foot more.
+func paintStageVeil(p *ui.Painter, r ui.Rect, scrim float32) {
 	p.Fill(r, ui.Color{A: uint8(255 * scrim)}, 0)
 	p.FillGradient(r, ui.LinearGradient{From: ui.Color{}, To: ui.Color{A: 120}, Angle: 180}, 0)
 }
@@ -193,7 +217,7 @@ func (s *shell) stageCover(c *ui.Context, t media.Track, size float32, st lyricS
 	frame := ui.Box(c.Key("stage-cover")).Size(size, size).Shrink(0).Radius(st.cover).Clip().Shadow(0, 14, 44, 0, ui.Color{A: 140})
 	var b *ui.Bitmap
 	if len(t.Artwork) > 0 {
-		b = s.art.get(c, artworkURL(t.Artwork, int(size*s.zoomOf())), s.artPixels(size))
+		b = s.art.get(c, s.artAt(t.Artwork, size), s.artPixels(size))
 	}
 	if b == nil {
 		frame.Background(stageInk.Alpha(0.12))
@@ -205,9 +229,14 @@ func (s *shell) stageCover(c *ui.Context, t media.Track, size float32, st lyricS
 	})
 }
 
-// stageClose is the button that closes the stage, at its top right.
+// stageClose is the button that closes the stage, at its top right, or,
+// where the window's buttons take that corner (Windows), below them.
 func (s *shell) stageClose(c *ui.Context) {
-	b := s.buttonBase(c.Key("stage-close")).Absolute().Top(20).Right(20).Size(40, 40).Radius(20).Label(locales.LyricsStageClose()).Cursor(ui.CursorPointer).Tooltip(locales.LyricsStageCloseTip())
+	top := float32(20)
+	if bar := c.TitleBar(); bar.Right > 0 {
+		top = bar.Height + 8
+	}
+	b := s.buttonBase(c.Key("stage-close")).Absolute().Top(top).Right(20).Size(40, 40).Radius(20).Label(locales.LyricsStageClose()).Cursor(ui.CursorPointer).Tooltip(locales.LyricsStageCloseTip())
 	if b.Hovered() {
 		b.Background(stageInk.Alpha(0.16))
 	}
@@ -240,7 +269,7 @@ func (s *shell) lyricsEmpty(c *ui.Context, o lyricsOptions, text string) {
 func (s *shell) lyricStyleCommands() []command {
 	cmds := make([]command, 0, len(lyricStyles))
 	for _, st := range lyricStyles {
-		cmds = append(cmds, command{"lyrics.style." + string(st.id), locales.CmdLyricsStyle(st.name), "", "lyrics", func() {
+		cmds = append(cmds, command{"lyrics.style." + string(st.id), locales.LyricsStageStyle(st.title()), "", locales.CmdGroupLyrics(), func() {
 			s.set.LyricsStyle = st.id
 			s.save()
 		}})

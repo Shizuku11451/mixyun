@@ -151,11 +151,14 @@ func (s *shell) readLine(c *ui.Context, r *playlistRead, noun string) {
 	n, count := len(r.p.Tracks), r.p.TrackCount
 	switch {
 	case r.reading:
-		text := locales.PlaylistReadLoading(thousands(n))
+		var text string
 		switch {
-		// shortcut: while Spotify asks to wait, what plays after is left out; add it if missed.
+		case r.waiting && count > n && r.then != nil:
+			text = locales.PlaylistReadWaitingOfThen(thousands(n), thousands(count), r.does)
 		case r.waiting && count > n:
 			text = locales.PlaylistReadWaitingOf(thousands(n), thousands(count))
+		case r.waiting && r.then != nil:
+			text = locales.PlaylistReadWaitingThen(thousands(n), r.does)
 		case r.waiting:
 			text = locales.PlaylistReadWaiting(thousands(n))
 		case count > n && r.then != nil:
@@ -164,6 +167,8 @@ func (s *shell) readLine(c *ui.Context, r *playlistRead, noun string) {
 			text = locales.PlaylistReadLoadingOf(thousands(n), thousands(count))
 		case r.then != nil:
 			text = locales.PlaylistReadLoadingThen(thousands(n), r.does)
+		default:
+			text = locales.PlaylistReadLoading(thousands(n))
 		}
 		ui.Row(c).Gap(8).Margin(0, 0, 16).Children(func() {
 			ui.Spinner(c).Size(16, 16).Label(locales.PlaylistReadLoadingLabel())

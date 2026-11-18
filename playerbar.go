@@ -314,7 +314,7 @@ func (s *shell) progress(c *ui.Context) {
 			s.p.Seek(time.Duration(s.seekTo * float64(time.Second)))
 		}
 		s.seeking = held
-		ui.Text(c, clock(dur)).FontSize(k.captionSize()).TextColor(k.muted).FontFeatures("tnum").Width(44)
+		ui.Text(c, clockLength(dur)).FontSize(k.captionSize()).TextColor(k.muted).FontFeatures("tnum").Width(44)
 	})
 }
 
@@ -354,8 +354,16 @@ func (s *shell) playerSide(c *ui.Context) {
 	s.speedButton(c)
 	s.outputButton(c, room)
 	s.volumeControl(c)
-	if s.iconButton(c, "mini", "mini", locales.PlayerMiniPlayer(), false, 18).Clicked() {
-		s.showMini()
+	// It opens the floating window.
+	float := s.iconButton(c, "mini", "mini", locales.PlayerFloat(), false, 18)
+	float.ContextMenu(func(m *ui.Menu) {
+		// The floating window locks, and unlocks, here too.
+		if m.Item(locales.FloatLock()).Checked(s.set.FloatLocked).Chosen() {
+			s.lockFloat(!s.set.FloatLocked)
+		}
+	})
+	if float.Clicked() {
+		go s.svc.System.ToggleFloatingLyrics()
 	}
 }
 

@@ -131,7 +131,7 @@ func (s *shell) youtubeAccount(c *ui.Context, yt app.YouTubeAccount) {
 				s.hint(c, locales.AccountSettingsYouTubeHint())
 				label := locales.AccountSettingsYouTubeSignInButton()
 				if s.signingIn == "youtube" {
-					label = locales.AccountSettingsYouTubeWaitingWindow()
+					label = locales.AccountSettingsWaitingWindow()
 				}
 				if s.button(c, "youtube-in", label, true).Disabled(busy).Clicked() {
 					s.youtubeCookies.problem, s.youtubePick = "", false
@@ -147,7 +147,7 @@ func (s *shell) youtubeAccount(c *ui.Context, yt app.YouTubeAccount) {
 			return
 		}
 		if yt.Error != "" {
-			again := locales.AccountSettingsYouTubeRefusedAgain(yt.Error)
+			again := locales.AccountSettingsYouTubeAgain(yt.Error)
 			s.found(c, locales.AccountSettingsYouTubeRefused(), again, func() {
 				s.alert(c, locales.AccountSettingsYouTubeRefused(), again, nil).Margin(12, 0)
 			})
@@ -166,7 +166,7 @@ func (s *shell) youtubeAccount(c *ui.Context, yt app.YouTubeAccount) {
 		}, "sign out, log out")
 		s.youtubeChannels(c)
 		s.row(c, locales.AccountSettingsYouTubeHistoryTitle(), locales.AccountSettingsYouTubeHistoryDesc(), func() {
-			if s.switchOf(c.Key("youtube-history"), &s.set.YouTubeHistory).Label(locales.AccountSettingsYouTubeHistorySwitch()).Changed() {
+			if s.switchOf(c.Key("youtube-history"), &s.set.YouTubeHistory).Label(locales.AccountSettingsYouTubeHistoryLabel()).Changed() {
 				s.save()
 			}
 		})
@@ -193,19 +193,19 @@ func (s *shell) youtubeCookieSignIn(c *ui.Context, busy bool) {
 	}
 	s.show(c, func() {
 		if yc.problem != "" {
-			s.alert(c, locales.AccountSettingsYouTubeCookieProblem(), yc.problem, nil).Margin(12, 0)
+			s.alert(c, locales.AccountSettingsYouTubeDidntSignIn(), yc.problem, nil).Margin(12, 0)
 		}
-		s.row(c, locales.AccountSettingsImportFromBrowser(), locales.AccountSettingsYouTubeImport(), func() {
+		s.row(c, locales.AccountSettingsYouTubeImportTitle(), locales.AccountSettingsYouTubeImportDesc(), func() {
 			// Wide enough for "Chromium (Flatpak)".
-			s.selectOf(c.Key("youtube-browser"), &yc.browser, yc.names).Width(200).Label(locales.AccountSettingsBrowser())
+			s.selectOf(c.Key("youtube-browser"), &yc.browser, yc.names).Width(200).Label(locales.AccountSettingsYouTubeBrowser())
 		})
-		s.row(c, locales.AccountSettingsProfile(), locales.AccountSettingsYouTubeProfile(), func() {
-			ui.TextInput(c.Key("youtube-profile"), &yc.profile).Placeholder(k.sentence(locales.AccountSettingsProfileOwn())).Width(260).Label(locales.AccountSettingsProfile())
+		s.row(c, locales.AccountSettingsYouTubeProfileTitle(), locales.AccountSettingsYouTubeProfileDesc(), func() {
+			ui.TextInput(c.Key("youtube-profile"), &yc.profile).Placeholder(k.sentence(locales.AccountSettingsYouTubeProfilePlaceholder())).Width(260).Label(locales.AccountSettingsYouTubeProfileTitle())
 		})
 		ui.Row(c).Padding(12, 0).Children(func() {
-			label := locales.AccountSettingsImport()
+			label := locales.AccountSettingsYouTubeImportButton()
 			if s.signingIn == "youtube-import" {
-				label = locales.AccountSettingsImporting()
+				label = locales.AccountSettingsYouTubeImporting()
 			}
 			if s.button(c, "youtube-import", label, false).Disabled(busy).Clicked() {
 				browser, profile := "", yc.profile
@@ -220,13 +220,13 @@ func (s *shell) youtubeCookieSignIn(c *ui.Context, busy bool) {
 		})
 		s.hint(c, locales.AccountSettingsYouTubeImportHint())
 		ui.Column(c).Gap(8).Padding(14, 0).Children(func() {
-			ui.Text(c, locales.AccountSettingsPasteCookie()).FontSize(k.bodySize())
-			ui.Text(c, locales.AccountSettingsYouTubePaste()).FontSize(k.smallSize()).TextColor(k.muted).MaxWidth(720)
-			ui.TextArea(c.Key("youtube-cookies"), &yc.pasted).Placeholder("SAPISID=…; SID=…").Height(88).MaxWidth(720).Label(locales.AccountSettingsCookieHeader()).
+			ui.Text(c, locales.AccountSettingsYouTubePasteTitle()).FontSize(k.bodySize())
+			ui.Text(c, locales.AccountSettingsYouTubePasteDesc()).FontSize(k.smallSize()).TextColor(k.muted).MaxWidth(720)
+			ui.TextArea(c.Key("youtube-cookies"), &yc.pasted).Placeholder("SAPISID=…; SID=…").Height(88).MaxWidth(720).Label(locales.AccountSettingsYouTubeCookieLabel()).
 				HandleInput(s.scrollsInside)
-			label := locales.AccountSettingsSignInWithIt()
+			label := locales.AccountSettingsYouTubePasteButton()
 			if s.signingIn == "youtube-paste" {
-				label = locales.AccountSettingsSigningIn()
+				label = locales.AccountSettingsYouTubeSigningIn()
 			}
 			if s.button(c, "youtube-paste", label, false).Disabled(busy || strings.TrimSpace(yc.pasted) == "").Clicked() {
 				pasted := yc.pasted
@@ -278,10 +278,7 @@ func (s *shell) youtubeSignIn(kind string, do func(ctx context.Context) error) {
 func (s *shell) youtubeChannels(c *ui.Context) {
 	// The search of the settings finds the row by what it says, whichever
 	// it says, without asking YouTube for the session's channels.
-	words := strings.Join([]string{
-		locales.AccountSettingsChannel(), locales.AccountSettingsChannelAbout(),
-		locales.AccountSettingsAccountChannel(), locales.AccountSettingsAccountChannelAbout(),
-	}, " ")
+	words := locales.AccountSettingsYouTubeChannelTitle() + " " + locales.AccountSettingsYouTubeChannelAbout() + " " + locales.AccountSettingsYouTubeAccountTitle() + " " + locales.AccountSettingsYouTubeAccountAbout()
 	if _, asked := s.loads["channels"]; !asked && !s.findable("", "", words) {
 		return
 	}
@@ -302,21 +299,21 @@ func (s *shell) youtubeChannels(c *ui.Context) {
 			labels[i] += " · " + ch.Email
 		}
 		if ch.Unswitchable {
-			labels[i] += " · " + locales.AccountSettingsUnswitchable()
+			labels[i] += " · " + locales.AccountSettingsYouTubeUnswitchable()
 		}
 		if i == current {
 			chosen = labels[i]
 		}
 	}
-	title, about := locales.AccountSettingsChannel(), locales.AccountSettingsChannelAbout()
+	title, about := locales.AccountSettingsYouTubeChannelTitle(), locales.AccountSettingsYouTubeChannelAbout()
 	if accounts {
-		title, about = locales.AccountSettingsAccountChannel(), locales.AccountSettingsAccountChannelAbout()
+		title, about = locales.AccountSettingsYouTubeAccountTitle(), locales.AccountSettingsYouTubeAccountAbout()
 	}
 	switch {
 	case current < 0:
-		about = locales.AccountSettingsChannelGone()
+		about = locales.AccountSettingsYouTubeNoAccount()
 	case s.youtubePick:
-		about = locales.AccountSettingsChannelMany()
+		about = locales.AccountSettingsYouTubeMultiple()
 	}
 	s.row(c, title, about, func() {
 		if s.selectOf(c.Key("channel"), &chosen, labels).Width(260).Label(title).Changed() {
@@ -324,13 +321,13 @@ func (s *shell) youtubeChannels(c *ui.Context) {
 			case i < 0:
 			case list[i].Unswitchable:
 				// It stays listed, and the one used stays chosen.
-				s.notes = append(s.notes, noticeOf(errors.New(locales.AccountSettingsSwitchNotice(list[i].Name))))
+				s.notes = append(s.notes, noticeOf(errors.New(locales.AccountSettingsYouTubeSwitchNamed(list[i].Name))))
 			default:
 				ch := list[i]
 				s.youtubePick = false
 				// The notice names the channel once switched, unless YouTube
 				// Music answered as the account itself, which the app tells.
-				s.account("", locales.AccountSettingsUsingAs(ch.Name), func(ctx context.Context) error {
+				s.account("", locales.AccountSettingsYouTubeUsingAs(ch.Name), func(ctx context.Context) error {
 					_, err := s.svc.Accounts.SetYouTubeChannel(ctx, ch)
 					return err
 				})
@@ -339,22 +336,88 @@ func (s *shell) youtubeChannels(c *ui.Context) {
 	}, words)
 }
 
+// waitingText says how many plays wait to be sent to a scrobbling
+// service, by the word it names them by: "scrobble" or "listen".
+func waitingText(n int, word, service string) string {
+	if word == "listen" {
+		return locales.AccountSettingsWaitingListens(n, service)
+	}
+	return locales.AccountSettingsWaitingScrobbles(n, service)
+}
+
+// lastfmExpiredText tells what to do when Last.fm refuses the connection.
+func lastfmExpiredText(lf app.LastfmAccount) string {
+	text := locales.AccountSettingsLastfmAgain()
+	if lf.Waiting > 0 {
+		text += " " + locales.AccountSettingsLastfmWaiting(lf.Waiting)
+	}
+	return text
+}
+
+// lastfmOtherText asks what becomes of the waiting scrobbles when another
+// Last.fm user approved the new connection.
+func lastfmOtherText(lf app.LastfmAccount) string {
+	return locales.AccountSettingsLastfmOther(lf.Waiting, lf.Name, lf.Other)
+}
+
+// lastfmDisconnectText is the question disconnecting asks.
+func lastfmDisconnectText(lf app.LastfmAccount) string {
+	text := locales.AccountSettingsDisconnectAskBody()
+	if lf.Waiting > 0 {
+		text += " " + locales.AccountSettingsLastfmDropped(lf.Waiting)
+	}
+	return text
+}
+
 func (s *shell) lastfmAccount(c *ui.Context, lf app.LastfmAccount) {
 	s.group(c, "Last.fm", func() {
 		if lf.Connected {
-			if lf.Expired {
-				title, again := locales.AccountSettingsLastfmGone(), locales.AccountSettingsLastfmAgain()
-				s.found(c, title, again, func() { s.alert(c, title, again, nil).Margin(12, 0) })
+			if lf.Other != "" {
+				title, text := locales.AccountSettingsLastfmSendTitle(lf.Other), lastfmOtherText(lf)
+				s.found(c, title, text, func() {
+					s.alert(c, title, text, func() {
+						if s.button(c, "lastfm-send", locales.AccountSettingsLastfmSend(), true).Clicked() {
+							s.account("", locales.AccountSettingsConnectedLastfm(), func(ctx context.Context) error { return s.svc.Accounts.LastfmResolve(ctx, true) })
+						}
+						if s.button(c, "lastfm-drop", locales.AccountSettingsLastfmDrop(), false).Clicked() {
+							s.account("", locales.AccountSettingsConnectedLastfm(), func(ctx context.Context) error { return s.svc.Accounts.LastfmResolve(ctx, false) })
+						}
+					}).Margin(12, 0)
+				})
+			} else if lf.Expired {
+				title := locales.AccountSettingsLastfmGone()
+				text := lastfmExpiredText(lf)
+				s.found(c, title, text, func() {
+					s.alert(c, title, text, func() {
+						busy := s.signingIn == "lastfm"
+						label := locales.AccountSettingsLastfmConnectAgain()
+						if busy {
+							label = locales.AccountSettingsWaitingLastfm()
+						}
+						if s.button(c, "lastfm-again", label, true).Disabled(busy).Clicked() {
+							s.notes = append(s.notes, notice(locales.AccountSettingsApproveLastfm()))
+							s.account("lastfm", locales.AccountSettingsConnectedLastfm(), func(ctx context.Context) error { return s.svc.Accounts.LastfmReconnect(ctx) })
+						}
+					}).Margin(12, 0)
+				})
 			}
 			s.row(c, locales.AccountSettingsScrobblingAs(lf.Name), locales.AccountSettingsScrobbleDesc(), func() {
 				if s.switchOf(c.Key("scrobbling"), &s.set.Scrobbling).Label(locales.AccountSettingsScrobbleSwitch()).Changed() {
 					s.save()
 				}
 			})
+			if lf.Waiting > 0 && !lf.Expired && lf.Other == "" {
+				s.hint(c, waitingText(lf.Waiting, "scrobble", "Last.fm"))
+			}
+			s.row(c, locales.AccountSettingsLastfmLoves(), locales.AccountSettingsLastfmLovesDesc(), func() {
+				if s.switchOf(c.Key("lastfm-loves"), &s.set.LastfmLoves).Label(locales.AccountSettingsLastfmLovesLabel()).Changed() {
+					s.save()
+				}
+			})
 			s.found(c, locales.AccountSettingsDisconnect(), "sign out log out of Last.fm", func() {
 				ui.Row(c).Padding(12, 0).Children(func() {
 					if s.button(c, "lastfm-out", locales.AccountSettingsDisconnect(), false).Clicked() {
-						s.ask(locales.AccountSettingsDisconnectAskTitle(), locales.AccountSettingsDisconnectAskBody(), locales.AccountSettingsDisconnect(), func() {
+						s.ask(locales.AccountSettingsDisconnectAskTitle(), lastfmDisconnectText(lf), locales.AccountSettingsDisconnect(), func() {
 							s.account("", "", func(ctx context.Context) error { return s.svc.Accounts.LastfmLogout(ctx) })
 						})
 					}

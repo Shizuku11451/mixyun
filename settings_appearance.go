@@ -19,14 +19,13 @@ import (
 // The groups of Settings › Appearance.
 
 // layoutChoices are the layout designs, in the order of settings.Layouts,
-// as Settings › Appearance offers them. A function, so that they show in the
-// language chosen.
+// as Settings › Appearance offers them.
 func layoutChoices() []choice {
 	return []choice{
-		{"Blend", locales.AppearanceLayoutBlendDescription(), false},
-		{"Expressive", locales.AppearanceLayoutExpressiveDescription(), false},
-		{"Crate", locales.AppearanceLayoutCrateDescription(), false},
-		{"Tiles", locales.AppearanceLayoutTilesDescription(), false},
+		{locales.AppearanceLayoutBlend(), locales.AppearanceLayoutBlendDescription(), false},
+		{locales.AppearanceLayoutExpressive(), locales.AppearanceLayoutExpressiveDescription(), false},
+		{locales.AppearanceLayoutCrate(), locales.AppearanceLayoutCrateDescription(), false},
+		{locales.AppearanceLayoutTiles(), locales.AppearanceLayoutTilesDescription(), false},
 	}
 }
 
@@ -40,8 +39,10 @@ func (s *shell) layoutSettings(c *ui.Context) {
 		options := layoutChoices()
 		if k.headings == headingsLight {
 			// Tiles' own words are lowercase, as its other choices.
-			for i := range options {
-				options[i].title = k.words(options[i].title)
+			options = s.lowLayoutChoices[:0]
+			for _, o := range layoutChoices() {
+				o.title = k.words(o.title)
+				options = append(options, o)
 			}
 		}
 		if s.choices(c, "layout", locales.AppearanceLayoutTitle(), &layout, options) {
@@ -74,12 +75,8 @@ func (s *shell) themeSettings(c *ui.Context) {
 			}
 		})
 		if s.set.FollowSystem {
-			s.row(c, locales.AppearanceInLightMode(), "", func() {
-				s.themeSelect(c, "light-theme", locales.AppearanceThemeInLightMode(), &s.set.LightTheme)
-			})
-			s.row(c, locales.AppearanceInDarkMode(), "", func() {
-				s.themeSelect(c, "dark-theme", locales.AppearanceThemeInDarkMode(), &s.set.DarkTheme)
-			})
+			s.row(c, locales.AppearanceInLightMode(), "", func() { s.themeSelect(c, "light-theme", locales.AppearanceThemeInLightMode(), &s.set.LightTheme) })
+			s.row(c, locales.AppearanceInDarkMode(), "", func() { s.themeSelect(c, "dark-theme", locales.AppearanceThemeInDarkMode(), &s.set.DarkTheme) })
 		}
 		if !s.wornColors().Empty() {
 			s.hint(c, locales.AppearanceColourFileSetsColours())

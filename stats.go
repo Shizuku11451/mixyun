@@ -15,19 +15,19 @@ import (
 	"github.com/fzn0x/mixmusic/locales"
 )
 
-// statsRanges are the days the stats count for each of their pivots: a
-// week, a month, and all of time; statsRangeLabels are their names.
-var statsRanges = []int{7, 30, 0}
-
-func statsRangeLabels() []string {
-	return []string{locales.StatsThisWeek(), locales.StatsThisMonth(), locales.StatsAllTime()}
-}
+var statsRanges = []struct {
+	label func() string
+	days  int
+}{{locales.StatsThisWeek, 7}, {locales.StatsThisMonth, 30}, {locales.StatsAllTime, 0}}
 
 // statsPage shows what the user listened to: artists rank as circles on
 // one fixed size ramp, and each service's share shows as two rings.
 func (s *shell) statsPage(c *ui.Context) {
 	k := &s.lk
-	labels := statsRangeLabels()
+	labels := make([]string, len(statsRanges))
+	for i, r := range statsRanges {
+		labels[i] = r.label()
+	}
 	years := s.recapYears()
 	if len(years) > 0 {
 		labels = append(labels, recapLabel())
@@ -41,13 +41,17 @@ func (s *shell) statsPage(c *ui.Context) {
 			s.recapView(c, years)
 			return
 		}
-		st := s.svc.Collection.Stats(statsRanges[s.statsRange])
+		st := s.svc.Collection.Stats(statsRanges[s.statsRange].days)
 		if st.Plays == 0 {
 			ui.Text(c, k.words(locales.StatsNothingCounted())).FontSize(k.bigSize()).FontWeight(k.displayWeight()).Font(k.display).TextColor(k.accent)
 			ui.Text(c, locales.StatsCountRule()).FontSize(k.subtitleSize()).FontWeight(k.leadWeight())
 			return
 		}
-		spent := longDuration(time.Duration(st.Minutes) * time.Minute)
+		hours := st.Minutes / 60
+		spent := locales.FormatMinutes(strconv.Itoa(st.Minutes))
+		if hours > 0 {
+			spent = locales.FormatHourMinutes(strconv.Itoa(hours), strconv.Itoa(st.Minutes%60))
+		}
 		size := k.subtitleSize()
 		ui.RichText(c,
 			ui.Span{Text: locales.StatsYouPlayed(), Size: size, Weight: 300},
@@ -127,7 +131,7 @@ func dayLabel(date string) string {
 	if err != nil {
 		return date
 	}
-	return weekdayDayMonth(t)
+	return locales.FormatWeekdayDayMonth(weekdayName(t), strconv.Itoa(t.Day()), monthName(t))
 }
 
 // describeDay tells a day's minutes and plays.
@@ -260,7 +264,7 @@ func (s *shell) dayChart(c *ui.Context, days []library.DayPlays) {
 					if n <= 7 {
 						label = weekdayName(t)
 					} else {
-						label = dayMonth(t, false)
+						label = locales.FormatDayMonth(strconv.Itoa(t.Day()), monthName(t))
 					}
 				}
 			}
@@ -456,7 +460,7 @@ func (s *shell) heatmap(c *ui.Context) {
 				x, y := r.X+float32(i/7)*w, r.Y+top+float32(i%7)*(r.H-top)/7
 				p.Fill(ui.Rect{X: x, Y: y, W: side, H: side}, level(d.Plays), 2)
 				if t, err := time.ParseInLocation(time.DateOnly, d.Date, time.Local); err == nil && t.Day() == 1 {
-					p.Text(x, r.Y, monthName(t, false), k.captionSize(), k.muted)
+					p.Text(x, r.Y, monthName(t), k.captionSize(), k.muted)
 				}
 			}
 		})
@@ -484,7 +488,7 @@ func (s *shell) heatmap(c *ui.Context) {
 				}
 				ui.Box(c).Size(cell, cell).Radius(2).Background(fill)
 			}
-			ui.Text(c, locales.StatsMore()).FontSize(k.captionSize()).TextColor(k.muted).Margin(0, 0, 0, 4)
+			ui.Text(c, locales.CollectionMore()).FontSize(k.captionSize()).TextColor(k.muted).Margin(0, 0, 0, 4)
 		})
 	})
 }

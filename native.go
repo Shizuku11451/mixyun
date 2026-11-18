@@ -86,11 +86,13 @@ func fitIn(r, work mygo.Rectangle) mygo.Rectangle {
 	return r
 }
 
-// titleBarStyle is the main window's title bar on goos: the system's own,
-// whose buttons are drawn as the system draws them, but on macOS, where
-// the traffic lights sit over the window, as in the system's apps.
+// titleBarStyle is the main window's title bar on goos: hidden on macOS
+// and Windows, where the page fills the window and the system's buttons sit
+// over it (the traffic lights; minimize, maximize and close as Windows 11
+// draws them), and the system's own elsewhere, where the desktop decides
+// which buttons show.
 func titleBarStyle(goos string) mygo.TitleBarStyle {
-	if goos == "darwin" {
+	if goos == "darwin" || goos == "windows" {
 		return mygo.TitleBarHidden
 	}
 	return mygo.TitleBarDefault
@@ -153,6 +155,8 @@ type shell struct {
 	// remote is the page of a computer controlled, and the dialog of the
 	// code this one shows (remote.go).
 	remote remoteView
+	// rooms is the rooms' page's: the code the user types (rooms.go).
+	rooms roomView
 	// firewall is what the settings know of Windows Firewall
 	// (settings_firewall.go).
 	firewall firewallView
@@ -176,6 +180,8 @@ type shell struct {
 	seeking bool
 	seekTo  float64
 	volume  float64
+	// fl is the floating window's lock, in its shell.
+	fl floatLock
 
 	// narrow is set while the window is at most narrowWidth wide, which
 	// folds the rail; narrowFold is the fold the user gave it there.
@@ -186,7 +192,10 @@ type shell struct {
 	// zoom is the zoom the window shows, zoomRoom the largest it has room
 	// for, and zoomToast set when the next frame tells of a new zoom.
 	zoom, zoomRoom float64
-	zoomToast      bool
+	// pixelScale is how many device pixels a DIP of the window is, the
+	// zoom's and the display's, as its last frame painted (notePixels).
+	pixelScale float32
+	zoomToast  bool
 	// zoomIn is macOS's View › Zoom In, and zoomInAccelerator its key
 	// (zoomInKey).
 	zoomIn            *mygo.MenuItem
@@ -198,6 +207,8 @@ type shell struct {
 	liveSince time.Time
 	// video is the picture of music videos on the now playing page.
 	video videoView
+	// moving is the covers that move (movingcover.go).
+	moving movingCovers
 	// home is Home's own state, as the user arranges it (homeedit.go).
 	home homeArrange
 	// The pages' own state. local are the home page's own shelves, of the
@@ -325,6 +336,8 @@ type shell struct {
 	cardLooks  map[string]*look
 	cardThemes []addons.Theme
 	cardLayout settings.Layout
+	// lowLayoutChoices are the layout designs' choices in Tiles' words.
+	lowLayoutChoices []choice
 	// find is the search of the settings.
 	find settingsFind
 
@@ -444,6 +457,7 @@ func (s *shell) start() {
 		s.a.OnNavigate(func(target string) { s.update(func() { s.open(target) }) }),
 		s.followCast(),
 		s.followRemote(),
+		s.followRooms(),
 		s.followOutput(),
 		s.a.OnGlobalShortcut(s.globalPress),
 		s.a.OnFlush(s.keepColors),
@@ -464,6 +478,7 @@ func (s *shell) follow(stop ...func()) {
 	s.stop = append(s.stop,
 		s.p.Subscribe(func(player.Event) { s.win.Invalidate() }),
 		s.a.Watch(func() { s.update(s.refresh) }),
+		s.followLyricsTiming(),
 		s.svc.Downloads.Watch(func() { s.win.Invalidate() }),
 		s.svc.LocalFiles.Watch(func() { s.win.Invalidate() }),
 		s.svc.Downloads.OnNetwork(func(online bool) { s.update(func() { s.followNetwork(online) }) }),

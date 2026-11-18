@@ -117,6 +117,9 @@ MixMusic menyatukan kedua layanan itu dalam satu pemutar:
 - Tautan `mixmusic://`.
 - **Last.fm:** setiap lagu yang Anda dengar tercatat di profil Anda, dan
   scrobble yang dibuat saat offline dikirim begitu Anda kembali online.
+- **ListenBrainz:** sama seperti itu, bersama Last.fm atau tanpanya, ke
+  ListenBrainz atau server Anda sendiri, seperti Maloja. Lagu yang Anda
+  sukai bisa dikirim ke salah satu atau keduanya sebagai love.
 - **Discord:** profil Anda menampilkan lagu yang sedang diputar, lengkap
   dengan sampul dan sisa waktunya.
 - **Pembaruan:** MixMusic memeriksa rilis baru saat dibuka dan setiap
@@ -291,6 +294,9 @@ bagaimana Flatpak berjalan di desktop Anda.
   (nama apa saja, tanpa callback URL), tempelkan API key dan shared secret
   dari akun itu di Settings › Accounts, lalu setujui MixMusic di browser
   Anda.
+- **ListenBrainz:** tempelkan user token dari
+  [pengaturan ListenBrainz Anda](https://listenbrainz.org/settings/), atau
+  dari server Anda sendiri, di Settings › Accounts.
 - **Discord:** selama aplikasi Discord berjalan, profil Anda menampilkan apa
   yang sedang Anda dengarkan. Matikan di Settings › Desktop (Pengaturan ›
   Desktop).
@@ -501,6 +507,10 @@ MixMusic berkomunikasi dengan:
   diterjemahkan lewat Google.
 - **LRCLIB:** judul, artis, album, dan durasi lagu yang sedang diputar,
   untuk mencari liriknya.
+- **SponsorBlock:** hanya saat Anda menyalakan Skip the parts SponsorBlock
+  marks (Lewati bagian yang ditandai SponsorBlock): 4 karakter pertama
+  dari hash ID setiap video, tidak pernah ID-nya, untuk mencari bagian
+  yang ditandainya.
 - **GitHub:** pemeriksaan versi baru saat aplikasi dibuka dan setiap
   beberapa jam, yang bisa Anda matikan di Settings › About (Pengaturan ›
   Tentang); registry komunitas saat Anda membuka marketplace; unduhan
@@ -508,6 +518,8 @@ MixMusic berkomunikasi dengan:
   bahasa Jepang, kamus bacaan kanji (11,7 MB). Romaji dibuat di komputer
   Anda: liriknya tidak dikirim.
 - **Last.fm,** setelah Anda menghubungkannya: lagu yang Anda putar.
+- **ListenBrainz,** atau server Anda sendiri yang memakai API-nya, setelah
+  Anda menghubungkannya: lagu yang Anda putar.
 - **Discord,** kecuali Anda mematikannya: lagu yang sedang diputar, dikirim
   ke aplikasi Discord di komputer Anda, yang kemudian menampilkannya di
   profil Anda.

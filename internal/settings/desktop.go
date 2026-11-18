@@ -29,6 +29,13 @@ type Desktop struct {
 	// MiniPanel is the panel the mini player shows beside it as it opens
 	// (#371): MiniQueue, MiniLyrics or MiniOutput, or "" for none.
 	MiniPanel string `json:"miniPanel"`
+	// MiniZoom is the zoom the mini player's window was last sized for:
+	// the size the window keeps of its last run suits it, and the mini
+	// player scales it to the zoom as it opens (#717). 0 before it opened.
+	MiniZoom float64 `json:"miniZoom"`
+	// FloatLocked locks the floating lyrics where they are: they show their
+	// words alone, and let the pointer through but to their unlock button.
+	FloatLocked bool `json:"floatLocked"`
 	// MediaKeys has the keyboard's play, next and previous keys control
 	// MixMusic.
 	MediaKeys bool `json:"mediaKeys"`
@@ -36,6 +43,34 @@ type Desktop struct {
 	// MixMusic over MCP (#477), through the command they start. It is off
 	// at first.
 	AssistantControl bool `json:"assistantControl"`
+	// RoomName is the user's name in the rooms of Listen with friends
+	// (#561), which the host and the other guests show, of at most 50
+	// characters: "" is the computer's name.
+	RoomName string `json:"roomName"`
+	// RoomSongs is what becomes of the songs the guests of the user's room
+	// add (#734): RoomSongsAdd, RoomSongsAsk, as at first, or RoomSongsOff.
+	RoomSongs string `json:"roomSongs"`
+	// RoomGuestControl lets the guests of the user's room play, pause and
+	// change its tracks. It is off at first.
+	RoomGuestControl bool `json:"roomGuestControl"`
+	// RoomAskJoin has the user let in each computer that joins their room.
+	// It is off at first.
+	RoomAskJoin bool `json:"roomAskJoin"`
+	// RoomFollowVolume has a guest of a room play at the host's volume,
+	// rather than its own. It is off at first.
+	RoomFollowVolume bool `json:"roomFollowVolume"`
+	// RoomAnywhere lets friends outside this network join the user's room
+	// (#562): MixMusic asks the router to forward the room's port, and the
+	// invite link carries where they reach it. It is off at first.
+	RoomAnywhere bool `json:"roomAnywhere"`
+	// RoomPort is the TCP port rooms listen on, kept so that a forward
+	// made by hand keeps working: picked at random from 1024 to 65535 as
+	// the first room opens, 0 before.
+	RoomPort int `json:"roomPort"`
+	// RoomAddress is the address invites carry in place of those MixMusic
+	// finds, as a VPN's both sides run or a forward made by hand: a host,
+	// with a port or not. "" has MixMusic find them.
+	RoomAddress string `json:"roomAddress"`
 	// DiscordPresence shows what plays on the user's Discord profile, as
 	// the Discord application of DiscordAppID, or MixMusic's own when it
 	// is empty.
@@ -82,6 +117,7 @@ func defaultDesktop() Desktop {
 	d.Notifications = true
 	d.ShowInTitle = true
 	d.MediaKeys = true
+	d.RoomSongs = RoomSongsAsk
 	d.DiscordPresence = true
 	d.DiscordFirstLine, d.DiscordSecondLine = DefaultDiscordFirstLine, DefaultDiscordSecondLine
 	d.DiscordCover, d.DiscordTimeLeft = true, true
@@ -91,9 +127,13 @@ func defaultDesktop() Desktop {
 
 // clean is d without a Discord application ID that isn't one, with lines of
 // the Discord status that Discord takes, and with a panel of the mini
-// player it has.
+// player it has, and a zoom of it that is one.
 func (d Desktop) clean() Desktop {
 	d.MiniPanel = cleanMiniPanel(d.MiniPanel)
+	d.MiniZoom = zoomStep(d.MiniZoom, 0)
+	d.RoomPort, d.RoomAddress = cleanRoomPort(d.RoomPort), cleanRoomAddress(d.RoomAddress)
+	d.RoomName = cleanRoomName(d.RoomName)
+	d.RoomSongs = cleanRoomSongs(d.RoomSongs)
 	if d.DiscordAppID = strings.TrimSpace(d.DiscordAppID); !discordIDRe.MatchString(d.DiscordAppID) {
 		d.DiscordAppID = ""
 	}

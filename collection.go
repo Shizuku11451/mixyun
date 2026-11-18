@@ -21,6 +21,7 @@ type headProps struct {
 	// shows none for a head without.
 	title       string
 	art         []media.Image
+	moving      bool // art plays when it's a GIF that moves (movingcover.go)
 	round       bool
 	source      media.Source
 	facts       []fact
@@ -72,7 +73,11 @@ func (s *shell) collectionHead(c *ui.Context, h headProps) {
 			download: h.download, menu: h.menu})
 	}
 	head.Children(func() {
-		s.cover(c, "head-cover", h.art, size, h.round)
+		if h.moving {
+			s.movingCover(c, "head-cover", h.art, size, true, locales.CollectionMovingCover(h.title))
+		} else {
+			s.cover(c, "head-cover", h.art, size, h.round)
+		}
 		ui.Column(c).Grow(1).MinWidth(0).Gap(12).Children(func() {
 			ui.Row(c).Gap(6).Wrap().Children(func() {
 				s.sourceMark(c, h.source, false)
@@ -242,7 +247,10 @@ func (s *shell) albumPage(c *ui.Context, page string) {
 	a := res.value
 	s.pageScroll(c, func() {
 		s.pageHeader(c, a.Title, nil, nil)
-		kind := locales.CollectionAlbumKind(string(a.Kind))
+		kind := string(a.Kind)
+		if kind == "" {
+			kind = locales.CollectionKindAlbum()
+		}
 		n := a.TrackCount
 		if n == 0 {
 			n = len(a.Tracks)
@@ -344,6 +352,7 @@ func (s *shell) playlistPage(c *ui.Context, id string) {
 			}
 		}
 		h := headProps{title: p.Title, art: p.Artwork, source: p.Source, facts: facts, description: p.Description, download: d, menu: menu}
+		h.moving = local
 		if len(tracks) > 0 {
 			h.play = func() { s.whenRead(r, "plays", func(t []media.Track) { s.p.PlayAll(t, false) }) }
 			h.shuffle = func() { s.whenRead(r, "shuffles", s.shuffled) }
@@ -357,9 +366,9 @@ func (s *shell) playlistPage(c *ui.Context, id string) {
 			}
 		}
 		s.collectionHead(c, h)
-		noun := "playlist"
+		noun := locales.CollectionKindPlaylist()
 		if local {
-			noun = "mix"
+			noun = locales.CollectionKindMix()
 		}
 		s.readLine(c, r, noun)
 		s.gapLine(c, r, tracks, noun)
@@ -492,30 +501,29 @@ func (s *shell) youtubeLibraryItems(m *ui.Menu, p media.Playlist) {
 // Refused, the library reads its playlists again, in case it went from
 // another device.
 func (s *shell) deleteYouTubePlaylist(p media.Playlist) {
-	s.ask(locales.CollectionDeletePlaylist(), locales.CollectionDeleteYouTubeQuestion(p.Title),
-		locales.LibraryDelete(), func() {
-			key := "delete:" + p.ID
-			s.keeping[key] = true
-			go func() {
-				ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-				defer cancel()
-				err := deleteOnYouTube(s, ctx, p.ID)
-				s.update(func() {
-					delete(s.keeping, key)
-					if err != nil {
-						s.notes = append(s.notes, player.Notice{Message: locales.CollectionDeleteFailed(p.Title, err.Error()), Error: true})
-						s.refetch("youtube:playlists")
-						return
-					}
-					s.dropPlaylist("youtube:playlists", p.ID)
-					s.forget("playlist:" + p.ID)
-					s.notes = append(s.notes, notice(locales.CollectionDeletedYouTube(p.Title)))
-					if s.router.Path() == playlistPath(p.ID) {
-						s.router.Replace("/library/youtube")
-					}
-				})
-			}()
-		})
+	s.ask(locales.CollectionDeletePlaylist(), locales.CollectionDeleteYouTubeQuestion(p.Title), locales.LibraryDelete(), func() {
+		key := "delete:" + p.ID
+		s.keeping[key] = true
+		go func() {
+			ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+			defer cancel()
+			err := deleteOnYouTube(s, ctx, p.ID)
+			s.update(func() {
+				delete(s.keeping, key)
+				if err != nil {
+					s.notes = append(s.notes, player.Notice{Message: locales.CollectionDeleteFailed(p.Title, err.Error()), Error: true})
+					s.refetch("youtube:playlists")
+					return
+				}
+				s.dropPlaylist("youtube:playlists", p.ID)
+				s.forget("playlist:" + p.ID)
+				s.notes = append(s.notes, notice(locales.CollectionDeletedYouTube(p.Title)))
+				if s.router.Path() == playlistPath(p.ID) {
+					s.router.Replace("/library/youtube")
+				}
+			})
+		}()
+	})
 }
 
 // removeYouTubePlaylist takes a playlist the user saved out of their
@@ -559,12 +567,12 @@ func (s *shell) dropPlaylist(key, id string) {
 // fetched for key, where the library and the track menus show it at once,
 // rather than read the list again, which YouTube may answer as it was a
 // moment before, as for dropPlaylist. A list still on its way, or one that
-// failed, is asked for again.
+// failed, is asked for again; one that came in part takes it too.
 func (s *shell) keepPlaylist(key string, p media.Playlist) {
 	l, ok := s.loads[key].(*loaded[[]media.Playlist])
 	switch {
 	case !ok:
-	case !l.done, l.err != nil:
+	case !l.done, !listCame(l.err):
 		s.refetch(key)
 	default:
 		l.value = slices.Insert(slices.Clone(l.value), 0, p)
@@ -643,10 +651,10 @@ func (s *shell) artistPage(c *ui.Context, id string) {
 	res := fetch(s, key, func(ctx context.Context) (media.Artist, error) { return s.svc.Catalog.Artist(ctx, id) })
 	switch {
 	case !res.done:
-		s.pageLoading(c, "artist")
+		s.pageLoading(c, locales.CollectionKindArtist())
 		return
 	case res.err != nil:
-		s.pageProblem(c, "artist", res.err, key)
+		s.pageProblem(c, locales.CollectionKindArtist(), res.err, key)
 		return
 	}
 	a := s.shownArtist(res.value)
@@ -654,14 +662,18 @@ func (s *shell) artistPage(c *ui.Context, id string) {
 		if s.artistOf != id {
 			s.artistOf, s.artistPivot = id, 0
 		}
-		pivots := []string{"songs"}
+		sections := []string{"songs"}
 		for _, p := range []struct {
 			name  string
 			shows bool
 		}{{"albums", len(a.Albums) > 0}, {"singles", len(a.Singles) > 0}, {"related", len(a.Related) > 0}} {
 			if p.shows {
-				pivots = append(pivots, p.name)
+				sections = append(sections, p.name)
 			}
+		}
+		pivots := make([]string, len(sections))
+		for i, name := range sections {
+			pivots[i] = artistPivotLabel(name)
 		}
 		before := s.artistPivot
 		labels := make([]string, len(pivots))
@@ -672,7 +684,7 @@ func (s *shell) artistPage(c *ui.Context, id string) {
 		// A pivot goes to its section, in the frame it is chosen.
 		jump := ""
 		if s.artistPivot != before {
-			jump = pivots[s.artistPivot]
+			jump = sections[s.artistPivot]
 		}
 		section := func(name string, content func()) {
 			if el := ui.Column(c.Key("artist-" + name)).Children(content); name == jump {
@@ -695,6 +707,7 @@ func (s *shell) artistPage(c *ui.Context, id string) {
 		if len(a.TopTracks) > 0 {
 			h.play = func() { s.p.PlayAll(a.TopTracks, false) }
 		}
+		s.artistPlay(&h, a)
 		// Signed out of the artist's service, they're followed in MixMusic.
 		// An artist of the music on this computer has no releases to follow.
 		following := s.followsArtist(a)
@@ -704,7 +717,7 @@ func (s *shell) artistPage(c *ui.Context, id string) {
 		}
 		s.collectionHead(c, h)
 		section("songs", func() {
-			s.sectionTitle(c, locales.CollectionTopSongs())
+			s.topSongsTitle(c, a)
 			ui.Column(c).Margin(0, 0, 48).Children(func() {
 				s.trackList(c, "top", a.TopTracks, trackListOptions{art: true, album: true, empty: locales.CollectionNoArtistSongs()})
 			})

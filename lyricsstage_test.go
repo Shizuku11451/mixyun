@@ -106,7 +106,7 @@ func TestLyricStylesTable(t *testing.T) {
 		if st.id != settings.LyricStyles[i] {
 			t.Errorf("style %d is %q, the settings' is %q", i, st.id, settings.LyricStyles[i])
 		}
-		if st.name == "" || st.about() == "" {
+		if st.title() == "" || st.about() == "" {
 			t.Errorf("%q has no name or no description", st.id)
 		}
 		if !slices.Contains([]string{face, faceRound, faceMaterial, faceArchivo}, st.family) {
@@ -320,8 +320,8 @@ func TestLyricStyleSettings(t *testing.T) {
 	show(s, tt, "/settings/appearance")
 	// The tests wear the Tiles layout, whose words are lowercase.
 	for _, st := range lyricStyles {
-		if !tt.HasText(s.lk.words(st.name)) {
-			t.Errorf("Settings doesn't list the style %q: %q", st.name, tt.Texts())
+		if !tt.HasText(s.lk.words(st.title())) {
+			t.Errorf("Settings doesn't list the style %q: %q", st.title(), tt.Texts())
 		}
 	}
 	click(t, s, tt, s.lk.words("Glow"))
@@ -635,4 +635,24 @@ func coversLoad(t *testing.T, s *shell, tt *ui.Tester) {
 			t.Fatal("the cover didn't load")
 		}
 	}
+}
+
+// TestStageGroundUnderTheLyrics finds the line sung painted white over the
+// blurred cover, not hidden under it: absolute elements paint above those in
+// the flow unless told otherwise.
+func TestStageGroundUnderTheLyrics(t *testing.T) {
+	_, tt := stageOn(t, stageSong, 15200*time.Millisecond, true)
+	r, ok := tt.Find("Slow wind over the pier")
+	if !ok {
+		t.Fatalf("the stage doesn't show the line sung: %q", tt.Texts())
+	}
+	img := tt.Image()
+	for x := int(r.X); x < int(r.X+r.W); x++ {
+		for y := int(r.Y); y < int(r.Y+r.H); y++ {
+			if c := img.RGBAAt(x, y); c.R > 240 && c.G > 240 && c.B > 240 {
+				return
+			}
+		}
+	}
+	t.Error("no white pixel where the line sung is: the ground covers the lyrics")
 }

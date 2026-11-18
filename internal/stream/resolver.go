@@ -95,8 +95,8 @@ const expiryMargin = 30 * time.Minute
 var videoIDRe = regexp.MustCompile(`^(?:[A-Za-z0-9_-]{11}|ne[0-9]{1,19})$`)
 
 // netEaseRe matches the key of a NetEase Cloud Music song: "ne" and the
-// song's ID. One of 11 characters could be a YouTube video's ID too; NetEase
-// took YouTube's place, so it is NetEase's.
+// song's ID. One of 11 characters could be a YouTube video's ID too, and is
+// taken for NetEase's: a video's ID is "ne" and 9 digits about once in 10^11.
 var netEaseRe = regexp.MustCompile(`^ne[0-9]{1,19}$`)
 
 // NetEaseKey returns the key the proxy, the cache and the downloads know a

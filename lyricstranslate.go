@@ -20,16 +20,22 @@ var translateLanguages = []struct {
 	code string
 	name func() string
 }{
-	{"af", locales.LyricsLangAfrikaans}, {"ar", locales.LyricsLangArabic}, {"bg", locales.LyricsLangBulgarian}, {"bn", locales.LyricsLangBengali}, {"ca", locales.LyricsLangCatalan},
-	{"zh", locales.LyricsLangChineseSimplified}, {"zh-Hant", locales.LyricsLangChineseTraditional}, {"hr", locales.LyricsLangCroatian}, {"cs", locales.LyricsLangCzech}, {"da", locales.LyricsLangDanish},
-	{"nl", locales.LyricsLangDutch}, {"en", locales.LyricsLangEnglish}, {"et", locales.LyricsLangEstonian}, {"tl", locales.LyricsLangFilipino}, {"fi", locales.LyricsLangFinnish},
-	{"fr", locales.LyricsLangFrench}, {"de", locales.LyricsLangGerman}, {"el", locales.LyricsLangGreek}, {"he", locales.LyricsLangHebrew}, {"hi", locales.LyricsLangHindi},
-	{"hu", locales.LyricsLangHungarian}, {"id", locales.LyricsLangIndonesian}, {"it", locales.LyricsLangItalian}, {"ja", locales.LyricsLangJapanese}, {"ko", locales.LyricsLangKorean},
-	{"lv", locales.LyricsLangLatvian}, {"lt", locales.LyricsLangLithuanian}, {"ms", locales.LyricsLangMalay}, {"no", locales.LyricsLangNorwegian}, {"fa", locales.LyricsLangPersian},
-	{"pl", locales.LyricsLangPolish}, {"pt", locales.LyricsLangPortuguese}, {"ro", locales.LyricsLangRomanian}, {"ru", locales.LyricsLangRussian}, {"sr", locales.LyricsLangSerbian},
-	{"sk", locales.LyricsLangSlovak}, {"sl", locales.LyricsLangSlovenian}, {"es", locales.LyricsLangSpanish}, {"sw", locales.LyricsLangSwahili}, {"sv", locales.LyricsLangSwedish},
-	{"ta", locales.LyricsLangTamil}, {"te", locales.LyricsLangTelugu}, {"th", locales.LyricsLangThai}, {"tr", locales.LyricsLangTurkish}, {"uk", locales.LyricsLangUkrainian},
-	{"ur", locales.LyricsLangUrdu}, {"vi", locales.LyricsLangVietnamese},
+	{"af", locales.LyricsLangAfrikaans}, {"ar", locales.LyricsLangArabic}, {"bg", locales.LyricsLangBulgarian},
+	{"bn", locales.LyricsLangBengali}, {"ca", locales.LyricsLangCatalan}, {"zh", locales.LyricsLangChineseSimplified},
+	{"zh-Hant", locales.LyricsLangChineseTraditional}, {"hr", locales.LyricsLangCroatian},
+	{"cs", locales.LyricsLangCzech}, {"da", locales.LyricsLangDanish}, {"nl", locales.LyricsLangDutch},
+	{"en", locales.LyricsLangEnglish}, {"et", locales.LyricsLangEstonian}, {"tl", locales.LyricsLangFilipino},
+	{"fi", locales.LyricsLangFinnish}, {"fr", locales.LyricsLangFrench}, {"de", locales.LyricsLangGerman},
+	{"el", locales.LyricsLangGreek}, {"he", locales.LyricsLangHebrew}, {"hi", locales.LyricsLangHindi},
+	{"hu", locales.LyricsLangHungarian}, {"id", locales.LyricsLangIndonesian}, {"it", locales.LyricsLangItalian},
+	{"ja", locales.LyricsLangJapanese}, {"ko", locales.LyricsLangKorean}, {"lv", locales.LyricsLangLatvian},
+	{"lt", locales.LyricsLangLithuanian}, {"ms", locales.LyricsLangMalay}, {"no", locales.LyricsLangNorwegian},
+	{"fa", locales.LyricsLangPersian}, {"pl", locales.LyricsLangPolish}, {"pt", locales.LyricsLangPortuguese},
+	{"ro", locales.LyricsLangRomanian}, {"ru", locales.LyricsLangRussian}, {"sr", locales.LyricsLangSerbian},
+	{"sk", locales.LyricsLangSlovak}, {"sl", locales.LyricsLangSlovenian}, {"es", locales.LyricsLangSpanish},
+	{"sw", locales.LyricsLangSwahili}, {"sv", locales.LyricsLangSwedish}, {"ta", locales.LyricsLangTamil},
+	{"te", locales.LyricsLangTelugu}, {"th", locales.LyricsLangThai}, {"tr", locales.LyricsLangTurkish},
+	{"uk", locales.LyricsLangUkrainian}, {"ur", locales.LyricsLangUrdu}, {"vi", locales.LyricsLangVietnamese},
 }
 
 // romanizeNames are the names of the switch that shows lyrics in Latin
@@ -438,9 +444,14 @@ func (s *shell) translateOptions() []string {
 	return options
 }
 
+// lyricsRows are the rows of Settings › Playback › Lyrics after
+// Translate lyrics to, which register from their features' files.
+const lyricsRows = "playback › Lyrics"
+
 func init() { addSettings("playback", 60, (*shell).lyricsSettings) }
 
-// lyricsSettings chooses the language lyrics translate to.
+// lyricsSettings chooses the language lyrics translate to, and shows the
+// other rows of the lyrics.
 func (s *shell) lyricsSettings(c *ui.Context) {
 	s.group(c, locales.LyricsSettingsGroup(), func() {
 		s.row(c, locales.LyricsSettingsTranslate(), locales.LyricsSettingsDesc(), func() {
@@ -478,7 +489,7 @@ func (s *shell) lyricsSettings(c *ui.Context) {
 			})
 			in.Placeholder("gpt-4o-mini").Width(260).Label(locales.LyricsSettingsLLMModel())
 		})
-		s.row(c, locales.LyricsSettingsLLMKey(), "", func() {
+		s.row(c, locales.AccountSettingsAPIKey(), "", func() {
 			// The key never shows: the input stays empty, and says whether one is kept.
 			placeholder := locales.LyricsSettingsLLMKeyNone()
 			if s.svc.System.HasLyricsLLMKey() {
@@ -489,7 +500,7 @@ func (s *shell) lyricsSettings(c *ui.Context) {
 					s.notes = append(s.notes, noticeOf(err))
 				}
 			})
-			in.Password().Placeholder(placeholder).Width(260).Label(locales.LyricsSettingsLLMKey())
+			in.Password().Placeholder(placeholder).Width(260).Label(locales.AccountSettingsAPIKey())
 			if s.svc.System.HasLyricsLLMKey() && s.link(c, "lyrics-llm-key-forget", locales.LyricsSettingsLLMKeyForget()) {
 				d.text = ""
 				if err := s.svc.System.SetLyricsLLMKey(""); err != nil {
@@ -497,5 +508,6 @@ func (s *shell) lyricsSettings(c *ui.Context) {
 				}
 			}
 		})
+		s.settingsOf(c, lyricsRows)
 	})
 }

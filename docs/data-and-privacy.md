@@ -52,10 +52,17 @@ AppImage or archive copy's.
 - `settings.json`: your settings. You can edit it while MixMusic runs, and
   what you save applies at once.
 - `library.json`: your liked and disliked songs, your mixes, the last
-  1,000 tracks you played, which the history and the stats read, your
+  1,000 tracks you played, which the history reads, your
   last 20 searches, the shows you follow, and the artists you follow
   in MixMusic.
+- `plays.jsonl`: every track you played, once it counted, a line each,
+  which the stats, Your year and the Plays sort read: when, and the
+  track's ID, service, title, artists, album and length, without covers.
+  It grows by about 1 MB a year at 10 plays a day. Clear history empties
+  it.
 - `mix-covers/`: the covers you chose for your mixes, cut to a square.
+- A GIF in `mix-covers/`, beside the still of a mix's cover, for one that
+  moves.
 - `local-files.json`: the index of the [music on this computer](local-music.md):
   the path, size, time of change and tags of each music file of the
   folders you added. The folders themselves are `musicFolders` in
@@ -64,9 +71,15 @@ AppImage or archive copy's.
   among those files, the ones you linked or unlinked by hand, and what
   each copy's audio is.
 - `queue.json`: up to 500 tracks of the queue, around the one playing,
-  and where it was.
+  and where it was; while you're in a room of
+  [Listen with friends](listen-with-friends.md), yours as it was as you
+  joined. A room keeps nothing else.
 - `positions.json`: where you left the latest 500 podcast episodes.
 - `lastfm-queue.json`: the scrobbles still to send, as while offline.
+- `listenbrainz-queue.json`: the same for ListenBrainz, and
+  `listenbrainz-recordings.json` the IDs ListenBrainz gave the recordings
+  of the latest 5,000 tracks that played, which likes send their loves by.
+  Disconnecting deletes both.
 - `updater.json`: your choices of updates.
 - `remote.json`: whether [remote control](remote-control.md) is on, and
   the computers paired with this one, by their names and their keys'
@@ -86,6 +99,9 @@ AppImage or archive copy's.
 - `audio/`: the offline cache, the tracks you played, as much as
   Settings › Playback › Offline cache allows (1 GB by default).
 - `artwork/`: the covers you saw, up to 256 MB.
+- `moving-covers/`: the clips of albums' moving covers that played, as
+  much as Settings › Playback › Offline cache allows (256 MB by default),
+  and which albums have one, once a source of them is chosen.
 - `local-art/`: a copy of the covers of the music on this computer, which
   a file holds or that is beside it, by its hash.
 - `now-playing/`, on Linux: the cover of what plays, for the desktop's
@@ -94,10 +110,17 @@ AppImage or archive copy's.
 - `loudness.json`: how loud YouTube measured the tracks you played.
 - `ai-labels.json`: the videos YouTube labels as made with AI, kept 30
   days, while you skip them.
+- `sponsorblock.json`: the parts SponsorBlock marks of the videos you
+  played, 5,000 videos at most, those you downloaded first, while you skip
+  them: asked again after 7 days, and used however old offline.
 - `releases.json`: the releases of the last year of the artists you
   follow, for [New from artists you follow](library.md#new-releases).
 - `lyrics-translations/`: the translations of lyrics you turned on, by
   track and language.
+- `lyrics-timing.json`: where the songs of the music videos you played
+  start in them, for [their lyrics](lyrics.md#music-videos), kept 180
+  days, and the videos whose song has no clear match, kept 7, 400 videos
+  at most.
 - `romaji/`: the dictionary of the readings of kanji, once you turn on
   romaji (11.7 MB).
 - `yt-dlp/`: what yt-dlp keeps of YouTube's player.
@@ -122,8 +145,8 @@ AppImage or archive copy's.
 
 ### Sign-ins
 
-Your Spotify sign-in, your Last.fm connection and the key of your YouTube
-Music session are in the system's credential store, which encrypts them
+Your Spotify sign-in, your Last.fm and ListenBrainz connections and the key
+of your YouTube Music session are in the system's credential store, which encrypts them
 for your account. MixMusic never sees your passwords: you sign in on
 Google's, Spotify's and Last.fm's own pages. Signing in to YouTube Music
 [with your browser](accounts.md#sign-in-with-your-browser) opens it with
@@ -134,11 +157,11 @@ Where the credential store can't keep a secret:
 
 - **On Windows**, as in a session without credentials, the secret is
   encrypted for your Windows account with DPAPI, in
-  `spotify-token.dpapi`, `lastfm.dpapi` or `youtube-session-key.dpapi` in
-  the data folder.
+  `spotify-token.dpapi`, `lastfm.dpapi`, `listenbrainz.dpapi` or
+  `youtube-session-key.dpapi` in the data folder.
 - **On Linux without a Secret Service**, the secrets are in files only
-  your user can read: `spotify-token.json`, `lastfm.json` and
-  `youtube-session.json`.
+  your user can read: `spotify-token.json`, `lastfm.json`,
+  `listenbrainz.json` and `youtube-session.json`.
 - Once the store can keep them, MixMusic moves them into it, and deletes
   the files.
 
@@ -153,20 +176,28 @@ Where the credential store can't keep a secret:
 | The audio of a track, while "Play audio as your account" is on | yt-dlp, which asks YouTube (`www.youtube.com`, `music.youtube.com`) | the video's ID, with your YouTube Music session's cookies, in a file of yours alone that goes once yt-dlp ran |
 | Your YouTube Music history, signed in, while "Add what you play to your YouTube Music history" is on | YouTube Music | the tracks you play, once they played a while, and how far you got in episodes |
 | Skip songs made with AI, while it's on | YouTube (`www.youtube.com`), signed out | the video's ID, once a video |
+| Skip the parts SponsorBlock marks, while it's on | SponsorBlock (`sponsor.ajay.app`), or the mirror you name | only the first 4 characters of the SHA-256 hash of the video's ID, once a video, never the ID: SponsorBlock answers with the parts of all the videos whose hash starts so, some 65,000 of them, and MixMusic keeps the video's. Nothing is sent of what you skip |
 | Covers | the image servers of YouTube, Google and Spotify | the image asked for |
 | Spotify, once you sign in | Spotify (`accounts.spotify.com`, `api.spotify.com`) | what you search and open, your library's changes, and the commands of what plays |
 | Spotify in MixMusic | Spotify's player, loaded from `sdk.scdn.co` | what Spotify's own player sends |
-| Lyrics | Better Lyrics (`api.betterlyrics.org`) | the title, first artist, album and length of the track that plays, once it has an album and a length |
-| Lyrics, when Better Lyrics has none | Unison (`unison.betterlyrics.org`) | the video ID of the track that plays, or, without one, its title, artists, album and length |
-| Lyrics, when Unison has none | LRCLIB (`lrclib.net`) | the title, artists, album and length of the track that plays |
-| Lyrics of a track on this computer | Better Lyrics, then Unison, then LRCLIB | its title, artists, album and length, as its tags tell, unless they name no artist; never its file |
+| Lyrics, from the [sources](lyrics.md#choose-and-order-the-sources) on in Settings › Playback › Lyrics, one at a time in their order, until one has synced lyrics | Better Lyrics (`api.betterlyrics.org`) | the title, first artist, album and length of the track that plays, once it has an album and a length |
+| Lyrics, the same way | Unison (`unison.betterlyrics.org`) | the video ID of the track that plays, or, without one, its title, artists, album and length |
+| Lyrics, the same way | LRCLIB (`lrclib.net`) | the title, artists, album and length of the track that plays; of a music video, its song's |
+| [Lyrics timed to a music video](lyrics.md#music-videos), while "Time lyrics to music videos" is on | YouTube's player API (`www.youtube.com`) and media servers, signed out | the video IDs of the music video and of its song, once a video, for stretches of their audio: of the song, only those compared. No play is reported |
+| Lyrics, the same way | YouTube Music | the video ID of the track that plays, or of its recording there |
+| Lyrics, the same way, and the transcript of a podcast episode | YouTube (`www.youtube.com`), signed out | the video ID of the track that plays, or of its recording there, for its captions |
+| Lyrics of a track on this computer | the sources on, but YouTube captions | its title, artists, album and length, as its tags tell, unless they name no artist; never its file |
 | Translate, or romanized Arabic, while it's on beside the lyrics | Unison, which has Google translate them | the lyrics of the track that plays, with its video ID |
 | Romaji, the first time you turn it on | GitHub | a download of the dictionary of kanji readings; the lyrics stay on your computer |
-| Last.fm, once you connect it | Last.fm | the title, artists, album and length of what you play, and when |
+| Last.fm, once you connect it | Last.fm | the title, artists, album and length of what you play, and when; with Send likes as loves on, the songs you like and unlike |
+| ListenBrainz, once you connect it | ListenBrainz (`api.listenbrainz.org`), or the server you name | the title, first artist, album and length of what you play, and when, that MixMusic sent it, and for YouTube Music and Spotify tracks the service, the track's page, and Spotify's address and the ISRC where known; with Send likes as loves on, the songs you like and unlike, and the title, artist and album of a song looked up for its love |
 | Discord, unless you turn it off in Settings › Desktop | the Discord app on your computer | the title, artists, album and cover address of what plays, and its times, as you choose them; with the Listen button, the track's link on its service |
 | Casting | the cast device you choose, on your network | the title, artist and cover of what plays; the device fetches the audio from MixMusic while you cast |
 | AI assistants, while you let them control MixMusic | the assistant on your computer, and from it the AI model it uses, which may be on the internet | what plays and the queue, the results of its searches, and the names of your playlists and mixes, as it asks for them |
 | Remote control, with a computer paired | that computer's MixMusic, on your network, encrypted | what plays, the volume and the next 20 tracks, and the commands; when you move what plays to it, the queue, with the tags of your music files, never their paths |
+| Listen with friends, while you host a room | each guest's MixMusic, on your network, or over the internet while you let friends outside it join, encrypted, once it proved the code or the link | your name in rooms, what plays, where it is and its volume, and up to 1,000 tracks of the queue, with the tags of your music files, never their paths or their audio; before a guest joins, who hosts, what plays and how many listen; the room's announcement tells your name in rooms to the whole network |
+| Listen with friends, while you're in a room | the host's MixMusic, on your network, or over the internet at the address its link names, encrypted | your name in rooms, and when each track is ready |
+| Listen with friends, while you let friends outside your network join | your router | a request to forward one TCP port, the room's, to your computer, by UPnP, NAT-PMP or PCP, and to let it in at your IPv6 address, renewed while the room lasts and removed as it ends; your invite link, which anyone it reaches can read, carries your router's internet address and the room's port, and your computer's IPv6 address, a temporary one, never one made of its hardware address, or the address you typed for invites in their place |
 | Checks for updates, unless you turn them off in Settings › About | GitHub | a request for the newest release, and its download when you install it |
 | yt-dlp, when you install or update it | GitHub | a request for the version of yt-dlp's latest release, from its page or GitHub's API, and a download of it |
 | The marketplace, when you open it | GitHub | a download of the registry, and of the add-ons you install |
@@ -183,8 +214,8 @@ Where the credential store can't keep a secret:
 
 - Your settings, your library, your history and your searches.
 - The [music on this computer](local-music.md#privacy): MixMusic plays it
-  from its files, and sends no file anywhere. Last.fm and Discord hear of
-  what plays as of any track, as their settings say.
+  from its files, and sends no file anywhere. Last.fm, ListenBrainz and
+  Discord hear of what plays as of any track, as their settings say.
 - Latin letters for lyrics, Japanese romaji included: MixMusic makes them
   itself, and sends no lyrics for them. Only Arabic's come from Unison,
   while romanize is on.
@@ -198,7 +229,8 @@ Where the credential store can't keep a secret:
 
 ## Clear, move or reset
 
-- **Your history:** the library's history page clears what you played.
+- **Your history:** the library's history page clears what you played,
+  and the plays the stats count.
 - **The cache:** Settings › Playback › Offline cache › Clear tracks and
   Clear covers.
 - **A sign-in:** signing out of a service in Settings › Accounts deletes

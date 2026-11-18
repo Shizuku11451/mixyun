@@ -41,16 +41,16 @@ type ballGeo struct {
 // ballMotions are the motions, in the order of settings.LyricBallMotions,
 // which a test holds them to.
 var ballMotions = []ballMotion{
-	{id: settings.LyricBallMix, name: locales.LyricBallMix, about: locales.LyricBallMixAbout},
-	{id: settings.LyricBallHop, name: locales.LyricBallHop, about: locales.LyricBallHopAbout,
+	{id: settings.LyricBallMix, name: locales.LyricBallMixName, about: locales.LyricBallMixAbout},
+	{id: settings.LyricBallHop, name: locales.LyricBallHopName, about: locales.LyricBallHopAbout,
 		takes: 560 * time.Millisecond, least: 200 * time.Millisecond, legs: hopLegs},
-	{id: settings.LyricBallBoomerang, name: locales.LyricBallBoomerang, about: locales.LyricBallBoomerangAbout,
+	{id: settings.LyricBallBoomerang, name: locales.LyricBallBoomerangName, about: locales.LyricBallBoomerangAbout,
 		takes: 1100 * time.Millisecond, least: 600 * time.Millisecond, legs: boomerangLegs},
-	{id: settings.LyricBallLoop, name: locales.LyricBallLoop, about: locales.LyricBallLoopAbout,
+	{id: settings.LyricBallLoop, name: locales.LyricBallLoopName, about: locales.LyricBallLoopAbout,
 		takes: 1200 * time.Millisecond, least: 700 * time.Millisecond, legs: loopLegs},
-	{id: settings.LyricBallDive, name: locales.LyricBallDive, about: locales.LyricBallDiveAbout,
+	{id: settings.LyricBallDive, name: locales.LyricBallDiveName, about: locales.LyricBallDiveAbout,
 		takes: 850 * time.Millisecond, least: 320 * time.Millisecond, legs: diveLegs},
-	{id: settings.LyricBallRicochet, name: locales.LyricBallRicochet, about: locales.LyricBallRicochetAbout,
+	{id: settings.LyricBallRicochet, name: locales.LyricBallRicochetName, about: locales.LyricBallRicochetAbout,
 		takes: 1500 * time.Millisecond, least: 900 * time.Millisecond, legs: ricochetLegs},
 }
 

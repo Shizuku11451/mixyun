@@ -172,7 +172,7 @@ func (s *shell) queueRow(c *ui.Context, i int, it player.Item, current bool) {
 			})
 		})
 		if t.DurationMs > 0 {
-			ui.Text(c, clock(ms(t.DurationMs))).FontSize(k.captionSize()).TextColor(sub).FontFeatures("tnum")
+			ui.Text(c, clockLength(ms(t.DurationMs))).FontSize(k.captionSize()).TextColor(sub).FontFeatures("tnum")
 		}
 		if !current && hovered {
 			if s.iconButton(c, "q-remove-"+it.UID, "close", locales.PanelRemoveTrack(t.Title), false, 14).Clicked() {
@@ -212,7 +212,7 @@ func (s *shell) lyricsPanel(c *ui.Context) {
 	var actions func()
 	if cur, ok := s.st.Current(); ok && !cur.Track.IsEpisode() {
 		actions = func() {
-			if s.iconButton(c, "lyrics-stage", "expand", locales.LyricsStageTitle(), false, 16).Clicked() {
+			if s.iconButton(c, "lyrics-stage", "expand", locales.LyricsFullScreen(), false, 16).Clicked() {
 				s.toggleStage()
 			}
 		}
@@ -608,6 +608,7 @@ func (s *shell) trackMenuAt(m *ui.Menu, t media.Track, queued int) {
 			s.p.Enqueue(one)
 			s.notes = append(s.notes, notice(locales.PanelAddedToQueue(t.Title)))
 		}
+		s.roomSongItem(m, t)
 	}
 	if !t.IsEpisode() && t.Source != media.SourceFile && m.Item(locales.PanelStartRadio()).Chosen() {
 		s.startRadio(t)
@@ -672,6 +673,7 @@ func (s *shell) trackMenuAt(m *ui.Menu, t media.Track, queued int) {
 			}
 		}
 	}
+	s.movingCoverItem(m, t)
 	// What plugins add to the menu of every track.
 	if actions := s.plugins.TrackActions(); len(actions) > 0 {
 		m.Separator()

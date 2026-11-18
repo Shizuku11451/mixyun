@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"math"
 	"slices"
 	"strings"
 	"sync"
@@ -100,14 +101,45 @@ func (c *Catalog) SearchYouTube(ctx context.Context, query string) (media.Search
 	return c.a.youtube.SearchWeb(ctx, query)
 }
 
-// Suggestions returns what to suggest for what the user typed: NetEase
-// Cloud Music's searches, songs, albums, artists and playlists, or the recent
-// searches while nothing is typed.
+// Suggestions returns what to suggest for what the user typed: the
+// searches, songs, albums, artists and playlists of NetEase Cloud Music and
+// YouTube Music in turn, NetEase's first, or the recent searches while
+// nothing is typed. It fails only when both did.
 func (c *Catalog) Suggestions(ctx context.Context, input string) (media.Suggestions, error) {
 	if strings.TrimSpace(input) == "" {
 		return media.Suggestions{Searches: c.a.library.Searches()}, nil
 	}
-	return c.a.netease.Suggestions(ctx, input)
+	var (
+		wg           sync.WaitGroup
+		ne, yt       media.Suggestions
+		neErr, ytErr error
+	)
+	wg.Go(func() { ne, neErr = c.a.netease.Suggestions(ctx, input) })
+	wg.Go(func() { yt, ytErr = c.a.youtube.Suggestions(ctx, input) })
+	wg.Wait()
+	if neErr != nil && ytErr != nil {
+		return media.Suggestions{}, neErr
+	}
+	return mergeSuggestions(ne, yt), nil
+}
+
+// mergeSuggestions takes the suggestions of each in turn, the first's
+// leading, keeping one of the searches that differ only in case.
+func mergeSuggestions(lists ...media.Suggestions) media.Suggestions {
+	var searches [][]string
+	var items [][]media.Item
+	for _, l := range lists {
+		searches, items = append(searches, l.Searches), append(items, l.Items)
+	}
+	out := media.Suggestions{Searches: []string{}, Items: interleave(math.MaxInt, items...)}
+	seen := map[string]bool{}
+	for _, v := range interleave(math.MaxInt, searches...) {
+		if k := strings.ToLower(strings.TrimSpace(v)); k != "" && !seen[k] {
+			seen[k] = true
+			out.Searches = append(out.Searches, v)
+		}
+	}
+	return out
 }
 
 // SpotifyHome returns Spotify's shelves of the home page, made of the
@@ -467,12 +499,12 @@ func (c *Catalog) videoLength(ctx context.Context, video media.Track) time.Durat
 	return time.Duration(tracks[0].DurationMs) * time.Millisecond
 }
 
-// Lyrics returns the lyrics of a track: Better Lyrics' when it has them
-// timed word by word, else Unison's, else LRCLIB's, else YouTube Music's.
-// Synchronized lyrics of a later source win over plain ones of an earlier,
-// and YouTube Music's plain lyrics over shorter ones.
+// Lyrics returns the lyrics of a track, from the sources of lyrics that
+// are on, in the user's order (askLyrics).
 func (c *Catalog) Lyrics(ctx context.Context, track media.Track) (lyrics.Lyrics, error) {
-	if l, ok := c.a.lyricsMemo.get(track.ID); ok {
+	set := c.a.settings.Get().Lyrics
+	kept := track.ID + " " + lyricsSetup(set)
+	if l, ok := c.a.lyricsMemo.get(kept); ok {
 		return l, nil
 	}
 	// A file of no artist, as a voice memo, is looked for nowhere.
@@ -487,52 +519,8 @@ func (c *Catalog) Lyrics(ctx context.Context, track media.Track) (lyrics.Lyrics,
 	}
 	q := lyricsQuery(track)
 	q.VideoID = c.videoID(track)
-	// Better Lyrics is asked first, for lyrics timed word by word. Unison
-	// is asked when it has none, or is down or busy.
-	l, err := c.a.betterLyrics.Get(ctx, q)
-	if errors.Is(err, lyrics.ErrUnavailable) {
-		log.Printf("mixmusic: the lyrics of %s, on Better Lyrics: %v", track.ID, err)
-	}
-	if err != nil {
-		l, err = c.a.unison.Get(ctx, q)
-		if errors.Is(err, lyrics.ErrUnavailable) {
-			log.Printf("mixmusic: the lyrics of %s, on Unison: %v", track.ID, err)
-		}
-	}
-	// LRCLIB fills in when Unison has nothing, or is down, and when it
-	// has synchronized lyrics where Unison has plain ones. Unison looks a
-	// music video up by its own ID, but LRCLIB has the lyrics of its song,
-	// timed for the song (#290).
-	note := ""
-	if err != nil || !l.Synced {
-		lq, song, ofSong := q, media.Track{}, false
-		if track.Video && q.VideoID != "" {
-			if song, ofSong = c.videoSong(ctx, track); ofSong {
-				lq = lyricsQuery(song)
-			}
-		}
-		lr, lrErr := c.a.lyrics.Get(ctx, lq)
-		if lrErr == nil && lr.Synced && ofSong && !c.keepsTime(ctx, track, song) {
-			lr, note = lr.Untimed(), videoNote
-		}
-		switch {
-		case lrErr == nil && (err != nil || lr.Synced):
-			l, err = lr, nil
-		case err != nil:
-			err = missed(err, lrErr)
-		}
-	}
-	// YouTube Music fills in when neither has anything, or both are down,
-	// and when its plain lyrics are longer than theirs.
-	if err != nil || (!l.Synced && !l.Instrumental) {
-		if yt, ytErr := c.youtubeLyrics(ctx, track); ytErr == nil && (err != nil || len(yt.Lines) > len(l.Lines)) {
-			l, err = yt, nil
-		}
-	}
-	// Whichever plain lyrics show, they tell why they aren't synced.
-	if note != "" && err == nil && !l.Synced {
-		l.Note = note
-	}
+	seen := c.a.lyricsTiming.version.Load()
+	l, err := c.askLyrics(ctx, track, q, set)
 	if err != nil {
 		// A track LRCLIB was too busy to look everywhere for, or that a
 		// source out of reach may have, reads the same, but the lyrics
@@ -546,19 +534,28 @@ func (c *Catalog) Lyrics(ctx context.Context, track media.Track) (lyrics.Lyrics,
 	if l.Language == "" {
 		l.Language = lyrics.GuessLanguage(l.Lines)
 	}
-	c.a.lyricsMemo.put(track.ID, l)
+	// A music video's lyrics change once timed to it (lyricsvideo.go).
+	if c.a.lyricsStay(track.ID, seen) {
+		c.a.lyricsMemo.put(kept, l)
+	}
 	return l, nil
 }
 
-// missed is why neither Unison nor LRCLIB has the lyrics of a track: none
-// found when both looked, and none found yet when one of them couldn't be
-// reached, which may have some; LRCLIB's failure when neither could be.
-func missed(unison, lrclib error) error {
-	down, lrclibDown := errors.Is(unison, lyrics.ErrUnavailable), errors.Is(lrclib, lyrics.ErrUnavailable)
-	if down != lrclibDown {
-		return fmt.Errorf("%w (%v; %v)", lyrics.ErrNotFoundYet, unison, lrclib)
+// lrclibLyrics returns LRCLIB's lyrics of a track. Unison looks a music
+// video up by its own ID, but LRCLIB has the lyrics of its song, timed for
+// the song (#290), which show timed to the video (videoLyrics).
+func (c *Catalog) lrclibLyrics(ctx context.Context, track media.Track, q lyrics.Query) (lyrics.Lyrics, error) {
+	song, ofSong := media.Track{}, false
+	if track.Video && q.VideoID != "" {
+		if song, ofSong = c.videoSong(ctx, track); ofSong {
+			q = lyricsQuery(song)
+		}
 	}
-	return lrclib
+	l, err := c.a.lyrics.Get(ctx, q)
+	if err == nil && l.Synced && ofSong {
+		l = c.videoLyrics(ctx, track, song, l)
+	}
+	return l, err
 }
 
 // videoID returns the ID of a track's recording on YouTube, to look its
@@ -605,12 +602,9 @@ func (e lyricsError) Unwrap() error { return e.err }
 // youtubeLyrics returns YouTube Music's lyrics of a track, or of its
 // recording there.
 func (c *Catalog) youtubeLyrics(ctx context.Context, track media.Track) (lyrics.Lyrics, error) {
-	yt := track
-	if track.Source != media.SourceYouTube {
-		var err error
-		if yt, err = c.a.matcher.Match(ctx, track); err != nil {
-			return lyrics.Lyrics{}, err
-		}
+	yt, err := c.youtubeRecording(ctx, track)
+	if err != nil {
+		return lyrics.Lyrics{}, err
 	}
 	_, videoID, err := media.ParseID(yt.ID)
 	if err != nil {
@@ -621,6 +615,15 @@ func (c *Catalog) youtubeLyrics(ctx context.Context, track media.Track) (lyrics.
 		return lyrics.Lyrics{}, err
 	}
 	return lyrics.Plain(text, strings.TrimPrefix(source, "Source: ")), nil
+}
+
+// youtubeRecording returns the recording of a track on YouTube: the track
+// itself, or the one matched to it there.
+func (c *Catalog) youtubeRecording(ctx context.Context, track media.Track) (media.Track, error) {
+	if track.Source == media.SourceYouTube {
+		return track, nil
+	}
+	return c.a.matcher.Match(ctx, track)
 }
 
 // Explore returns YouTube Music's new albums and singles, trending songs

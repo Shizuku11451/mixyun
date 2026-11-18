@@ -80,13 +80,16 @@ func (s *shell) discordLineRow(c *ui.Context, key, title string, line *string, d
 		text = dr.text
 	}
 	describe := func() {
-		names := make([]string, len(app.DiscordPlaceholders))
+		ui.Text(c, locales.DiscordPlaceholdersLabel())
 		for i, name := range app.DiscordPlaceholders {
-			names[i] = "{" + name + "}"
+			if i > 0 {
+				ui.Text(c, ", ")
+			}
+			ui.Text(c, "{"+name+"}").TextColor(k.text)
 		}
-		ui.Text(c, locales.DiscordPlaceholders(strings.Join(names, ", ")))
+		ui.Text(c, locales.DiscordPlaceholdersEmpty())
 		if unknown := app.UnknownDiscordPlaceholders(text); len(unknown) > 0 {
-			ui.Text(c, discordUnknownNote(unknown)).TextColor(k.danger)
+			ui.Text(c, " "+discordUnknownNote(unknown)).TextColor(k.danger)
 		}
 	}
 	s.rowWith(c, title, describe, func() {
@@ -109,7 +112,7 @@ func discordUnknownNote(names []string) string {
 	for i, n := range names {
 		braced[i] = "{" + n + "}"
 	}
-	return locales.DiscordUnknownNote(len(braced), strings.Join(braced, ", "))
+	return locales.DiscordUnknownNote(len(names), strings.Join(braced, ", "))
 }
 
 // discordSample is the track the preview shows while nothing plays.
@@ -284,6 +287,6 @@ func (s *shell) discordTimes(c *ui.Context, a *discord.Activity, now time.Time) 
 			p.Fill(r, k.border, r.H/2)
 			p.Fill(ui.Rect{X: r.X, Y: r.Y, W: r.W * f, H: r.H}, k.text, r.H/2)
 		})
-		ui.Text(c, clock(length)).FontSize(k.captionSize()).TextColor(k.muted).FontFeatures("tnum")
+		ui.Text(c, clockLength(length)).FontSize(k.captionSize()).TextColor(k.muted).FontFeatures("tnum")
 	})
 }

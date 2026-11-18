@@ -118,8 +118,22 @@ func newNotchHost(w *mygo.Window) notchHost {
 
 // track has the view MyGo draws in hear the pointer whichever app is
 // active.
-func (m *macNotch) track() {
-	view := surfaceView(m.ns.Send(sel("contentView")))
+func (m *macNotch) track() { trackAlways(m.ns) }
+
+// trackPointer has the window w hear the pointer whichever app is active,
+// as a window over the others, which the user rarely makes MixMusic
+// active for, needs to show what it shows on hover.
+func trackPointer(w *mygo.Window) {
+	mygo.RunOnMain(func() { withPool(func() { trackAlways(objc.ID(w.NativeHandle())) }) })
+}
+
+// trackAlways adds a tracking area of trackingAlways to the view MyGo draws
+// in, in the NSWindow ns. Main thread.
+func trackAlways(ns objc.ID) {
+	if ns == 0 {
+		return
+	}
+	view := surfaceView(ns.Send(sel("contentView")))
 	if view == 0 {
 		return
 	}

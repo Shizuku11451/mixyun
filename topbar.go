@@ -226,7 +226,7 @@ func (s *shell) suggestedItem(c *ui.Context, cb ui.ComboboxParts, it media.Item)
 	key := suggestedKey(it)
 	title, _, line, art := s.suggestedLine(it)
 	item := cb.Item(key).Height(48).PaddingX(8).Gap(12).AlignItems(ui.Center).Radius(k.radiusSm).Cursor(ui.CursorPointer).
-		Label(title + ", " + line)
+		Label(locales.TopbarSuggestedLabel(title, line))
 	ink, mark := k.text, k.muted
 	if item.Highlighted() {
 		item.Background(k.accent)

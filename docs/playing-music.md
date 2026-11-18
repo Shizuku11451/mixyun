@@ -28,12 +28,16 @@ The [command palette](settings.md#the-command-palette) (Ctrl+K) searches too: ty
 - **A track's row:** double-click it, or click its cover, to play the list from that track: the album, the playlist or the search results. Doing so on the track that plays pauses it.
 - **A track's menu,** from the … button of its row or a right click: Play, Play next, Add to queue, Start radio, Add to liked songs, Dislike, [Add to library](library.md#youtube-music-playlists-albums-and-artists) (YouTube Music, signed in), [Add to mix](library.md#mixes), [Add to YouTube Music playlist](library.md#youtube-music-playlists-albums-and-artists) (signed in), [Download](library.md#downloads), Go to the artist, Go to album, Open in Spotify or YouTube Music, [Copy](#sharing), and [Share](#sharing). A Spotify track that plays from YouTube Music also has Find another YouTube Music match, for when the recording found is the wrong one.
 - **An album's or a playlist's page:** Play and Shuffle, and the More menu: Play next, Add to queue, Start radio, Save as a new mix, Save as a YouTube Music playlist (signed in), Open on its service, Copy link and [Share](#sharing). The tiles of albums, playlists and mixes have Share in their menus too.
-- **An artist's page:** Play top songs and [Follow](library.md#artists-you-follow), then Top songs, Albums, Singles & EPs, and Fans also like. Its More menu follows the artist or stops, and starts a radio of the artist.
-- **A tile,** on Home, Explore, the search or the library: its play button plays it, and clicking the tile opens its page.
+- **An artist's page:** Play and Shuffle of all their songs (see [Play on a Spotify artist](spotify.md#play-on-an-artist)) or Play top songs, and [Follow](library.md#artists-you-follow), then Top songs, Albums, Singles & EPs, and Fans also like. Its More menu follows the artist or stops, and starts a radio of the artist.
+- **A tile,** on Home, Explore, the search or the library: its play button plays it, and clicking the tile opens its page. An artist's tile has a shuffle button, which shuffles all of their songs (see All of an artist's songs below), and Play and Shuffle in its menu.
 - **Home's Jump back in** plays the track you played last again.
 - **[Synced lyrics](lyrics.md#synced-and-plain-lyrics):** click a line to play the song from there.
 
 A track that loads can't be paused or moved until you hear it: the play button shows that it loads, and the keys and media controls wait too. Choosing another track still leaves it.
+
+## All of an artist's songs
+
+On a YouTube Music or Spotify artist's page, Play and Shuffle play all of the artist's songs (on Spotify, [from all their releases](spotify.md#play-on-an-artist)); so do the artist's tile and its menu, and an AI assistant's `play_result`. On YouTube Music, they play the list of them that Show all, beside Top songs, opens: the list of them that Show all, beside Top songs, opens. The first hundred or so start at once, and the rest join the queue as they load, scattered among the songs still to play when you shuffle. A song the list holds twice plays once, and Hide explicit content leaves its explicit songs out. When the list doesn't load, the top songs play, and a notice says so; an artist YouTube Music has no list of has Play top songs alone. An artist of the music on this computer has Play and Shuffle of all their songs too. Start radio, in an artist's More menu, starts from their first top song.
 
 ## Selecting tracks
 
@@ -179,6 +183,21 @@ A song is liked or disliked, not both: disliking a liked song unlikes it, on Spo
 - MixMusic asks YouTube about each song once, signed out, and keeps the answer for 30 days. That can add up to half a second before a song you skip to starts; a song YouTube doesn't answer for within 10 seconds plays.
 - Spotify songs are checked by their recording on YouTube Music, when they play from there.
 
+## Skipping parts of videos
+
+"Skip the parts SponsorBlock marks", in Settings › Playback › Skip parts of videos and off by default, passes over the parts of videos that [SponsorBlock](https://sponsor.ajay.app)'s community marks: music videos that open with a spoken scene, uploads and episodes with sponsor reads. Plain songs seldom have any.
+
+- Once it's on, a box for each kind says what it skips: **Non-music parts**, **Sponsor** and **Self-promotion**, ticked at first, and **Reminders to like or subscribe**, **Intro**, **Outro**, **Preview or recap**, **Hook or greeting** and **Filler**, which skips a lot, so it's off at first.
+- A part at the start of a track is passed over with no gap as the track starts, also when it's preloaded or crossfaded into. One in the middle is jumped over as it comes, on screen, minimized or in the tray. One that reaches the end ends the track there, and a crossfade takes its start for the track's end.
+- A toast tells of each, such as "Skipped the intro", with **undo**, which goes back to it. Each part is skipped once a play, so seeking back into one plays it.
+- The seek bar marks each part it skips, in a colour of the theme for its kind, in the player bar, on the now playing page, in the mini player and around the notch; the pointer over one tells its kind and times.
+- **Highlight**, ticked at first, marks the moment SponsorBlock calls a video's best with a dot; **Jump to the highlight**, on the now playing page and in the command palette, plays from there.
+- Skipped parts count for nothing: a play counts at 30 seconds, or half the track, of what played without them, Last.fm's and ListenBrainz's scrobbles take half of the track without them, and Previous's first 3 seconds leave them out.
+- MixMusic asks SponsorBlock of the YouTube recording that plays, a Spotify track's too, as its stream is found, the next track's before it plays, and playback never waits for the answer: one that comes late applies from then on. It never asks of songs on this computer, of tracks Spotify plays, or of live streams, and nothing while it's off. It sends only the first 4 characters of the hash of the video's ID ([what each feature sends](data-and-privacy.md#what-each-feature-sends-where)), and never sends parts or votes.
+- A part marked on a video since cut, whose length is more than 2 seconds off the audio's, is left out, as are parts under a second. Answers are kept, those of downloads first, so downloads skip their parts offline too. **Server** takes the https address of a mirror of SponsorBlock.
+- A cast device plays the parts: only MixMusic's own player skips them.
+- SponsorBlock's data is under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/): "Uses SponsorBlock data licensed under CC BY-NC-SA 4.0 from https://sponsor.ajay.app/" ([Credits](credits.md)).
+
 ## Live streams
 
 YouTube's live streams play, such as its 24/7 radio channels, from about 15 seconds behind the broadcast, for as long as it goes on. [Where the audio streams come from](streams.md#live-streams) tells how they play.
@@ -187,7 +206,7 @@ YouTube's live streams play, such as its 24/7 radio channels, from about 15 seco
 - A live stream ends only when its broadcast does.
 - After a pause of up to about an hour, it goes on from where it was; after a longer one, from near the live edge.
 - It plays at its own level, as YouTube measures none for Even loudness, and at its own speed. Data saver plays its 22 kHz stream.
-- It isn't kept in the [offline cache](library.md#the-offline-cache), doesn't download, and isn't scrobbled to Last.fm, which hears only that it plays. [Discord](desktop.md#discord) shows how long it played. Live streams don't [cast](casting.md) yet.
+- It isn't kept in the [offline cache](library.md#the-offline-cache), doesn't download, and isn't scrobbled to Last.fm or ListenBrainz, which hear only that it plays. [Discord](desktop.md#discord) shows how long it played. Live streams don't [cast](casting.md) yet.
 
 ## The picture of music videos
 
@@ -199,6 +218,18 @@ Music videos can show their picture on the now playing page, in place of the cov
 - It's fetched as it plays, about 3 MB a minute at 360p, and under 1 MB with data saver. Nothing is fetched while it's paused or not shown: on another page, with the window hidden or minimized, or with the mini player open.
 - While your system asks for less motion, a button on the cover plays the picture.
 - A web view runs beside MixMusic while pictures show, which takes memory until a minute after the last one.
+
+## Moving covers
+
+A cover that's a GIF can move. Turn on "Show moving covers" in Settings › Playback › Moving covers, or use the command "Show or hide moving covers". It's off at first.
+
+- **Which covers move:** a mix's cover you chose as a GIF, with [Change cover…](library.md#mixes), and the GIF of music on this computer: inside its file, or beside it as `cover.gif`, `folder.gif`, `front.gif` or `album.gif`, when no still of that name is there.
+- **Where they move:** in the now playing page's sleeve, where the GIF pauses with the music, and in the head of the mix's page. Everywhere else, as on tiles, the first frame shows.
+- **When they stay still:** while your system asks for less motion, until the GIF has been read, and for a GIF that takes more than 24 MB decoded, as one of hundreds of large frames. Nothing moves, and nothing is drawn, while the window is hidden or minimized, or the page doesn't show the cover.
+- **What it costs:** a GIF is read once, and its frames are drawn as they come due, with no web view. A GIF of 60 frames of 600 pixels square, the largest a mix keeps, takes about 22 MB while its page shows, and about half a millisecond of the processor a frame. A GIF no page showed for half a minute is let go.
+- **The picture of music videos** shows in place of the cover, moving or not, while it plays.
+
+Albums' own moving covers, the short clips that loop in place of their cover, wait for a source of them to be chosen. Once one is, they loop muted in the sleeve, in a loop mode of the picture of music videos, and keep in **Moving covers kept**, in Settings › Playback › Offline cache.
 
 ## The output device
 
