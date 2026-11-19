@@ -11,6 +11,7 @@ import (
 	"errors"
 	"io/fs"
 	"os"
+	"slices"
 	"strings"
 	"time"
 
@@ -81,6 +82,22 @@ type TrackInfo struct {
 	// ReplayGain is what a file's ReplayGain tags make of it, while the
 	// settings play files by them: nil while they don't.
 	ReplayGain *audio.Gain
+	// Output is the device the engine plays the track on, once it plays.
+	Output *TrackOutput
+	// Equalizer is set while the equalizer changes the sound: on, and not
+	// flat; Preamp is its preamp then, in dB.
+	Equalizer bool
+	Preamp    float64
+}
+
+// TrackOutput is the output device MixMusic's engine plays on.
+type TrackOutput struct {
+	// Name is what the system calls it, "" for the system's default
+	// device when the system names none.
+	Name string
+	// Rate is the sample rate the system runs it at, in Hz, 0 when it
+	// can't be read.
+	Rate float64
 }
 
 // TrackFile is a file a track plays from.
@@ -284,6 +301,10 @@ func (info *TrackInfo) engine(a *App, now *player.Source) {
 	info.Surround = now.SurroundURL != "" && l.URL == now.SurroundURL
 	info.EvenLoudness, info.Levelling = l.EvenLoudness, l.Levelling
 	info.LKFS, info.Measured, info.Trim = l.LKFS, l.Measured, l.Trim
+	info.Output = a.playingOutput()
+	if eq := a.settings.Get().Equalizer; eq.Enabled && (eq.Preamp != 0 || slices.ContainsFunc(eq.Gains, func(g float64) bool { return g != 0 })) {
+		info.Equalizer, info.Preamp = true, eq.Preamp
+	}
 	if l.ReplayGain != nil {
 		info.ReplayGain = l.ReplayGain
 	}

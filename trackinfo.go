@@ -262,6 +262,9 @@ func trackFacts(t media.Track, info app.TrackInfo) []infoRow {
 	rows = append(rows, streamRows(st)...)
 	if info.Playing {
 		rows = append(rows, infoRow{locales.TrackInfoPlaying(), playingLine(info), false})
+		if info.Engine != nil && info.Engine.Ready {
+			rows = append(rows, infoRow{locales.TrackInfoProcessing(), processingLine(info), false})
+		}
 	}
 	return append(rows, infoRow{locales.TrackInfoLoudness(), loudnessLine(t, info), false})
 }
@@ -374,7 +377,53 @@ func playingLine(info app.TrackInfo) string {
 	if r := e.Format.SampleRate; r > 0 && r != audio.Rate {
 		line = locales.TrackInfoEngineConverted(line, kilohertz(audio.Rate))
 	}
+	if o := info.Output; o != nil {
+		device := o.Name
+		if device == "" {
+			device = locales.TrackInfoDefaultDevice()
+		}
+		if o.Rate > 0 {
+			device = locales.TrackInfoDeviceRate(device, kilohertz(int(o.Rate)))
+		}
+		line = locales.TrackInfoEngineDevice(line, device)
+	}
 	return line
+}
+
+// processingLine tells what MixMusic's engine does to the sound of the
+// track playing, past what the Loudness row tells: the equalizer, the
+// speed, and mixing more channels down to stereo.
+func processingLine(info app.TrackInfo) string {
+	var stages []string
+	switch {
+	case info.Equalizer && info.Preamp != 0:
+		stages = append(stages, locales.TrackInfoProcessingPreamp(decibels(info.Preamp)))
+	case info.Equalizer:
+		stages = append(stages, locales.TrackInfoProcessingEqualizer())
+	}
+	if sp := info.Engine.Speed; sp != 0 && sp != 1 {
+		stages = append(stages, locales.TrackInfoProcessingSpeed(strconv.FormatFloat(sp, 'f', -1, 64)+"×"))
+	}
+	if info.Engine.Format.Channels > 2 && !info.Surround {
+		stages = append(stages, locales.TrackInfoProcessingDownmix())
+	}
+	if len(stages) == 0 {
+		return locales.TrackInfoProcessingNone()
+	}
+	list := stages[0]
+	for _, next := range stages[1:] {
+		list = locales.TrackInfoProcessingJoin(list, next)
+	}
+	return locales.TrackInfoProcessingLine(list)
+}
+
+// decibels writes a gain as "+2 dB" or "−3.5 dB", with a minus sign.
+func decibels(v float64) string {
+	s := strconv.FormatFloat(v, 'f', -1, 64)
+	if v > 0 {
+		s = "+" + s
+	}
+	return strings.Replace(s, "-", "−", 1) + " dB"
 }
 
 // loudnessLine tells how loud t plays: as YouTube measured it, and what

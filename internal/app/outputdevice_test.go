@@ -117,3 +117,33 @@ func TestStartNativeOnAGoneDevice(t *testing.T) {
 		t.Error("no note that the device is gone")
 	}
 }
+
+// TestPlayingOutput names the device the engine plays on (#20): the one
+// chosen, or the system's default while none is or while it isn't there,
+// with the rate the system runs it at.
+func TestPlayingOutput(t *testing.T) {
+	a := newQuietApp(t, func(o *Options) {
+		o.OutputDevices = func() ([]OutputDevice, error) {
+			return []OutputDevice{{ID: "hp", Name: "Headphones"}, {ID: "sp", Name: "Speakers", Default: true}}, nil
+		}
+	})
+	rates := map[string]float64{"": 48000, "hp": 96000}
+	deviceRate = func(id string) float64 { return rates[id] }
+	t.Cleanup(func() { deviceRate = output.DeviceRate })
+	if got := *a.playingOutput(); got != (TrackOutput{"Speakers", 48000}) {
+		t.Errorf("none chosen: %+v", got)
+	}
+	headphones := settings.OutputDevice{ID: "hp", Name: "Headphones"}
+	st := a.settings.Get()
+	st.OutputDevice = headphones
+	if _, err := (&Preferences{a}).Set(st); err != nil {
+		t.Fatal(err)
+	}
+	if got := *a.playingOutput(); got != (TrackOutput{"Headphones", 96000}) {
+		t.Errorf("chosen: %+v", got)
+	}
+	a.outputMoved(headphones, true)
+	if got := *a.playingOutput(); got != (TrackOutput{"Speakers", 48000}) {
+		t.Errorf("fallen back: %+v", got)
+	}
+}
