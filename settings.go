@@ -13,13 +13,15 @@ import (
 )
 
 // settingsTabs are the settings' sections, by their paths' last part.
-var settingsTabs = []string{"general", "appearance", "playback", "audio", "lyrics", "content", "accounts", "storage", "desktop", "plugins", "shortcuts", "about"}
+var settingsTabs = []string{"general", "sources", "appearance", "playback", "audio", "lyrics", "content", "accounts", "storage", "desktop", "plugins", "shortcuts", "about"}
 
 // settingsTabName names a section of settingsTabs, in the language shown.
 func settingsTabName(tab string) string {
 	switch tab {
 	case "general":
 		return locales.SettingsTabGeneral()
+	case "sources":
+		return locales.SettingsTabSources()
 	case "appearance":
 		return locales.SettingsTabAppearance()
 	case "playback":

@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"slices"
 
 	"github.com/egoist/mygo/ui"
 
@@ -10,12 +11,34 @@ import (
 	"github.com/fzn0x/mixmusic/locales"
 )
 
-// homeFilters are the home page's pivots, and the sources they keep.
-var homeFilters = []struct {
+// homeFilter is a pivot of the home page, and the source it keeps.
+type homeFilter struct {
 	label  func() string
 	source media.Source
-}{{locales.HomeFilterEverything, ""}, {locales.HomeFilterYours, media.SourceLocal}, {func() string { return "Spotify" }, media.SourceSpotify},
+}
+
+// homeFilters are the home page's pivots.
+var homeFilters = []homeFilter{{locales.HomeFilterEverything, ""}, {locales.HomeFilterYours, media.SourceLocal}, {func() string { return "Spotify" }, media.SourceSpotify},
 	{func() string { return "网易云音乐" }, media.SourceNetEase}, {func() string { return "YouTube Music" }, media.SourceYouTube}}
+
+// homePivots are the pivots of homeFilters of the sources on: Everything
+// alone while one service at most is, as there's nothing to choose between.
+func (s *shell) homePivots() []homeFilter {
+	var out []homeFilter
+	services := 0
+	for _, f := range homeFilters {
+		if s.sourceOn(f.source) {
+			out = append(out, f)
+			if f.source != "" && f.source != media.SourceLocal {
+				services++
+			}
+		}
+	}
+	if services < 2 {
+		return homeFilters[:1]
+	}
+	return out
+}
 
 // networkOnline tells whether the network answers, as last checked; tests
 // answer for it.
@@ -32,11 +55,24 @@ func (s *shell) homePage(c *ui.Context) {
 			s.homeEditor(c)
 			return
 		}
-		labels := make([]string, len(homeFilters))
-		for i, f := range homeFilters {
-			labels[i] = f.label()
+		// The pivot chosen last stays chosen, across launches too: one of a
+		// source turned off since shows Everything, until it's on again.
+		pivots := s.homePivots()
+		pick := max(slices.IndexFunc(pivots, func(f homeFilter) bool { return string(f.source) == s.set.HomePivot }), 0)
+		if len(pivots) > 1 {
+			labels := make([]string, len(pivots))
+			for i, f := range pivots {
+				labels[i] = f.label()
+			}
+			before := pick
+			s.pageHeader(c, locales.HomeTitle(), labels, &pick)
+			if pick != before {
+				s.set.HomePivot = string(pivots[pick].source)
+				s.save()
+			}
+		} else {
+			s.pageHeader(c, locales.HomeTitle(), nil, nil)
 		}
-		s.pageHeader(c, locales.HomeTitle(), labels, &s.homeFilter)
 		s.toolProblems(c)
 		accounts := fetch(s, "accounts", func(ctx context.Context) (app.AccountsStatus, error) { return s.svc.Accounts.Status(ctx), nil })
 
@@ -55,6 +91,7 @@ func (s *shell) homePage(c *ui.Context) {
 				s.home.editing = true
 			}
 		})
+		// shortcut: the top tiles are fixed; hide and move them as Edit home does shelves once users ask (#6).
 		s.tileGrid(c, func(columns int) {
 			title, caption, label := locales.HomeStartHere(), k.words(locales.HomeStartCaption()), locales.HomeSearchMusic()
 			var art []media.Image
@@ -69,7 +106,7 @@ func (s *shell) homePage(c *ui.Context) {
 					s.navigate("/search")
 				}
 			}
-			offer := accounts.done && !accounts.value.Spotify.SignedIn
+			offer := s.sourceOn(media.SourceSpotify) && accounts.done && !accounts.value.Spotify.SignedIn
 			span := tileWide
 			if offer {
 				span = tileSmall
@@ -87,7 +124,7 @@ func (s *shell) homePage(c *ui.Context) {
 		// The user's own shelves show at once, then those of each service
 		// once they came: one that still loads holds back those after it,
 		// which would move once it came (homePlaces).
-		source := homeFilters[s.homeFilter].source
+		source := pivots[pick].source
 		layout := s.set.HomeShelves
 		shown, failed := 0, false
 		for _, p := range homePlaces(layout, s.homeGroups(layout), source) {

@@ -32,6 +32,7 @@ func Open(a *app.App, hidden bool) *mygo.Window {
 	registerFonts()
 	s := newShell(a, a.GoPlayer())
 	s.main = true
+	s.welcomeFirstRun()
 	// A screen smaller than the window, as a laptop's, gets one that fits.
 	work := mygo.Screen.PrimaryDisplay().WorkArea
 	size := fitIn(mygo.Rectangle{X: work.X, Y: work.Y, Width: 1280, Height: 820}, work)
@@ -220,7 +221,6 @@ type shell struct {
 	home homeArrange
 	// The pages' own state. local are the home page's own shelves, of the
 	// library at localVersion once localBuilt.
-	homeFilter   int
 	local        []media.Shelf
 	localVersion uint64
 	localBuilt   bool
@@ -247,6 +247,8 @@ type shell struct {
 	// recapPick is the year of the recap on the stats, by its place in
 	// the years it lists, the latest first.
 	recapPick int
+	// welcome is the guide of the first launch (firstrun.go).
+	welcome welcomeGuide
 	// The command palette, what it searches, and its row chosen;
 	// paletteMoved is set in the frame the keys move the choice.
 	paletteOpen  bool

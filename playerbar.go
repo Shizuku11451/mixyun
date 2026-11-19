@@ -16,6 +16,7 @@ import (
 // playerBar shows what plays, the transport and where it is in the track,
 // and the volume; the next track waits in view under the current one. It
 // runs across the window's foot, or floats over it as a raised card.
+// shortcut: its buttons are fixed; show, hide and reorder them as upstream's fzn0x/mixmusic#588 settles (#6).
 func (s *shell) playerBar(c *ui.Context) {
 	k := &s.lk
 	bar := ui.Row(c).Height(k.player).Shrink(0).Padding(0, 24, 0, 16).Gap(24)

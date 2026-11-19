@@ -109,6 +109,7 @@ func (s *shell) commands() []command {
 			s.notes = append(s.notes, notice(locales.CmdAddonsReloaded()))
 		}},
 		{"settings.openFile", locales.CmdSettingsOpenFile(), "", locales.CmdGroupSettings(), s.openSettingsFile},
+		{"settings.welcome", locales.CmdSettingsWelcome(), "", locales.CmdGroupSettings(), s.openWelcome},
 		{"backup.export", locales.BackupExportTitle(), "", locales.CmdGroupSettings(), s.exportBackup},
 		{"backup.import", locales.BackupImportTitle(), "", locales.CmdGroupSettings(), s.chooseBackup},
 	}

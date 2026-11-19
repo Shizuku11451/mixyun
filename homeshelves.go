@@ -91,6 +91,9 @@ func (s *shell) homeGroups(layout []settings.HomeShelf) []*homeGroup {
 		{media.SourceNetEase, "home:netease", s.svc.Catalog.NetEaseHome},
 		{media.SourceYouTube, "home:youtube", s.svc.Catalog.YouTubeHome},
 	} {
+		if !s.sourceOn(sv.source) {
+			continue // turned off: not even fetched
+		}
 		l := fetch(s, sv.key, sv.get)
 		g := &homeGroup{key: sv.key, source: sv.source, done: l.done, err: l.err}
 		for i, key := range shelfKeys(l.value) {
@@ -100,7 +103,7 @@ func (s *shell) homeGroups(layout []settings.HomeShelf) []*homeGroup {
 		groups = append(groups, g)
 	}
 	for _, e := range layout {
-		if !e.Hidden && addedKind(e.Key) {
+		if !e.Hidden && addedKind(e.Key) && s.sourceOn(keySource(e.Key)) {
 			groups = append(groups, s.addedGroup(e))
 		}
 	}

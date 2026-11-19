@@ -87,6 +87,10 @@ func (p *Preferences) Reset() (settings.Settings, error) {
 	return d, nil
 }
 
+// FirstRun reports whether there was no settings.json as MixMusic started:
+// a new install, which the guide of the first launch welcomes.
+func (p *Preferences) FirstRun() bool { return p.a.firstRun }
+
 // OpenAtLogin reports whether MixMusic starts when the user logs in.
 func (p *Preferences) OpenAtLogin() bool { return mygo.App.OpenAtLogin() }
 

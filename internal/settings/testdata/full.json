@@ -64,6 +64,14 @@
       "hidden": true
     }
   ],
+  "sourcesOff": [
+    "youtube",
+    "podcasts"
+  ],
+  "homePivot": "netease",
+  "sidebarHidden": [
+    "stats"
+  ],
   "spotifyPlayback": "match",
   "spotifyDevice": "device-1",
   "quality": "saver",
@@ -150,6 +158,7 @@
   "floatLocked": true,
   "mediaKeys": false,
   "advancedSettings": true,
+  "firstRunDone": true,
   "assistantControl": true,
   "roomName": "Ana",
   "roomSongs": "add",

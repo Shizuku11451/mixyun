@@ -11,17 +11,29 @@ import (
 	"github.com/egoist/mygo/ui"
 
 	"github.com/fzn0x/mixmusic/internal/app"
+	"github.com/fzn0x/mixmusic/internal/media"
 	"github.com/fzn0x/mixmusic/internal/youtube"
 	"github.com/fzn0x/mixmusic/locales"
 )
 
 func init() { addSettings("accounts", 10, (*shell).accountSettings) }
 
-// accountSettings sign in and out of Spotify, NetEase Cloud Music and Last.fm.
+// accountSettings sign in and out of Spotify, NetEase Cloud Music, YouTube
+// Music and Last.fm: in Settings › Accounts, and in the guide of the first
+// launch.
 func (s *shell) accountSettings(c *ui.Context) {
 	st := s.accounts()
-	s.spotifyAccount(c, st.Spotify)
-	s.neteaseAccount(c, st.NetEase)
+	// A source turned off keeps its account signed in, out of sight.
+	if s.sourceOn(media.SourceSpotify) {
+		s.spotifyAccount(c, st.Spotify)
+	}
+	if s.sourceOn(media.SourceNetEase) {
+		s.neteaseAccount(c, st.NetEase)
+	}
+	if s.sourceOn(media.SourceYouTube) {
+		s.youtubeAccount(c, st.YouTube)
+	}
+	// shortcut: Navidrome has no switch in Settings › Sources; add one if asked.
 	s.navidromeAccount(c, st.Navidrome)
 	s.lastfmAccount(c, st.Lastfm)
 }

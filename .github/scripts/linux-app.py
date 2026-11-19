@@ -383,6 +383,9 @@ def make_profile(root, tone, cover_url):
         json.dump(index, f, indent=2)
     with open(os.path.join(data, "queue.json"), "w") as f:
         json.dump({"tracks": [track], "index": 0, "position": 0, "shuffle": False, "repeat": "off"}, f, indent=2)
+    # An install that ran before: the first-run guide would cover the window.
+    with open(os.path.join(data, "settings.json"), "w") as f:
+        json.dump({"firstRunDone": True}, f)
     return os.path.join(data, "settings.json")
 
 
