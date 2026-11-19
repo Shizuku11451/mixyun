@@ -310,6 +310,9 @@ func New(opts Options) (*App, error) {
 	a := &App{opts: opts, lastCrash: opts.LastCrash}
 	a.here.a = a
 	a.global.repeats = runtime.GOOS == "linux"
+	if err := applyPendingBackup(opts.DataDir); err != nil {
+		log.Printf("mixmusic: the imported backup wasn't put in place, and the data stays as it was: %v", err)
+	}
 	var err error
 	if a.settings, err = store.OpenWith(filepath.Join(opts.DataDir, "settings.json"), settings.Default(), settings.Decode); err != nil {
 		return nil, fmt.Errorf("opening settings: %w", err)
