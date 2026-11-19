@@ -80,6 +80,12 @@
     ],
     "preamp": 0
   },
+  "headphoneEQ": {
+    "enabled": false,
+    "name": "",
+    "profile": "",
+    "attenuation": 0
+  },
   "volumeCurve": "natural",
   "volume": 0.8,
   "cacheSizeMb": 1024,

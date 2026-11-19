@@ -2507,6 +2507,119 @@
     }
   },
   "handoverOnComputer": "On this computer",
+  "headphoneEQ": "Headphone profile",
+  "headphoneEQAlone": "The ten bands are off: only the profile shapes the sound.",
+  "headphoneEQAttenuate": "Turn down by {gain}",
+  "@headphoneEQAttenuate": {
+    "placeholders": {
+      "gain": {
+        "type": "String"
+      }
+    }
+  },
+  "headphoneEQAttenuation": "Turned down by {gain} more than its preamp.",
+  "@headphoneEQAttenuation": {
+    "placeholders": {
+      "gain": {
+        "type": "String"
+      }
+    }
+  },
+  "headphoneEQClips": "Together they boost by up to {gain} near {hz}, which can clip a track at full scale. This is an estimate of the curve, not a true-peak limiter.",
+  "@headphoneEQClips": {
+    "placeholders": {
+      "gain": {
+        "type": "String"
+      },
+      "hz": {
+        "type": "String"
+      }
+    }
+  },
+  "headphoneEQCurve": "The response of the ten bands and the profile, from 20 Hz to 20 kHz",
+  "headphoneEQDesc": "A correction for your headphones from a ParametricEQ.txt file, as AutoEq and Equalizer APO write it. It plays after the ten bands, and switching it off keeps it and the bands as they are.",
+  "headphoneEQErrEmpty": "The file has no preamp nor filter.",
+  "headphoneEQErrMany": "Line {line} is one filter more than the 64 a profile may have.",
+  "@headphoneEQErrMany": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      }
+    }
+  },
+  "headphoneEQErrNumber": "Line {line} has a number missing, unreadable or out of range, or no Q: {text}",
+  "@headphoneEQErrNumber": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "headphoneEQErrRead": "The file can't be read: {error}",
+  "@headphoneEQErrRead": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "headphoneEQErrType": "Line {line} has a filter other than PK, LSC or HSC: {text}",
+  "@headphoneEQErrType": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "headphoneEQErrUnsupported": "Line {line} is something this player doesn't run: {text}",
+  "@headphoneEQErrUnsupported": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "headphoneEQHeadroom": "Together they peak at {gain} near {hz}: no boost above full scale, by an estimate of the curve.",
+  "@headphoneEQHeadroom": {
+    "placeholders": {
+      "gain": {
+        "type": "String"
+      },
+      "hz": {
+        "type": "String"
+      }
+    }
+  },
+  "headphoneEQImport": "Import…",
+  "headphoneEQImportTitle": "Choose a ParametricEQ.txt file",
+  "headphoneEQKept": "The profile that plays is unchanged.",
+  "headphoneEQNone": "None imported.",
+  "headphoneEQRemoveAttenuation": "Remove",
+  "headphoneEQSummary": "{name}: preamp {preamp}, {count} filters.",
+  "@headphoneEQSummary": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "preamp": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "headphoneEQTextFiles": "Text files",
+  "headphoneEQWithBands": "The ten bands are on too, before it.",
   "hiddenOpenOn": "open on {source}",
   "@hiddenOpenOn": {
     "description": "The play button of a page whose tracks open on the service. Lowercase.",

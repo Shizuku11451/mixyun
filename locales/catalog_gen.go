@@ -8564,6 +8564,240 @@ func (msgs Messages) HandoverOnComputer() string {
 	return Catalog.Format(msgs.locale, "handoverOnComputer", nil)
 }
 
+// HeadphoneEQ says "Headphone profile"
+// in the language the app shows.
+func HeadphoneEQ() string { return In(i18n.Locale()).HeadphoneEQ() }
+
+// HeadphoneEQ says "Headphone profile"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQ() string {
+	return Catalog.Format(msgs.locale, "headphoneEQ", nil)
+}
+
+// HeadphoneEQAlone says "The ten bands are off: only the profile shapes the sound."
+// in the language the app shows.
+func HeadphoneEQAlone() string { return In(i18n.Locale()).HeadphoneEQAlone() }
+
+// HeadphoneEQAlone says "The ten bands are off: only the profile shapes the sound."
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQAlone() string {
+	return Catalog.Format(msgs.locale, "headphoneEQAlone", nil)
+}
+
+// HeadphoneEQAttenuate says "Turn down by {gain}"
+// in the language the app shows.
+func HeadphoneEQAttenuate(gain string) string { return In(i18n.Locale()).HeadphoneEQAttenuate(gain) }
+
+// HeadphoneEQAttenuate says "Turn down by {gain}"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQAttenuate(gain string) string {
+	return Catalog.Format(msgs.locale, "headphoneEQAttenuate", map[string]any{"gain": gain})
+}
+
+// HeadphoneEQAttenuation says "Turned down by {gain} more than its preamp."
+// in the language the app shows.
+func HeadphoneEQAttenuation(gain string) string {
+	return In(i18n.Locale()).HeadphoneEQAttenuation(gain)
+}
+
+// HeadphoneEQAttenuation says "Turned down by {gain} more than its preamp."
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQAttenuation(gain string) string {
+	return Catalog.Format(msgs.locale, "headphoneEQAttenuation", map[string]any{"gain": gain})
+}
+
+// HeadphoneEQClips says "Together they boost by up to {gain} near {hz}, which can clip a track at full scale. This is an estimate of the curve…"
+// in the language the app shows.
+func HeadphoneEQClips(gain string, hz string) string {
+	return In(i18n.Locale()).HeadphoneEQClips(gain, hz)
+}
+
+// HeadphoneEQClips says "Together they boost by up to {gain} near {hz}, which can clip a track at full scale. This is an estimate of the curve…"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQClips(gain string, hz string) string {
+	return Catalog.Format(msgs.locale, "headphoneEQClips", map[string]any{"gain": gain, "hz": hz})
+}
+
+// HeadphoneEQCurve says "The response of the ten bands and the profile, from 20 Hz to 20 kHz"
+// in the language the app shows.
+func HeadphoneEQCurve() string { return In(i18n.Locale()).HeadphoneEQCurve() }
+
+// HeadphoneEQCurve says "The response of the ten bands and the profile, from 20 Hz to 20 kHz"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQCurve() string {
+	return Catalog.Format(msgs.locale, "headphoneEQCurve", nil)
+}
+
+// HeadphoneEQDesc says "A correction for your headphones from a ParametricEQ.txt file, as AutoEq and Equalizer APO write it. It plays after t…"
+// in the language the app shows.
+func HeadphoneEQDesc() string { return In(i18n.Locale()).HeadphoneEQDesc() }
+
+// HeadphoneEQDesc says "A correction for your headphones from a ParametricEQ.txt file, as AutoEq and Equalizer APO write it. It plays after t…"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQDesc() string {
+	return Catalog.Format(msgs.locale, "headphoneEQDesc", nil)
+}
+
+// HeadphoneEQErrEmpty says "The file has no preamp nor filter."
+// in the language the app shows.
+func HeadphoneEQErrEmpty() string { return In(i18n.Locale()).HeadphoneEQErrEmpty() }
+
+// HeadphoneEQErrEmpty says "The file has no preamp nor filter."
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQErrEmpty() string {
+	return Catalog.Format(msgs.locale, "headphoneEQErrEmpty", nil)
+}
+
+// HeadphoneEQErrMany says "Line {line} is one filter more than the 64 a profile may have."
+// in the language the app shows.
+func HeadphoneEQErrMany(line string) string { return In(i18n.Locale()).HeadphoneEQErrMany(line) }
+
+// HeadphoneEQErrMany says "Line {line} is one filter more than the 64 a profile may have."
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQErrMany(line string) string {
+	return Catalog.Format(msgs.locale, "headphoneEQErrMany", map[string]any{"line": line})
+}
+
+// HeadphoneEQErrNumber says "Line {line} has a number missing, unreadable or out of range, or no Q: {text}"
+// in the language the app shows.
+func HeadphoneEQErrNumber(line string, text string) string {
+	return In(i18n.Locale()).HeadphoneEQErrNumber(line, text)
+}
+
+// HeadphoneEQErrNumber says "Line {line} has a number missing, unreadable or out of range, or no Q: {text}"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQErrNumber(line string, text string) string {
+	return Catalog.Format(msgs.locale, "headphoneEQErrNumber", map[string]any{"line": line, "text": text})
+}
+
+// HeadphoneEQErrRead says "The file can't be read: {error}"
+// in the language the app shows.
+func HeadphoneEQErrRead(error string) string { return In(i18n.Locale()).HeadphoneEQErrRead(error) }
+
+// HeadphoneEQErrRead says "The file can't be read: {error}"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQErrRead(error string) string {
+	return Catalog.Format(msgs.locale, "headphoneEQErrRead", map[string]any{"error": error})
+}
+
+// HeadphoneEQErrType says "Line {line} has a filter other than PK, LSC or HSC: {text}"
+// in the language the app shows.
+func HeadphoneEQErrType(line string, text string) string {
+	return In(i18n.Locale()).HeadphoneEQErrType(line, text)
+}
+
+// HeadphoneEQErrType says "Line {line} has a filter other than PK, LSC or HSC: {text}"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQErrType(line string, text string) string {
+	return Catalog.Format(msgs.locale, "headphoneEQErrType", map[string]any{"line": line, "text": text})
+}
+
+// HeadphoneEQErrUnsupported says "Line {line} is something this player doesn't run: {text}"
+// in the language the app shows.
+func HeadphoneEQErrUnsupported(line string, text string) string {
+	return In(i18n.Locale()).HeadphoneEQErrUnsupported(line, text)
+}
+
+// HeadphoneEQErrUnsupported says "Line {line} is something this player doesn't run: {text}"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQErrUnsupported(line string, text string) string {
+	return Catalog.Format(msgs.locale, "headphoneEQErrUnsupported", map[string]any{"line": line, "text": text})
+}
+
+// HeadphoneEQHeadroom says "Together they peak at {gain} near {hz}: no boost above full scale, by an estimate of the curve."
+// in the language the app shows.
+func HeadphoneEQHeadroom(gain string, hz string) string {
+	return In(i18n.Locale()).HeadphoneEQHeadroom(gain, hz)
+}
+
+// HeadphoneEQHeadroom says "Together they peak at {gain} near {hz}: no boost above full scale, by an estimate of the curve."
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQHeadroom(gain string, hz string) string {
+	return Catalog.Format(msgs.locale, "headphoneEQHeadroom", map[string]any{"gain": gain, "hz": hz})
+}
+
+// HeadphoneEQImport says "Import…"
+// in the language the app shows.
+func HeadphoneEQImport() string { return In(i18n.Locale()).HeadphoneEQImport() }
+
+// HeadphoneEQImport says "Import…"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQImport() string {
+	return Catalog.Format(msgs.locale, "headphoneEQImport", nil)
+}
+
+// HeadphoneEQImportTitle says "Choose a ParametricEQ.txt file"
+// in the language the app shows.
+func HeadphoneEQImportTitle() string { return In(i18n.Locale()).HeadphoneEQImportTitle() }
+
+// HeadphoneEQImportTitle says "Choose a ParametricEQ.txt file"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQImportTitle() string {
+	return Catalog.Format(msgs.locale, "headphoneEQImportTitle", nil)
+}
+
+// HeadphoneEQKept says "The profile that plays is unchanged."
+// in the language the app shows.
+func HeadphoneEQKept() string { return In(i18n.Locale()).HeadphoneEQKept() }
+
+// HeadphoneEQKept says "The profile that plays is unchanged."
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQKept() string {
+	return Catalog.Format(msgs.locale, "headphoneEQKept", nil)
+}
+
+// HeadphoneEQNone says "None imported."
+// in the language the app shows.
+func HeadphoneEQNone() string { return In(i18n.Locale()).HeadphoneEQNone() }
+
+// HeadphoneEQNone says "None imported."
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQNone() string {
+	return Catalog.Format(msgs.locale, "headphoneEQNone", nil)
+}
+
+// HeadphoneEQRemoveAttenuation says "Remove"
+// in the language the app shows.
+func HeadphoneEQRemoveAttenuation() string { return In(i18n.Locale()).HeadphoneEQRemoveAttenuation() }
+
+// HeadphoneEQRemoveAttenuation says "Remove"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQRemoveAttenuation() string {
+	return Catalog.Format(msgs.locale, "headphoneEQRemoveAttenuation", nil)
+}
+
+// HeadphoneEQSummary says "{name}: preamp {preamp}, {count} filters."
+// in the language the app shows.
+func HeadphoneEQSummary(name string, preamp string, count string) string {
+	return In(i18n.Locale()).HeadphoneEQSummary(name, preamp, count)
+}
+
+// HeadphoneEQSummary says "{name}: preamp {preamp}, {count} filters."
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQSummary(name string, preamp string, count string) string {
+	return Catalog.Format(msgs.locale, "headphoneEQSummary", map[string]any{"name": name, "preamp": preamp, "count": count})
+}
+
+// HeadphoneEQTextFiles says "Text files"
+// in the language the app shows.
+func HeadphoneEQTextFiles() string { return In(i18n.Locale()).HeadphoneEQTextFiles() }
+
+// HeadphoneEQTextFiles says "Text files"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQTextFiles() string {
+	return Catalog.Format(msgs.locale, "headphoneEQTextFiles", nil)
+}
+
+// HeadphoneEQWithBands says "The ten bands are on too, before it."
+// in the language the app shows.
+func HeadphoneEQWithBands() string { return In(i18n.Locale()).HeadphoneEQWithBands() }
+
+// HeadphoneEQWithBands says "The ten bands are on too, before it."
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQWithBands() string {
+	return Catalog.Format(msgs.locale, "headphoneEQWithBands", nil)
+}
+
 // HiddenOpenOn says "open on {source}"
 // in the language the app shows.
 //

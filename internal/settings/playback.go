@@ -119,6 +119,8 @@ type Playback struct {
 	MovingCovers bool `json:"movingCovers"`
 	// Equalizer shapes the sound of MixMusic's own player.
 	Equalizer Equalizer `json:"equalizer"`
+	// HeadphoneEQ is a headphone profile, after the equalizer.
+	HeadphoneEQ HeadphoneEQ `json:"headphoneEQ"`
 	// VolumeCurve is how the positions of the volume slider sound, in
 	// MixMusic's own player and in Spotify's alike (#383): Natural at first.
 	VolumeCurve volume.Curve `json:"volumeCurve"`
@@ -177,6 +179,7 @@ func (p Playback) clean(d Playback) Playback {
 	p.Volume = min(max(p.Volume, 0), 1)
 	p.VolumeCurve = cleanVolumeCurve(p.VolumeCurve, d.VolumeCurve)
 	p.Equalizer = p.Equalizer.clean()
+	p.HeadphoneEQ = p.HeadphoneEQ.clean()
 	return p
 }
 
