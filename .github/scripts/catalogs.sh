@@ -16,9 +16,11 @@ trap 'rm -rf "$work"' EXIT
 cp -R locales "$work/"
 rm "$work/locales/catalog_gen.go"
 echo '{"name": "MixMusic", "i18n": {"dir": "locales", "source": "en"}}' >"$work/mygo.json"
+# Since MyGo v0.9, generate asks go list for the app's native modules: an
+# empty module has none.
+printf 'module catalogs\n\ngo 1.27\n' >"$work/go.mod"
 
 go run github.com/egoist/mygo/cmd/mygo i18n check "$work"
-# It warns that the copy has no go.mod, which only the import check needs.
 go run github.com/egoist/mygo/cmd/mygo generate "$work"
 if ! diff -u locales/catalog_gen.go "$work/locales/catalog_gen.go" >"$work/diff"; then
   head -40 "$work/diff"
