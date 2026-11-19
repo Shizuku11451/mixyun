@@ -11,7 +11,10 @@ import (
 )
 
 // The engine asks a file on this computer whether it was cut short.
-var _ audio.Shortened = fileSource{}
+var (
+	_ audio.Shortened = fileSource{}
+	_ audio.Gained    = fileSource{}
+)
 
 // TestFileSourceShortened tells a file cut short after it was opened, and
 // not one whose tags were written meanwhile, which is a new file put in its

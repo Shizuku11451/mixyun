@@ -77,6 +77,8 @@ type Engine struct {
 	paused    bool
 	normalize bool
 	loudness  bool
+	// replayGain is which ReplayGain tags files play by.
+	replayGain ReplayGainMode
 	// skips are the parts of the tracks the decks pass over, by URL, as
 	// SetSkips told (skip.go).
 	skips map[string][]Skip
@@ -439,6 +441,14 @@ func (e *Engine) SetLoudness(on bool) {
 	e.mu.Unlock()
 }
 
+// SetReplayGain has the files whose source is Gained play by their
+// ReplayGain tags of mode: their track's or their album's, or none.
+func (e *Engine) SetReplayGain(mode ReplayGainMode) {
+	e.mu.Lock()
+	e.replayGain = mode
+	e.mu.Unlock()
+}
+
 // SetSurround has the output play six channels where the device has them,
 // for 5.1 surround tracks, or two: an output that plays starts again with
 // them. Surround tracks are mixed down to stereo, as their streams ask, on
@@ -463,13 +473,19 @@ func (e *Engine) outputChannels() int {
 
 // trimOf returns the trim of deck d, toward its target: the gain that
 // turns its track down to an even loudness, while Even loudness is on and
-// the track's loudness is known, else 1. A deck takes its trim at once with
+// the track's loudness is known, else 1. A file played by its ReplayGain
+// tags takes the gain they tell in place of it. A deck takes its trim at once with
 // its first frames, so a track starts at its level; after, the trim glides
 // to a new target, as the volume does. On the audio thread.
 func (e *Engine) trimOf(d *deck, frames bool) *smoother {
 	target := 1.0
 	if lkfs := math.Float64frombits(d.lkfs.Load()); e.loudness && !math.IsNaN(lkfs) {
 		target = math.Pow(10, loudnessTrim(lkfs)/20)
+	}
+	if rg := d.rg.Load(); rg != nil {
+		if g, ok := rg.Applied(e.replayGain); ok {
+			target = math.Pow(10, g.DB/20)
+		}
 	}
 	switch {
 	case d.trimmed:

@@ -16478,6 +16478,56 @@ func (msgs Messages) RemoteTitle() string {
 	return Catalog.Format(msgs.locale, "remoteTitle", nil)
 }
 
+// ReplayGain says "ReplayGain"
+// in the language the app shows.
+func ReplayGain() string { return In(i18n.Locale()).ReplayGain() }
+
+// ReplayGain says "ReplayGain"
+// in the language of msgs.
+func (msgs Messages) ReplayGain() string {
+	return Catalog.Format(msgs.locale, "replayGain", nil)
+}
+
+// ReplayGainAlbum says "album"
+// in the language the app shows.
+func ReplayGainAlbum() string { return In(i18n.Locale()).ReplayGainAlbum() }
+
+// ReplayGainAlbum says "album"
+// in the language of msgs.
+func (msgs Messages) ReplayGainAlbum() string {
+	return Catalog.Format(msgs.locale, "replayGainAlbum", nil)
+}
+
+// ReplayGainDesc says "Plays the music on this computer at the level its files' ReplayGain tags tell: each track's own, or its album's, whic…"
+// in the language the app shows.
+func ReplayGainDesc() string { return In(i18n.Locale()).ReplayGainDesc() }
+
+// ReplayGainDesc says "Plays the music on this computer at the level its files' ReplayGain tags tell: each track's own, or its album's, whic…"
+// in the language of msgs.
+func (msgs Messages) ReplayGainDesc() string {
+	return Catalog.Format(msgs.locale, "replayGainDesc", nil)
+}
+
+// ReplayGainOff says "off"
+// in the language the app shows.
+func ReplayGainOff() string { return In(i18n.Locale()).ReplayGainOff() }
+
+// ReplayGainOff says "off"
+// in the language of msgs.
+func (msgs Messages) ReplayGainOff() string {
+	return Catalog.Format(msgs.locale, "replayGainOff", nil)
+}
+
+// ReplayGainTrack says "track"
+// in the language the app shows.
+func ReplayGainTrack() string { return In(i18n.Locale()).ReplayGainTrack() }
+
+// ReplayGainTrack says "track"
+// in the language of msgs.
+func (msgs Messages) ReplayGainTrack() string {
+	return Catalog.Format(msgs.locale, "replayGainTrack", nil)
+}
+
 // RoamByEra says "By era"
 // in the language the app shows.
 func RoamByEra() string { return In(i18n.Locale()).RoamByEra() }
@@ -21276,6 +21326,86 @@ func TrackInfoRecording(title string, artists string) string {
 // in the language of msgs.
 func (msgs Messages) TrackInfoRecording(title string, artists string) string {
 	return Catalog.Format(msgs.locale, "trackInfoRecording", map[string]any{"title": title, "artists": artists})
+}
+
+// TrackInfoReplayGainAlbum says "album gain"
+// in the language the app shows.
+func TrackInfoReplayGainAlbum() string { return In(i18n.Locale()).TrackInfoReplayGainAlbum() }
+
+// TrackInfoReplayGainAlbum says "album gain"
+// in the language of msgs.
+func (msgs Messages) TrackInfoReplayGainAlbum() string {
+	return Catalog.Format(msgs.locale, "trackInfoReplayGainAlbum", nil)
+}
+
+// TrackInfoReplayGainApplied says "Plays at {gain}, by its ReplayGain {kind}."
+// in the language the app shows.
+func TrackInfoReplayGainApplied(gain string, kind string) string {
+	return In(i18n.Locale()).TrackInfoReplayGainApplied(gain, kind)
+}
+
+// TrackInfoReplayGainApplied says "Plays at {gain}, by its ReplayGain {kind}."
+// in the language of msgs.
+func (msgs Messages) TrackInfoReplayGainApplied(gain string, kind string) string {
+	return Catalog.Format(msgs.locale, "trackInfoReplayGainApplied", map[string]any{"gain": gain, "kind": kind})
+}
+
+// TrackInfoReplayGainInvalid says "Plays at its own level: its ReplayGain {kind} tag can't be read."
+// in the language the app shows.
+func TrackInfoReplayGainInvalid(kind string) string {
+	return In(i18n.Locale()).TrackInfoReplayGainInvalid(kind)
+}
+
+// TrackInfoReplayGainInvalid says "Plays at its own level: its ReplayGain {kind} tag can't be read."
+// in the language of msgs.
+func (msgs Messages) TrackInfoReplayGainInvalid(kind string) string {
+	return Catalog.Format(msgs.locale, "trackInfoReplayGainInvalid", map[string]any{"kind": kind})
+}
+
+// TrackInfoReplayGainLimited says "Plays at {gain}: its ReplayGain {kind} of {tagged} is held back so that its peak stays under full scale."
+// in the language the app shows.
+func TrackInfoReplayGainLimited(gain string, tagged string, kind string) string {
+	return In(i18n.Locale()).TrackInfoReplayGainLimited(gain, tagged, kind)
+}
+
+// TrackInfoReplayGainLimited says "Plays at {gain}: its ReplayGain {kind} of {tagged} is held back so that its peak stays under full scale."
+// in the language of msgs.
+func (msgs Messages) TrackInfoReplayGainLimited(gain string, tagged string, kind string) string {
+	return Catalog.Format(msgs.locale, "trackInfoReplayGainLimited", map[string]any{"gain": gain, "tagged": tagged, "kind": kind})
+}
+
+// TrackInfoReplayGainMissing says "Plays at its own level: the file has no ReplayGain {kind} tag."
+// in the language the app shows.
+func TrackInfoReplayGainMissing(kind string) string {
+	return In(i18n.Locale()).TrackInfoReplayGainMissing(kind)
+}
+
+// TrackInfoReplayGainMissing says "Plays at its own level: the file has no ReplayGain {kind} tag."
+// in the language of msgs.
+func (msgs Messages) TrackInfoReplayGainMissing(kind string) string {
+	return Catalog.Format(msgs.locale, "trackInfoReplayGainMissing", map[string]any{"kind": kind})
+}
+
+// TrackInfoReplayGainNoPeak says "Plays at its own level: its ReplayGain {kind} of {tagged} would turn it up, and no peak tag tells how far it may go."
+// in the language the app shows.
+func TrackInfoReplayGainNoPeak(tagged string, kind string) string {
+	return In(i18n.Locale()).TrackInfoReplayGainNoPeak(tagged, kind)
+}
+
+// TrackInfoReplayGainNoPeak says "Plays at its own level: its ReplayGain {kind} of {tagged} would turn it up, and no peak tag tells how far it may go."
+// in the language of msgs.
+func (msgs Messages) TrackInfoReplayGainNoPeak(tagged string, kind string) string {
+	return Catalog.Format(msgs.locale, "trackInfoReplayGainNoPeak", map[string]any{"tagged": tagged, "kind": kind})
+}
+
+// TrackInfoReplayGainTrack says "track gain"
+// in the language the app shows.
+func TrackInfoReplayGainTrack() string { return In(i18n.Locale()).TrackInfoReplayGainTrack() }
+
+// TrackInfoReplayGainTrack says "track gain"
+// in the language of msgs.
+func (msgs Messages) TrackInfoReplayGainTrack() string {
+	return Catalog.Format(msgs.locale, "trackInfoReplayGainTrack", nil)
 }
 
 // TrackInfoRouteAccount says "With yt-dlp's full run, with the session of your YouTube Music account"

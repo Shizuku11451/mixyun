@@ -4881,6 +4881,11 @@
   },
   "remoteSwitch": "Allow remote control",
   "remoteTitle": "Remote control",
+  "replayGain": "ReplayGain",
+  "replayGainAlbum": "album",
+  "replayGainDesc": "Plays the music on this computer at the level its files' ReplayGain tags tell: each track's own, or its album's, which keeps the album's quiet and loud songs as they were mastered. A gain stops before the track's peak passes full scale.",
+  "replayGainOff": "off",
+  "replayGainTrack": "track",
   "roamByEra": "By era",
   "roamByGenre": "By genre",
   "roamByLanguage": "By language",
@@ -6239,6 +6244,60 @@
       }
     }
   },
+  "trackInfoReplayGainAlbum": "album gain",
+  "trackInfoReplayGainApplied": "Plays at {gain}, by its ReplayGain {kind}.",
+  "@trackInfoReplayGainApplied": {
+    "placeholders": {
+      "gain": {
+        "type": "String"
+      },
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "trackInfoReplayGainInvalid": "Plays at its own level: its ReplayGain {kind} tag can't be read.",
+  "@trackInfoReplayGainInvalid": {
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "trackInfoReplayGainLimited": "Plays at {gain}: its ReplayGain {kind} of {tagged} is held back so that its peak stays under full scale.",
+  "@trackInfoReplayGainLimited": {
+    "placeholders": {
+      "gain": {
+        "type": "String"
+      },
+      "tagged": {
+        "type": "String"
+      },
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "trackInfoReplayGainMissing": "Plays at its own level: the file has no ReplayGain {kind} tag.",
+  "@trackInfoReplayGainMissing": {
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "trackInfoReplayGainNoPeak": "Plays at its own level: its ReplayGain {kind} of {tagged} would turn it up, and no peak tag tells how far it may go.",
+  "@trackInfoReplayGainNoPeak": {
+    "placeholders": {
+      "tagged": {
+        "type": "String"
+      },
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "trackInfoReplayGainTrack": "track gain",
   "trackInfoRouteAccount": "With yt-dlp's full run, with the session of your YouTube Music account",
   "trackInfoRouteFull": "With yt-dlp's full run, with its default clients and a JavaScript runtime",
   "trackInfoRoutePlayerAPI": "Quickly, through YouTube's player API, with no yt-dlp",

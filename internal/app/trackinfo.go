@@ -78,6 +78,9 @@ type TrackInfo struct {
 	// loudness plays the track at: 0, or less for a loud one.
 	EvenLoudness, Levelling bool
 	Trim                    float64
+	// ReplayGain is what a file's ReplayGain tags make of it, while the
+	// settings play files by them: nil while they don't.
+	ReplayGain *audio.Gain
 }
 
 // TrackFile is a file a track plays from.
@@ -158,6 +161,11 @@ func (p *Player) TrackInfo(ctx context.Context, t media.Track, now *player.Sourc
 			return TrackInfo{}, errors.New("not a file of this computer: " + t.ID)
 		}
 		info.File = readTrackFile(FileMusic, path, true)
+		if info.File.Tags != nil {
+			if g, ok := audio.ReplayGain(info.File.Tags.ReplayGain).Applied(audio.ReplayGainMode(st.ReplayGain)); ok {
+				info.ReplayGain = &g
+			}
+		}
 		info.engine(a, now)
 		return info, ctx.Err()
 	}
@@ -272,6 +280,9 @@ func (info *TrackInfo) engine(a *App, now *player.Source) {
 	info.Surround = now.SurroundURL != "" && l.URL == now.SurroundURL
 	info.EvenLoudness, info.Levelling = l.EvenLoudness, l.Levelling
 	info.LKFS, info.Measured, info.Trim = l.LKFS, l.Measured, l.Trim
+	if l.ReplayGain != nil {
+		info.ReplayGain = l.ReplayGain
+	}
 }
 
 // readTrackFile reads a file a track plays from: its size, what it holds,

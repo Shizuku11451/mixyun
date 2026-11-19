@@ -362,3 +362,14 @@ func FuzzRead(f *testing.F) {
 		}
 	})
 }
+
+// TestFLACReplayGain reads a FLAC file's ReplayGain comments as written,
+// in any case.
+func TestFLACReplayGain(t *testing.T) {
+	b := flacFile([]byte{4}, vcomments("TITLE=Glass Rivers", "replaygain_track_gain=-6.20 dB", "REPLAYGAIN_TRACK_PEAK=0.988",
+		"REPLAYGAIN_ALBUM_GAIN=+1.5 dB", "REPLAYGAIN_ALBUM_PEAK= 0.5 "))
+	got := read(t, b).ReplayGain
+	if want := (ReplayGain{TrackGain: "-6.20 dB", TrackPeak: "0.988", AlbumGain: "+1.5 dB", AlbumPeak: "0.5"}); got != want {
+		t.Errorf("ReplayGain = %+v, want %+v", got, want)
+	}
+}

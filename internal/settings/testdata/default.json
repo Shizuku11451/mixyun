@@ -38,6 +38,7 @@
   "crossfade": 0,
   "normalize": false,
   "loudness": true,
+  "replayGain": "off",
   "surround": false,
   "outputDevice": {
     "id": "",
