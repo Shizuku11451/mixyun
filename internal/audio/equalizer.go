@@ -31,17 +31,28 @@ type equalizer struct {
 	preamp  smoother // a linear gain
 	gains   [len(Bands)]smoother
 	filters [len(Bands)]biquad
-	// at is the gain of the coefficients of each filter.
-	at [len(Bands)]float64
+	// at is the gain of the coefficients of each filter, and rate the
+	// sample rate they are of.
+	at   [len(Bands)]float64
+	rate float64
 }
 
 func newEqualizer() *equalizer {
-	e := &equalizer{preamp: newSmoother(1, glide)}
+	e := &equalizer{preamp: newSmoother(1, glide), rate: Rate}
 	for i := range e.filters {
 		e.gains[i] = newSmoother(0, glide)
-		e.filters[i].set(bandKind(i), Bands[i], bandQ, 0)
+		e.filters[i].set(bandKind(i), Bands[i], bandQ, 0, e.rate)
 	}
 	return e
+}
+
+// retune computes the filters again for frames at rate, from silence.
+func (e *equalizer) retune(rate float64) {
+	e.rate = rate
+	for i := range e.filters {
+		e.filters[i].set(bandKind(i), Bands[i], bandQ, e.at[i], rate)
+		e.filters[i].forget(0)
+	}
 }
 
 // set changes the equalizer, as the web player's applyEq: the gains of the
@@ -75,7 +86,7 @@ func (e *equalizer) process(buf []float32, ch int) {
 		f, g := &e.filters[i], &e.gains[i]
 		moving := !g.settled()
 		if e.at[i] != g.value {
-			f.set(bandKind(i), Bands[i], bandQ, g.value)
+			f.set(bandKind(i), Bands[i], bandQ, g.value, e.rate)
 			e.at[i] = g.value
 		}
 		if moving {

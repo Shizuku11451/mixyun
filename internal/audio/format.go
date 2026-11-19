@@ -175,6 +175,11 @@ type Loaded struct {
 	Trim float64
 	// Speed is the speed the track plays at: 1 is its own.
 	Speed float64
+	// Rate is the rate, in Hz, the track decodes and plays at: Rate, or
+	// its own as SetNative lets it; Fallback is why the engine last left
+	// a rate SetNative named for Rate, or nil.
+	Rate     int
+	Fallback error
 }
 
 // Loaded returns what the active deck plays, and false while no deck
@@ -182,9 +187,10 @@ type Loaded struct {
 func (e *Engine) Loaded() (Loaded, bool) {
 	e.mu.Lock()
 	d := e.decks[e.active]
-	l := Loaded{EvenLoudness: e.loudness, Levelling: e.normalize}
+	l := Loaded{EvenLoudness: e.loudness, Levelling: e.normalize, Fallback: e.fallback}
 	if d != nil {
 		l.Speed = d.rate()
+		l.Rate = int(d.hz.Load())
 	}
 	e.mu.Unlock()
 	if d == nil {

@@ -22,10 +22,10 @@ type biquad struct {
 }
 
 // set computes the coefficients of a filter at frequency hz, of quality q
-// (for peaking) and gain in dB, as Blink's SetLowShelfParams,
-// SetHighShelfParams and SetPeakingParams do.
-func (f *biquad) set(kind filterKind, hz, q, gain float64) {
-	frequency := min(max(hz/(Rate/2), 0), 1)
+// (for peaking) and gain in dB, for frames at rate, as Blink's
+// SetLowShelfParams, SetHighShelfParams and SetPeakingParams do.
+func (f *biquad) set(kind filterKind, hz, q, gain, rate float64) {
+	frequency := min(max(hz/(rate/2), 0), 1)
 	a := pow10(gain / 40)
 	switch kind {
 	case lowShelf, highShelf:

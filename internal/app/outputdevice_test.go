@@ -100,7 +100,7 @@ func TestStartNativeOnAGoneDevice(t *testing.T) {
 	a.output.chosen = gone
 	notes := make(chan string, 4)
 	defer a.OnOutputDevice(func(note string) { notes <- note })()
-	out, err := a.startNative(2, func(out []float32, _ int) { clear(out) }, nil)
+	out, err := a.startNative(2, 48000, func(out []float32, _ int) { clear(out) }, nil)
 	if errors.Is(err, output.ErrNoDevice) || errors.Is(err, output.ErrUnsupported) {
 		t.Skip(err)
 	}

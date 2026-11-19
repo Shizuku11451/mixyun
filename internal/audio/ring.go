@@ -88,6 +88,9 @@ func frames(d time.Duration) int64 {
 }
 
 // duration converts frames at Rate to a duration.
-func duration(n int64) time.Duration {
-	return time.Duration(n * int64(time.Second) / Rate)
+func duration(n int64) time.Duration { return durationAt(n, Rate) }
+
+// durationAt converts frames at rate to a duration.
+func durationAt(n, rate int64) time.Duration {
+	return time.Duration(n * int64(time.Second) / rate)
 }

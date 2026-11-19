@@ -13716,6 +13716,26 @@ func (msgs Messages) OutputLookAgain() string {
 	return Catalog.Format(msgs.locale, "outputLookAgain", nil)
 }
 
+// OutputNativeRateDescription says "Switches the output device to the sample rate of the FLAC file that plays, where the device supports it, and back whe…"
+// in the language the app shows.
+func OutputNativeRateDescription() string { return In(i18n.Locale()).OutputNativeRateDescription() }
+
+// OutputNativeRateDescription says "Switches the output device to the sample rate of the FLAC file that plays, where the device supports it, and back whe…"
+// in the language of msgs.
+func (msgs Messages) OutputNativeRateDescription() string {
+	return Catalog.Format(msgs.locale, "outputNativeRateDescription", nil)
+}
+
+// OutputNativeRateTitle says "Play FLAC at its own sample rate"
+// in the language the app shows.
+func OutputNativeRateTitle() string { return In(i18n.Locale()).OutputNativeRateTitle() }
+
+// OutputNativeRateTitle says "Play FLAC at its own sample rate"
+// in the language of msgs.
+func (msgs Messages) OutputNativeRateTitle() string {
+	return Catalog.Format(msgs.locale, "outputNativeRateTitle", nil)
+}
+
 // OverlayAbout says "Tells what plays, as a page for the browser source of OBS or another streaming program, and as data for an overlay of…"
 // in the language the app shows.
 func OverlayAbout() string { return In(i18n.Locale()).OverlayAbout() }
@@ -21058,6 +21078,18 @@ func TrackInfoEngineLive() string { return In(i18n.Locale()).TrackInfoEngineLive
 // in the language of msgs.
 func (msgs Messages) TrackInfoEngineLive() string {
 	return Catalog.Format(msgs.locale, "trackInfoEngineLive", nil)
+}
+
+// TrackInfoEngineNativeFailed says "{line} (couldn't play at the track's own rate: {reason})"
+// in the language the app shows.
+func TrackInfoEngineNativeFailed(line string, reason string) string {
+	return In(i18n.Locale()).TrackInfoEngineNativeFailed(line, reason)
+}
+
+// TrackInfoEngineNativeFailed says "{line} (couldn't play at the track's own rate: {reason})"
+// in the language of msgs.
+func (msgs Messages) TrackInfoEngineNativeFailed(line string, reason string) string {
+	return Catalog.Format(msgs.locale, "trackInfoEngineNativeFailed", map[string]any{"line": line, "reason": reason})
 }
 
 // TrackInfoEngineOpening says "Mixyun's audio engine is opening it…"

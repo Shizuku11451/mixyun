@@ -374,8 +374,15 @@ func playingLine(info app.TrackInfo) string {
 		how = locales.TrackInfoEngineSurround(how)
 	}
 	line := locales.TrackInfoEngineLine(how)
-	if r := e.Format.SampleRate; r > 0 && r != audio.Rate {
-		line = locales.TrackInfoEngineConverted(line, kilohertz(audio.Rate))
+	rate := e.Rate
+	if rate == 0 {
+		rate = audio.Rate
+	}
+	if r := e.Format.SampleRate; r > 0 && r != rate {
+		line = locales.TrackInfoEngineConverted(line, kilohertz(rate))
+	}
+	if e.Fallback != nil {
+		line = locales.TrackInfoEngineNativeFailed(line, e.Fallback.Error())
 	}
 	if o := info.Output; o != nil {
 		device := o.Name

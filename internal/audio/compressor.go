@@ -58,6 +58,9 @@ type compressor struct {
 	compressorGain             float32
 	dbMaxAttackCompressionDiff float32
 
+	// rate is the sample rate of the frames it compresses.
+	rate float32
+
 	preDelay                    [maxChannels][maxPreDelayFrames]float32
 	preDelayRead, preDelayWrite int
 	lastPreDelayFrames          int
@@ -70,6 +73,7 @@ func newCompressor() *compressor {
 		dbThreshold: uninitialized, dbKnee: uninitialized, kneeThreshold: uninitialized,
 		dbKneeThreshold: uninitialized, dbYKneeThreshold: uninitialized, knee: uninitialized,
 		lastPreDelayFrames: defaultPreDelayFrames,
+		rate:               Rate,
 	}
 	c.reset()
 	return c
@@ -124,9 +128,9 @@ func (c *compressor) process(buf []float32, ch int, dbThreshold, dbKnee, ratio, 
 	k := c.updateStaticCurveParameters(dbThreshold, dbKnee, ratio)
 	// Makeup gain with empirical/perceptual tuning.
 	linearPostGain := float32(math.Pow(float64(1/c.saturate(1, k)), float64(float32(0.6))))
-	attackFrames := max(0.001, attackTime) * Rate
-	releaseFrames := Rate * releaseTime
-	satReleaseFrames := float32(satReleaseTime) * Rate
+	attackFrames := max(0.001, attackTime) * c.rate
+	releaseFrames := c.rate * releaseTime
+	satReleaseFrames := float32(satReleaseTime) * c.rate
 	// A smooth function through four points: y = a + b·x + c·x² + d·x³ + e·x⁴.
 	a, b, cc, d, e := releaseFrames*kABase, releaseFrames*kBBase, releaseFrames*kCBase,
 		releaseFrames*kDBase, releaseFrames*kEBase
@@ -241,7 +245,7 @@ func (c *compressor) process(buf []float32, ch int, dbThreshold, dbKnee, ratio, 
 
 // setPreDelayTime reconfigures the look-ahead when its time changes.
 func (c *compressor) setPreDelayTime(seconds float32) {
-	frames := min(int(seconds*Rate), maxPreDelayFrames-1)
+	frames := min(int(seconds*c.rate), maxPreDelayFrames-1)
 	if c.lastPreDelayFrames != frames {
 		c.lastPreDelayFrames = frames
 		c.preDelay = [maxChannels][maxPreDelayFrames]float32{}

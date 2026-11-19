@@ -178,7 +178,7 @@ func (d *deck) replan() {
 	p := &skipPlan{spans: make([]skipSpan, len(spans))}
 	for i, s := range spans {
 		sp := &p.spans[i]
-		sp.from, sp.to, sp.ends = frames(s.From), frames(s.To), s.Ends(d.duration)
+		sp.from, sp.to, sp.ends = d.frames(s.From), d.frames(s.To), s.Ends(d.duration)
 		if old != nil {
 			for j := range old.spans {
 				if o := &old.spans[j]; o.from == sp.from && o.to == sp.to {
@@ -199,18 +199,18 @@ func (d *deck) passStart(start time.Duration) time.Duration {
 	if p == nil {
 		return start
 	}
-	at := frames(start)
+	at := d.frames(start)
 	for i := range p.spans {
 		s := &p.spans[i]
 		if at < s.from || at >= s.to || !s.passed.CompareAndSwap(false, true) {
 			continue
 		}
-		d.passes = append(d.passes, Skip{From: duration(s.from), To: duration(s.to)})
+		d.passes = append(d.passes, Skip{From: d.timeOf(s.from), To: d.timeOf(s.to)})
 		if s.ends {
 			d.cut.Store(true)
 			return start
 		}
-		return duration(s.to)
+		return d.timeOf(s.to)
 	}
 	return start
 }
@@ -249,7 +249,7 @@ func (d *deck) passOver() {
 		return
 	}
 	d.mu.Lock()
-	d.passes = append(d.passes, Skip{From: duration(s.from), To: duration(s.to)})
+	d.passes = append(d.passes, Skip{From: d.timeOf(s.from), To: d.timeOf(s.to)})
 	d.mu.Unlock()
 	// The deck holds until it is cut, or the seek's ring is there.
 	if s.ends {
@@ -257,7 +257,7 @@ func (d *deck) passOver() {
 		d.jump.CompareAndSwap(s, nil)
 		return
 	}
-	d.seek(duration(s.to))
+	d.seek(d.timeOf(s.to))
 }
 
 // passed returns the parts the deck passed over since it was last asked.

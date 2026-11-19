@@ -18,6 +18,7 @@ type Ranged interface {
 type rangedTrack struct {
 	track
 	off, limit int64
+	hz         int64 // the rate of its frames
 	// at is the frame of the stream of the next frame decoded, -1 until a
 	// packet after a seek tells it; over is set once the part ended.
 	at   int64
@@ -26,9 +27,10 @@ type rangedTrack struct {
 
 // ranged has tr play from start to end, and its timing tell the part's.
 func ranged(tr track, tm timing, start, end time.Duration) (track, timing) {
-	r := &rangedTrack{track: tr, off: frames(start), at: -1}
+	hz := tm.hz()
+	r := &rangedTrack{track: tr, off: framesAt(start, hz), hz: hz, at: -1}
 	if end > start {
-		r.limit = frames(end) + frames(tm.delay)
+		r.limit = framesAt(end, hz) + framesAt(tm.delay, hz)
 		tm.total = end - start + tm.delay
 	} else if tm.total > start {
 		tm.total -= start
@@ -38,7 +40,7 @@ func ranged(tr track, tm timing, start, end time.Duration) (track, timing) {
 
 func (r *rangedTrack) seek(t time.Duration) error {
 	r.at, r.over = -1, false
-	return r.track.seek(t + duration(r.off))
+	return r.track.seek(t + durationAt(r.off, r.hz))
 }
 
 func (r *rangedTrack) read() error {

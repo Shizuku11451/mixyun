@@ -27,14 +27,21 @@ type fakeDevice struct {
 	starts          int
 	stopped         bool
 	fail            error // what starting returns, if set
+	// rate is the rate the output that plays was asked for; noRate a rate
+	// the device can't play at.
+	rate, noRate int
 }
 
-func (f *fakeDevice) start(channels int, render func([]float32, int), failed func(error)) (Output, error) {
+func (f *fakeDevice) start(channels, rate int, render func([]float32, int), failed func(error)) (Output, error) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	if f.fail != nil {
 		return nil, f.fail
 	}
+	if rate == f.noRate {
+		return nil, errors.New("the device can't play at this rate")
+	}
+	f.rate = rate
 	f.render, f.failed = render, failed
 	f.asked, f.channels = channels, 2
 	if channels == 6 && f.surround {

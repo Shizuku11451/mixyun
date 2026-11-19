@@ -266,7 +266,7 @@ func TestDeckKeepsTheDownloadWhole(t *testing.T) {
 			src, err := fileOpener(ctx, url, interrupted)
 			return wholeSource{src, &kept}, err
 		}
-		d := newDeckSkipping(cuesFront, 0, skips, open, func() {})
+		d := newDeckSkipping(cuesFront, 0, skips, nil, open, func() {})
 		deadline := time.Now().Add(5 * time.Second)
 		for {
 			if _, ready := d.info(); ready {

@@ -3900,6 +3900,8 @@
   },
   "outputDevice": "Output device",
   "outputLookAgain": "Look for devices again",
+  "outputNativeRateDescription": "Switches the output device to the sample rate of the FLAC file that plays, where the device supports it, and back when Mixyun stops. Other apps on the device keep playing, converted by macOS. A change of rate between tracks leaves a short gap. The equalizer and the volume still change the sound: this isn't bit-perfect output.",
+  "outputNativeRateTitle": "Play FLAC at its own sample rate",
   "overlayAbout": "Tells what plays, as a page for the browser source of OBS or another streaming program, and as data for an overlay of your own. It listens on this computer only, and takes no commands.",
   "overlayAddressProblem": "{error} Choose another port above.",
   "@overlayAddressProblem": {
@@ -6230,6 +6232,17 @@
     }
   },
   "trackInfoEngineLive": "live from YouTube",
+  "trackInfoEngineNativeFailed": "{line} (couldn't play at the track's own rate: {reason})",
+  "@trackInfoEngineNativeFailed": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
   "trackInfoEngineOpening": "Mixyun's audio engine is opening it…",
   "trackInfoEngineStreamed": "streamed",
   "trackInfoEngineSurround": "its 5.1 surround audio, {from}",
