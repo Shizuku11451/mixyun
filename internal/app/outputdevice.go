@@ -153,3 +153,30 @@ func outputNote(name string, fallback bool) string {
 	}
 	return "Playing on " + name + " again"
 }
+
+// deviceRate is output.DeviceRate, which tests replace.
+var deviceRate = output.DeviceRate
+
+// playingOutput is the device the engine plays on: the one chosen, or the
+// system's default while none is, or while the chosen one isn't there.
+func (a *App) playingOutput() *TrackOutput {
+	o := &a.output
+	o.mu.Lock()
+	id := o.chosen.ID
+	name := o.chosen.Name
+	if o.fallback {
+		id, name = "", ""
+	}
+	o.mu.Unlock()
+	list := systemOutputs
+	if a.opts.OutputDevices != nil {
+		list = a.opts.OutputDevices
+	}
+	devices, _ := list()
+	for _, d := range devices {
+		if id == "" && d.Default || id != "" && d.ID == id {
+			name = d.Name
+		}
+	}
+	return &TrackOutput{Name: name, Rate: deviceRate(id)}
+}

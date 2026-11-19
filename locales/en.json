@@ -6114,6 +6114,18 @@
   },
   "trackInfoCopied": "Copied the stream's address: it stops working after a few hours",
   "trackInfoCopyURL": "copy stream URL",
+  "trackInfoDefaultDevice": "the system's default device",
+  "trackInfoDeviceRate": "{device} (Core Audio: {rate})",
+  "@trackInfoDeviceRate": {
+    "placeholders": {
+      "device": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
   "trackInfoDownload": "Download",
   "trackInfoDownloaded": "{source}, downloaded",
   "@trackInfoDownloaded": {
@@ -6131,6 +6143,17 @@
         "type": "String"
       },
       "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "trackInfoEngineDevice": "{line}, on {device}",
+  "@trackInfoEngineDevice": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "device": {
         "type": "String"
       }
     }
@@ -6226,6 +6249,45 @@
   "trackInfoPlaysAs": "Plays as",
   "trackInfoPlaysConnect": "On a Spotify Connect device",
   "trackInfoPlaysSpotify": "In Spotify's own player, in Mixyun",
+  "trackInfoProcessing": "Processing",
+  "trackInfoProcessingDownmix": "mixed down to stereo",
+  "trackInfoProcessingEqualizer": "the equalizer",
+  "trackInfoProcessingJoin": "{done}; {next}",
+  "@trackInfoProcessingJoin": {
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "next": {
+        "type": "String"
+      }
+    }
+  },
+  "trackInfoProcessingLine": "In Mixyun: {list}",
+  "@trackInfoProcessingLine": {
+    "placeholders": {
+      "list": {
+        "type": "String"
+      }
+    }
+  },
+  "trackInfoProcessingNone": "None: the equalizer, speed and mixing down leave it as it is.",
+  "trackInfoProcessingPreamp": "the equalizer, its preamp at {db}",
+  "@trackInfoProcessingPreamp": {
+    "placeholders": {
+      "db": {
+        "type": "String"
+      }
+    }
+  },
+  "trackInfoProcessingSpeed": "speed {speed}",
+  "@trackInfoProcessingSpeed": {
+    "placeholders": {
+      "speed": {
+        "type": "String"
+      }
+    }
+  },
   "trackInfoQualitySpotify": "As your Spotify account and Spotify's settings choose: Spotify tells Mixyun nothing of its audio.",
   "trackInfoReading": "Reading what it holds…",
   "trackInfoRecording": "{title} · {artists}",
