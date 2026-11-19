@@ -6,6 +6,383 @@ All notable changes to MixMusic are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-11-19
+
+### Added
+
+- A new install opens on a welcome guide: the language, the theme and the
+  layout, the accounts, the language lyrics translate to, and how Mixyun
+  starts and closes, in five steps with Back, Next and Skip. It opens
+  again from Settings › General and the command palette (#5).
+- Settings › Sources turns off the music sources you don't use: a source
+  off leaves Home, unfetched, Search, the library, the pivots and Accounts,
+  and keeps its account signed in. The welcome guide has a step for them,
+  Home keeps the pivot chosen last, and Settings › Appearance › Sidebar
+  hides Explore, Roam, Stats or Marketplace (#6).
+- Settings › General › Backup exports your settings, library, play log,
+  queue and add-ons to one file, and imports it on another computer.
+  Sign-ins aren't in it (#7).
+- Pages, the side panel and the full-screen lyrics move as one: pages
+  fade, detail pages slide in from the side, the panel opens on a spring.
+  Reduced motion keeps only the fades (#15).
+- Track info's Playing line names the device the engine plays on and its
+  rate, and a new Processing row tells what the engine does to the track:
+  equalizer, speed, and a surround mix down to stereo (#20).
+- Local files play into one another without a gap, sample for sample,
+  while Crossfade is off (#21).
+- Settings › Audio › Equalizer imports a headphone correction from a
+  ParametricEQ.txt, as AutoEq and Equalizer APO write it, draws the curve
+  and offers to turn it down when its peak clips (#22).
+- Local files can play by their ReplayGain tags, by track or by album,
+  without clipping their peak: Settings › Audio › Output (#23).
+- Opening a .cue sheet plays the tracks of its FLAC, one into the next
+  without a gap, with the sheet's titles (#24).
+- Navidrome: connect a personal server in Settings › Accounts, and browse
+  and play its albums and artists in the original quality (#25).
+- On macOS, with an output device chosen, a FLAC can play at its own
+  sample rate, with no resampling: Settings › Audio › Output (#26).
+- Skip the parts SponsorBlock marks, in Settings › Playback › Skip parts
+  of videos, off at first, passes over the intros, sponsor reads and
+  parts without music of music videos, uploads and episodes, as
+  SponsorBlock's community marks them, with a box for each of its 9
+  kinds: Non-music parts, Sponsor and Self-promotion are ticked at
+  first. A part at the start is passed over with no gap, a toast tells
+  of each one skipped, with undo, and every seek bar marks them, in a
+  colour for each kind, with the highlight, which Jump to the highlight
+  plays from. Skipped parts count for nothing in plays and Last.fm
+  scrobbles. Only the first 4 characters of a hash of each video's ID go
+  to SponsorBlock, whose data is under CC BY-NC-SA 4.0 (#548).
+- Listen with friends: start a room in the cast button's menu, or in
+  Settings › Desktop, and friends on the same network join it with its
+  6-character code or its invite link, see who hosts, what plays and
+  how many listen, and hear what you play, in step, on their own
+  computers, within about 50 ms. The code is never sent; 5 wrong ones
+  make a computer wait a minute, and 30 in a minute the whole room. The
+  host removes or blocks a guest, and New code shuts out one that comes
+  back under a new name; a guest that drops off comes back by itself,
+  and gets its own queue back as it leaves. Your audio is never sent:
+  each computer plays the same track from where it can (#561).
+- Friends outside your network join your room: turn on Let friends
+  outside this network join on its page, and Mixyun asks your router
+  to forward the room's port by UPnP, NAT-PMP or PCP, and the invite
+  link carries your router's address, your IPv6 address, or one you type
+  for invites, as a VPN's. There is no server: friends reach your
+  computer directly. The page says what was set up, or why it can't be,
+  as behind your provider's router; a web link opens the room for chat
+  apps that don't open mixmusic:// links. Join a room takes a link, or
+  an address and a code, and a guest that drops off tries to come back
+  for 15 minutes (#562).
+- A music video's lyrics that are its song's, from LRCLIB, keep time with
+  the video: Mixyun compares the two recordings' audio on your
+  computer, finds where the song starts in the video, and moves the
+  lines there, so a video that opens with a scene gets its lyrics in
+  time, and one longer only by its outro keeps them synced. The first
+  play says "Timing these lyrics to the video…" for a few seconds, then
+  the lyrics switch in place, with a note such as "Timed to this video
+  (+29.1 s)", remembered for 180 days. Settings › Lyrics turns Time lyrics to music videos off (#565).
+- Settings › Lyrics lists the lyrics sources, a row each with
+  a switch and what the source gets. Drag a row, or press Alt+Up and
+  Alt+Down on it, to change the order Mixyun asks them in, switch off
+  a source it should never ask, and reset to default to put them back.
+  Prefer word-by-word lyrics has lyrics timed word by word from a lower
+  source win over lyrics timed line by line from a higher one. Of two
+  sources with plain lyrics, the longer now wins, and No lyrics found
+  offers try again whenever a source couldn't be reached (#566).
+- YouTube captions, a new lyrics source, last by default, shows the
+  timed captions of the video that plays, for live versions and uploads
+  no lyrics service has, never those YouTube makes from speech. Caption
+  language chooses their language. A podcast episode of YouTube Music
+  shows its captions under its details as a timed transcript (#566).
+- LRCLIB's lyrics light word by word where LRCLIB has their words timed
+  (#566).
+- Scrobble to ListenBrainz, or to a server of your own that speaks its
+  API, such as Maloja, beside Last.fm or without it: Settings › Accounts
+  › ListenBrainz takes your user token and, optionally, the server, whose
+  plain http address works on your local network alone, with a warning
+  that the token travels unencrypted. Listens count by Last.fm's rules,
+  wait while the server can't be reached or refuses the token, and go up
+  to 1,000 at a time. Send likes as loves, off at first, sends your likes
+  to Last.fm and to ListenBrainz as loves (#568).
+- Moving covers: with Show moving covers on, in Settings › Content or
+  the command palette, a GIF cover moves in the now playing page's
+  sleeve, pausing with the music, and in the head of a mix's page.
+  Change cover… takes a GIF, kept as its centre square of at most 600
+  pixels beside a still of its first frame, which tiles show. A GIF a
+  music file holds, or a cover.gif beside it, moves too. Elsewhere, while
+  your system asks for less motion, and for a GIF over 24 MB decoded,
+  the still shows. Albums' own looping clips wait for a source of them
+  (#569).
+- Play, pause and skip from a Stream Deck key, a keyboard macro or a
+  script, with no window coming forward: the links mixmusic://toggle,
+  play, pause, next, previous, mute, shuffle, repeat, volume-up and
+  volume-down, or the flags of the same names given to Mixyun's
+  program, as `Mixyun --next`. The volume turns by 5%, as the global
+  shortcuts turn it. With no Mixyun running, a flag says "Mixyun
+  isn't running" and ends with status 1, rather than start it. Starting
+  Mixyun again with no flag, or with the link of a page or a track,
+  still shows its window (#590).
+- A shelf of songs on Home and Explore has Play
+  and Shuffle buttons in its title row, before its scroll arrows. Play
+  queues the songs of the shelf in the order shown, and Shuffle queues
+  them with shuffle on, as a playlist page's buttons do. A shelf that
+  mixes in albums or playlists plays only its songs (#629).
+- The search page has a Sort by select beside the services. Most played
+  puts the songs, videos and playlists with the most plays or views
+  first, with Spotify's and NetEase Cloud Music's results, which have no
+  counts, after YouTube Music's, and Newest puts the newest albums first on the Albums pivot
+  (#630).
+- A track in Up next has Play next in its menu, which moves it right after
+the track playing, in the queue and in the mini player's panel. A radio
+track moved so counts as one you added. The docs now say where Add to
+queue puts a track during an album or a playlist (#631).
+- Full-screen lyrics: the lyrics of what plays over its cover, blurred and
+  darkened, with the buttons of the player at the left of the cover and the
+  covers of the next tracks in the queue at the right, which a click plays.
+  A style (Spotlight, Glow, Focus, Simple, Bold or Calm), the size of the
+  text and a ball that hops from word to word over the line sung, touching
+  its letters, and flies to the next line in a motion of your choice (a
+  mix, hop, boomerang, loop, dive or ricochet), for lyrics timed word by
+  word, are set in Settings › Lyrics ›
+  Lyrics style, with a small preview. The lyrics glide up to each line as it is
+  sung. Open them with the full-screen button of the lyrics panel or of
+  the now playing page, with Ctrl+Shift+F (⇧⌘F on macOS), or from
+  Settings (#688).
+- The search page offers YouTube itself as a scope, beside NetEase Cloud
+  Music, Spotify and YouTube Music: what the music catalog doesn't have, as tutorials,
+  vlogs and live streams. Its results are videos, and their audio plays
+  through the same stream finder as a song's, so nothing more is needed
+  to hear them (#690).
+- Listen with friends: guests add songs to the room from a song's menu,
+  which the host adds at once, accepts first, as at first, or takes none
+  of, as YouTube Music or Spotify tell them; the host lets guests play,
+  pause and skip, and lets in each friend who joins, if they choose; and
+  Make host moves the room to a guest's computer, once its user agrees,
+  if the others can reach it. The host checks each of these itself. A
+  crossfade on the host waits for the guests as a track change does, a
+  guest's SponsorBlock skips rest in a room as its crossfade does, and a
+  room started before macOS lets Mixyun use the local network is found
+  once it may (#734).
+- On the now playing page, the cover of what plays fills the whole
+  window, blurred to a wash of its colours, under the rail, the top bar
+  and the player bar. Settings › Appearance turns it off and sets how
+  strong a veil lies over it.
+- Lyrics without a translation of their own can be translated by a
+  language model of your choice: Settings › Lyrics › Translate with picks Unison, a preset (OpenAI, OpenRouter, Gemini, DeepSeek,
+  Groq, Mistral, xAI, Together AI, NVIDIA NIM, Ollama, LM Studio) or any
+  server that speaks OpenAI's chat completions, with a model and an API
+  key, which is kept in the system's credential store.
+- On Windows, the taskbar's lyrics show the line's translation under it,
+  in place of the next line, for lyrics of a language you translate.
+- On Windows, the cover of the taskbar's lyrics shows a button that
+  expands under the pointer: a click opens a player above the taskbar,
+  with the cover, the title, the artists and the service, previous, play
+  or pause and next, and the progress, which seeks. It closes as you
+  click elsewhere, on Escape, or on the cover again.
+
+### Changed
+
+- A lyric line partly in the language it's translated to keeps those words
+  as written, and the language model translates only the rest (#14).
+- Waiting Last.fm scrobbles go out once the network comes back, and
+  after a failed send on a timer of 15 seconds that doubles up to every
+  5 minutes, not only when a track starts. A batch Last.fm rejects goes
+  again in halves, so that only the scrobble at fault is dropped, a line
+  under Scrobbling as says how many wait, and Last.fm hears Mixyun's
+  version (#568).
+- An artist's tile has a shuffle button like the playlists' play button,
+  and its menu has Play and Shuffle, which play all of the artist's
+  songs. AI assistants that play an artist now play all their songs, not
+  only their top tracks, and Spotify's artist page has Shuffle too
+  (#572).
+- The mini player's progress line waves too with Wavy progress bar on: it
+moves while the track plays, lies flat when it pauses, and holds still
+when the computer asks for less motion, as the seek bar does (#632).
+- Explore is back in the sidebar, and Even loudness, Skip songs made with
+  AI and yt-dlp's tools are back in Settings, as YouTube Music stays
+  beside NetEase Cloud Music.
+- In the floating lyrics window, the next line grows out of where it showed,
+  under the line sung, into that line's place, as the line sung rises out,
+  by transforms alone, rather than the two lines leaving and coming back
+  together. The floating window's button in the player bar loses Open the
+  mini player from its menu; the mini player still opens with Ctrl M (⌘ M),
+  the command palette and the tray.
+- In Chinese, macOS names the app 混云 and asks for the local network and
+  the audio of Spotify in Chinese, and Settings › About names the projects
+  of its licenses, and Appearance the built-in themes' options, in Chinese.
+- On a MacBook, the lyrics in the player around the notch glide to the next
+  line: the lines scroll up, and the line sung grows and brightens as the
+  others dim, rather than jump.
+- On the now playing page, the lyrics' choices are a column of buttons at
+  their side, which leaves the lyrics the room above them: synced or plain,
+  translated, in Latin letters (under each line or in its place from its
+  menu), and share. The lyrics there show no scrollbar, and the player bar
+  has no ground of its own: the cover's backdrop shows through it.
+- Settings has twelve sections, by topic: General, Appearance, Playback,
+  Audio, Lyrics, Content, Accounts, Storage, Desktop, Plugins, Shortcuts
+  and About. In a wide window they're listed at the page's left. What few
+  change, as the volume curve, the Windows Firewall, the settings file and
+  memory use, folds under **Advanced** at the foot of its section; the
+  search still finds it, and opens the fold (#5).
+- In full-screen lyrics, the strip of covers at the right shows the track
+  playing, ringed, a third of the way down, with what played before it
+  above and what comes next below it. When the track changes, the covers
+  slide to their new places, and still change at once when the computer
+  asks for less motion (#4).
+- On Windows, the taskbar's lyrics glide to the next line: the lines rise
+  a row and fade between them, rather than jump. A line timed word by
+  word lights up word by word as it is sung, as the lyrics do.
+- The now playing page's visualizer draws at 60 frames a second rather
+  than at the display's rate, 120 on ProMotion displays, and only while
+  Mixyun hears what plays, for less power.
+- The visualizer's bars keep to the cover's rounded corners.
+- On Windows, the window has no title bar of its own: the page fills it,
+  under the cover's backdrop too, and minimize, maximize and close sit
+  over its top right, as on Windows 11, with its snap layouts. The top bar
+  and the sidebar drag the window, and a double click on them maximizes
+  it. Full-screen lyrics keep a strip at the top that drags the window,
+  and their close button comes below the window's buttons.
+
+### Fixed
+
+- Settings › Accounts shows the YouTube Music sign-in again, beside
+  NetEase Cloud Music's (#5).
+- The list of Settings sections stays in view while a long section
+  scrolls (#27).
+- A NetEase song marked pure music shows as instrumental, not as having
+  no lyrics (#28).
+- Saving a Spotify playlist to your library, or taking it out, works with
+  a Client ID made since February 2026, which Spotify gives no route for
+  it but the library's own. One made before still works (#536).
+- Pairing for remote control ends the same way on both computers. When
+  the computer controlled took more than 6 seconds to keep the pairing,
+  as on a slow or busy disk, it said Paired while the other said it
+  stopped answering and kept nothing. The other now waits 30 seconds
+  more, and a pairing that doesn't finish is dropped on both: the
+  computer controlled says it didn't finish, and the other that it
+  couldn't keep the pairing, rather than that it may be asleep (#537).
+- A YouTube Music artist's Play plays all their songs, the list that
+  Top songs links to, rather than the five or so on the page, and a new
+  Shuffle shuffles them, in the head and the top bar. The first hundred
+  start at once and the rest join the queue as they load. Show all,
+  beside Top songs, opens the list. An artist of the music on this
+  computer gets Shuffle too (#543).
+- Stats, Your year and the Plays sort count every play, rather than your
+  last 1,000: All time said "You played 1,000 tracks" and never more, and
+  a year's recap held only its last months. Mixyun keeps each play in
+  `plays.jsonl` in your data folder, about 1 MB a year at 10 plays a
+  day, and fills it once from the last 1,000 plays of the history. Clear
+  history empties it too (#545).
+- With Crossfade on, a next track whose audio comes late no longer jumps
+  in loud: the one playing keeps its volume until that audio is there,
+  and the next fades in from silence then, or starts at full volume with
+  under half a second of the one before left. A pause during a fade,
+  however long, no longer drops the track fading out (#549).
+- Scrobbles are no longer lost when Last.fm stops accepting Mixyun's
+  connection. Plays heard meanwhile wait with the earlier ones, Settings
+  › Accounts › Last.fm offers "connect again" in place, which sends them
+  all, and, if another Last.fm user approves, asks whether to send them
+  to that profile or drop them. Disconnecting says how many scrobbles it
+  drops (#567).
+- A long Spotify playlist goes on loading when Spotify asks Mixyun to
+  wait: the page waits as long as Spotify asks, up to a minute, says
+  "Spotify asked Mixyun to wait" with how many tracks came, and reads
+  the rest by itself, rather than stopping partway with Try again (#570).
+- Play on a Spotify artist's page plays all of their songs, read from
+  every album and single, not the ten of their top songs. Sound starts
+  with the first release and the others join the queue as they are read
+  (#571).
+- Library › Spotify shows all of your Spotify playlists, saved albums,
+  followed artists and saved podcasts, rather than the first 200, or 50
+  albums, and so do Library › Artists, Library › Podcasts, Add to
+  Spotify playlist and Add a shelf. A page that fails is tried again; a
+  list that still came in part shows what came, says "Showing 200 of 250
+  playlists" with Try again, and no longer has new releases forget the
+  artists it missed. Home's Spotify playlists shelf shows the first 50,
+  so that Home doesn't wait (#574).
+- The Sleep Timer plugin's "at the end of this track" pauses the music as
+  the track ends, before a crossfade or the next track starts, instead
+  of letting the next track play on. It also stops on Repeat: one, and
+  at the end of the queue, and a press of Next no longer counts as the
+  end. A timed pause that falls while a track loads is sent again until
+  the music stops, and the volume comes back after it. The page has its
+  45-minute tile, and "The sleep timer stops in 30:00." reads right
+  (#584).
+- Library › YouTube Music shows all of your YouTube Music playlists,
+  albums, artists, songs and saved podcasts, up to some 24,000 of each,
+  rather than about the first 1,000, and so do Library › Artists,
+  Library › Podcasts, Add to YouTube Music playlist and Add a shelf. A
+  page that fails is tried again; a list that still came in part shows
+  what came, says "Showing the first 1,200 songs" with Try again, and
+  no longer has new releases forget the artists it missed. The menu of
+  a song a partial Songs list lacks asks YouTube Music whether you keep
+  it, so a song saved long ago offers Remove from library (#586).
+- After LRCLIB, Better Lyrics or Unison answers "Too Many Requests",
+  Mixyun leaves it alone for as long as it asks (with a little more),
+  instead of asking again at once for the next track or on try again; the
+  other sources answer meanwhile. LRCLIB's cached lookup is tried only
+  after a server error (#619).
+- The number above an equalizer band or the preamp shows its half
+  decibels: +0.5, -0.5, +1.5 and +2.5 dB, where +1.5 and +2.5 both read
+  +2 and a half step near zero read +0. Whole values read as before
+  (#620).
+- Data saver and the 5.1 mix play a video's original audio when yt-dlp
+  finds the stream, as they do on the other routes: yt-dlp ranked the
+  tracks of a dubbed video by quality alone, so data saver could play a
+  dub, or an audio description (#621).
+- Searching the settings for "phone" no longer finds Remote control,
+  which phones can't use (#622).
+- Quitting Mixyun stops its plugins: the function a plugin returns to
+  run when it stops runs at every quit too, as it does when the plugin is
+  turned off, and what it keeps with `api.storage` then is saved. Mixyun
+  waits 3 seconds at most for all of them, so a plugin can't hold up the
+  quit (#623).
+- A small bright mark on a black or grey cover no longer sets the
+  accent: a colour has to cover more than 1% of the cover, and the
+  cover's own grey stays otherwise. Pure colours such as `#ff0000` now
+  count, where they used to be skipped as near white (#624).
+- A playlist says why its count is above its rows: once all of it is
+  read, a muted line under the header tells how many of its items can't
+  play here, as Spotify's local files, podcast episodes and removed
+  tracks, and how many explicit songs Hide explicit content leaves out,
+  so the count and the list agree. The Long playlists section of the
+  library page says what the line means (#625).
+- A YouTube Music playlist sorted by Top voted loads all its songs, up
+  to 20,000, rather than stopping at its first 100 or so under a header
+  that counted them all: Play, Shuffle, the download and a copy into a
+  mix take every one (#626).
+- A YouTube Music playlist that loads far fewer songs than its header
+  counts says so under the header, with Try again, rather than looking
+  complete: "Only 100 of this playlist's 1,527 tracks came from YouTube
+  Music." A small gap stays quiet (#627).
+- A downloaded song keeps its cover in the system's media controls,
+  notifications and Now playing for overlays when you are offline, even
+  after Clear covers emptied the artwork store: they read the cover the
+  download keeps (#628).
+- The hint of Settings › Accounts › YouTube Music no longer says your
+session never goes to yt-dlp: with Play audio as your account on, yt-dlp
+asks as your account first (#634).
+- The mini player opens at its size at the zoom: at 125% the first time,
+  it opened at its 100% size, and its cover became a narrow strip. With
+  the zoom changed while it was closed, it opens scaled to the new one
+  (#717).
+- A YouTube Music song that plays shows the same length in the player
+  bar and the mini player as in its row of the queue, 3:34 rather than
+  3:33. Lengths are now rounded up to the whole second, as YouTube Music
+  lists them (#718).
+- On macOS, a computer whose remote control started before you let
+  Mixyun use the local network is found by the others within a minute
+  of allowing it, rather than only after Mixyun restarted (#725).
+- A Spotify song Mixyun plays itself stops as the next song starts, as
+  one picked from YouTube Music. It sometimes played on beside it: when
+  Spotify told of it under another name, when its play failed after
+  Spotify took it and Mixyun played it from YouTube Music instead, or
+  when Spotify went on by itself past Mixyun's queue (#745).
+- On Windows, the taskbar's lyrics keep clear of its buttons: the widgets,
+  Start, search and the apps' buttons, whether centred or at the left. They
+  sit in the room left between them, narrower where it is short.
+- On Windows, the player the taskbar's cover expands opens over the
+  lyrics, wherever they sit, rather than at the screen's left end.
+
 ## [0.7.4] - 2026-11-14
 
 ### Changed
@@ -1890,7 +2267,8 @@ player, for macOS, Windows and Linux.
 - Apps for macOS 12 and later (Apple silicon and Intel), Windows 10 and 11,
   and Linux, on x64 and Arm64.
 
-[Unreleased]: https://github.com/fzn0x/mixmusic/compare/v0.7.4...HEAD
+[Unreleased]: https://github.com/Shizuku11451/mixyun/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/Shizuku11451/mixyun/compare/v0.7.4...v0.8.0
 [0.7.4]: https://github.com/fzn0x/mixmusic/compare/v0.7.2...v0.7.4
 [0.7.2]: https://github.com/fzn0x/mixmusic/compare/v0.7.1...v0.7.2
 [0.7.1]: https://github.com/fzn0x/mixmusic/compare/v0.7.0...v0.7.1
