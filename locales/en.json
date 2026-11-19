@@ -385,6 +385,24 @@
   "@audioOutputGroup": {
     "description": "Settings › Audio: the group of the output device, loudness and surround."
   },
+  "backupExportAbout": "Saves your settings, library, history, queue, add-ons and playlist covers in one file. Sign-ins, caches and downloads stay out.",
+  "backupExportButton": "export",
+  "backupExportTitle": "Export backup",
+  "backupFilter": "Mixyun backup",
+  "backupGroup": "Backup",
+  "backupImportAbout": "Replaces them with those of a backup, as Mixyun starts again. What it replaces is kept in the data folder, in before-import.",
+  "backupImportButton": "import",
+  "backupImportConfirm": "Replace your settings, library, history, queue, add-ons and playlist covers with those of this backup? Mixyun starts again to put it in place.",
+  "backupImportConfirmButton": "import and restart",
+  "backupImportTitle": "Import backup",
+  "backupSaved": "Saved the backup as {file}",
+  "@backupSaved": {
+    "placeholders": {
+      "file": {
+        "type": "String"
+      }
+    }
+  },
   "cacheSettingsClear": "clear",
   "cacheSettingsClearCovers": "Clear covers",
   "cacheSettingsClearTracks": "Clear tracks",

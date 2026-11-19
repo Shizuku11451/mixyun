@@ -2206,6 +2206,116 @@ func (msgs Messages) AudioOutputGroup() string {
 	return Catalog.Format(msgs.locale, "audioOutputGroup", nil)
 }
 
+// BackupExportAbout says "Saves your settings, library, history, queue, add-ons and playlist covers in one file. Sign-ins, caches and downloads…"
+// in the language the app shows.
+func BackupExportAbout() string { return In(i18n.Locale()).BackupExportAbout() }
+
+// BackupExportAbout says "Saves your settings, library, history, queue, add-ons and playlist covers in one file. Sign-ins, caches and downloads…"
+// in the language of msgs.
+func (msgs Messages) BackupExportAbout() string {
+	return Catalog.Format(msgs.locale, "backupExportAbout", nil)
+}
+
+// BackupExportButton says "export"
+// in the language the app shows.
+func BackupExportButton() string { return In(i18n.Locale()).BackupExportButton() }
+
+// BackupExportButton says "export"
+// in the language of msgs.
+func (msgs Messages) BackupExportButton() string {
+	return Catalog.Format(msgs.locale, "backupExportButton", nil)
+}
+
+// BackupExportTitle says "Export backup"
+// in the language the app shows.
+func BackupExportTitle() string { return In(i18n.Locale()).BackupExportTitle() }
+
+// BackupExportTitle says "Export backup"
+// in the language of msgs.
+func (msgs Messages) BackupExportTitle() string {
+	return Catalog.Format(msgs.locale, "backupExportTitle", nil)
+}
+
+// BackupFilter says "Mixyun backup"
+// in the language the app shows.
+func BackupFilter() string { return In(i18n.Locale()).BackupFilter() }
+
+// BackupFilter says "Mixyun backup"
+// in the language of msgs.
+func (msgs Messages) BackupFilter() string {
+	return Catalog.Format(msgs.locale, "backupFilter", nil)
+}
+
+// BackupGroup says "Backup"
+// in the language the app shows.
+func BackupGroup() string { return In(i18n.Locale()).BackupGroup() }
+
+// BackupGroup says "Backup"
+// in the language of msgs.
+func (msgs Messages) BackupGroup() string {
+	return Catalog.Format(msgs.locale, "backupGroup", nil)
+}
+
+// BackupImportAbout says "Replaces them with those of a backup, as Mixyun starts again. What it replaces is kept in the data folder, in before-…"
+// in the language the app shows.
+func BackupImportAbout() string { return In(i18n.Locale()).BackupImportAbout() }
+
+// BackupImportAbout says "Replaces them with those of a backup, as Mixyun starts again. What it replaces is kept in the data folder, in before-…"
+// in the language of msgs.
+func (msgs Messages) BackupImportAbout() string {
+	return Catalog.Format(msgs.locale, "backupImportAbout", nil)
+}
+
+// BackupImportButton says "import"
+// in the language the app shows.
+func BackupImportButton() string { return In(i18n.Locale()).BackupImportButton() }
+
+// BackupImportButton says "import"
+// in the language of msgs.
+func (msgs Messages) BackupImportButton() string {
+	return Catalog.Format(msgs.locale, "backupImportButton", nil)
+}
+
+// BackupImportConfirm says "Replace your settings, library, history, queue, add-ons and playlist covers with those of this backup? Mixyun starts …"
+// in the language the app shows.
+func BackupImportConfirm() string { return In(i18n.Locale()).BackupImportConfirm() }
+
+// BackupImportConfirm says "Replace your settings, library, history, queue, add-ons and playlist covers with those of this backup? Mixyun starts …"
+// in the language of msgs.
+func (msgs Messages) BackupImportConfirm() string {
+	return Catalog.Format(msgs.locale, "backupImportConfirm", nil)
+}
+
+// BackupImportConfirmButton says "import and restart"
+// in the language the app shows.
+func BackupImportConfirmButton() string { return In(i18n.Locale()).BackupImportConfirmButton() }
+
+// BackupImportConfirmButton says "import and restart"
+// in the language of msgs.
+func (msgs Messages) BackupImportConfirmButton() string {
+	return Catalog.Format(msgs.locale, "backupImportConfirmButton", nil)
+}
+
+// BackupImportTitle says "Import backup"
+// in the language the app shows.
+func BackupImportTitle() string { return In(i18n.Locale()).BackupImportTitle() }
+
+// BackupImportTitle says "Import backup"
+// in the language of msgs.
+func (msgs Messages) BackupImportTitle() string {
+	return Catalog.Format(msgs.locale, "backupImportTitle", nil)
+}
+
+// BackupSaved says "Saved the backup as {file}"
+// in the language the app shows.
+func BackupSaved(file string) string { return In(i18n.Locale()).BackupSaved(file) }
+
+// BackupSaved says "Saved the backup as {file}"
+// in the language of msgs.
+func (msgs Messages) BackupSaved(file string) string {
+	return Catalog.Format(msgs.locale, "backupSaved", map[string]any{"file": file})
+}
+
 // CacheSettingsClear says "clear"
 // in the language the app shows.
 func CacheSettingsClear() string { return In(i18n.Locale()).CacheSettingsClear() }

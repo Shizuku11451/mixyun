@@ -374,7 +374,10 @@ type shell struct {
 	// resetting asks to reset the settings; recording is the command whose
 	// shortcut the user presses the keys of, recordingFocused whether its
 	// button had the focus in the last frame.
-	resetting        bool
+	resetting bool
+	// importing asks before importing the backup at importPath.
+	importing        bool
+	importPath       string
 	recording        string
 	recordingFocused bool
 	// plainKeys are the commands' keys without modifiers that a focused
