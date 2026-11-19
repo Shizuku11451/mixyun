@@ -1,4 +1,4 @@
-- Moving covers: with Show moving covers on, in Settings › Playback or
+- Moving covers: with Show moving covers on, in Settings › Content or
   the command palette, a GIF cover moves in the now playing page's
   sleeve, pausing with the music, and in the head of a mix's page.
   Change cover… takes a GIF, kept as its centre square of at most 600

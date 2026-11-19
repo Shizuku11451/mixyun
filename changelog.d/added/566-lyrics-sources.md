@@ -1,6 +1,6 @@
-- Settings › Playback › Lyrics lists the lyrics sources, a row each with
+- Settings › Lyrics lists the lyrics sources, a row each with
   a switch and what the source gets. Drag a row, or press Alt+Up and
-  Alt+Down on it, to change the order MixMusic asks them in, switch off
+  Alt+Down on it, to change the order Mixyun asks them in, switch off
   a source it should never ask, and reset to default to put them back.
   Prefer word-by-word lyrics has lyrics timed word by word from a lower
   source win over lyrics timed line by line from a higher one. Of two

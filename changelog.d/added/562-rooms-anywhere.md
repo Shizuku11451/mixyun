@@ -1,5 +1,5 @@
 - Friends outside your network join your room: turn on Let friends
-  outside this network join on its page, and MixMusic asks your router
+  outside this network join on its page, and Mixyun asks your router
   to forward the room's port by UPnP, NAT-PMP or PCP, and the invite
   link carries your router's address, your IPv6 address, or one you type
   for invites, as a VPN's. There is no server: friends reach your
