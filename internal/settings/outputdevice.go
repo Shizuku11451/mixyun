@@ -13,6 +13,9 @@ type OutputDevice struct {
 	// Name is the device's name as the system told it when it was chosen,
 	// which shows while the device isn't there.
 	Name string `json:"name"`
+	// NativeRate, on macOS, has the device switched to the sample rate of
+	// the FLAC that plays, where it supports it, for the duration of play.
+	NativeRate bool `json:"nativeRate,omitempty"`
 }
 
 // clean is d with its name trimmed, and none for the system's default.

@@ -2,6 +2,7 @@ package audio
 
 import (
 	"io"
+	"slices"
 
 	"github.com/fzn0x/mixmusic/flac"
 )
@@ -14,13 +15,18 @@ type flacCodec struct {
 
 // openFLAC returns the track of a FLAC file. Its errors are worded for the
 // player.
-func openFLAC(src io.ReadSeeker) (track, timing, error) {
+// It decodes at its own rate when that is one of native's.
+func openFLAC(src io.ReadSeeker, native []int) (track, timing, error) {
 	r, err := flac.NewReader(src)
 	if err != nil {
 		return nil, timing{}, readError(err)
 	}
 	i := r.Info()
-	return newPCMTrack(&flacCodec{r: r}, i.SampleRate, i.Channels, timing{total: i.Duration()})
+	tm := timing{total: i.Duration()}
+	if slices.Contains(native, i.SampleRate) {
+		tm.rate = i.SampleRate
+	}
+	return newPCMTrack(&flacCodec{r: r}, i.SampleRate, i.Channels, tm)
 }
 
 func (c *flacCodec) seek(f int64) (int64, error) { return c.r.SeekSample(f) }

@@ -71,7 +71,7 @@ func TestPEQResponse(t *testing.T) {
 			t.Errorf("%s: %.3f dB, want %.3f", what, got, want)
 		}
 	}
-	pk, ls, hs := PEQFilter{"PK", 1000, 6, 2}.filter(), PEQFilter{"LSC", 200, -8, 0.7}.filter(), PEQFilter{"HSC", 4000, 5, 0.7}.filter()
+	pk, ls, hs := PEQFilter{"PK", 1000, 6, 2}.filter(Rate), PEQFilter{"LSC", 200, -8, 0.7}.filter(Rate), PEQFilter{"HSC", 4000, 5, 0.7}.filter(Rate)
 	near("peak at its frequency", pk.response(1000), 6)
 	near("peak far off", pk.response(50), 0)
 	near("low shelf below", ls.response(20), -8)
@@ -95,7 +95,7 @@ func TestPEQPeakMeasured(t *testing.T) {
 		t.Fatalf("peak %.2f dB at %.0f Hz", db, hz)
 	}
 	measure := func(c Chain) float64 {
-		eq, s := newEqualizer(), newPEQStage(*c.PEQ, c.Attenuation)
+		eq, s := newEqualizer(), newPEQStage(*c.PEQ, c.Attenuation, Rate)
 		eq.set(c.EQ, c.Gains, c.EQPreamp)
 		const amp = 0.99
 		top := 0.0
@@ -126,5 +126,26 @@ func TestPEQPeakMeasured(t *testing.T) {
 	off.PEQ = nil
 	if got := off.ResponseDB(hz); math.Abs(got-2) > 0.1 {
 		t.Errorf("bypassed, the chain is %.2f dB at %.0f Hz, the ten bands' alone", got, hz)
+	}
+}
+
+// TestPEQAtNativeRate checks that the engine makes a profile's filters
+// again at the rate it retunes to: a 1 kHz +6 dB peak stays at 1 kHz.
+func TestPEQAtNativeRate(t *testing.T) {
+	e := &Engine{rate: Rate, eq: newEqualizer(), comp: newCompressor()}
+	e.SetPEQ(&PEQ{Filters: []PEQFilter{{"PK", 1000, 6, 2}}}, 0)
+	const hz = 96000
+	e.retune(hz)
+	buf := make([]float32, hz) // a second, mono
+	for i := range buf {
+		buf[i] = 0.25 * float32(math.Sin(2*math.Pi*1000*float64(i)/hz))
+	}
+	e.peq.process(buf, 1)
+	var peak float32
+	for _, v := range buf[hz/2:] {
+		peak = max(peak, v)
+	}
+	if db := 20 * math.Log10(float64(peak/0.25)); math.Abs(db-6) > 0.1 {
+		t.Errorf("1 kHz at %d Hz: %+.2f dB, want +6", hz, db)
 	}
 }

@@ -18,7 +18,7 @@ func TestEngineOnTheDevice(t *testing.T) {
 	if os.Getenv("MIXMUSIC_AUDIO") != "1" {
 		t.Skip("MIXMUSIC_AUDIO=1 runs the tests that open the audio device")
 	}
-	start := func(channels int, render func([]float32, int), failed func(error)) (Output, error) {
+	start := func(channels, _ int, render func([]float32, int), failed func(error)) (Output, error) {
 		return output.Start(channels, render, failed)
 	}
 	rec := newRecorder()
@@ -69,7 +69,7 @@ func TestEngineOnTheDeviceAtSpeed(t *testing.T) {
 	if os.Getenv("MIXMUSIC_AUDIO") != "1" {
 		t.Skip("MIXMUSIC_AUDIO=1 runs the tests that open the audio device")
 	}
-	start := func(channels int, render func([]float32, int), failed func(error)) (Output, error) {
+	start := func(channels, _ int, render func([]float32, int), failed func(error)) (Output, error) {
 		return output.Start(channels, render, failed)
 	}
 	rec := newRecorder()

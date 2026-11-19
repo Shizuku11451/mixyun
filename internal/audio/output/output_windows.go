@@ -226,8 +226,11 @@ type Stream struct {
 // Open starts a stream as o tells: of o.Channels, 2, or Surround for 5.1,
 // which it plays where the device mixes 5.1 or more, else stereo, on
 // o.Device or the default device. It returns once the device plays, or why
-// it can't.
+// it can't: ErrRate for a rate other than Rate.
 func Open(o Options) (*Stream, error) {
+	if o.Rate != 0 && o.Rate != Rate {
+		return nil, ErrRate
+	}
 	s := &Stream{render: o.Render, channels: o.Channels, want: o.Device, mover: newMover(o), done: make(chan struct{})}
 	ready := make(chan error, 1)
 	go func() {

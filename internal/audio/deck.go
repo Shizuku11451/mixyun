@@ -139,6 +139,11 @@ type deck struct {
 	cut  atomic.Bool
 	// sought is set once the deck was sought.
 	sought atomic.Bool
+	// native is the rates a FLAC track decodes at, not converted to Rate,
+	// and hz the rate of the deck's frames: Rate until its headers were
+	// read.
+	native []int
+	hz     atomic.Int64
 
 	cancel context.CancelFunc
 	done   chan struct{}
@@ -163,12 +168,13 @@ type deck struct {
 // newDeck starts a deck of url at start. notify is called, from the deck's
 // goroutine, when its state changes.
 func newDeck(url string, start time.Duration, open Opener, notify func()) *deck {
-	return newDeckSkipping(url, start, nil, open, notify)
+	return newDeckSkipping(url, start, nil, nil, open, notify)
 }
 
 // newDeckSkipping is newDeck of a deck that passes over skips of its
-// track: from the end of the one it starts in, if any.
-func newDeckSkipping(url string, start time.Duration, skips []Skip, open Opener, notify func()) *deck {
+// track: from the end of the one it starts in, if any. A FLAC track of one
+// of native's rates decodes at it.
+func newDeckSkipping(url string, start time.Duration, skips []Skip, native []int, open Opener, notify func()) *deck {
 	ctx, cancel := context.WithCancel(context.Background())
 	d := &deck{
 		url:      url,
@@ -181,7 +187,9 @@ func newDeckSkipping(url string, start time.Duration, skips []Skip, open Opener,
 		seekTo:   -1,
 		channels: 2,
 		skips:    skips,
+		native:   native,
 	}
+	d.hz.Store(Rate)
 	d.lkfs.Store(math.Float64bits(math.NaN()))
 	d.ring.Store(newRing(frames(start), 2))
 	go func() {
@@ -224,7 +232,7 @@ func (d *deck) seek(t time.Duration) {
 	d.sought.Store(true)
 	d.mu.Lock()
 	d.seekTo = t
-	d.ring.Store(newRing(frames(t), d.channels))
+	d.ring.Store(newRing(d.frames(t), d.channels))
 	d.mu.Unlock()
 	// A part the deck held at gives way once the new ring is there.
 	d.jump.Store(nil)
@@ -264,6 +272,11 @@ func (d *deck) takeSeek() (time.Duration, *ring, bool) {
 	return t, d.ring.Load(), true
 }
 
+// frames converts t to frames at the deck's rate, and timeOf frames at
+// it to a duration.
+func (d *deck) frames(t time.Duration) int64 { return framesAt(t, d.hz.Load()) }
+func (d *deck) timeOf(n int64) time.Duration { return durationAt(n, d.hz.Load()) }
+
 // position returns the frame of the track the deck reads from its ring.
 func (d *deck) position() int64 { return d.ring.Load().position() }
 
@@ -302,7 +315,7 @@ func (d *deck) left() (int64, bool) {
 	if r.done.Load() {
 		end = r.start + r.write.Load()
 	} else if total, ready := d.info(); ready && total > 0 {
-		end = frames(total)
+		end = d.frames(total)
 	} else {
 		return 0, false
 	}
@@ -376,7 +389,7 @@ func (d *deck) play(ctx context.Context, start time.Duration, cur **ring, open O
 	var tr track
 	var tm timing
 	for {
-		tr, tm, err = openTrack(src)
+		tr, tm, err = openTrackAt(src, d.native)
 		if err == nil || !interrupted() {
 			break
 		}
@@ -411,8 +424,11 @@ func (d *deck) play(ctx context.Context, start time.Duration, cur **ring, open O
 	// the audio thread reads takes them before it got a frame, as the one
 	// a seek asked for meanwhile, which the loop below takes.
 	d.channels = ch
-	if r := d.ring.Load(); r.channels != ch {
-		nr := newRing(r.start, ch)
+	// They hold frames of its rate too, from the frame at Rate they start at.
+	hz := tm.hz()
+	d.hz.Store(hz)
+	if r := d.ring.Load(); r.channels != ch || hz != Rate {
+		nr := newRing(r.start*hz/Rate, ch)
 		d.ring.Store(nr)
 		if *cur == r {
 			*cur = nr
@@ -424,7 +440,7 @@ func (d *deck) play(ctx context.Context, start time.Duration, cur **ring, open O
 	if r := d.ring.Load(); r == *cur && d.seekTo < 0 {
 		if past := d.passStart(start); past != start {
 			start = past
-			nr := newRing(frames(start), ch)
+			nr := newRing(d.frames(start), ch)
 			d.ring.Store(nr)
 			*cur = nr
 		}
@@ -440,7 +456,7 @@ func (d *deck) play(ctx context.Context, start time.Duration, cur **ring, open O
 		if err := tr.seek(max(0, target-tm.preRoll)); err != nil {
 			return err
 		}
-		next, skip = -1, frames(target)
+		next, skip = -1, d.frames(target)
 		return nil
 	}
 	// wait waits for space in the ring, unless a seek or the end comes.
@@ -565,7 +581,7 @@ func (d *deck) brokeNearEnd(err error, next, skip int64, delay time.Duration) bo
 	if at < 0 {
 		at = skip
 	}
-	return total > 0 && duration(at)-delay >= total-endSlack
+	return total > 0 && d.timeOf(at)-delay >= total-endSlack
 }
 
 // ramp moves a gain linearly, as linearRampToValueAtTime does.

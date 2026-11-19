@@ -11,17 +11,27 @@ import (
 // of 4096 samples but the last, of verbatim subframes.
 func flacOf(t *testing.T, samples [][2]int16) string {
 	t.Helper()
+	return flacAt(t, 48000, samples)
+}
+
+// flacAt is flacOf at a rate of 44100 or 48000 Hz.
+func flacAt(t *testing.T, rate int, samples [][2]int16) string {
+	t.Helper()
+	code := byte(0x0A) // the frame header's code of 48 kHz
+	if rate == 44100 {
+		code = 0x09
+	}
 	const block = 4096
 	info := make([]byte, 34)
 	binary.BigEndian.PutUint16(info[0:], block)
 	binary.BigEndian.PutUint16(info[2:], block)
-	binary.BigEndian.PutUint64(info[10:], uint64(48000)<<44|1<<41|15<<36|uint64(len(samples)))
+	binary.BigEndian.PutUint64(info[10:], uint64(rate)<<44|1<<41|15<<36|uint64(len(samples)))
 	b := append([]byte("fLaC\x80\x00\x00\x22"), info...)
 	for i := 0; i*block < len(samples); i++ {
 		part := samples[i*block : min((i+1)*block, len(samples))]
-		frame := []byte{0xFF, 0xF8, 0xCA, 0x18, byte(i)}
+		frame := []byte{0xFF, 0xF8, 0xC0 | code, 0x18, byte(i)}
 		if len(part) != block {
-			frame[2] = 0x7A
+			frame[2] = 0x70 | code
 			frame = binary.BigEndian.AppendUint16(frame, uint16(len(part)-1))
 		}
 		frame = append(frame, crc8(frame))

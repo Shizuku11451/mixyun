@@ -1,6 +1,7 @@
 package main
 
 import (
+	"runtime"
 	"slices"
 
 	"github.com/egoist/mygo/ui"
@@ -54,3 +55,18 @@ func (s *shell) outputDeviceRow(c *ui.Context) {
 // outputDescription tells what the output device does, in Settings ›
 // Playback.
 func outputDescription() string { return locales.OutputDescription() }
+
+func init() { addSettings(audioRows, 11, (*shell).nativeRateRow) }
+
+// nativeRateRow has the device chosen switch to the rate of the FLAC that
+// plays, in Settings › Audio › Output: on macOS, with a device chosen.
+func (s *shell) nativeRateRow(c *ui.Context) {
+	if runtime.GOOS != "darwin" || s.set.OutputDevice.ID == "" {
+		return
+	}
+	s.row(c, locales.OutputNativeRateTitle(), locales.OutputNativeRateDescription(), func() {
+		if s.switchOf(c.Key("native-rate"), &s.set.OutputDevice.NativeRate).Label(locales.OutputNativeRateTitle()).Changed() {
+			s.save()
+		}
+	}, "sample rate", "44.1", "96", "hi-res", "dac")
+}

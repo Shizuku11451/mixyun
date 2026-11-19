@@ -22,6 +22,9 @@ const (
 	kAudioDevicePropertyNominalSampleRate = 0x6E737274
 	kAudioDevicePropertyIsHidden          = 0x6869646E
 	kAudioDevicePropertyDeviceIsAlive     = 0x6C69766E
+	// kAudioDevicePropertyAvailableNominalSampleRates is the rates a
+	// device may run at, in ranges: 'nsr#'.
+	kAudioDevicePropertyAvailableNominalSampleRates = 0x6E737223
 	// kAudioQueuePropertyCurrentDevice is the UID of the device a queue
 	// plays on: 'aqcd'.
 	kAudioQueuePropertyCurrentDevice = 0x61716364
@@ -226,4 +229,41 @@ func DeviceRate(id string) float64 {
 		return 0
 	}
 	return rate
+}
+
+// DeviceRates returns the sample rates, in Hz and sorted, the device of the
+// ID id may run at: the standard rates in the ranges Core Audio tells. It
+// returns ErrNoDevice when the device isn't there.
+func DeviceRates(id string) ([]int, error) {
+	if err := loadCoreFoundation(); err != nil {
+		return nil, err
+	}
+	dev, _, ok := outputDevice(id)
+	if !ok {
+		return nil, ErrNoDevice
+	}
+	return rangeRates(rateRanges(dev)), nil
+}
+
+// rateRanges returns the ranges of the nominal rates a device may run at,
+// each an AudioValueRange of its lowest and highest rate.
+func rateRanges(dev uint32) [][2]float64 {
+	addr := audioObjectPropertyAddress{kAudioDevicePropertyAvailableNominalSampleRates, kAudioObjectPropertyScopeGlobal, 0}
+	var size uint32
+	if audioObjectGetPropertyDataSize(dev, &addr, 0, nil, &size) != 0 || size < 16 || size > 1<<16 {
+		return nil
+	}
+	ranges := make([][2]float64, size/16)
+	if audioObjectGetPropertyData(dev, &addr, 0, nil, &size, unsafe.Pointer(&ranges[0])) != 0 {
+		return nil
+	}
+	return ranges[:min(int(size/16), len(ranges))]
+}
+
+// setDeviceRate sets the nominal rate of a device, which Core Audio then
+// converts the other apps' audio to.
+func setDeviceRate(dev uint32, rate int) bool {
+	addr := audioObjectPropertyAddress{kAudioDevicePropertyNominalSampleRate, kAudioObjectPropertyScopeGlobal, 0}
+	r := float64(rate)
+	return audioObjectSetPropertyData(dev, &addr, 0, nil, uint32(unsafe.Sizeof(r)), unsafe.Pointer(&r)) == 0
 }

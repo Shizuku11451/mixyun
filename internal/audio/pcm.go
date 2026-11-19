@@ -37,12 +37,13 @@ type pcmTrack struct {
 }
 
 // newPCMTrack returns the track of codec, of in channels at rate, which
-// plays as tm tells: its duration, and its codec's delay.
+// plays as tm tells: its duration, its codec's delay, and the rate it
+// converts to.
 func newPCMTrack(codec pcmCodec, rate, in int, tm timing) (track, timing, error) {
 	if in < 1 || in > 8 {
 		return nil, timing{}, fmt.Errorf("%w (%d channels)", errUnsupported, in)
 	}
-	conv, err := newConverter(rate, tm.delay)
+	conv, err := newConverter(rate, tm.hz(), tm.delay)
 	if err != nil {
 		return nil, timing{}, err
 	}
@@ -135,16 +136,16 @@ type converter struct {
 	pcm      []float32
 }
 
-// newConverter returns the converter of a track at rate, whose codec
-// delays its audio by delay.
-func newConverter(rate int, delay time.Duration) (converter, error) {
-	rs, err := resample.New(rate, Rate, 2)
+// newConverter returns the converter of a track at rate to the rate to,
+// whose codec delays its audio by delay: one of the same rates copies.
+func newConverter(rate int, to int64, delay time.Duration) (converter, error) {
+	rs, err := resample.New(rate, int(to), 2)
 	if err != nil {
 		return converter{}, fmt.Errorf("%w (%v)", errUnsupported, err)
 	}
 	r := int64(rate)
-	g := gcd(r, Rate)
-	return converter{rs: rs, rate: r, up: Rate / g, down: r / g, origin: framesAt(delay, r), originAt: frames(delay)}, nil
+	g := gcd(r, to)
+	return converter{rs: rs, rate: r, up: to / g, down: r / g, origin: framesAt(delay, r), originAt: framesAt(delay, to)}, nil
 }
 
 func (c *converter) reset() {
