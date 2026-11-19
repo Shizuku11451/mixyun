@@ -1,6 +1,7 @@
 package app
 
 import (
+	"cmp"
 	"context"
 	"errors"
 	"fmt"
@@ -12,6 +13,7 @@ import (
 	"slices"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/egoist/mygo"
 
@@ -192,7 +194,7 @@ func (l *LocalFiles) ChooseFolder(parent *mygo.Window) (string, error) {
 
 // ChooseFiles asks for music files to play.
 func (l *LocalFiles) ChooseFiles(parent *mygo.Window) ([]string, error) {
-	exts := []string{"mp3", "flac", "ogg", "oga", "opus", "m4a", "mp4", "wav", "wave"}
+	exts := []string{"mp3", "flac", "ogg", "oga", "opus", "m4a", "mp4", "wav", "wave", "cue"}
 	return mygo.Dialog.Open(mygo.OpenDialogOptions{Parent: parent, Title: "Open music files", Multiple: true,
 		Filters: []mygo.FileFilter{{Name: "Music", Extensions: exts}}})
 }
@@ -205,6 +207,9 @@ const maxOpened = 2000
 type Opened struct {
 	Tracks  []media.Track
 	Skipped int
+	// Cue is why the first CUE sheet that didn't open didn't, nil when
+	// each did (#24).
+	Cue error
 }
 
 // Open reads files the user opened or dropped, and the music files of the
@@ -240,6 +245,16 @@ func (l *LocalFiles) Open(paths []string) Opened {
 	}
 	var out Opened
 	for _, f := range files[:min(len(files), maxOpened)] {
+		if localfiles.IsCue(f) {
+			tracks, err := l.a.localFiles.ReadCue(f)
+			if err != nil {
+				out.Skipped++
+				out.Cue = cmp.Or(out.Cue, err)
+				continue
+			}
+			out.Tracks = append(out.Tracks, tracks...)
+			continue
+		}
 		e, err := l.a.localFiles.ReadFile(f)
 		if err != nil {
 			out.Skipped++
@@ -255,6 +270,16 @@ func (l *LocalFiles) Open(paths []string) Opened {
 // there. One whose file is gone doesn't, and shows as missing from then
 // on.
 func (a *App) prepareFile(track media.Track) (PlaybackSource, error) {
+	if path, _, _, ok := localfiles.CuePartOf(track.ID); ok {
+		id := localfiles.TrackID(path)
+		if info, err := os.Stat(path); err != nil || info.IsDir() {
+			a.localFiles.Gone(id)
+			return PlaybackSource{}, errFileMissing
+		}
+		a.localFiles.Found(id)
+		_, native, _ := media.ParseID(track.ID)
+		return PlaybackSource{Mode: PlaybackStream, URL: schemeURL(streamScheme) + "file/" + native, Track: track, Cached: true}, nil
+	}
 	for {
 		path, ok := a.localFiles.FileOf(track.ID)
 		switch {
@@ -282,6 +307,14 @@ func (a *App) prepareFile(track media.Track) (PlaybackSource, error) {
 // change meanwhile, the new file taking its place, as the engine goes on
 // playing it (store.OpenShared).
 func (a *App) openFile(native string) (audio.Source, error) {
+	if path, start, end, ok := localfiles.CuePartOf(media.ID(media.SourceFile, native)); ok {
+		f, err := store.OpenShared(path)
+		if err != nil {
+			a.localFiles.Gone(localfiles.TrackID(path))
+			return nil, errFileMissing
+		}
+		return cuePart{newFileSource(f), start, end}, nil
+	}
 	path, ok := localfiles.PathOf(media.ID(media.SourceFile, native))
 	if !ok {
 		return nil, fmt.Errorf("not a file of this computer: %s", native)
@@ -302,6 +335,15 @@ func (a *App) openFile(native string) (audio.Source, error) {
 	}
 	return s, nil
 }
+
+// cuePart is the part of a FLAC file a track of a CUE sheet plays, from
+// start to end, 0 for the file's end (#24).
+type cuePart struct {
+	fileSource
+	start, end time.Duration
+}
+
+func (c cuePart) Range() (time.Duration, time.Duration) { return c.start, c.end }
 
 // fileSource is a file as the engine reads it: all of it is there, so a
 // read never waits, and one that fails is the file's failure, not the

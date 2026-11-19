@@ -8,6 +8,7 @@ import (
 	"errors"
 	"path/filepath"
 	"runtime"
+	"strconv"
 
 	"github.com/egoist/mygo"
 	"github.com/egoist/mygo/ui"
@@ -322,6 +323,13 @@ func (s *shell) playFiles(paths []string) {
 
 // playOpened plays what opening files found.
 func (s *shell) playOpened(o app.Opened) {
+	if o.Cue != nil {
+		s.notes = append(s.notes, noticeOf(errors.New(cueMessage(o.Cue))))
+		if len(o.Tracks) == 0 {
+			return
+		}
+		o.Skipped-- // told already
+	}
 	switch {
 	case len(o.Tracks) == 0 && o.Skipped == 1:
 		s.notes = append(s.notes, noticeOf(errors.New(locales.ComputerCantPlayFile())))
@@ -345,6 +353,28 @@ func (s *shell) playOpened(o app.Opened) {
 		msg = locales.ComputerPlaying(o.Tracks[0].Title)
 	}
 	s.notes = append(s.notes, notice(msg))
+}
+
+// cueMessage tells why a CUE sheet opened doesn't play.
+func cueMessage(err error) string {
+	var c *localfiles.CueError
+	if !errors.As(err, &c) {
+		return locales.CueSheetUnreadable(err.Error())
+	}
+	line := strconv.Itoa(c.Line)
+	switch c.Problem {
+	case localfiles.CueBadFile:
+		return locales.CueSheetBadFile(line, c.Text)
+	case localfiles.CueMissing:
+		return locales.CueSheetMissing(c.Text)
+	case localfiles.CueBadIndex:
+		return locales.CueSheetBadIndex(line, c.Text)
+	case localfiles.CueOutOfRange:
+		return locales.CueSheetOutOfRange(line, c.Text)
+	case localfiles.CueNoTracks:
+		return locales.CueSheetEmpty()
+	}
+	return locales.CueSheetUnsupported(line, c.Text)
 }
 
 // missingFile reports whether t is a track on this computer whose file is

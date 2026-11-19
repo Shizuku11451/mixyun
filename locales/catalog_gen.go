@@ -5132,6 +5132,84 @@ func (msgs Messages) CrossfadeTitle() string {
 	return Catalog.Format(msgs.locale, "crossfadeTitle", nil)
 }
 
+// CueSheetBadFile says "The CUE sheet can't play: line {line} names a file other than a FLAC beside it: {text}"
+// in the language the app shows.
+func CueSheetBadFile(line string, text string) string {
+	return In(i18n.Locale()).CueSheetBadFile(line, text)
+}
+
+// CueSheetBadFile says "The CUE sheet can't play: line {line} names a file other than a FLAC beside it: {text}"
+// in the language of msgs.
+func (msgs Messages) CueSheetBadFile(line string, text string) string {
+	return Catalog.Format(msgs.locale, "cueSheetBadFile", map[string]any{"line": line, "text": text})
+}
+
+// CueSheetBadIndex says "The CUE sheet can't play: line {line} has a time it can't read, or out of order: {text}"
+// in the language the app shows.
+func CueSheetBadIndex(line string, text string) string {
+	return In(i18n.Locale()).CueSheetBadIndex(line, text)
+}
+
+// CueSheetBadIndex says "The CUE sheet can't play: line {line} has a time it can't read, or out of order: {text}"
+// in the language of msgs.
+func (msgs Messages) CueSheetBadIndex(line string, text string) string {
+	return Catalog.Format(msgs.locale, "cueSheetBadIndex", map[string]any{"line": line, "text": text})
+}
+
+// CueSheetEmpty says "The CUE sheet can't play: it has no track with an INDEX 01."
+// in the language the app shows.
+func CueSheetEmpty() string { return In(i18n.Locale()).CueSheetEmpty() }
+
+// CueSheetEmpty says "The CUE sheet can't play: it has no track with an INDEX 01."
+// in the language of msgs.
+func (msgs Messages) CueSheetEmpty() string {
+	return Catalog.Format(msgs.locale, "cueSheetEmpty", nil)
+}
+
+// CueSheetMissing says "The CUE sheet can't play: {file} isn't beside it, or doesn't play."
+// in the language the app shows.
+func CueSheetMissing(file string) string { return In(i18n.Locale()).CueSheetMissing(file) }
+
+// CueSheetMissing says "The CUE sheet can't play: {file} isn't beside it, or doesn't play."
+// in the language of msgs.
+func (msgs Messages) CueSheetMissing(file string) string {
+	return Catalog.Format(msgs.locale, "cueSheetMissing", map[string]any{"file": file})
+}
+
+// CueSheetOutOfRange says "The CUE sheet can't play: line {line} starts past the end of the file: {text}"
+// in the language the app shows.
+func CueSheetOutOfRange(line string, text string) string {
+	return In(i18n.Locale()).CueSheetOutOfRange(line, text)
+}
+
+// CueSheetOutOfRange says "The CUE sheet can't play: line {line} starts past the end of the file: {text}"
+// in the language of msgs.
+func (msgs Messages) CueSheetOutOfRange(line string, text string) string {
+	return Catalog.Format(msgs.locale, "cueSheetOutOfRange", map[string]any{"line": line, "text": text})
+}
+
+// CueSheetUnreadable says "The CUE sheet can't play: {error}"
+// in the language the app shows.
+func CueSheetUnreadable(error string) string { return In(i18n.Locale()).CueSheetUnreadable(error) }
+
+// CueSheetUnreadable says "The CUE sheet can't play: {error}"
+// in the language of msgs.
+func (msgs Messages) CueSheetUnreadable(error string) string {
+	return Catalog.Format(msgs.locale, "cueSheetUnreadable", map[string]any{"error": error})
+}
+
+// CueSheetUnsupported says "The CUE sheet can't play: line {line} is something this player doesn't run, as a second file, a data track or a gap: …"
+// in the language the app shows.
+func CueSheetUnsupported(line string, text string) string {
+	return In(i18n.Locale()).CueSheetUnsupported(line, text)
+}
+
+// CueSheetUnsupported says "The CUE sheet can't play: line {line} is something this player doesn't run, as a second file, a data track or a gap: …"
+// in the language of msgs.
+func (msgs Messages) CueSheetUnsupported(line string, text string) string {
+	return Catalog.Format(msgs.locale, "cueSheetUnsupported", map[string]any{"line": line, "text": text})
+}
+
 // DesktopSettingsDiscordAbout says "While Discord runs, your profile says what you listen to: you choose its lines, cover, time and button."
 // in the language the app shows.
 func DesktopSettingsDiscordAbout() string { return In(i18n.Locale()).DesktopSettingsDiscordAbout() }
