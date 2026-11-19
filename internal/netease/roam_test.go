@@ -5,8 +5,11 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"slices"
 	"strings"
 	"testing"
+
+	"github.com/fzn0x/mixmusic/internal/media"
 )
 
 // TestRoam plays the songs of three of a tag's playlists, each once, at
@@ -45,20 +48,23 @@ func TestRoam(t *testing.T) {
 	}
 }
 
-// TestRoamLiked plays what 心动模式 gives after one of the liked songs, and
-// the liked songs themselves when it gives nothing.
+// TestRoamLiked plays what 心动模式 gives after a few of the liked songs,
+// with liked songs mixed in and shuffled, so that each roam differs; and the
+// liked songs themselves when it gives nothing.
 func TestRoamLiked(t *testing.T) {
-	heart := `{"code":200,"data":[{"songInfo":{"id":7,"name":"like them"}},{"songInfo":{"id":1,"name":"liked"}}]}`
+	heart := `{"code":200,"data":[{"songInfo":{"id":7,"name":"like them"}},{"songInfo":{"id":8,"name":"like them too"}},{"songInfo":{"id":1,"name":"liked"}}]}`
+	hearts := 0
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case "/weapi/user/playlist":
 			fmt.Fprint(w, `{"code":200,"playlist":[{"id":5,"creator":{"userId":2}},{"id":10,"creator":{"userId":42}},{"id":11,"creator":{"userId":42}}]}`)
 		case "/weapi/v6/playlist/detail":
-			fmt.Fprint(w, `{"code":200,"playlist":{"trackIds":[{"id":1},{"id":2}]}}`)
+			fmt.Fprint(w, `{"code":200,"playlist":{"trackIds":[{"id":1},{"id":2},{"id":3},{"id":4}]}}`)
 		case "/weapi/playmode/intelligence/list":
+			hearts++
 			fmt.Fprint(w, heart)
 		case "/weapi/v3/song/detail":
-			fmt.Fprint(w, `{"code":200,"songs":[{"id":1,"name":"liked"},{"id":2,"name":"liked too"}]}`)
+			fmt.Fprint(w, `{"code":200,"songs":[{"id":2,"name":"liked too"},{"id":3,"name":"liked three"},{"id":4,"name":"liked four"}]}`)
 		default:
 			http.NotFound(w, r)
 		}
@@ -66,12 +72,27 @@ func TestRoamLiked(t *testing.T) {
 	defer srv.Close()
 	c := New()
 	c.BaseURL = srv.URL
-	tracks, err := c.RoamLiked(context.Background(), "42")
-	if err != nil || len(tracks) != 2 || tracks[0].Title != "like them" {
-		t.Errorf("RoamLiked gave %+v, %v", tracks, err)
+	orders := map[string]bool{}
+	for range 20 {
+		hearts = 0
+		tracks, err := c.RoamLiked(context.Background(), "42")
+		if err != nil || len(tracks) != 6 {
+			t.Fatalf("RoamLiked gave %+v, %v; want 心动模式's 3 and 3 liked", tracks, err)
+		}
+		if hearts != roamSeeds {
+			t.Errorf("心动模式 started %d times; want %d", hearts, roamSeeds)
+		}
+		var order []string
+		for _, tr := range tracks {
+			order = append(order, tr.Title)
+		}
+		orders[strings.Join(order, "|")] = true
+	}
+	if len(orders) < 2 {
+		t.Errorf("20 roams played the same order: %v", orders)
 	}
 	heart = `{"code":200,"data":[]}`
-	if tracks, err := c.RoamLiked(context.Background(), "42"); err != nil || len(tracks) != 2 || tracks[0].Title == "like them" {
+	if tracks, err := c.RoamLiked(context.Background(), "42"); err != nil || len(tracks) != 3 || slices.ContainsFunc(tracks, func(tr media.Track) bool { return tr.Title == "like them" }) {
 		t.Errorf("without 心动模式: %+v, %v", tracks, err)
 	}
 }
