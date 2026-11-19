@@ -173,6 +173,8 @@ type Loaded struct {
 	// or less for a track louder than its target. It is 0 while Even
 	// loudness is off, or the track's loudness is unknown.
 	Trim float64
+	// Speed is the speed the track plays at: 1 is its own.
+	Speed float64
 }
 
 // Loaded returns what the active deck plays, and false while no deck
@@ -181,6 +183,9 @@ func (e *Engine) Loaded() (Loaded, bool) {
 	e.mu.Lock()
 	d := e.decks[e.active]
 	l := Loaded{EvenLoudness: e.loudness, Levelling: e.normalize}
+	if d != nil {
+		l.Speed = d.rate()
+	}
 	e.mu.Unlock()
 	if d == nil {
 		return Loaded{}, false
