@@ -165,6 +165,29 @@ func TestLocalOpen(t *testing.T) {
 	}
 }
 
+// TestLocalOpenCue opens a CUE sheet as the tracks it marks in its FLAC,
+// which prepare as the file, and tells why a sheet that fails doesn't play.
+func TestLocalOpenCue(t *testing.T) {
+	a, music := localApp(t)
+	sheet := filepath.Join(music, "Shore", "Shore.cue")
+	os.WriteFile(sheet, []byte("FILE \"01 Slow Tide.flac\" WAVE\n  TRACK 01 AUDIO\n    TITLE \"Ebb\"\n    INDEX 01 00:00:00\n  TRACK 02 AUDIO\n    INDEX 01 00:00:10\n"), 0o644)
+	got := (&LocalFiles{a}).Open([]string{sheet})
+	if got.Cue != nil || len(got.Tracks) != 2 || got.Tracks[0].Title != "Ebb" || got.Tracks[1].Title != "Track 02" {
+		t.Fatalf("opened %+v", got)
+	}
+	src, err := (&Player{a}).Prepare(context.Background(), got.Tracks[1])
+	if err != nil || src.URL == "" {
+		t.Errorf("prepare: %+v, %v", src, err)
+	}
+	bad := filepath.Join(music, "bad.cue")
+	os.WriteFile(bad, []byte("FILE \"gone.flac\" WAVE\n  TRACK 01 AUDIO\n    INDEX 01 00:00:00\n"), 0o644)
+	got = (&LocalFiles{a}).Open([]string{bad})
+	var c *localfiles.CueError
+	if len(got.Tracks) != 0 || got.Skipped != 1 || !errors.As(got.Cue, &c) || c.Problem != localfiles.CueMissing {
+		t.Errorf("a sheet of a file not there: %+v", got)
+	}
+}
+
 // TestLocalCatalog opens the pages of an album and an artist of the
 // index, and of none.
 func TestLocalCatalog(t *testing.T) {

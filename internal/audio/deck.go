@@ -386,6 +386,10 @@ func (d *deck) play(ctx context.Context, start time.Duration, cur **ring, open O
 	if err != nil {
 		return err
 	}
+	if r, ok := src.(Ranged); ok {
+		start, end := r.Range()
+		tr, tm = ranged(tr, tm, start, end)
+	}
 	delay := tm.delay
 	ch := tr.channels()
 	d.live.Store(tm.live)

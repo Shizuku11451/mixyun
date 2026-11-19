@@ -1252,6 +1252,67 @@
     }
   },
   "crossfadeTitle": "Crossfade",
+  "cueSheetBadFile": "The CUE sheet can't play: line {line} names a file other than a FLAC beside it: {text}",
+  "@cueSheetBadFile": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "cueSheetBadIndex": "The CUE sheet can't play: line {line} has a time it can't read, or out of order: {text}",
+  "@cueSheetBadIndex": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "cueSheetEmpty": "The CUE sheet can't play: it has no track with an INDEX 01.",
+  "cueSheetMissing": "The CUE sheet can't play: {file} isn't beside it, or doesn't play.",
+  "@cueSheetMissing": {
+    "placeholders": {
+      "file": {
+        "type": "String"
+      }
+    }
+  },
+  "cueSheetOutOfRange": "The CUE sheet can't play: line {line} starts past the end of the file: {text}",
+  "@cueSheetOutOfRange": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "cueSheetUnreadable": "The CUE sheet can't play: {error}",
+  "@cueSheetUnreadable": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "cueSheetUnsupported": "The CUE sheet can't play: line {line} is something this player doesn't run, as a second file, a data track or a gap: {text}",
+  "@cueSheetUnsupported": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "text": {
+        "type": "String"
+      }
+    }
+  },
   "desktopSettingsDiscordAbout": "While Discord runs, your profile says what you listen to: you choose its lines, cover, time and button.",
   "desktopSettingsDiscordAfter": " and paste its application ID.",
   "desktopSettingsDiscordAppID": "Discord application ID",

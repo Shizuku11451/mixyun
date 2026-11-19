@@ -107,6 +107,8 @@ func mp3Frame(src io.ReadSeeker) (rate, channels int) {
 // opens the track.
 func describe(tr track) Format {
 	switch t := tr.(type) {
+	case *rangedTrack:
+		return describe(t.track)
 	case *mp4Track:
 		mt := t.r.Track()
 		f := Format{Container: "MP4", Codec: "AAC", SampleRate: int(t.rate), Channels: mt.Channels}
