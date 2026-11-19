@@ -317,6 +317,9 @@ type Stream interface {
 	// Load and Crossfade start a track as cue asks, as the engine's do.
 	Load(url string, cue audio.Cue) error
 	Preload(url string)
+	// Follow has the track playing run into url, preloaded, as it ends,
+	// without a gap, as the engine's does: "" follows nothing.
+	Follow(url string)
 	Crossfade(url string, d time.Duration, cue audio.Cue) error
 	// Fading reports whether the crossfade Crossfade started plays on, as
 	// the engine's does: a next track whose audio is late, or a pause,
@@ -462,13 +465,16 @@ type Player struct {
 	notices []Notice
 	// saveAsked is set once a task asked to save the queue, and saveDue
 	// once the throttle lets it be written, as the task publishes it.
-	saveAsked   bool
-	saveDue     bool
-	loadToken   int
-	retry       retryState
-	counted     string
-	prepared    string
-	prefetched  string
+	saveAsked  bool
+	saveDue    bool
+	loadToken  int
+	retry      retryState
+	counted    string
+	prepared   string
+	prefetched string
+	// following is the entry the engine runs the current track into as it
+	// ends, without a gap (Follow): "" for none.
+	following   string
 	crossfading bool
 	failures    int
 	// warned holds what fellBack told, to tell it once.
@@ -741,6 +747,7 @@ func (p *Player) run() {
 		for _, fn := range tasks {
 			p.saveAsked = false
 			fn()
+			p.checkFollow()
 			if !p.saveAsked && slices.Contains(p.events, QueueChange) {
 				// An edit of the queue is kept, also while nothing plays to
 				// report it.

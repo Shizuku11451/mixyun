@@ -271,6 +271,7 @@ func (s engineStream) Stop() {
 func (s engineStream) Unload() { s.e.Unload() }
 
 func (s engineStream) Preload(url string)     { s.e.Preload(url) }
+func (s engineStream) Follow(url string)      { s.e.Follow(url) }
 func (s engineStream) Play() error            { return s.e.Play() }
 func (s engineStream) Pause()                 { s.e.Pause() }
 func (s engineStream) Seek(t time.Duration)   { s.e.Seek(t) }

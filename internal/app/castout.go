@@ -275,6 +275,9 @@ func (o *castOut) loadFailure(err error, fetched bool) string {
 
 func (o *castOut) Preload(string) {}
 
+// Follow follows nothing: a cast device plays one track at a time.
+func (o *castOut) Follow(string) {}
+
 // Crossfade plays url at once: a cast device plays one stream at a time.
 // The player doesn't crossfade on one.
 func (o *castOut) Crossfade(url string, _ time.Duration, cue audio.Cue) error {

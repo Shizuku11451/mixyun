@@ -737,11 +737,38 @@ func (p *Player) preload(next Item) {
 		if err == nil && src.Mode == ModeStream && src.URL != "" && !src.Live && !spoken(next.Track) {
 			p.partsFor(src.audio(p.surround), src)
 			p.stream.Preload(src.audio(p.surround))
+			if p.followable(next) {
+				p.stream.Follow(src.audio(p.surround))
+				p.following = next.UID
+			}
 		}
 		if errors.Is(err, ErrOffline) {
 			p.prefetchOnline(next.UID)
 		}
 	})
+}
+
+// followable reports whether next, the entry up next, may follow the
+// current track without a gap (#21): both files on this computer, as an
+// album is, with no crossfade, played here, and next not the current one
+// again.
+func (p *Player) followable(next Item) bool {
+	cur, ok := p.s.Current()
+	return ok && next.UID != cur.UID && next.Skip == "" && p.out.Stream == nil && p.svc.Settings().Crossfade == 0 &&
+		cur.Track.Source == media.SourceFile && next.Track.Source == media.SourceFile
+}
+
+// checkFollow has the engine follow nothing once the entry it follows
+// isn't the one up next, or may no longer follow: the queue changed, or
+// the settings did. A stale preload never plays so.
+func (p *Player) checkFollow() {
+	if p.following == "" {
+		return
+	}
+	if next, ok := p.s.UpNext(); !ok || next.UID != p.following || !p.followable(next) {
+		p.stream.Follow("")
+		p.following = ""
+	}
 }
 
 // fadeCheck is how often the player asks whether the engine's crossfade
