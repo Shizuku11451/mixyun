@@ -207,6 +207,9 @@ or animations turned off on a Linux desktop), MixMusic moves less:
   waits for you to press play on the cover.
 - On a [MacBook's notch](desktop.md#the-player-around-the-notch), the
   player's panel fades in place rather than growing, and its bars rest.
+- A page you go to fades in without rising or sliding in, the queue and the
+  lyrics beside the page open and close at once, and the full-screen lyrics
+  fade in and out without rising.
 
 ## Marketplace themes
 
