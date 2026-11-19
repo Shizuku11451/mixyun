@@ -299,7 +299,9 @@ type shell struct {
 	// sign-in's fields; and the service whose sign-in waits.
 	drafts                  map[string]*draft
 	lastfmKey, lastfmSecret string
-	signingIn               string
+	// The Navidrome connection's fields.
+	navidromeServer, navidromeUser, navidromePassword string
+	signingIn                                         string
 	// llmCustom is Translate with's Custom, chosen while its server is
 	// yet to be typed.
 	llmCustom bool

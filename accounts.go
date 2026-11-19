@@ -22,6 +22,7 @@ func (s *shell) accountSettings(c *ui.Context) {
 	st := s.accounts()
 	s.spotifyAccount(c, st.Spotify)
 	s.neteaseAccount(c, st.NetEase)
+	s.navidromeAccount(c, st.Navidrome)
 	s.lastfmAccount(c, st.Lastfm)
 }
 
@@ -499,6 +500,9 @@ func (s *shell) account(kind, done string, do func(ctx context.Context) error) {
 			}
 			if kind == "lastfm" {
 				s.lastfmSecret = ""
+			}
+			if kind == "navidrome" {
+				s.navidromePassword = ""
 			}
 			clear(s.loads)
 		})

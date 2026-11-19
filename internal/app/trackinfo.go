@@ -198,6 +198,10 @@ func (p *Player) TrackInfo(ctx context.Context, t media.Track, now *player.Sourc
 		}
 		if s, ok := known(video); ok {
 			info.Stream = trackStream(s)
+			// A Navidrome song's address carries the credentials.
+			if _, nd := stream.NavidromeSong(video); nd {
+				info.Stream.URL = ""
+			}
 		}
 	}
 	if lkfs, ok := a.loudness.lkfs(video); ok {
@@ -255,7 +259,7 @@ func recordingOf(a *App, t media.Track, now *player.Source) (media.Track, string
 		rec = found
 	}
 	source, _, err := media.ParseID(rec.ID)
-	if err != nil || source != media.SourceYouTube && source != media.SourceNetEase {
+	if err != nil || source != media.SourceYouTube && source != media.SourceNetEase && source != media.SourceNavidrome {
 		return media.Track{}, ""
 	}
 	// A NetEase song's audio is known by its own key (streamKey).
