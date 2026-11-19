@@ -37,6 +37,7 @@ import (
 	"github.com/fzn0x/mixmusic/internal/spotify"
 	"github.com/fzn0x/mixmusic/internal/store"
 	"github.com/fzn0x/mixmusic/internal/stream"
+	"github.com/fzn0x/mixmusic/internal/subsonic"
 	"github.com/fzn0x/mixmusic/internal/taskbar"
 	"github.com/fzn0x/mixmusic/internal/tools"
 	"github.com/fzn0x/mixmusic/internal/youtube"
@@ -151,6 +152,10 @@ type App struct {
 	youtube      *youtube.Client
 	netease      *netease.Client
 	neteaseStore jsonSecret[string]
+	// navidrome is the user's Navidrome server, through its Subsonic API.
+	navidrome      *subsonic.Client
+	navidromeStore jsonSecret[navidromeLogin]
+
 	auth         *spotify.Auth
 	spotify      *spotify.Client
 	tokens       tokenStore
@@ -310,6 +315,9 @@ func New(opts Options) (*App, error) {
 	a := &App{opts: opts, lastCrash: opts.LastCrash}
 	a.here.a = a
 	a.global.repeats = runtime.GOOS == "linux"
+	if err := applyPendingBackup(opts.DataDir); err != nil {
+		log.Printf("mixmusic: the imported backup wasn't put in place, and the data stays as it was: %v", err)
+	}
 	var err error
 	if a.settings, err = store.OpenWith(filepath.Join(opts.DataDir, "settings.json"), settings.Default(), settings.Decode); err != nil {
 		return nil, fmt.Errorf("opening settings: %w", err)
@@ -348,6 +356,8 @@ func New(opts Options) (*App, error) {
 	a.youtube = youtube.New()
 	a.netease = netease.New()
 	a.neteaseStore = jsonSecret[string]{newSecretStore(opts.DataDir, neteaseSecret, "netease-session.json", "netease-session.dpapi")}
+	a.navidrome = subsonic.New()
+	a.navidromeStore = jsonSecret[navidromeLogin]{newSecretStore(opts.DataDir, navidromeSecret, "navidrome.json", "navidrome.dpapi")}
 	a.auth = spotify.NewAuth(s.SpotifyClientID)
 	a.spotify = spotify.NewClient(a.auth)
 	a.tokens = tokenStore{newSecretStore(opts.DataDir, tokenSecret, "spotify-token.json", "spotify-token.dpapi")}
@@ -381,6 +391,7 @@ func New(opts Options) (*App, error) {
 	a.cache = stream.NewCache(filepath.Join(opts.CacheDir, "audio"), 0)
 	a.proxy = stream.NewProxy(a.resolver)
 	a.openNetEase()
+	a.openNavidrome()
 	// The player asks whether the network answers, which audio coming
 	// tells too.
 	a.online = online.New(online.Probe)

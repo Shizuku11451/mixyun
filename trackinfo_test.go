@@ -268,6 +268,19 @@ func TestTrackFacts(t *testing.T) {
 	if got["Format"] != "PCM in WAV" || got["Bit depth"] != "32-bit floating point" || got["Channels"] != "Mono" || got["Sample rate"] != "96 kHz" {
 		t.Errorf("a WAV file: %q", got)
 	}
+	// A file played by its ReplayGain tags.
+	file := media.Track{Source: media.SourceFile}
+	for g, want := range map[audio.Gain]string{
+		{Mode: audio.ReplayGainAlbum, DB: -6.2, Tagged: -6.2}:                 "Plays at −6.2 dB, by its ReplayGain album gain.",
+		{Mode: audio.ReplayGainTrack, DB: 1.5, Tagged: 4, Limited: true}:      "Plays at +1.5 dB: its ReplayGain track gain of +4.0 dB is held back so that its peak stays under full scale.",
+		{Mode: audio.ReplayGainTrack, Tagged: 3, Limited: true, NoPeak: true}: "Plays at its own level: its ReplayGain track gain of +3.0 dB would turn it up, and no peak tag tells how far it may go.",
+		{Mode: audio.ReplayGainAlbum, Problem: audio.GainMissing}:             "Plays at its own level: the file has no ReplayGain album gain tag.",
+		{Mode: audio.ReplayGainTrack, Problem: audio.GainInvalid}:             "Plays at its own level: its ReplayGain track gain tag can't be read.",
+	} {
+		if got := loudnessLine(file, app.TrackInfo{ReplayGain: &g}); got != want {
+			t.Errorf("%+v: %q, want %q", g, got, want)
+		}
+	}
 }
 
 // TestTrackInfoTellsHowAStreamWasFound shows the route that found a

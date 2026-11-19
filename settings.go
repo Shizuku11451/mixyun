@@ -123,10 +123,24 @@ func (s *shell) settingsPage(c *ui.Context, tab, q string) {
 const settingsSideMin = 760
 
 // settingsSections lists the settings' sections, names, at the page's
-// left: the chosen one, *selected, filled.
+// left: the chosen one, *selected, filled. The list stays in view while the
+// section scrolls, and scrolls on its own in a window too short for it.
 func (s *shell) settingsSections(c *ui.Context, names []string, selected *int) {
+	list := ui.Scroll(c.Key("settings-sections")).Width(184).Shrink(0).MinHeight(0).Sticky().Top(settingsSectionsInset)
+	if s.here.view > 0 {
+		list.MaxHeight(max(s.here.view-2*settingsSectionsInset, 120))
+	}
+	list.Children(func() { s.sectionTabs(c, names, selected) })
+}
+
+// settingsSectionsInset is how far the sections list stays from the
+// page's top and bottom edges as the page scrolls.
+const settingsSectionsInset = 16
+
+// sectionTabs are the tabs of settingsSections.
+func (s *shell) sectionTabs(c *ui.Context, names []string, selected *int) {
 	k := &s.lk
-	ui.Column(c).Width(184).Shrink(0).Gap(2).Role(ui.RoleTabList).Label(locales.SettingsTitle()).Children(func() {
+	ui.Column(c).Gap(2).Role(ui.RoleTabList).Label(locales.SettingsTitle()).Children(func() {
 		for i, name := range names {
 			name := k.sentence(name)
 			b := s.buttonBase(c.Key("section-" + settingsTabs[i])).Role(ui.RoleTab).Label(name).AccessSelected(i == *selected).

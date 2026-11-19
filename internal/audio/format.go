@@ -180,6 +180,9 @@ type Loaded struct {
 	// a rate SetNative named for Rate, or nil.
 	Rate     int
 	Fallback error
+	// ReplayGain is what the track's ReplayGain tags make of it, while the
+	// settings play files by them and its source is Gained.
+	ReplayGain *Gain
 }
 
 // Loaded returns what the active deck plays, and false while no deck
@@ -192,6 +195,7 @@ func (e *Engine) Loaded() (Loaded, bool) {
 		l.Speed = d.rate()
 		l.Rate = int(d.hz.Load())
 	}
+	mode := e.replayGain
 	e.mu.Unlock()
 	if d == nil {
 		return Loaded{}, false
@@ -202,6 +206,11 @@ func (e *Engine) Loaded() (Loaded, bool) {
 		l.LKFS, l.Measured = lkfs, true
 		if l.EvenLoudness {
 			l.Trim = loudnessTrim(lkfs)
+		}
+	}
+	if rg := d.rg.Load(); rg != nil {
+		if g, ok := rg.Applied(mode); ok {
+			l.ReplayGain = &g
 		}
 	}
 	return l, true

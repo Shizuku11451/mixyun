@@ -28,9 +28,11 @@ type LLM struct {
 // llmPrompt tells the model what to write.
 const llmPrompt = `You translate song lyrics. The user sends a JSON array of lines. ` +
 	`Answer with JSON only, {"lines":[{"t":"…","r":"…"}]}, one object per line, in order, as many as were sent. ` +
-	`"t" is the line translated into the language %s, faithful to its meaning and its tone, as a singer would say it; ` +
-	`"" for a blank line or one already in that language. "r" is the line in Latin letters, by the usual romanization ` +
-	`of its language (romaji, pinyin, Revised Romanization…); "" for a line in Latin letters already.`
+	`"t" is the line translated into the language %[1]s, faithful to its meaning and its tone, as a singer would say it. ` +
+	`A line that mixes languages keeps every word already in %[1]s exactly as written, in its script and its place, ` +
+	`and only the rest is translated, in the line's order and with its punctuation. ` +
+	`"t" is "" for a blank line or one with nothing to translate. "r" is the line in Latin letters, by the usual romanization ` +
+	`of its language (romaji, pinyin, Revised Romanization…), its words in Latin letters as they are; "" for a line in Latin letters already.`
 
 // Translate translates lines of lyrics into the language to, a code as
 // "en" or "zh-Hant", and romanizes them. from is their language, "" when

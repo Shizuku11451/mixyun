@@ -218,8 +218,11 @@ func streamKey(t media.Track) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	if source == media.SourceNetEase {
+	switch source {
+	case media.SourceNetEase:
 		return stream.NetEaseKey(native), nil
+	case media.SourceNavidrome:
+		return stream.NavidromeKey(native), nil
 	}
 	return native, nil
 }
