@@ -553,10 +553,12 @@ func playlistShelf(title, key string, in []playlist) media.Shelf {
 // SongLyrics are a song's lyrics as NetEase has them: as LRC, and as YRC,
 // synchronized word by word, when it has them so; their Chinese
 // translation and their words in Latin letters, as LRC timed as each of
-// the two, when it has those. What it lacks is "".
+// the two, when it has those. What it lacks is "". PureMusic is NetEase
+// marking the song instrumental.
 type SongLyrics struct {
 	LRC, Translation, Roman       string
 	YRC, YRCTranslation, YRCRoman string
+	PureMusic                     bool
 }
 
 // Lyrics returns a song's lyrics.
@@ -577,13 +579,14 @@ func (c *Client) Lyrics(ctx context.Context, native string) (SongLyrics, error) 
 		Yrc      text `json:"yrc"`
 		Ytlrc    text `json:"ytlrc"`
 		Yromalrc text `json:"yromalrc"`
+		Pure     bool `json:"pureMusic"`
 	}
 	params := map[string]any{"id": native, "cp": false, "lv": 0, "tv": 0, "rv": 0, "kv": 0, "yv": 0, "ytv": 0, "yrv": 0}
 	if err := c.call(ctx, "/song/lyric/v1", params, &r); err != nil {
 		return SongLyrics{}, err
 	}
 	found := SongLyrics{LRC: r.Lrc.Lyric, Translation: r.Tlyric.Lyric, Roman: r.Romalrc.Lyric,
-		YRC: r.Yrc.Lyric, YRCTranslation: r.Ytlrc.Lyric, YRCRoman: r.Yromalrc.Lyric}
+		YRC: r.Yrc.Lyric, YRCTranslation: r.Ytlrc.Lyric, YRCRoman: r.Yromalrc.Lyric, PureMusic: r.Pure}
 	c.mu.Lock()
 	c.lyrics.native, c.lyrics.found = native, found
 	c.mu.Unlock()
