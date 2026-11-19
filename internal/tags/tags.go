@@ -55,6 +55,15 @@ type Tags struct {
 	Explicit bool
 	// Picture is the cover, the front cover when the file tells which.
 	Picture *Picture
+	// ReplayGain is what the file's Vorbis comments tell of its
+	// ReplayGain, as they write it: the reader checks it.
+	ReplayGain ReplayGain
+}
+
+// ReplayGain is a file's ReplayGain tags, as written, as "-6.20 dB" and
+// "0.988". A tag the file hasn't is "".
+type ReplayGain struct {
+	TrackGain, TrackPeak, AlbumGain, AlbumPeak string
 }
 
 // Picture is an image a file holds.
@@ -204,6 +213,14 @@ func (t *Tags) set(key string, values ...string) {
 		if t.ISRC == "" {
 			t.ISRC = vs[0]
 		}
+	case "rgtrackgain":
+		t.ReplayGain.TrackGain = vs[0]
+	case "rgtrackpeak":
+		t.ReplayGain.TrackPeak = vs[0]
+	case "rgalbumgain":
+		t.ReplayGain.AlbumGain = vs[0]
+	case "rgalbumpeak":
+		t.ReplayGain.AlbumPeak = vs[0]
 	}
 }
 

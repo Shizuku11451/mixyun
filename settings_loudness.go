@@ -1,6 +1,8 @@
 package main
 
 import (
+	"slices"
+
 	"github.com/egoist/mygo/ui"
 
 	"github.com/fzn0x/mixmusic/internal/settings"
@@ -33,4 +35,19 @@ func (s *shell) levellingRow(c *ui.Context) {
 			s.save()
 		}
 	}, "normalize loudness")
+}
+
+func init() { addSettings(audioRows, 25, (*shell).replayGainRow) }
+
+// replayGainRow plays the music on this computer by its files' ReplayGain
+// tags, in Settings › Audio › Output (#23).
+func (s *shell) replayGainRow(c *ui.Context) {
+	modes := []settings.ReplayGain{settings.ReplayGainOff, settings.ReplayGainTrack, settings.ReplayGainAlbum}
+	s.row(c, locales.ReplayGain(), locales.ReplayGainDesc(), func() {
+		chosen := slices.Index(modes, s.set.ReplayGain)
+		if s.segmented(c, "replay-gain", locales.ReplayGain(), &chosen, locales.ReplayGainOff(), locales.ReplayGainTrack(), locales.ReplayGainAlbum()) {
+			s.set.ReplayGain = modes[chosen]
+			s.save()
+		}
+	}, "replaygain normalize volume album")
 }

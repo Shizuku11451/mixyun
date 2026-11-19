@@ -110,6 +110,7 @@ func (s *shell) equalizerSettings(c *ui.Context) {
 				}
 			})
 		})
+		s.headphoneEQRows(c)
 		// Spotify's audio plays in Spotify's own player, which no app may
 		// change: only the system's equalizer reaches it.
 		s.found(c, "", locales.EqualizerSpotifyNote(), func() {

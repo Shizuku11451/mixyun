@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"image"
 	"image/png"
+	"math"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -419,5 +420,49 @@ func TestEvenLoudness(t *testing.T) {
 	}
 	if s.svc.Preferences.Get().Loudness {
 		t.Error("the switch didn't turn Even loudness off")
+	}
+}
+
+// TestSettingsSectionsStay keeps the sections list in view at the foot of a
+// long section (#27): Lyrics is a click away there, and in a window too
+// short for the whole list, About scrolls into it.
+func TestSettingsSectionsStay(t *testing.T) {
+	s := newTestShell(t)
+	tt := testerOf(t, s, 1800, 820)
+	show(s, tt, "/settings/audio")
+	s.pageScrolled().Y = math.MaxFloat32
+	tt.Frame()
+	tt.Frame()
+	if s.pageY() < 200 {
+		t.Fatalf("Audio scrolled %v, too short to test", s.pageY())
+	}
+	tab, ok := tt.AccessByRole(ui.RoleTab, "lyrics")
+	if !ok || tab.Bounds.Y < 0 || tab.Bounds.Y+tab.Bounds.H > 820 {
+		t.Fatalf("the Lyrics tab scrolled away: %+v, %v", tab.Bounds, ok)
+	}
+	tt.ClickAt(tab.Bounds.X+tab.Bounds.W/2, tab.Bounds.Y+tab.Bounds.H/2)
+	s.drain()
+	tt.Frame()
+	if got := s.router.Path(); got != "/settings/lyrics" {
+		t.Errorf("clicking Lyrics at the foot of Audio went to %q", got)
+	}
+
+	// A window too short for the list: it holds under the top once the
+	// page scrolls, and scrolls on its own down to About.
+	tt.SetSize(1800, 520)
+	show(s, tt, "/settings/audio")
+	s.pageScrolled().Y = math.MaxFloat32
+	tt.Frame()
+	tt.Frame()
+	general, ok := tt.AccessByRole(ui.RoleTab, "general")
+	if !ok {
+		t.Fatal("no general tab")
+	}
+	tt.Wheel(general.Bounds.X+20, general.Bounds.Y+60, 0, 2000)
+	tt.Frame()
+	tt.Advance(time.Second)
+	tt.Frame()
+	if about, ok := tt.Find("about"); !ok || about.H < 36 || about.Y+about.H > 520 {
+		t.Errorf("about is out of reach in a short window: %+v, %v", about, ok)
 	}
 }

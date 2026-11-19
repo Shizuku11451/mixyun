@@ -48,3 +48,32 @@ func TestLLMTranslate(t *testing.T) {
 		t.Errorf("429: %v", err)
 	}
 }
+
+// TestLLMMixedLine asks the model to keep the words of a mixed line that
+// are in the language translated to (#14), and keeps what it answers.
+func TestLLMMixedLine(t *testing.T) {
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var req struct {
+			Messages []struct{ Role, Content string }
+		}
+		json.NewDecoder(r.Body).Decode(&req)
+		prompt := req.Messages[0].Content
+		if strings.Contains(prompt, "%!") || !strings.Contains(prompt, "keeps every word already in en exactly as written") {
+			t.Errorf("prompt: %s", prompt)
+		}
+		json.NewEncoder(w).Encode(map[string]any{"choices": []any{map[string]any{"message": map[string]string{
+			"content": `{"lines":[{"t":"I really love you I love you so much","r":"kimi no koto ga daisuki da I love you so much"},{"t":"Taro","r":""}]}`}}}})
+	}))
+	defer srv.Close()
+	tr, err := LLM{URL: srv.URL, Model: "m"}.Translate(context.Background(), []string{"君のことが大好きだ I love you so much", "Taro"}, "en", "ja")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got := tr.Lines[0].Text; !strings.HasSuffix(got, "I love you so much") {
+		t.Errorf("the English half changed: %q", got)
+	}
+	// A line with only a name to translate doesn't repeat itself under it.
+	if tr.Lines[1] != (TranslatedLine{}) {
+		t.Errorf("a name came back as %+v", tr.Lines[1])
+	}
+}

@@ -15,21 +15,36 @@ import (
 )
 
 // sidePanel is the panel at the right of the main pane: the queue, or the
-// lyrics.
-func (s *shell) sidePanel(c *ui.Context) {
+// lyrics, open as far as open says, from 0 to 1: its content keeps its
+// width, clipped, as the panel grows.
+func (s *shell) sidePanel(c *ui.Context, open float32) {
 	k := &s.lk
-	panel := ui.Column(c).Width(s.panelWidth(c)).Shrink(0).Background(k.surface)
+	w := s.panelWidth(c)
+	panel := ui.Column(c).Width(w * open).Shrink(0).Background(k.surface)
+	if k.floating || open < 1 {
+		panel.Clip()
+	}
 	if k.floating {
-		panel.Margin(0, floatMargin, floatMargin, 0).Radius(k.radius).Clip()
+		panel.Margin(0, floatMargin, floatMargin, 0).Radius(k.radius)
 	} else {
 		panel.BorderWidth(0, 0, 0, 1).BorderColor(k.border)
 	}
 	panel.Children(func() {
-		if s.panel == "queue" {
-			s.queuePanel(c)
-		} else {
-			s.lyricsPanel(c)
+		// The queue and the lyrics cross-fade as one replaces the other.
+		shown := ui.Column(c.Key(s.panelShown)).Grow(1).MinHeight(0).Transition(s.fadeMotion())
+		if open < 1 {
+			// shortcut: the panel closing still takes clicks and the focus
+			// for its few frames, as mygo makes no element inert; mark it
+			// so once it does.
+			shown.Width(w).Shrink(0).Opacity(max(open, 0))
 		}
+		shown.Children(func() {
+			if s.panelShown == "queue" {
+				s.queuePanel(c)
+			} else {
+				s.lyricsPanel(c)
+			}
+		})
 	})
 }
 

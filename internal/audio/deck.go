@@ -113,6 +113,9 @@ type deck struct {
 	// float64: NaN until the deck opened a Measured source, which it does
 	// before it decodes a frame.
 	lkfs atomic.Uint64
+	// rg is the ReplayGain tags of the track, once the deck opened a Gained
+	// source, nil for another.
+	rg atomic.Pointer[ReplayGain]
 	// trim turns a loud track down to an even loudness, and trimmed tells
 	// that it took its level, with the deck's first frames: the audio
 	// thread's.
@@ -355,6 +358,10 @@ func (d *deck) play(ctx context.Context, start time.Duration, cur **ring, open O
 		if lkfs, ok := m.Loudness(); ok {
 			d.lkfs.Store(math.Float64bits(lkfs))
 		}
+	}
+	if g, ok := src.(Gained); ok {
+		rg := g.ReplayGain()
+		d.rg.Store(&rg)
 	}
 	d.mu.Lock()
 	d.src = src
