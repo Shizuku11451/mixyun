@@ -556,8 +556,12 @@ type Stream struct {
 // which it plays where PulseAudio's sink has 5.1 or more, else stereo, on
 // o.Device or the default device. A stream of 5.1 on the default device
 // stays one when the default sink changes, which the sound server then
-// mixes down. Open returns once the device is open.
+// mixes down. Open returns once the device is open, or ErrRate for a rate
+// other than Rate.
 func Open(o Options) (*Stream, error) {
+	if o.Rate != 0 && o.Rate != Rate {
+		return nil, ErrRate
+	}
 	s := &Stream{render: o.Render, asked: o.Channels, want: o.Device, mover: newMover(o), done: make(chan struct{})}
 	dev, fallback, err := openDevice(s.want, &s.avoid, s.asked)
 	if err != nil {
