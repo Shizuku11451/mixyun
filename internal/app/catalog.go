@@ -219,6 +219,8 @@ func (c *Catalog) Album(ctx context.Context, id string) (media.Album, error) {
 		return c.a.youtube.Album(ctx, native)
 	case media.SourceNetEase:
 		return c.a.netease.Album(ctx, native)
+	case media.SourceNavidrome:
+		return c.a.navidrome.Album(ctx, native)
 	case media.SourceSpotify:
 		a, err := c.a.spotify.Album(ctx, native)
 		if err == nil {
@@ -245,6 +247,8 @@ func (c *Catalog) Artist(ctx context.Context, id string) (media.Artist, error) {
 		return c.a.youtube.Artist(ctx, native)
 	case media.SourceNetEase:
 		return c.a.netease.Artist(ctx, native)
+	case media.SourceNavidrome:
+		return c.a.navidrome.Artist(ctx, native)
 	case media.SourceSpotify:
 		a, err := c.a.spotify.Artist(ctx, native)
 		if err == nil {
@@ -396,8 +400,13 @@ func (c *Catalog) radio(ctx context.Context, seed media.Track, skip []string) ([
 		return nil, err
 	}
 	radio := c.a.youtube.Radio
-	if source == media.SourceNetEase {
+	switch source {
+	case media.SourceNetEase:
 		radio = c.a.netease.Similar
+	case media.SourceNavidrome:
+		// shortcut: no radio of a Navidrome song; ask the server's
+		// getSimilarSongs2 when people want one.
+		return nil, nil
 	}
 	tracks, err := radio(ctx, videoID)
 	if err != nil {
@@ -699,6 +708,10 @@ func (c *Catalog) neteaseLyrics(ctx context.Context, track media.Track) (lyrics.
 	if err != nil {
 		log.Printf("mixmusic: the lyrics of %s, on NetEase Cloud Music: %v", track.ID, err)
 		return lyrics.Lyrics{}, false
+	}
+	// Its placeholder LRC of an instrumental is no lyrics to show.
+	if found.PureMusic {
+		return lyrics.Lyrics{Instrumental: true, Lines: []lyrics.Line{}, Source: neteaseLyricsSource}, true
 	}
 	// Word by word when NetEase has them so, which light as they're sung.
 	lines := lyrics.ParseYRC(found.YRC)

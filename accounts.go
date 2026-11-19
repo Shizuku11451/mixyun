@@ -33,6 +33,8 @@ func (s *shell) accountSettings(c *ui.Context) {
 	if s.sourceOn(media.SourceYouTube) {
 		s.youtubeAccount(c, st.YouTube)
 	}
+	// shortcut: Navidrome has no switch in Settings › Sources; add one if asked.
+	s.navidromeAccount(c, st.Navidrome)
 	s.lastfmAccount(c, st.Lastfm)
 }
 
@@ -510,6 +512,9 @@ func (s *shell) account(kind, done string, do func(ctx context.Context) error) {
 			}
 			if kind == "lastfm" {
 				s.lastfmSecret = ""
+			}
+			if kind == "navidrome" {
+				s.navidromePassword = ""
 			}
 			clear(s.loads)
 		})

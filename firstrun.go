@@ -86,7 +86,7 @@ func (s *shell) welcomeDialog(c *ui.Context) {
 	}
 }
 
-func init() { addSettings("general", 40, (*shell).welcomeSettings) }
+func init() { addSettings("general", 50, (*shell).welcomeSettings) }
 
 // welcomeSettings open the guide of the first launch again.
 func (s *shell) welcomeSettings(c *ui.Context) {

@@ -92,7 +92,7 @@ const resolveTimeout = 90 * time.Second
 // again, so that a track started near the expiry plays to its end.
 const expiryMargin = 30 * time.Minute
 
-var videoIDRe = regexp.MustCompile(`^(?:[A-Za-z0-9_-]{11}|ne[0-9]{1,19})$`)
+var videoIDRe = regexp.MustCompile(`^(?:[A-Za-z0-9_-]{11}|ne[0-9]{1,19}|nd\.[A-Za-z0-9_-]{1,64})$`)
 
 // netEaseRe matches the key of a NetEase Cloud Music song: "ne" and the
 // song's ID. One of 11 characters could be a YouTube video's ID too, and is
@@ -111,11 +111,27 @@ func NetEaseSong(key string) (string, bool) {
 	return key[2:], true
 }
 
+// navidromeRe matches the key of a Navidrome song: "nd." and the song's
+// ID. The dot keeps it apart from a video's ID, which has none.
+var navidromeRe = regexp.MustCompile(`^nd\.[A-Za-z0-9_-]{1,64}$`)
+
+// NavidromeKey returns the key the proxy and the cache know a Navidrome
+// song's audio by, in place of a video's ID.
+func NavidromeKey(songID string) string { return "nd." + songID }
+
+// NavidromeSong returns the song ID of a Navidrome key, if it is one.
+func NavidromeSong(key string) (string, bool) {
+	if !navidromeRe.MatchString(key) {
+		return "", false
+	}
+	return key[3:], true
+}
+
 // ErrBadVideoID is returned for strings that are not YouTube video IDs.
 var ErrBadVideoID = errors.New("stream: not a YouTube video id")
 
 // ValidVideoID reports whether id is a YouTube video ID, or the key of a
-// NetEase Cloud Music song (NetEaseKey).
+// NetEase Cloud Music song (NetEaseKey) or a Navidrome one (NavidromeKey).
 func ValidVideoID(id string) bool { return videoIDRe.MatchString(id) }
 
 // Stream is the audio stream of a video.
@@ -226,6 +242,9 @@ type Resolver struct {
 	// NetEase, when set, finds the audio of NetEase Cloud Music songs, by
 	// their song ID, in quality.
 	NetEase func(ctx context.Context, songID string, quality Quality) (Stream, error)
+	// Navidrome, when set, finds the audio of the user's Navidrome songs,
+	// by their song ID.
+	Navidrome func(ctx context.Context, songID string) (Stream, error)
 
 	mu      sync.Mutex
 	quality Quality
@@ -413,6 +432,12 @@ func (r *Resolver) Forget(videoID string) {
 func (r *Resolver) resolve(ctx context.Context, videoID string, quality Quality) (Stream, error) {
 	if song, ok := NetEaseSong(videoID); ok && r.NetEase != nil {
 		return r.NetEase(ctx, song, quality)
+	}
+	if song, ok := NavidromeSong(videoID); ok {
+		if r.Navidrome == nil {
+			return Stream{}, errors.New("not connected to Navidrome")
+		}
+		return r.Navidrome(ctx, song)
 	}
 	if s, ok := r.accountStream(ctx, videoID, quality); ok {
 		return s, nil

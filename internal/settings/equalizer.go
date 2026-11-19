@@ -43,3 +43,25 @@ func (e Equalizer) clean() Equalizer {
 	}
 	return e
 }
+
+// HeadphoneEQ is a headphone correction imported from a ParametricEQ.txt
+// file, as Equalizer APO and AutoEq write it, which plays after the
+// equalizer (#22).
+type HeadphoneEQ struct {
+	// Enabled plays it; off, it bypasses it and keeps it.
+	Enabled bool `json:"enabled"`
+	// Name is the file's, and Profile what it says.
+	Name    string `json:"name"`
+	Profile string `json:"profile"`
+	// Attenuation turns it down more than its preamp, in dB, from -24 to
+	// 0, to keep its boosts from clipping.
+	Attenuation float64 `json:"attenuation"`
+}
+
+func (h HeadphoneEQ) clean() HeadphoneEQ {
+	h.Attenuation = min(max(h.Attenuation, -24), 0)
+	if h.Profile == "" {
+		h.Enabled = false
+	}
+	return h
+}
