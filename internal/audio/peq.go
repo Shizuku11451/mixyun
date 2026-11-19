@@ -121,11 +121,11 @@ func number(s string, lo, hi float64) (float64, bool) {
 }
 
 // filter is f as a biquad: the RBJ cookbook's peaking and shelving filters
-// of quality Q, as APO runs them.
-func (f PEQFilter) filter() biquad {
+// of quality Q, as APO runs them, at rate Hz.
+func (f PEQFilter) filter(rate float64) biquad {
 	var b biquad
 	a := math.Pow(10, f.Gain/40)
-	w0 := 2 * math.Pi * f.Hz / Rate
+	w0 := 2 * math.Pi * f.Hz / rate
 	alpha, k := math.Sin(w0)/(2*f.Q), math.Cos(w0)
 	k2 := 2 * math.Sqrt(a) * alpha
 	ap1, am1 := a+1, a-1
@@ -148,16 +148,19 @@ func (b *biquad) response(hz float64) float64 {
 }
 
 // peqStage runs a PEQ: its preamp and an attenuation of the user's, then
-// its filters.
+// its filters, at the engine's rate. It keeps p and attenuation for the
+// engine to make it again at another rate.
 type peqStage struct {
-	gain    float32
-	filters []biquad
+	p           PEQ
+	attenuation float64
+	gain        float32
+	filters     []biquad
 }
 
-func newPEQStage(p PEQ, attenuation float64) *peqStage {
-	s := &peqStage{gain: float32(math.Pow(10, (p.Preamp+attenuation)/20))}
+func newPEQStage(p PEQ, attenuation float64, rate int64) *peqStage {
+	s := &peqStage{p: p, attenuation: attenuation, gain: float32(math.Pow(10, (p.Preamp+attenuation)/20))}
 	for _, f := range p.Filters {
-		s.filters = append(s.filters, f.filter())
+		s.filters = append(s.filters, f.filter(float64(rate)))
 	}
 	return s
 }
@@ -197,14 +200,14 @@ func (c Chain) ResponseDB(hz float64) float64 {
 		db += c.EQPreamp
 		for i, g := range c.Gains {
 			var b biquad
-			b.set(bandKind(i), Bands[i], bandQ, g)
+			b.set(bandKind(i), Bands[i], bandQ, g, Rate)
 			db += b.response(hz)
 		}
 	}
 	if c.PEQ != nil {
 		db += c.PEQ.Preamp + c.Attenuation
 		for _, f := range c.PEQ.Filters {
-			b := f.filter()
+			b := f.filter(Rate) // the curve drawn is at Rate, as response reads it
 			db += b.response(hz)
 		}
 	}

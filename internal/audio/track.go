@@ -60,6 +60,17 @@ type timing struct {
 	// live is set for a live stream, which plays on from where it starts:
 	// it has no length, and seeks only tell the time of what comes next.
 	live bool
+	// rate is the rate of the frames it decodes, in Hz: Rate when 0. Only a
+	// FLAC file opened at its own rate (openTrackAt) has another.
+	rate int
+}
+
+// hz is the rate of the frames of the track.
+func (tm timing) hz() int64 {
+	if tm.rate == 0 {
+		return Rate
+	}
+	return int64(tm.rate)
 }
 
 // openTrack reads the headers of a file, from its start, and returns its
@@ -67,7 +78,13 @@ type timing struct {
 // the AAC of HLS packed audio, the audio of a file kept on a computer,
 // FLAC, Opus or Vorbis in Ogg, WAV or MP3, else the Opus of a WebM file.
 // Its errors are worded for the player.
-func openTrack(src io.ReadSeeker) (track, timing, error) {
+func openTrack(src io.ReadSeeker) (track, timing, error) { return openTrackAt(src, nil) }
+
+// openTrackAt is openTrack of a track that decodes at its own rate, not
+// converted to Rate, when it is a FLAC file of one of native's rates.
+//
+// shortcut: FLAC only, as #26 starts; WAV, MP3 and Vorbis convert to Rate until asked for.
+func openTrackAt(src io.ReadSeeker, native []int) (track, timing, error) {
 	kind, err := sniff(src)
 	if err != nil {
 		return nil, timing{}, readError(err)
@@ -78,7 +95,7 @@ func openTrack(src io.ReadSeeker) (track, timing, error) {
 	case packedAudio:
 		return openPacked(src)
 	case flacFile:
-		return openFLAC(src)
+		return openFLAC(src, native)
 	case oggFile:
 		return openOgg(src)
 	case wavFile:

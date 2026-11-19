@@ -496,6 +496,12 @@ func (s *shell) mergedPodcasts(res *loaded[app.PodcastSearch]) media.PodcastResu
 		case youtubeMusicScope:
 			m.merged = r.YouTube
 		default:
+			if !s.sourceOn(media.SourceSpotify) {
+				r.Spotify = media.PodcastResults{}
+			}
+			if !s.sourceOn(media.SourceYouTube) {
+				r.YouTube = media.PodcastResults{}
+			}
 			m.merged = media.PodcastResults{
 				Podcasts: interleave(r.Spotify.Podcasts, r.YouTube.Podcasts),
 				Episodes: interleave(r.Spotify.Episodes, r.YouTube.Episodes),

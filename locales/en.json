@@ -537,6 +537,7 @@
     }
   },
   "cmdSettingsOpenFile": "Open the settings file",
+  "cmdSettingsWelcome": "Show the welcome guide",
   "cmdSpeedAt": "{kind, select, podcasts {Podcasts} other {Songs}} play at {speed}",
   "@cmdSpeedAt": {
     "placeholders": {
@@ -1340,6 +1341,8 @@
       }
     }
   },
+  "customizeReset": "Reset to default",
+  "customizeResetButton": "reset",
   "desktopSettingsDiscordAbout": "While Discord runs, your profile says what you listen to: you choose its lines, cover, time and button.",
   "desktopSettingsDiscordAfter": " and paste its application ID.",
   "desktopSettingsDiscordAppID": "Discord application ID",
@@ -4040,6 +4043,8 @@
   },
   "outputDevice": "Output device",
   "outputLookAgain": "Look for devices again",
+  "outputNativeRateDescription": "Switches the output device to the sample rate of the FLAC file that plays, where the device supports it, and back when Mixyun stops. Other apps on the device keep playing, converted by macOS. A change of rate between tracks leaves a short gap. The equalizer and the volume still change the sound: this isn't bit-perfect output.",
+  "outputNativeRateTitle": "Play FLAC at its own sample rate",
   "overlayAbout": "Tells what plays, as a page for the browser source of OBS or another streaming program, and as data for an overlay of your own. It listens on this computer only, and takes no commands.",
   "overlayAddressProblem": "{error} Choose another port above.",
   "@overlayAddressProblem": {
@@ -5684,6 +5689,7 @@
   "settingsTabPlayback": "playback",
   "settingsTabPlugins": "plugins",
   "settingsTabShortcuts": "shortcuts",
+  "settingsTabSources": "sources",
   "settingsTabStorage": "storage",
   "settingsTitle": "Settings",
   "shareCopied": "Copied the link",
@@ -5839,6 +5845,9 @@
     }
   },
   "shortcutsSet": "set",
+  "sidebarAbout": "Home, Search, Library and Settings always show. Explore shows YouTube Music's alone, and leaves while it's off.",
+  "sidebarGroup": "Sidebar",
+  "sidebarResetAbout": "Shows every page in the sidebar.",
   "skipAIDesc": "Skips the tracks YouTube labels as made with AI. YouTube labels only some of them, so others still play.",
   "skipAITitle": "Skip songs made with AI",
   "skipPartsAbout": "Passes over the parts of music videos, uploads and episodes that SponsorBlock's community marks, and shows them on the seek bar. While it's on, Mixyun asks SponsorBlock of each video it plays from YouTube Music, sending the first 4 characters of a hash of its ID, never the ID.",
@@ -5889,6 +5898,12 @@
   },
   "skipPartsSwitchLabel": "Skip the parts SponsorBlock marks",
   "skipPartsTitle": "Skip the parts SponsorBlock marks",
+  "sourcesAbout": "A source turned off leaves Home, Search, the library and Accounts. Its account stays signed in, and what you liked, added or downloaded of it comes back once it's on again. One stays on.",
+  "sourcesFiles": "Local files",
+  "sourcesGroup": "Music sources",
+  "sourcesMatchNote": "Spotify's songs play by finding them here: matching still looks here while it's off, but if it can't, some Spotify songs may not play.",
+  "sourcesResetAbout": "Turns every music source on.",
+  "sourcesYouTube": "YouTube videos",
   "speedAt": "{speed}, at their own pitch.",
   "@speedAt": {
     "placeholders": {
@@ -6375,6 +6390,17 @@
     }
   },
   "trackInfoEngineLive": "live from YouTube",
+  "trackInfoEngineNativeFailed": "{line} (couldn't play at the track's own rate: {reason})",
+  "@trackInfoEngineNativeFailed": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
   "trackInfoEngineOpening": "Mixyun's audio engine is opening it…",
   "trackInfoEngineStreamed": "streamed",
   "trackInfoEngineSurround": "its 5.1 surround audio, {from}",
@@ -6914,6 +6940,25 @@
   "volumeUnmute": "Unmute",
   "wavyProgressDescription": "The played part of the seek bar is a gentle wave that moves while music plays and lies flat while it's paused. It holds still while your system asks for less motion.",
   "wavyProgressTitle": "Wavy progress bar",
+  "welcomeBack": "Back",
+  "welcomeDone": "Done",
+  "welcomeGuide": "Welcome guide",
+  "welcomeGuideAbout": "Choose the language, the look, the music sources, your accounts, the lyrics and how Mixyun starts, step by step.",
+  "welcomeGuideOpen": "show the guide",
+  "welcomeNext": "Next",
+  "welcomeSkip": "Skip",
+  "welcomeStep": "Step {step} of {steps}",
+  "@welcomeStep": {
+    "placeholders": {
+      "step": {
+        "type": "int"
+      },
+      "steps": {
+        "type": "int"
+      }
+    }
+  },
+  "welcomeTitle": "Welcome to Mixyun",
   "widgetsLoading": "Loading",
   "widgetsTryAgain": "try again",
   "youtubeBrowserAbout": "Mixyun opens the browser with a new, empty profile of its own, at YouTube Music's sign-in. Sign in there as in any browser: Mixyun then takes the session, closes the browser and deletes the profile. Your own profiles stay as they are.",

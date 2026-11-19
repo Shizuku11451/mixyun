@@ -105,15 +105,24 @@ func (a *App) applyOutputDevice(e *audio.Engine, d settings.OutputDevice) {
 	o := &a.output
 	o.mu.Lock()
 	changed := o.chosen.ID != d.ID
+	native := changed || o.chosen.NativeRate != d.NativeRate
 	o.chosen = d
 	if changed {
 		o.fallback = false
 	}
 	o.mu.Unlock()
-	if changed {
+	if native {
+		var rates []int
+		if d.ID != "" && d.NativeRate {
+			rates, _ = deviceRates(d.ID) // none where the device isn't there
+		}
+		e.SetNative(rates)
 		e.ReopenOutput()
 	}
 }
+
+// deviceRates is output.DeviceRates, which tests replace.
+var deviceRates = output.DeviceRates
 
 // chosenOutput returns the device the engine opens.
 func (a *App) chosenOutput() settings.OutputDevice {

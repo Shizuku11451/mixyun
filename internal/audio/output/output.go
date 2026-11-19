@@ -19,9 +19,13 @@ var (
 	ErrNoDevice = errors.New("output: no audio output device")
 	// ErrUnsupported is returned where there is no output.
 	ErrUnsupported = errors.New("output: no audio output on this system")
+	// ErrRate is returned when a stream can't play at the rate its Options
+	// ask for.
+	ErrRate = errors.New("output: the device can't play at this sample rate")
 )
 
-// Rate is the sample rate of a Stream, in Hz.
+// Rate is the sample rate of a Stream, in Hz, unless its Options ask for
+// another.
 const Rate = 48000
 
 // bufferDuration is how much a Stream renders ahead of the device: the most

@@ -161,7 +161,11 @@ var engineLoaded = func(a *App) (audio.Loaded, bool) {
 	if e == nil {
 		return audio.Loaded{}, false
 	}
-	return e.Loaded()
+	l, ok := e.Loaded()
+	if !a.chosenOutput().NativeRate {
+		l.Fallback = nil // the setting is off: nothing fell back
+	}
+	return l, ok
 }
 
 // TrackInfo tells what MixMusic knows of a track, and of how it plays:

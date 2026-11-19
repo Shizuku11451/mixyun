@@ -6,3 +6,7 @@ package output
 //
 // shortcut: no WASAPI mix rate or PulseAudio sink rate yet, add them when a Windows or Linux user asks.
 func DeviceRate(id string) float64 { return 0 }
+
+// DeviceRates returns ErrUnsupported: only macOS opens a device at another
+// rate.
+func DeviceRates(id string) ([]int, error) { return nil, ErrUnsupported }

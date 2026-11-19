@@ -24,6 +24,10 @@ import (
 // errNoNative is returned where the system has no audio engine.
 var errNoNative = errors.New("Mixyun's audio engine isn't available on this system")
 
+// errNativeOff is why the engine left a track's own rate: the setting
+// that asked for it is off.
+var errNativeOff = errors.New("the native rate is off")
+
 // engineEvents passes the engine's events to the player, once there is one.
 type engineEvents struct{ a *App }
 
@@ -83,12 +87,12 @@ func Silent() bool { return os.Getenv("MIXMUSIC_SILENT") != "" }
 
 // startSilent starts an output that plays into no device: it renders at a
 // device's pace, in stereo, and drops what it renders.
-func startSilent(_ int, render func([]float32, int), _ func(error)) (audio.Output, error) {
+func startSilent(_, rate int, render func([]float32, int), _ func(error)) (audio.Output, error) {
 	log.Print("mixmusic: the audio engine plays into no device (MIXMUSIC_SILENT)")
 	o := &silentOutput{stop: make(chan struct{}), done: make(chan struct{})}
 	go func() {
 		defer close(o.done)
-		period := make([]float32, 2*output.Rate/100) // 10 ms, in stereo
+		period := make([]float32, 2*rate/100) // 10 ms, in stereo
 		tick := time.NewTicker(10 * time.Millisecond)
 		defer tick.Stop()
 		for {
@@ -156,9 +160,18 @@ func (a *App) openNative(ctx context.Context, rawURL string, interrupted func() 
 // startNative starts the output of the native engine, of channels: 2, or
 // 6 for 5.1 surround where the device has it, on the output device chosen,
 // or on the system's default device while that one isn't there.
-func (a *App) startNative(channels int, render func([]float32, int), failed func(error)) (audio.Output, error) {
+func (a *App) startNative(channels, rate int, render func([]float32, int), failed func(error)) (audio.Output, error) {
 	chosen := a.chosenOutput()
+	if chosen.ID == "" || !chosen.NativeRate {
+		if rate != audio.Rate {
+			// Native rate went off while a track played at its own: the
+			// engine falls back to 48 kHz on this.
+			return nil, errNativeOff
+		}
+		rate = 0 // the device's own rate: macOS converts the engine's 48 kHz
+	}
 	s, err := output.Open(output.Options{
+		Rate:     rate,
 		Channels: channels,
 		Render:   render,
 		Failed:   failed,
@@ -169,7 +182,7 @@ func (a *App) startNative(channels int, render func([]float32, int), failed func
 	case errors.Is(err, output.ErrNoDevice):
 		return nil, errors.New("no audio output device")
 	case err != nil:
-		return nil, fmt.Errorf("the audio device couldn't start (%v)", err)
+		return nil, fmt.Errorf("the audio device couldn't start (%w)", err)
 	}
 	return s, nil
 }

@@ -6,5 +6,5 @@
   if the others can reach it. The host checks each of these itself. A
   crossfade on the host waits for the guests as a track change does, a
   guest's SponsorBlock skips rest in a room as its crossfade does, and a
-  room started before macOS lets MixMusic use the local network is found
+  room started before macOS lets Mixyun use the local network is found
   once it may (#734).

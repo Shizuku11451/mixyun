@@ -680,10 +680,12 @@ func (c *Client) Roam(ctx context.Context, tag string) ([]media.Track, error) {
 // which no tag of NetEase's is named.
 const RoamLiked = "liked"
 
-// RoamLiked returns up to 100 songs after those userID liked, as NetEase's
-// 心动模式 plays them from one of them picked at random: songs they liked,
-// and ones like them. When it has none, the liked songs themselves,
-// shuffled.
+// RoamLiked returns up to 100 songs after those userID liked, shuffled: what
+// NetEase's 心动模式 plays after a few of them picked at random, songs they
+// liked and ones like them, with as many more of the liked songs picked at
+// random, so that each roam differs even where 心动模式 answers much the
+// same whatever it starts from. When it has none, the liked songs
+// themselves, shuffled.
 func (c *Client) RoamLiked(ctx context.Context, userID string) ([]media.Track, error) {
 	lists, err := c.UserPlaylists(ctx, userID)
 	if err != nil {
@@ -712,21 +714,47 @@ func (c *Client) RoamLiked(ctx context.Context, userID string) ([]media.Track, e
 		return nil, nil
 	}
 	rand.Shuffle(len(ids), func(i, j int) { ids[i], ids[j] = ids[j], ids[i] })
-	var heart struct {
-		Data []struct {
-			SongInfo song `json:"songInfo"`
-		} `json:"data"`
+	seen := map[int64]bool{}
+	var songs []song
+	for _, seed := range ids[:min(roamSeeds, len(ids))] {
+		var heart struct {
+			Data []struct {
+				SongInfo song `json:"songInfo"`
+			} `json:"data"`
+		}
+		if c.call(ctx, "/playmode/intelligence/list", map[string]any{"songId": seed, "startMusicId": seed, "playlistId": liked, "type": "fromPlayOne", "count": 1}, &heart) != nil {
+			continue
+		}
+		for _, d := range heart.Data {
+			if d.SongInfo.ID != 0 && !seen[d.SongInfo.ID] {
+				seen[d.SongInfo.ID] = true
+				songs = append(songs, d.SongInfo)
+			}
+		}
 	}
-	err = c.call(ctx, "/playmode/intelligence/list", map[string]any{"songId": ids[0], "startMusicId": ids[0], "playlistId": liked, "type": "fromPlayOne", "count": 1}, &heart)
-	songs := make([]song, len(heart.Data))
-	for i, d := range heart.Data {
-		songs[i] = d.SongInfo
+	if len(songs) == 0 {
+		return c.songs(ctx, ids[:min(100, len(ids))])
 	}
-	if tracks := toTracks(songs); err == nil && len(tracks) > 0 {
-		return tracks[:min(100, len(tracks))], nil
+	tracks := toTracks(songs)
+	var more []int64
+	for _, id := range ids {
+		if len(more) == len(songs) {
+			break
+		}
+		if !seen[id] {
+			more = append(more, id)
+		}
 	}
-	return c.songs(ctx, ids[:min(100, len(ids))])
+	// The liked songs are a mix's other half; without them, 心动模式's still plays.
+	if extra, err := c.songs(ctx, more); err == nil {
+		tracks = append(tracks, extra...)
+	}
+	rand.Shuffle(len(tracks), func(i, j int) { tracks[i], tracks[j] = tracks[j], tracks[i] })
+	return tracks[:min(100, len(tracks))], nil
 }
+
+// roamSeeds is how many liked songs RoamLiked starts 心动模式 from.
+const roamSeeds = 3
 
 // SongWiki returns a song's genre and language as its 音乐百科 tells
 // them, as 流行 and 华语: the genre without its sub-genre, the language as

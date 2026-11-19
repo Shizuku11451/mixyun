@@ -2,12 +2,14 @@ package main
 
 import (
 	"context"
+	"slices"
 	"strings"
 
 	"github.com/egoist/mygo/ui"
 
 	"github.com/fzn0x/mixmusic/internal/app"
 	"github.com/fzn0x/mixmusic/internal/media"
+	"github.com/fzn0x/mixmusic/internal/settings"
 	"github.com/fzn0x/mixmusic/locales"
 )
 
@@ -37,6 +39,43 @@ const (
 // them, Spotify, NetEase Cloud Music, YouTube Music, and YouTube itself.
 func searchScopeLabels() []string {
 	return []string{locales.SearchScopeAll(), "Spotify", "网易云音乐", "YouTube Music", "YouTube"}
+}
+
+// scopeSources are the sources of the scopes past allScope, in their
+// order.
+var scopeSources = []string{settings.SourceSpotify, settings.SourceNetEase, settings.SourceYouTubeMusic, settings.SourceYouTube}
+
+// searchScopes are the scopes the search offers, of the services on: All,
+// then each of theirs, or, with one service on, that one's alone.
+func (s *shell) searchScopes() []int {
+	var on []int
+	for i, src := range scopeSources {
+		if s.set.SourceOn(src) {
+			on = append(on, allScope+1+i)
+		}
+	}
+	switch {
+	case len(on) == 1 && on[0] == youtubeScope:
+		return on
+	case len(on) < 2:
+		return []int{allScope}
+	}
+	return append([]int{allScope}, on...)
+}
+
+// ofSourcesOn is r without what the services turned off found, which
+// a search made before they were turned off holds.
+func (s *shell) ofSourcesOn(r app.SearchResponse) app.SearchResponse {
+	if !s.sourceOn(media.SourceSpotify) {
+		r.Spotify = media.SearchResults{}
+	}
+	if !s.sourceOn(media.SourceNetEase) {
+		r.NetEase = media.SearchResults{}
+	}
+	if !s.sourceOn(media.SourceYouTube) {
+		r.YouTube = media.SearchResults{}
+	}
+	return r
 }
 
 // interleave alternates the items of lists, so each service leads in turn,
@@ -89,15 +128,28 @@ func (s *shell) searchPage(c *ui.Context, q string) {
 			return
 		}
 		res := fetch(s, "search:"+q, func(ctx context.Context) (app.SearchResponse, error) { return s.svc.Catalog.Search(ctx, q) })
+		found := s.ofSourcesOn(res.value)
+		scopes := s.searchScopes()
+		if !slices.Contains(scopes, s.searchScope) {
+			s.searchScope = scopes[0]
+		}
 		var counts []int
 		if res.done && res.err == nil && s.searchScope != youtubeScope {
-			r := s.shownResults(mergeResults(res.value, s.searchScope))
+			r := s.shownResults(mergeResults(found, s.searchScope))
 			// An album counts once, however many versions it has.
 			albums := len(s.albumGroups("album", r.Albums))
 			counts = []int{-1, len(r.Tracks), len(r.Videos), albums, len(r.Artists), len(r.Playlists), s.podcastCount(q)}
 		}
 		// YouTube's own search lists videos only, so it has no pivots.
 		pivots, pivotSel := searchPivotLabels(), &s.searchPivot
+		if !s.set.SourceOn(settings.SourcePodcasts) {
+			// Podcasts, turned off, lose their pivot, the last.
+			pivots = pivots[:len(pivots)-1]
+			s.searchPivot = min(s.searchPivot, len(pivots)-1)
+			if counts != nil {
+				counts = counts[:len(pivots)]
+			}
+		}
 		if s.searchScope == youtubeScope {
 			pivots, pivotSel = nil, nil
 		}
@@ -109,14 +161,23 @@ func (s *shell) searchPage(c *ui.Context, q string) {
 		}
 		order := sortBestMatch
 		ui.Row(c).Margin(0, 0, 24).Wrap().GapX(16).GapY(12).AlignItems(ui.Center).Children(func() {
-			s.segmented(c, "scope", locales.SearchServices(), &s.searchScope, searchScopeLabels()...)
+			// With one service on, there's nothing to choose between.
+			if len(scopes) > 1 {
+				all, labels := searchScopeLabels(), make([]string, len(scopes))
+				for i, sc := range scopes {
+					labels[i] = all[sc]
+				}
+				at := slices.Index(scopes, s.searchScope)
+				s.segmented(c, "scope", locales.SearchServices(), &at, labels...)
+				s.searchScope = scopes[at]
+			}
 			order = s.sortSelect(c, q, sortPivot, s.searchScope)
 		})
 		if s.searchScope == youtubeScope {
 			s.youtubeResults(c, q, order)
 			return
 		}
-		if s.searchScope == allScope {
+		if s.searchScope == allScope && s.sourceOn(media.SourceFile) {
 			s.computerResults(c, q, searchPivots[s.searchPivot])
 		}
 		switch {
@@ -127,19 +188,19 @@ func (s *shell) searchPage(c *ui.Context, q string) {
 			s.problem(c, res.err, func() { s.forget("search:" + q) })
 			return
 		}
-		if !res.value.SpotifySignedIn && (s.searchScope == allScope || s.searchScope == spotifyScope) {
+		if !found.SpotifySignedIn && s.sourceOn(media.SourceSpotify) && (s.searchScope == allScope || s.searchScope == spotifyScope) {
 			ui.RichText(c).FontSize(k.smallSize()).TextColor(k.muted).Margin(0, 0, 16).Children(func() {
 				ui.Text(c, locales.SearchNetEaseOnly())
 				s.linkOf(c, locales.SearchSignInSpotify(), "/settings/accounts")
 				ui.Text(c, locales.SearchSignInTail())
 			})
 		}
-		if len(res.value.Errors) > 0 {
-			ui.Text(c, strings.Join(res.value.Errors, " · ")).FontSize(k.smallSize()).TextColor(k.danger).Margin(0, 0, 16)
+		if len(found.Errors) > 0 {
+			ui.Text(c, strings.Join(found.Errors, " · ")).FontSize(k.smallSize()).TextColor(k.danger).Margin(0, 0, 16)
 		}
-		r := s.shownResults(mergeResults(res.value, s.searchScope))
+		r := s.shownResults(mergeResults(found, s.searchScope))
 		if order == sortMostPlayed {
-			r = playedResults(res.value, s.searchScope, s.shownResults)
+			r = playedResults(found, s.searchScope, s.shownResults)
 			// NetEase Cloud Music's songs have no counts either, signed in to
 			// Spotify or not.
 			if s.searchScope == allScope {
@@ -210,7 +271,7 @@ func (s *shell) searchPage(c *ui.Context, q string) {
 		case "playlists":
 			// Spotify's search lists the playlists of others too, whose
 			// tracks it shows apps none of: they're left out (#530).
-			if s.searchScope == spotifyScope && res.value.SpotifySignedIn {
+			if s.searchScope == spotifyScope && found.SpotifySignedIn {
 				ui.Text(c, locales.SearchSpotifyPlaylists()).
 					FontSize(k.smallSize()).TextColor(k.muted).Margin(0, 0, 16)
 			}

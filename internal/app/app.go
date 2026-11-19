@@ -5,6 +5,7 @@ package app
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"io/fs"
 	"log"
@@ -141,6 +142,8 @@ type App struct {
 	// lastCrash is the crash report of the run before, until the user
 	// answers about it.
 	lastCrash string
+	// firstRun is set when there was no settings.json as MixMusic started.
+	firstRun bool
 	// memory records how MixMusic uses its memory while the user asks, in
 	// the logs folder (memory.go): made at its first use.
 	memory     *diag.MemoryRecorder
@@ -319,7 +322,11 @@ func New(opts Options) (*App, error) {
 		log.Printf("mixmusic: the imported backup wasn't put in place, and the data stays as it was: %v", err)
 	}
 	var err error
-	if a.settings, err = store.OpenWith(filepath.Join(opts.DataDir, "settings.json"), settings.Default(), settings.Decode); err != nil {
+	path := filepath.Join(opts.DataDir, "settings.json")
+	if _, err := os.Stat(path); errors.Is(err, fs.ErrNotExist) {
+		a.firstRun = true
+	}
+	if a.settings, err = store.OpenWith(path, settings.Default(), settings.Decode); err != nil {
 		return nil, fmt.Errorf("opening settings: %w", err)
 	}
 	if err := a.settings.Aside(); err != nil {

@@ -21,9 +21,11 @@ type Output interface {
 // OutputStarter starts an output that calls render for each period of the
 // device, and failed when it stops of itself. channels is what the engine
 // asks for: 6 for 5.1 surround, which the output plays where the device has
-// six channels, else 2. render gets the channels of its frames,
-// interleaved: 2 or 6, which may change as the default device does.
-type OutputStarter func(channels int, render func(out []float32, channels int), failed func(error)) (Output, error)
+// six channels, else 2. rate is the sample rate of its frames, in Hz: Rate,
+// or a FLAC track's own as SetNative lets it. render gets the channels of
+// its frames, interleaved: 2 or 6, which may change as the default device
+// does.
+type OutputStarter func(channels, rate int, render func(out []float32, channels int), failed func(error)) (Output, error)
 
 // maxChannels is the most channels the engine renders: 5.1 surround's.
 const maxChannels = 6
@@ -93,7 +95,15 @@ type Engine struct {
 	// what the output that plays was asked for.
 	surround    bool
 	outChannels int
-	eq          *equalizer
+	// native is the rates, as SetNative told, a FLAC track decodes and
+	// plays at, not converted to Rate; rate is the rate the engine
+	// processes and the output plays at: the active deck's, once its
+	// headers were read. fallback is why it last couldn't play at a rate
+	// native named.
+	native   []int
+	rate     int64
+	fallback error
+	eq       *equalizer
 	// peq is the headphone profile after the equalizer, nil when off.
 	peq    *peqStage
 	comp   *compressor
@@ -140,6 +150,7 @@ func NewEngine(open Opener, start OutputStarter, events Events) *Engine {
 		vol:    volume.Of(0.8),
 		an:     newAnalyser(),
 		bus:    2,
+		rate:   Rate,
 		notify: make(chan struct{}, 1),
 		closed: make(chan struct{}),
 	}
@@ -198,7 +209,7 @@ func (e *Engine) Load(url string, cue Cue) error {
 	} else {
 		stale = append(stale, e.decks[e.active], e.decks[other])
 		e.decks[other] = nil
-		e.decks[e.active] = newDeckSkipping(url, cue.Start, e.skips[url], e.open, e.wake)
+		e.decks[e.active] = e.newDeck(url, cue.Start)
 	}
 	e.chained = false
 	d := e.decks[e.active]
@@ -226,7 +237,7 @@ func (e *Engine) Preload(url string) {
 		return
 	}
 	stale := e.decks[other]
-	e.decks[other] = newDeckSkipping(url, 0, e.skips[url], e.open, e.wake)
+	e.decks[other] = e.newDeck(url, 0)
 	e.levels[other] = ramp{}
 	e.mu.Unlock()
 	closeDecks([]*deck{stale})
@@ -256,7 +267,7 @@ func (e *Engine) follower(d *deck, r *ring, n int) (*deck, *ring) {
 		return nil, nil
 	}
 	nr := nd.ring.Load()
-	if nr.channels != r.channels || nr.readable() < int64(quantum-n) && !nr.done.Load() {
+	if nr.channels != r.channels || nd.hz.Load() != d.hz.Load() || nr.readable() < int64(quantum-n) && !nr.done.Load() {
 		return nil, nil
 	}
 	return nd, nr
@@ -284,7 +295,7 @@ func (e *Engine) Crossfade(url string, d time.Duration, cue Cue) error {
 	var stale []*deck
 	if dk := e.decks[to]; dk == nil || dk.url != url {
 		stale = append(stale, dk)
-		e.decks[to] = newDeckSkipping(url, 0, e.skips[url], e.open, e.wake)
+		e.decks[to] = e.newDeck(url, 0)
 	} else if !dk.fresh() {
 		dk.seek(0)
 	}
@@ -495,16 +506,123 @@ func (e *Engine) SetEqualizer(enabled bool, gains [len(Bands)]float64, preamp fl
 	e.mu.Unlock()
 }
 
+// SetNative lets a FLAC track of one of rates, in Hz, decode and play at
+// its own rate, not converted to Rate: the output starts again at it,
+// with a short gap, as a track of another rate becomes the active one,
+// and plays on for the tracks after it of the same rate. nil plays all at
+// Rate, from the next track loaded on. The rates are the device's: one it
+// fails to start at falls back to Rate, which NativeRate tells.
+func (e *Engine) SetNative(rates []int) {
+	e.mu.Lock()
+	e.native = rates
+	e.fallback = nil
+	e.mu.Unlock()
+}
+
+// NativeRate returns the rate the engine plays at, in Hz, and why it last
+// fell back to Rate from a rate SetNative named, or nil.
+func (e *Engine) NativeRate() (int, error) {
+	e.mu.Lock()
+	defer e.mu.Unlock()
+	return int(e.rate), e.fallback
+}
+
+// followRate switches the engine to the rate of the active deck, once its
+// headers tell it: the output, while it plays, stops and starts again at
+// it, and the equalizer and the levelling take it. A deck of the old rate
+// fading out goes. On the event loop.
+func (e *Engine) followRate() {
+	e.outMu.Lock()
+	defer e.outMu.Unlock()
+	e.mu.Lock()
+	d := e.decks[e.active]
+	if d == nil {
+		e.mu.Unlock()
+		return
+	}
+	if _, ready := d.info(); !ready || d.hz.Load() == e.rate {
+		e.mu.Unlock()
+		return
+	}
+	hz := d.hz.Load()
+	var stale *deck
+	if other := 1 - e.active; e.decks[other] != nil && e.decks[other].hz.Load() != hz && e.fading {
+		stale, e.decks[other] = e.decks[other], nil
+		e.levels[other] = ramp{}
+		e.fading = false
+		e.endHold()
+	}
+	e.retune(hz)
+	// It comes in from silence, as it does from a pause.
+	e.levels[e.active].value = 0
+	e.levels[e.active].to(e.levels[e.active].target, pauseFade)
+	out, channels := e.out, e.outputChannels()
+	e.out = nil
+	e.mu.Unlock()
+	closeDecks([]*deck{stale})
+	if out == nil {
+		return
+	}
+	out.Stop()
+	next, err := e.start(channels, int(hz), e.render, e.outputFailed)
+	if err != nil && hz != Rate {
+		next, err = e.fallBack(err, channels)
+	}
+	if err != nil {
+		e.outputFailed(err)
+		return
+	}
+	e.mu.Lock()
+	e.out, e.outChannels = next, channels
+	e.mu.Unlock()
+}
+
+// fallBack starts the output at Rate, as it failed to start at another for
+// why: native rates are off until SetNative, and the active deck loads
+// again where it is, converted to Rate. outMu is held.
+func (e *Engine) fallBack(why error, channels int) (Output, error) {
+	e.mu.Lock()
+	e.native, e.fallback = nil, why
+	if d := e.decks[e.active]; d != nil && d.hz.Load() != Rate {
+		nd := e.newDeck(d.url, e.position())
+		nd.speed, nd.gain = d.speed, d.gain
+		e.decks[e.active] = nd
+		closeDecks([]*deck{d})
+	}
+	if d := e.decks[1-e.active]; d != nil && d.hz.Load() != Rate {
+		e.decks[1-e.active] = nil
+		closeDecks([]*deck{d})
+	}
+	e.retune(Rate)
+	e.mu.Unlock()
+	return e.start(channels, Rate, e.render, e.outputFailed)
+}
+
+// retune has the engine process at rate: the equalizer's filters and the
+// levelling take it, and what is left of the last quantum is dropped.
+// mu is held.
+//
+// shortcut: the volume's and the trims' glides, the pause fades and the analyser's bins keep their frames at Rate, a little quicker at higher rates; retune them if anyone hears it.
+func (e *Engine) retune(rate int64) {
+	e.rate = rate
+	e.pending = nil
+	e.eq.retune(float64(rate))
+	e.comp.rate = float32(rate)
+	e.comp.reset()
+	if e.peq != nil {
+		e.peq = newPEQStage(e.peq.p, e.peq.attenuation, rate)
+	}
+}
+
 // SetPEQ runs the headphone profile p after the equalizer, turned down by
 // attenuation dB more, or none when p is nil.
 // shortcut: the change is a step, which may click once; glide the gains if it is heard.
 func (e *Engine) SetPEQ(p *PEQ, attenuation float64) {
-	var s *peqStage
-	if p != nil {
-		s = newPEQStage(*p, attenuation)
-	}
 	e.mu.Lock()
-	e.peq = s
+	e.peq = nil
+	if p != nil {
+		e.peq = newPEQStage(*p, attenuation, e.rate)
+	}
 	e.mu.Unlock()
 }
 
@@ -600,12 +718,19 @@ func (e *Engine) position() time.Duration {
 	if d == nil {
 		return 0
 	}
-	pos := duration(d.heard())
+	pos := d.timeOf(d.heard())
 	if e.out != nil && !e.paused {
 		// What waits to be heard plays the track at the deck's rate.
 		pos -= time.Duration(float64(e.out.Delay()) * d.rate())
 	}
 	return max(0, pos)
+}
+
+// newDeck starts a deck of url at start, which passes over what SetSkips
+// told of it, and decodes a FLAC track at its own rate where SetNative
+// lets it.
+func (e *Engine) newDeck(url string, start time.Duration) *deck {
+	return newDeckSkipping(url, start, e.skips[url], e.native, e.open, e.wake)
 }
 
 func closeDecks(decks []*deck) {
@@ -629,9 +754,12 @@ func (e *Engine) ensureOutput() error {
 		return nil
 	}
 	e.mu.Lock()
-	channels := e.outputChannels()
+	channels, rate := e.outputChannels(), e.rate
 	e.mu.Unlock()
-	out, err := e.start(channels, e.render, e.outputFailed)
+	out, err := e.start(channels, int(rate), e.render, e.outputFailed)
+	if err != nil && rate != Rate {
+		out, err = e.fallBack(err, channels)
+	}
 	if err != nil {
 		return err
 	}
@@ -654,9 +782,13 @@ func (e *Engine) restartOutput(always bool) {
 		return
 	}
 	e.out = nil
+	rate := e.rate
 	e.mu.Unlock()
 	out.Stop()
-	next, err := e.start(channels, e.render, e.outputFailed)
+	next, err := e.start(channels, int(rate), e.render, e.outputFailed)
+	if err != nil && rate != Rate {
+		next, err = e.fallBack(err, channels)
+	}
 	if err != nil {
 		e.outputFailed(err)
 		return
@@ -743,6 +875,12 @@ func (e *Engine) renderQuantum() {
 		// A part the deck passes over isn't heard: it holds silent until
 		// the loop moves it past.
 		if d.holdsStill() {
+			e.wake()
+			continue
+		}
+		// A deck of another rate holds silent until the loop switches the
+		// engine to it (followRate), or drops it.
+		if d.hz.Load() != e.rate {
 			e.wake()
 			continue
 		}
@@ -866,6 +1004,7 @@ func (e *Engine) loop() {
 }
 
 func (e *Engine) report() {
+	e.followRate()
 	// A deck that reached a part it passes over goes past it, outside mu:
 	// the audio thread doesn't wait for the seek.
 	e.mu.Lock()
@@ -902,7 +1041,7 @@ func (e *Engine) report() {
 		passes          []Skip
 		outFailure      = e.outFailure
 		buffering       = e.underrun && !e.paused
-		idle            = e.out != nil && e.silentFor >= frames(idleTime) && !e.fading
+		idle            = e.out != nil && e.silentFor >= framesAt(idleTime, e.rate) && !e.fading
 		playing         = !e.paused
 	)
 	e.outFailure = nil
@@ -965,7 +1104,7 @@ func (e *Engine) report() {
 	if idle {
 		e.outMu.Lock()
 		e.mu.Lock()
-		still := e.out != nil && e.silentFor >= frames(idleTime) && !e.fading
+		still := e.out != nil && e.silentFor >= framesAt(idleTime, e.rate) && !e.fading
 		out := e.out
 		if still {
 			e.out = nil

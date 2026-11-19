@@ -85,6 +85,7 @@ func (s *shell) dialogs(c *ui.Context) {
 	s.promptDialog(c)
 	s.failureDialog(c)
 	s.remoteCodeDialog(c)
+	s.welcomeDialog(c)
 	s.sweepDialogs()
 	s.sweepViews()
 	s.followVideo()

@@ -64,6 +64,14 @@
       "hidden": true
     }
   ],
+  "sourcesOff": [
+    "youtube",
+    "podcasts"
+  ],
+  "homePivot": "netease",
+  "sidebarHidden": [
+    "stats"
+  ],
   "spotifyPlayback": "match",
   "spotifyDevice": "device-1",
   "quality": "saver",
@@ -76,7 +84,8 @@
   "surround": true,
   "outputDevice": {
     "id": "{0.0.0.00000000}.{ec3a06c1-26c5-4159-8114-bc167b0bad07}",
-    "name": "Headphones (USB DAC)"
+    "name": "Headphones (USB DAC)",
+    "nativeRate": true
   },
   "autoplay": false,
   "songSpeed": 1.25,
@@ -150,6 +159,7 @@
   "floatLocked": true,
   "mediaKeys": false,
   "advancedSettings": true,
+  "firstRunDone": true,
   "assistantControl": true,
   "roomName": "Ana",
   "roomSongs": "add",
