@@ -64,10 +64,24 @@ func (a *App) applyEngine(s settings.Settings) {
 	var gains [len(audio.Bands)]float64
 	copy(gains[:], s.Equalizer.Gains)
 	e.SetEqualizer(s.Equalizer.Enabled, gains, s.Equalizer.Preamp)
+	e.SetPEQ(HeadphoneEQ(s.HeadphoneEQ), s.HeadphoneEQ.Attenuation)
 	e.SetNormalize(s.Normalize)
 	e.SetLoudness(s.Loudness)
 	e.SetSurround(s.Surround)
 	a.applyOutputDevice(e, s.OutputDevice)
+}
+
+// HeadphoneEQ is the headphone profile h plays, nil when it's off or no
+// longer reads as one.
+func HeadphoneEQ(h settings.HeadphoneEQ) *audio.PEQ {
+	if !h.Enabled {
+		return nil
+	}
+	p, err := audio.ParsePEQ(h.Profile)
+	if err != nil {
+		return nil
+	}
+	return &p
 }
 
 // commandGoPlayer has the native interface's player do what the tray, the

@@ -124,6 +124,9 @@ type shell struct {
 	stop         []func()
 	// clearingCovers is set while the covers kept on disk are removed.
 	clearingCovers bool
+	// peqProblem is why the last headphone profile didn't import, "" when
+	// it did.
+	peqProblem string
 	// pending holds what update ran without a window, which pendingMu
 	// guards with win while it's set.
 	pendingMu sync.Mutex

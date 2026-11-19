@@ -86,6 +86,8 @@ type Engine struct {
 	surround    bool
 	outChannels int
 	eq          *equalizer
+	// peq is the headphone profile after the equalizer, nil when off.
+	peq *peqStage
 	comp        *compressor
 	master      smoother
 	// vol is the volume's position, from 0 to 1, and curve the curve it
@@ -421,6 +423,19 @@ func (e *Engine) SetEqualizer(enabled bool, gains [len(Bands)]float64, preamp fl
 	e.mu.Unlock()
 }
 
+// SetPEQ runs the headphone profile p after the equalizer, turned down by
+// attenuation dB more, or none when p is nil.
+// shortcut: the change is a step, which may click once; glide the gains if it is heard.
+func (e *Engine) SetPEQ(p *PEQ, attenuation float64) {
+	var s *peqStage
+	if p != nil {
+		s = newPEQStage(*p, attenuation)
+	}
+	e.mu.Lock()
+	e.peq = s
+	e.mu.Unlock()
+}
+
 // SetNormalize turns the levelling of the volume on or off.
 func (e *Engine) SetNormalize(on bool) {
 	e.mu.Lock()
@@ -600,6 +615,9 @@ func (e *Engine) render(out []float32, channels int) {
 		// had beyond those both have.
 		e.pending = nil
 		e.eq.forget(min(e.bus, channels))
+		if e.peq != nil {
+			e.peq.forget(min(e.bus, channels))
+		}
 		e.comp.forget(min(e.bus, channels))
 		e.bus = channels
 	}
@@ -701,6 +719,9 @@ func (e *Engine) renderQuantum() {
 		e.silentFor += quantum
 	}
 	e.eq.process(buf, ch)
+	if e.peq != nil {
+		e.peq.process(buf, ch)
+	}
 	if e.normalize {
 		e.comp.process(buf, ch, levelThreshold, levelKnee, levelRatio, levelAttack, levelRelease)
 	}
