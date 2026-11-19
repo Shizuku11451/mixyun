@@ -120,10 +120,11 @@ func (s *shell) lyricStage(c *ui.Context) {
 	// Its lyrics refresh with the page, as the side panel's do.
 	s.collecting = true
 	defer func() { s.collecting = false }()
-	ui.DialogBase(c, &s.stage.open, func(_, panel ui.Element) {
+	ui.DialogBase(c, &s.stage.open, func(back, panel ui.Element) {
 		// The panel fills the window, so that no click falls on the backdrop,
 		// which would close the stage.
 		panel.Size(w, h).Label(locales.LyricsFullScreen()).Clip()
+		s.enterStage(c, back, panel)
 		// The focus starts on a point that is nothing to press, without a
 		// ring, so that Enter, pressed by a user who opened the stage with
 		// its keys, doesn't press the close button, which would have the

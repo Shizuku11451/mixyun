@@ -52,12 +52,14 @@ func (s *shell) windowContent(c *ui.Context) {
 		s.rail(c)
 		ui.Column(c).Grow(1).MinWidth(0).Children(func() {
 			s.topBar(c)
-			ui.Row(c).Grow(1).MinHeight(0).AlignItems(ui.Stretch).Children(func() {
+			row := ui.Row(c).Grow(1).MinHeight(0).AlignItems(ui.Stretch)
+			open := s.panelOpen(row)
+			row.Children(func() {
 				s.mainPane(c)
-				if s.panel != "" {
+				if open > 0 {
 					// The panel's lyrics refresh with the page.
 					s.collecting = true
-					s.sidePanel(c)
+					s.sidePanel(c, open)
 					s.collecting = false
 				}
 			})
@@ -94,7 +96,13 @@ func (s *shell) dialogs(c *ui.Context) {
 // mainPane shows the page of the router's path. Pages scroll themselves,
 // as pageScroll does, or as lists, which build only the rows in view.
 func (s *shell) mainPane(c *ui.Context) {
-	s.router.View(c, func(r *ui.Route) { s.page(c, r) }).Grow(1).MinWidth(0)
+	s.followPage(c)
+	s.router.View(c, func(r *ui.Route) {
+		// The page's own column, which its move poses.
+		page := ui.Column(c).Grow(1).MinWidth(0).MinHeight(0)
+		s.movePage(c, page)
+		page.Children(func() { s.page(c, r) })
+	}).Grow(1).MinWidth(0)
 }
 
 // page builds the page of a route.

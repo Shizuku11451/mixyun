@@ -110,6 +110,8 @@ func (s *shell) commands() []command {
 		}},
 		{"settings.openFile", locales.CmdSettingsOpenFile(), "", locales.CmdGroupSettings(), s.openSettingsFile},
 		{"settings.welcome", locales.CmdSettingsWelcome(), "", locales.CmdGroupSettings(), s.openWelcome},
+		{"backup.export", locales.BackupExportTitle(), "", locales.CmdGroupSettings(), s.exportBackup},
+		{"backup.import", locales.BackupImportTitle(), "", locales.CmdGroupSettings(), s.chooseBackup},
 	}
 	cmds = append(cmds, s.themeCommands...)
 	cmds = append(cmds, s.lyricStyleCommands()...)

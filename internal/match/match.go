@@ -54,7 +54,7 @@ func New(yt Searcher, known *store.File[map[string]media.Track]) *Matcher {
 // Match returns the YouTube Music track of the same recording as t.
 func (m *Matcher) Match(ctx context.Context, t media.Track) (media.Track, error) {
 	switch t.Source {
-	case media.SourceYouTube, media.SourceNetEase:
+	case media.SourceYouTube, media.SourceNetEase, media.SourceNavidrome:
 		return t, nil
 	case media.SourceFile:
 		return media.Track{}, ErrLocal
@@ -120,7 +120,7 @@ func (m *Matcher) Forget(trackID string) error {
 // if any.
 func (m *Matcher) Matched(t media.Track) (media.Track, bool) {
 	switch t.Source {
-	case media.SourceYouTube, media.SourceNetEase:
+	case media.SourceYouTube, media.SourceNetEase, media.SourceNavidrome:
 		return t, true
 	case media.SourceFile:
 		return media.Track{}, false

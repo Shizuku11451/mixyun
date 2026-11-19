@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io"
 	"io/fs"
 	"log"
 	"os"
@@ -19,6 +20,7 @@ import (
 	"github.com/fzn0x/mixmusic/internal/media"
 	"github.com/fzn0x/mixmusic/internal/settings"
 	"github.com/fzn0x/mixmusic/internal/store"
+	"github.com/fzn0x/mixmusic/internal/tags"
 )
 
 // LocalFiles is the music on the user's computer, as the windows show it:
@@ -289,7 +291,16 @@ func (a *App) openFile(native string) (audio.Source, error) {
 		a.localFiles.Gone(media.ID(media.SourceFile, native))
 		return nil, errFileMissing
 	}
-	return newFileSource(f), nil
+	s := newFileSource(f)
+	// The engine reads the file from its start.
+	if t, err := tags.Read(f); err == nil {
+		s.rg = audio.ReplayGain(t.ReplayGain)
+	}
+	if _, err := f.Seek(0, io.SeekStart); err != nil {
+		f.Close()
+		return nil, err
+	}
+	return s, nil
 }
 
 // fileSource is a file as the engine reads it: all of it is there, so a
@@ -298,6 +309,8 @@ func (a *App) openFile(native string) (audio.Source, error) {
 type fileSource struct {
 	*os.File
 	size int64
+	// rg is the file's ReplayGain tags.
+	rg audio.ReplayGain
 }
 
 func newFileSource(f *os.File) fileSource {
@@ -311,6 +324,8 @@ func newFileSource(f *os.File) fileSource {
 func (fileSource) Wake() {}
 
 func (fileSource) Local() bool { return true }
+
+func (s fileSource) ReplayGain() audio.ReplayGain { return s.rg }
 
 // Shortened reports whether the file is shorter now than when it was
 // opened: cut short as it played, it ends at the cut, which isn't the end

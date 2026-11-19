@@ -92,6 +92,15 @@
       }
     }
   },
+  "accountSettingsNavidromeConnect": "Connect to Navidrome",
+  "accountSettingsNavidromeConnectButton": "connect to navidrome",
+  "accountSettingsNavidromeConnected": "Connected to Navidrome",
+  "accountSettingsNavidromeForm": "The address of your Navidrome server, your user name and password there. Subsonic, OpenSubsonic, NAS, home server, personal library. Sign in, log in.",
+  "accountSettingsNavidromeHint": "Mixyun browses your Navidrome library and plays its original files through its Subsonic API. It keeps the password in your system's credential store.",
+  "accountSettingsNavidromePassword": "Password",
+  "accountSettingsNavidromeServer": "Server address",
+  "accountSettingsNavidromeUser": "User name",
+  "accountSettingsNavidromeWaiting": "connecting…",
   "accountSettingsNetEaseHint": "A window opens NetEase Cloud Music's sign-in page: scan its QR code with the NetEase Cloud Music app.",
   "accountSettingsNetEaseRefused": "NetEase Cloud Music refused the session",
   "accountSettingsNetEaseSignInButton": "sign in to netease cloud music",
@@ -384,6 +393,24 @@
   "audioOutputGroup": "Output",
   "@audioOutputGroup": {
     "description": "Settings › Audio: the group of the output device, loudness and surround."
+  },
+  "backupExportAbout": "Saves your settings, library, history, queue, add-ons and playlist covers in one file. Sign-ins, caches and downloads stay out.",
+  "backupExportButton": "export",
+  "backupExportTitle": "Export backup",
+  "backupFilter": "Mixyun backup",
+  "backupGroup": "Backup",
+  "backupImportAbout": "Replaces them with those of a backup, as Mixyun starts again. What it replaces is kept in the data folder, in before-import.",
+  "backupImportButton": "import",
+  "backupImportConfirm": "Replace your settings, library, history, queue, add-ons and playlist covers with those of this backup? Mixyun starts again to put it in place.",
+  "backupImportConfirmButton": "import and restart",
+  "backupImportTitle": "Import backup",
+  "backupSaved": "Saved the backup as {file}",
+  "@backupSaved": {
+    "placeholders": {
+      "file": {
+        "type": "String"
+      }
+    }
   },
   "cacheSettingsClear": "clear",
   "cacheSettingsClearCovers": "Clear covers",
@@ -2481,6 +2508,119 @@
     }
   },
   "handoverOnComputer": "On this computer",
+  "headphoneEQ": "Headphone profile",
+  "headphoneEQAlone": "The ten bands are off: only the profile shapes the sound.",
+  "headphoneEQAttenuate": "Turn down by {gain}",
+  "@headphoneEQAttenuate": {
+    "placeholders": {
+      "gain": {
+        "type": "String"
+      }
+    }
+  },
+  "headphoneEQAttenuation": "Turned down by {gain} more than its preamp.",
+  "@headphoneEQAttenuation": {
+    "placeholders": {
+      "gain": {
+        "type": "String"
+      }
+    }
+  },
+  "headphoneEQClips": "Together they boost by up to {gain} near {hz}, which can clip a track at full scale. This is an estimate of the curve, not a true-peak limiter.",
+  "@headphoneEQClips": {
+    "placeholders": {
+      "gain": {
+        "type": "String"
+      },
+      "hz": {
+        "type": "String"
+      }
+    }
+  },
+  "headphoneEQCurve": "The response of the ten bands and the profile, from 20 Hz to 20 kHz",
+  "headphoneEQDesc": "A correction for your headphones from a ParametricEQ.txt file, as AutoEq and Equalizer APO write it. It plays after the ten bands, and switching it off keeps it and the bands as they are.",
+  "headphoneEQErrEmpty": "The file has no preamp nor filter.",
+  "headphoneEQErrMany": "Line {line} is one filter more than the 64 a profile may have.",
+  "@headphoneEQErrMany": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      }
+    }
+  },
+  "headphoneEQErrNumber": "Line {line} has a number missing, unreadable or out of range, or no Q: {text}",
+  "@headphoneEQErrNumber": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "headphoneEQErrRead": "The file can't be read: {error}",
+  "@headphoneEQErrRead": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "headphoneEQErrType": "Line {line} has a filter other than PK, LSC or HSC: {text}",
+  "@headphoneEQErrType": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "headphoneEQErrUnsupported": "Line {line} is something this player doesn't run: {text}",
+  "@headphoneEQErrUnsupported": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "headphoneEQHeadroom": "Together they peak at {gain} near {hz}: no boost above full scale, by an estimate of the curve.",
+  "@headphoneEQHeadroom": {
+    "placeholders": {
+      "gain": {
+        "type": "String"
+      },
+      "hz": {
+        "type": "String"
+      }
+    }
+  },
+  "headphoneEQImport": "Import…",
+  "headphoneEQImportTitle": "Choose a ParametricEQ.txt file",
+  "headphoneEQKept": "The profile that plays is unchanged.",
+  "headphoneEQNone": "None imported.",
+  "headphoneEQRemoveAttenuation": "Remove",
+  "headphoneEQSummary": "{name}: preamp {preamp}, {count} filters.",
+  "@headphoneEQSummary": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "preamp": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "headphoneEQTextFiles": "Text files",
+  "headphoneEQWithBands": "The ten bands are on too, before it.",
   "hiddenOpenOn": "open on {source}",
   "@hiddenOpenOn": {
     "description": "The play button of a page whose tracks open on the service. Lowercase.",
@@ -4882,6 +5022,11 @@
   },
   "remoteSwitch": "Allow remote control",
   "remoteTitle": "Remote control",
+  "replayGain": "ReplayGain",
+  "replayGainAlbum": "album",
+  "replayGainDesc": "Plays the music on this computer at the level its files' ReplayGain tags tell: each track's own, or its album's, which keeps the album's quiet and loud songs as they were mastered. A gain stops before the track's peak passes full scale.",
+  "replayGainOff": "off",
+  "replayGainTrack": "track",
   "roamByEra": "By era",
   "roamByGenre": "By genre",
   "roamByLanguage": "By language",
@@ -6240,6 +6385,60 @@
       }
     }
   },
+  "trackInfoReplayGainAlbum": "album gain",
+  "trackInfoReplayGainApplied": "Plays at {gain}, by its ReplayGain {kind}.",
+  "@trackInfoReplayGainApplied": {
+    "placeholders": {
+      "gain": {
+        "type": "String"
+      },
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "trackInfoReplayGainInvalid": "Plays at its own level: its ReplayGain {kind} tag can't be read.",
+  "@trackInfoReplayGainInvalid": {
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "trackInfoReplayGainLimited": "Plays at {gain}: its ReplayGain {kind} of {tagged} is held back so that its peak stays under full scale.",
+  "@trackInfoReplayGainLimited": {
+    "placeholders": {
+      "gain": {
+        "type": "String"
+      },
+      "tagged": {
+        "type": "String"
+      },
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "trackInfoReplayGainMissing": "Plays at its own level: the file has no ReplayGain {kind} tag.",
+  "@trackInfoReplayGainMissing": {
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "trackInfoReplayGainNoPeak": "Plays at its own level: its ReplayGain {kind} of {tagged} would turn it up, and no peak tag tells how far it may go.",
+  "@trackInfoReplayGainNoPeak": {
+    "placeholders": {
+      "tagged": {
+        "type": "String"
+      },
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "trackInfoReplayGainTrack": "track gain",
   "trackInfoRouteAccount": "With yt-dlp's full run, with the session of your YouTube Music account",
   "trackInfoRouteFull": "With yt-dlp's full run, with its default clients and a JavaScript runtime",
   "trackInfoRoutePlayerAPI": "Quickly, through YouTube's player API, with no yt-dlp",
