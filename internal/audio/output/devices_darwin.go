@@ -16,11 +16,12 @@ import (
 const (
 	// The properties of the devices: 'dev#', 'uid ', 'lnam', 'hidn' and
 	// 'livn'.
-	kAudioHardwarePropertyDevices     = 0x64657623
-	kAudioDevicePropertyDeviceUID     = 0x75696420
-	kAudioObjectPropertyName          = 0x6C6E616D
-	kAudioDevicePropertyIsHidden      = 0x6869646E
-	kAudioDevicePropertyDeviceIsAlive = 0x6C69766E
+	kAudioHardwarePropertyDevices         = 0x64657623
+	kAudioDevicePropertyDeviceUID         = 0x75696420
+	kAudioObjectPropertyName              = 0x6C6E616D
+	kAudioDevicePropertyNominalSampleRate = 0x6E737274
+	kAudioDevicePropertyIsHidden          = 0x6869646E
+	kAudioDevicePropertyDeviceIsAlive     = 0x6C69766E
 	// kAudioQueuePropertyCurrentDevice is the UID of the device a queue
 	// plays on: 'aqcd'.
 	kAudioQueuePropertyCurrentDevice = 0x61716364
@@ -199,4 +200,30 @@ func outputDevice(uid string) (id uint32, channels int, ok bool) {
 		}
 	}
 	return 0, 0, false
+}
+
+// DeviceRate returns the sample rate, in Hz, Core Audio runs the device of
+// the ID id at, its nominal rate, or the default device's for ""; 0 when
+// it can't tell.
+func DeviceRate(id string) float64 {
+	if loadCoreFoundation() != nil {
+		return 0
+	}
+	dev := defaultOutputDevice()
+	if id != "" {
+		var ok bool
+		if dev, _, ok = outputDevice(id); !ok {
+			return 0
+		}
+	}
+	if dev == 0 {
+		return 0
+	}
+	addr := audioObjectPropertyAddress{kAudioDevicePropertyNominalSampleRate, kAudioObjectPropertyScopeGlobal, 0}
+	var rate float64
+	size := uint32(unsafe.Sizeof(rate))
+	if audioObjectGetPropertyData(dev, &addr, 0, nil, &size, unsafe.Pointer(&rate)) != 0 {
+		return 0
+	}
+	return rate
 }

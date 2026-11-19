@@ -107,6 +107,8 @@ func mp3Frame(src io.ReadSeeker) (rate, channels int) {
 // opens the track.
 func describe(tr track) Format {
 	switch t := tr.(type) {
+	case *rangedTrack:
+		return describe(t.track)
 	case *mp4Track:
 		mt := t.r.Track()
 		f := Format{Container: "MP4", Codec: "AAC", SampleRate: int(t.rate), Channels: mt.Channels}
@@ -171,6 +173,8 @@ type Loaded struct {
 	// or less for a track louder than its target. It is 0 while Even
 	// loudness is off, or the track's loudness is unknown.
 	Trim float64
+	// Speed is the speed the track plays at: 1 is its own.
+	Speed float64
 	// ReplayGain is what the track's ReplayGain tags make of it, while the
 	// settings play files by them and its source is Gained.
 	ReplayGain *Gain
@@ -182,6 +186,9 @@ func (e *Engine) Loaded() (Loaded, bool) {
 	e.mu.Lock()
 	d := e.decks[e.active]
 	l := Loaded{EvenLoudness: e.loudness, Levelling: e.normalize}
+	if d != nil {
+		l.Speed = d.rate()
+	}
 	mode := e.replayGain
 	e.mu.Unlock()
 	if d == nil {

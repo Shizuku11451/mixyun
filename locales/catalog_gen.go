@@ -5142,6 +5142,84 @@ func (msgs Messages) CrossfadeTitle() string {
 	return Catalog.Format(msgs.locale, "crossfadeTitle", nil)
 }
 
+// CueSheetBadFile says "The CUE sheet can't play: line {line} names a file other than a FLAC beside it: {text}"
+// in the language the app shows.
+func CueSheetBadFile(line string, text string) string {
+	return In(i18n.Locale()).CueSheetBadFile(line, text)
+}
+
+// CueSheetBadFile says "The CUE sheet can't play: line {line} names a file other than a FLAC beside it: {text}"
+// in the language of msgs.
+func (msgs Messages) CueSheetBadFile(line string, text string) string {
+	return Catalog.Format(msgs.locale, "cueSheetBadFile", map[string]any{"line": line, "text": text})
+}
+
+// CueSheetBadIndex says "The CUE sheet can't play: line {line} has a time it can't read, or out of order: {text}"
+// in the language the app shows.
+func CueSheetBadIndex(line string, text string) string {
+	return In(i18n.Locale()).CueSheetBadIndex(line, text)
+}
+
+// CueSheetBadIndex says "The CUE sheet can't play: line {line} has a time it can't read, or out of order: {text}"
+// in the language of msgs.
+func (msgs Messages) CueSheetBadIndex(line string, text string) string {
+	return Catalog.Format(msgs.locale, "cueSheetBadIndex", map[string]any{"line": line, "text": text})
+}
+
+// CueSheetEmpty says "The CUE sheet can't play: it has no track with an INDEX 01."
+// in the language the app shows.
+func CueSheetEmpty() string { return In(i18n.Locale()).CueSheetEmpty() }
+
+// CueSheetEmpty says "The CUE sheet can't play: it has no track with an INDEX 01."
+// in the language of msgs.
+func (msgs Messages) CueSheetEmpty() string {
+	return Catalog.Format(msgs.locale, "cueSheetEmpty", nil)
+}
+
+// CueSheetMissing says "The CUE sheet can't play: {file} isn't beside it, or doesn't play."
+// in the language the app shows.
+func CueSheetMissing(file string) string { return In(i18n.Locale()).CueSheetMissing(file) }
+
+// CueSheetMissing says "The CUE sheet can't play: {file} isn't beside it, or doesn't play."
+// in the language of msgs.
+func (msgs Messages) CueSheetMissing(file string) string {
+	return Catalog.Format(msgs.locale, "cueSheetMissing", map[string]any{"file": file})
+}
+
+// CueSheetOutOfRange says "The CUE sheet can't play: line {line} starts past the end of the file: {text}"
+// in the language the app shows.
+func CueSheetOutOfRange(line string, text string) string {
+	return In(i18n.Locale()).CueSheetOutOfRange(line, text)
+}
+
+// CueSheetOutOfRange says "The CUE sheet can't play: line {line} starts past the end of the file: {text}"
+// in the language of msgs.
+func (msgs Messages) CueSheetOutOfRange(line string, text string) string {
+	return Catalog.Format(msgs.locale, "cueSheetOutOfRange", map[string]any{"line": line, "text": text})
+}
+
+// CueSheetUnreadable says "The CUE sheet can't play: {error}"
+// in the language the app shows.
+func CueSheetUnreadable(error string) string { return In(i18n.Locale()).CueSheetUnreadable(error) }
+
+// CueSheetUnreadable says "The CUE sheet can't play: {error}"
+// in the language of msgs.
+func (msgs Messages) CueSheetUnreadable(error string) string {
+	return Catalog.Format(msgs.locale, "cueSheetUnreadable", map[string]any{"error": error})
+}
+
+// CueSheetUnsupported says "The CUE sheet can't play: line {line} is something this player doesn't run, as a second file, a data track or a gap: …"
+// in the language the app shows.
+func CueSheetUnsupported(line string, text string) string {
+	return In(i18n.Locale()).CueSheetUnsupported(line, text)
+}
+
+// CueSheetUnsupported says "The CUE sheet can't play: line {line} is something this player doesn't run, as a second file, a data track or a gap: …"
+// in the language of msgs.
+func (msgs Messages) CueSheetUnsupported(line string, text string) string {
+	return Catalog.Format(msgs.locale, "cueSheetUnsupported", map[string]any{"line": line, "text": text})
+}
+
 // CustomizeReset says "Reset to default"
 // in the language the app shows.
 func CustomizeReset() string { return In(i18n.Locale()).CustomizeReset() }
@@ -21492,6 +21570,28 @@ func (msgs Messages) TrackInfoCopyURL() string {
 	return Catalog.Format(msgs.locale, "trackInfoCopyURL", nil)
 }
 
+// TrackInfoDefaultDevice says "the system's default device"
+// in the language the app shows.
+func TrackInfoDefaultDevice() string { return In(i18n.Locale()).TrackInfoDefaultDevice() }
+
+// TrackInfoDefaultDevice says "the system's default device"
+// in the language of msgs.
+func (msgs Messages) TrackInfoDefaultDevice() string {
+	return Catalog.Format(msgs.locale, "trackInfoDefaultDevice", nil)
+}
+
+// TrackInfoDeviceRate says "{device} (Core Audio: {rate})"
+// in the language the app shows.
+func TrackInfoDeviceRate(device string, rate string) string {
+	return In(i18n.Locale()).TrackInfoDeviceRate(device, rate)
+}
+
+// TrackInfoDeviceRate says "{device} (Core Audio: {rate})"
+// in the language of msgs.
+func (msgs Messages) TrackInfoDeviceRate(device string, rate string) string {
+	return Catalog.Format(msgs.locale, "trackInfoDeviceRate", map[string]any{"device": device, "rate": rate})
+}
+
 // TrackInfoDownload says "Download"
 // in the language the app shows.
 func TrackInfoDownload() string { return In(i18n.Locale()).TrackInfoDownload() }
@@ -21532,6 +21632,18 @@ func TrackInfoEngineConverted(line string, rate string) string {
 // in the language of msgs.
 func (msgs Messages) TrackInfoEngineConverted(line string, rate string) string {
 	return Catalog.Format(msgs.locale, "trackInfoEngineConverted", map[string]any{"line": line, "rate": rate})
+}
+
+// TrackInfoEngineDevice says "{line}, on {device}"
+// in the language the app shows.
+func TrackInfoEngineDevice(line string, device string) string {
+	return In(i18n.Locale()).TrackInfoEngineDevice(line, device)
+}
+
+// TrackInfoEngineDevice says "{line}, on {device}"
+// in the language of msgs.
+func (msgs Messages) TrackInfoEngineDevice(line string, device string) string {
+	return Catalog.Format(msgs.locale, "trackInfoEngineDevice", map[string]any{"line": line, "device": device})
 }
 
 // TrackInfoEngineDownload says "from its download"
@@ -21870,6 +21982,94 @@ func TrackInfoPlaysSpotify() string { return In(i18n.Locale()).TrackInfoPlaysSpo
 // in the language of msgs.
 func (msgs Messages) TrackInfoPlaysSpotify() string {
 	return Catalog.Format(msgs.locale, "trackInfoPlaysSpotify", nil)
+}
+
+// TrackInfoProcessing says "Processing"
+// in the language the app shows.
+func TrackInfoProcessing() string { return In(i18n.Locale()).TrackInfoProcessing() }
+
+// TrackInfoProcessing says "Processing"
+// in the language of msgs.
+func (msgs Messages) TrackInfoProcessing() string {
+	return Catalog.Format(msgs.locale, "trackInfoProcessing", nil)
+}
+
+// TrackInfoProcessingDownmix says "mixed down to stereo"
+// in the language the app shows.
+func TrackInfoProcessingDownmix() string { return In(i18n.Locale()).TrackInfoProcessingDownmix() }
+
+// TrackInfoProcessingDownmix says "mixed down to stereo"
+// in the language of msgs.
+func (msgs Messages) TrackInfoProcessingDownmix() string {
+	return Catalog.Format(msgs.locale, "trackInfoProcessingDownmix", nil)
+}
+
+// TrackInfoProcessingEqualizer says "the equalizer"
+// in the language the app shows.
+func TrackInfoProcessingEqualizer() string { return In(i18n.Locale()).TrackInfoProcessingEqualizer() }
+
+// TrackInfoProcessingEqualizer says "the equalizer"
+// in the language of msgs.
+func (msgs Messages) TrackInfoProcessingEqualizer() string {
+	return Catalog.Format(msgs.locale, "trackInfoProcessingEqualizer", nil)
+}
+
+// TrackInfoProcessingJoin says "{done}; {next}"
+// in the language the app shows.
+func TrackInfoProcessingJoin(done string, next string) string {
+	return In(i18n.Locale()).TrackInfoProcessingJoin(done, next)
+}
+
+// TrackInfoProcessingJoin says "{done}; {next}"
+// in the language of msgs.
+func (msgs Messages) TrackInfoProcessingJoin(done string, next string) string {
+	return Catalog.Format(msgs.locale, "trackInfoProcessingJoin", map[string]any{"done": done, "next": next})
+}
+
+// TrackInfoProcessingLine says "In Mixyun: {list}"
+// in the language the app shows.
+func TrackInfoProcessingLine(list string) string {
+	return In(i18n.Locale()).TrackInfoProcessingLine(list)
+}
+
+// TrackInfoProcessingLine says "In Mixyun: {list}"
+// in the language of msgs.
+func (msgs Messages) TrackInfoProcessingLine(list string) string {
+	return Catalog.Format(msgs.locale, "trackInfoProcessingLine", map[string]any{"list": list})
+}
+
+// TrackInfoProcessingNone says "None: the equalizer, speed and mixing down leave it as it is."
+// in the language the app shows.
+func TrackInfoProcessingNone() string { return In(i18n.Locale()).TrackInfoProcessingNone() }
+
+// TrackInfoProcessingNone says "None: the equalizer, speed and mixing down leave it as it is."
+// in the language of msgs.
+func (msgs Messages) TrackInfoProcessingNone() string {
+	return Catalog.Format(msgs.locale, "trackInfoProcessingNone", nil)
+}
+
+// TrackInfoProcessingPreamp says "the equalizer, its preamp at {db}"
+// in the language the app shows.
+func TrackInfoProcessingPreamp(db string) string {
+	return In(i18n.Locale()).TrackInfoProcessingPreamp(db)
+}
+
+// TrackInfoProcessingPreamp says "the equalizer, its preamp at {db}"
+// in the language of msgs.
+func (msgs Messages) TrackInfoProcessingPreamp(db string) string {
+	return Catalog.Format(msgs.locale, "trackInfoProcessingPreamp", map[string]any{"db": db})
+}
+
+// TrackInfoProcessingSpeed says "speed {speed}"
+// in the language the app shows.
+func TrackInfoProcessingSpeed(speed string) string {
+	return In(i18n.Locale()).TrackInfoProcessingSpeed(speed)
+}
+
+// TrackInfoProcessingSpeed says "speed {speed}"
+// in the language of msgs.
+func (msgs Messages) TrackInfoProcessingSpeed(speed string) string {
+	return Catalog.Format(msgs.locale, "trackInfoProcessingSpeed", map[string]any{"speed": speed})
 }
 
 // TrackInfoQualitySpotify says "As your Spotify account and Spotify's settings choose: Spotify tells Mixyun nothing of its audio."

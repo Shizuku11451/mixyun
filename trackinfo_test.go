@@ -237,6 +237,25 @@ func TestTrackFacts(t *testing.T) {
 			t.Errorf("%s: %q, want %q", label, got[label], want)
 		}
 	}
+	// On a device, through the equalizer, faster, a 5.1 file mixed down (#20).
+	got = values(trackFacts(media.Track{Source: media.SourceFile}, app.TrackInfo{Plays: app.PlaysEngine, Playing: true,
+		File:   &app.TrackFile{Kind: app.FileMusic, Format: audio.Format{Container: "FLAC", Codec: "FLAC", SampleRate: 44100, Channels: 6}},
+		Engine: &audio.Loaded{Ready: true, Speed: 1.25, Format: audio.Format{Container: "FLAC", Codec: "FLAC", SampleRate: 44100, Channels: 6}},
+		Output: &app.TrackOutput{Name: "Headphones", Rate: 48000}, Equalizer: true, Preamp: -3}))
+	for label, want := range map[string]string{
+		"Playing":    "In Mixyun's audio engine, from its file, converted to 48 kHz, on Headphones (Core Audio: 48 kHz)",
+		"Processing": "In Mixyun: the equalizer, its preamp at −3 dB; speed 1.25×; mixed down to stereo",
+	} {
+		if got[label] != want {
+			t.Errorf("%s: %q, want %q", label, got[label], want)
+		}
+	}
+	got = values(trackFacts(media.Track{Source: media.SourceFile}, app.TrackInfo{Plays: app.PlaysEngine, Playing: true,
+		Engine: &audio.Loaded{Ready: true, Speed: 1, Format: audio.Format{SampleRate: 48000, Channels: 2}}, Output: &app.TrackOutput{}}))
+	if got["Playing"] != "In Mixyun's audio engine, streamed, on the system's default device" ||
+		got["Processing"] != "None: the equalizer, speed and mixing down leave it as it is." {
+		t.Errorf("as it is, on an unnamed default device: %q", got)
+	}
 	// A live stream, with Even loudness off.
 	got = values(trackFacts(testTracks[0], app.TrackInfo{Plays: app.PlaysEngine, Measured: true, LKFS: -8,
 		Stream: &app.TrackStream{Codec: "AAC", Container: "ADTS", Bitrate: 128, Live: true}}))

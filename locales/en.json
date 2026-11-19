@@ -1280,6 +1280,67 @@
     }
   },
   "crossfadeTitle": "Crossfade",
+  "cueSheetBadFile": "The CUE sheet can't play: line {line} names a file other than a FLAC beside it: {text}",
+  "@cueSheetBadFile": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "cueSheetBadIndex": "The CUE sheet can't play: line {line} has a time it can't read, or out of order: {text}",
+  "@cueSheetBadIndex": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "cueSheetEmpty": "The CUE sheet can't play: it has no track with an INDEX 01.",
+  "cueSheetMissing": "The CUE sheet can't play: {file} isn't beside it, or doesn't play.",
+  "@cueSheetMissing": {
+    "placeholders": {
+      "file": {
+        "type": "String"
+      }
+    }
+  },
+  "cueSheetOutOfRange": "The CUE sheet can't play: line {line} starts past the end of the file: {text}",
+  "@cueSheetOutOfRange": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "cueSheetUnreadable": "The CUE sheet can't play: {error}",
+  "@cueSheetUnreadable": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "cueSheetUnsupported": "The CUE sheet can't play: line {line} is something this player doesn't run, as a second file, a data track or a gap: {text}",
+  "@cueSheetUnsupported": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "text": {
+        "type": "String"
+      }
+    }
+  },
   "customizeReset": "Reset to default",
   "customizeResetButton": "reset",
   "desktopSettingsDiscordAbout": "While Discord runs, your profile says what you listen to: you choose its lines, cover, time and button.",
@@ -6272,6 +6333,18 @@
   },
   "trackInfoCopied": "Copied the stream's address: it stops working after a few hours",
   "trackInfoCopyURL": "copy stream URL",
+  "trackInfoDefaultDevice": "the system's default device",
+  "trackInfoDeviceRate": "{device} (Core Audio: {rate})",
+  "@trackInfoDeviceRate": {
+    "placeholders": {
+      "device": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
   "trackInfoDownload": "Download",
   "trackInfoDownloaded": "{source}, downloaded",
   "@trackInfoDownloaded": {
@@ -6289,6 +6362,17 @@
         "type": "String"
       },
       "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "trackInfoEngineDevice": "{line}, on {device}",
+  "@trackInfoEngineDevice": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "device": {
         "type": "String"
       }
     }
@@ -6384,6 +6468,45 @@
   "trackInfoPlaysAs": "Plays as",
   "trackInfoPlaysConnect": "On a Spotify Connect device",
   "trackInfoPlaysSpotify": "In Spotify's own player, in Mixyun",
+  "trackInfoProcessing": "Processing",
+  "trackInfoProcessingDownmix": "mixed down to stereo",
+  "trackInfoProcessingEqualizer": "the equalizer",
+  "trackInfoProcessingJoin": "{done}; {next}",
+  "@trackInfoProcessingJoin": {
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "next": {
+        "type": "String"
+      }
+    }
+  },
+  "trackInfoProcessingLine": "In Mixyun: {list}",
+  "@trackInfoProcessingLine": {
+    "placeholders": {
+      "list": {
+        "type": "String"
+      }
+    }
+  },
+  "trackInfoProcessingNone": "None: the equalizer, speed and mixing down leave it as it is.",
+  "trackInfoProcessingPreamp": "the equalizer, its preamp at {db}",
+  "@trackInfoProcessingPreamp": {
+    "placeholders": {
+      "db": {
+        "type": "String"
+      }
+    }
+  },
+  "trackInfoProcessingSpeed": "speed {speed}",
+  "@trackInfoProcessingSpeed": {
+    "placeholders": {
+      "speed": {
+        "type": "String"
+      }
+    }
+  },
   "trackInfoQualitySpotify": "As your Spotify account and Spotify's settings choose: Spotify tells Mixyun nothing of its audio.",
   "trackInfoReading": "Reading what it holds…",
   "trackInfoRecording": "{title} · {artists}",
