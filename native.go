@@ -162,6 +162,10 @@ type shell struct {
 	firewall firewallView
 	// panel is the side panel shown: "queue", "lyrics" or "".
 	panel string
+	// panelShown is the side panel drawn: panel, or the one closing.
+	panelShown string
+	// move is how the page coming in moves (motion.go).
+	move pageMove
 	// mini is what the mini player keeps from frame to frame: its panel,
 	// and its window as the panel grows it (minipanel.go).
 	mini miniState
@@ -426,6 +430,9 @@ func newShell(a *app.App, p *player.Player) *shell {
 		mountedViews: map[*plugins.View]bool{}, seenViews: map[*plugins.View]bool{}, pluginInputs: map[string]*string{},
 		canvasSizes: map[*plugins.Canvas][2]float32{}, cssColors: map[string]ui.Color{}, svgs: map[string]*ui.SVG{},
 		dialogScrolls: map[string]*dialogScroll{}, shown: map[string]bool{}, showing: map[string]bool{}, missingMemos: map[string]missingMemo{}}
+	// Pages fade, whichever they are: how deep a page is, the app says
+	// (pageEntry), not the shape of its path.
+	s.router.Transition = ui.TransitionFade
 	s.queueList.Selected = new(int)
 	*s.queueList.Selected = -1
 	// The covers the downloads keep show without the network, as those of
