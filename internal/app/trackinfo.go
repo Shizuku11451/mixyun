@@ -79,6 +79,9 @@ type TrackInfo struct {
 	// loudness plays the track at: 0, or less for a loud one.
 	EvenLoudness, Levelling bool
 	Trim                    float64
+	// ReplayGain is what a file's ReplayGain tags make of it, while the
+	// settings play files by them: nil while they don't.
+	ReplayGain *audio.Gain
 	// Output is the device the engine plays the track on, once it plays.
 	Output *TrackOutput
 	// Equalizer is set while the equalizer changes the sound: on, and not
@@ -175,6 +178,11 @@ func (p *Player) TrackInfo(ctx context.Context, t media.Track, now *player.Sourc
 			return TrackInfo{}, errors.New("not a file of this computer: " + t.ID)
 		}
 		info.File = readTrackFile(FileMusic, path, true)
+		if info.File.Tags != nil {
+			if g, ok := audio.ReplayGain(info.File.Tags.ReplayGain).Applied(audio.ReplayGainMode(st.ReplayGain)); ok {
+				info.ReplayGain = &g
+			}
+		}
 		info.engine(a, now)
 		return info, ctx.Err()
 	}
@@ -207,6 +215,10 @@ func (p *Player) TrackInfo(ctx context.Context, t media.Track, now *player.Sourc
 		}
 		if s, ok := known(video); ok {
 			info.Stream = trackStream(s)
+			// A Navidrome song's address carries the credentials.
+			if _, nd := stream.NavidromeSong(video); nd {
+				info.Stream.URL = ""
+			}
 		}
 	}
 	if lkfs, ok := a.loudness.lkfs(video); ok {
@@ -264,7 +276,7 @@ func recordingOf(a *App, t media.Track, now *player.Source) (media.Track, string
 		rec = found
 	}
 	source, _, err := media.ParseID(rec.ID)
-	if err != nil || source != media.SourceYouTube && source != media.SourceNetEase {
+	if err != nil || source != media.SourceYouTube && source != media.SourceNetEase && source != media.SourceNavidrome {
 		return media.Track{}, ""
 	}
 	// A NetEase song's audio is known by its own key (streamKey).
@@ -292,6 +304,9 @@ func (info *TrackInfo) engine(a *App, now *player.Source) {
 	info.Output = a.playingOutput()
 	if eq := a.settings.Get().Equalizer; eq.Enabled && (eq.Preamp != 0 || slices.ContainsFunc(eq.Gains, func(g float64) bool { return g != 0 })) {
 		info.Equalizer, info.Preamp = true, eq.Preamp
+	}
+	if l.ReplayGain != nil {
+		info.ReplayGain = l.ReplayGain
 	}
 }
 

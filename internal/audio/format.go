@@ -173,6 +173,9 @@ type Loaded struct {
 	Trim float64
 	// Speed is the speed the track plays at: 1 is its own.
 	Speed float64
+	// ReplayGain is what the track's ReplayGain tags make of it, while the
+	// settings play files by them and its source is Gained.
+	ReplayGain *Gain
 }
 
 // Loaded returns what the active deck plays, and false while no deck
@@ -184,6 +187,7 @@ func (e *Engine) Loaded() (Loaded, bool) {
 	if d != nil {
 		l.Speed = d.rate()
 	}
+	mode := e.replayGain
 	e.mu.Unlock()
 	if d == nil {
 		return Loaded{}, false
@@ -194,6 +198,11 @@ func (e *Engine) Loaded() (Loaded, bool) {
 		l.LKFS, l.Measured = lkfs, true
 		if l.EvenLoudness {
 			l.Trim = loudnessTrim(lkfs)
+		}
+	}
+	if rg := d.rg.Load(); rg != nil {
+		if g, ok := rg.Applied(mode); ok {
+			l.ReplayGain = &g
 		}
 	}
 	return l, true

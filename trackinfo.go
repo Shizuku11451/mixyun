@@ -437,6 +437,8 @@ func loudnessLine(t media.Track, info app.TrackInfo) string {
 		line = locales.TrackInfoMeasuredTurnDown(lkfs(info.LKFS), strconv.FormatFloat(-info.Trim, 'f', 1, 64))
 	case info.Measured:
 		line = locales.TrackInfoMeasuredLeave(lkfs(info.LKFS), lkfs(-14))
+	case info.ReplayGain != nil:
+		line = replayGainLine(*info.ReplayGain)
 	case t.Source == media.SourceFile:
 		line = locales.TrackInfoFileLoudness()
 	default:
@@ -446,6 +448,37 @@ func loudnessLine(t media.Track, info app.TrackInfo) string {
 		line = locales.TrackInfoLevelling(line)
 	}
 	return line
+}
+
+// replayGainLine tells what a file's ReplayGain tags make of it.
+func replayGainLine(g audio.Gain) string {
+	kind := locales.TrackInfoReplayGainTrack()
+	if g.Mode == audio.ReplayGainAlbum {
+		kind = locales.TrackInfoReplayGainAlbum()
+	}
+	switch {
+	case g.Problem == audio.GainMissing:
+		return locales.TrackInfoReplayGainMissing(kind)
+	case g.Problem != "":
+		return locales.TrackInfoReplayGainInvalid(kind)
+	case g.NoPeak:
+		return locales.TrackInfoReplayGainNoPeak(gainDB(g.Tagged), kind)
+	case g.Limited:
+		return locales.TrackInfoReplayGainLimited(gainDB(g.DB), gainDB(g.Tagged), kind)
+	}
+	return locales.TrackInfoReplayGainApplied(gainDB(g.DB), kind)
+}
+
+// gainDB writes a gain as "+3.0 dB" or "−6.2 dB", with a minus sign.
+func gainDB(v float64) string {
+	s := strconv.FormatFloat(v, 'f', 1, 64)
+	if s == "-0.0" {
+		s = "0.0"
+	}
+	if v > 0 {
+		s = "+" + s
+	}
+	return strings.Replace(s, "-", "−", 1) + " dB"
 }
 
 // lkfs writes a loudness as "−9.2 LKFS", with a minus sign.

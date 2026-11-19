@@ -566,6 +566,108 @@ func (msgs Messages) AccountSettingsLastfmWaiting(count int) string {
 	return Catalog.Format(msgs.locale, "accountSettingsLastfmWaiting", map[string]any{"count": count})
 }
 
+// AccountSettingsNavidromeConnect says "Connect to Navidrome"
+// in the language the app shows.
+func AccountSettingsNavidromeConnect() string {
+	return In(i18n.Locale()).AccountSettingsNavidromeConnect()
+}
+
+// AccountSettingsNavidromeConnect says "Connect to Navidrome"
+// in the language of msgs.
+func (msgs Messages) AccountSettingsNavidromeConnect() string {
+	return Catalog.Format(msgs.locale, "accountSettingsNavidromeConnect", nil)
+}
+
+// AccountSettingsNavidromeConnectButton says "connect to navidrome"
+// in the language the app shows.
+func AccountSettingsNavidromeConnectButton() string {
+	return In(i18n.Locale()).AccountSettingsNavidromeConnectButton()
+}
+
+// AccountSettingsNavidromeConnectButton says "connect to navidrome"
+// in the language of msgs.
+func (msgs Messages) AccountSettingsNavidromeConnectButton() string {
+	return Catalog.Format(msgs.locale, "accountSettingsNavidromeConnectButton", nil)
+}
+
+// AccountSettingsNavidromeConnected says "Connected to Navidrome"
+// in the language the app shows.
+func AccountSettingsNavidromeConnected() string {
+	return In(i18n.Locale()).AccountSettingsNavidromeConnected()
+}
+
+// AccountSettingsNavidromeConnected says "Connected to Navidrome"
+// in the language of msgs.
+func (msgs Messages) AccountSettingsNavidromeConnected() string {
+	return Catalog.Format(msgs.locale, "accountSettingsNavidromeConnected", nil)
+}
+
+// AccountSettingsNavidromeForm says "The address of your Navidrome server, your user name and password there. Subsonic, OpenSubsonic, NAS, home server, pe…"
+// in the language the app shows.
+func AccountSettingsNavidromeForm() string { return In(i18n.Locale()).AccountSettingsNavidromeForm() }
+
+// AccountSettingsNavidromeForm says "The address of your Navidrome server, your user name and password there. Subsonic, OpenSubsonic, NAS, home server, pe…"
+// in the language of msgs.
+func (msgs Messages) AccountSettingsNavidromeForm() string {
+	return Catalog.Format(msgs.locale, "accountSettingsNavidromeForm", nil)
+}
+
+// AccountSettingsNavidromeHint says "Mixyun browses your Navidrome library and plays its original files through its Subsonic API. It keeps the password in…"
+// in the language the app shows.
+func AccountSettingsNavidromeHint() string { return In(i18n.Locale()).AccountSettingsNavidromeHint() }
+
+// AccountSettingsNavidromeHint says "Mixyun browses your Navidrome library and plays its original files through its Subsonic API. It keeps the password in…"
+// in the language of msgs.
+func (msgs Messages) AccountSettingsNavidromeHint() string {
+	return Catalog.Format(msgs.locale, "accountSettingsNavidromeHint", nil)
+}
+
+// AccountSettingsNavidromePassword says "Password"
+// in the language the app shows.
+func AccountSettingsNavidromePassword() string {
+	return In(i18n.Locale()).AccountSettingsNavidromePassword()
+}
+
+// AccountSettingsNavidromePassword says "Password"
+// in the language of msgs.
+func (msgs Messages) AccountSettingsNavidromePassword() string {
+	return Catalog.Format(msgs.locale, "accountSettingsNavidromePassword", nil)
+}
+
+// AccountSettingsNavidromeServer says "Server address"
+// in the language the app shows.
+func AccountSettingsNavidromeServer() string {
+	return In(i18n.Locale()).AccountSettingsNavidromeServer()
+}
+
+// AccountSettingsNavidromeServer says "Server address"
+// in the language of msgs.
+func (msgs Messages) AccountSettingsNavidromeServer() string {
+	return Catalog.Format(msgs.locale, "accountSettingsNavidromeServer", nil)
+}
+
+// AccountSettingsNavidromeUser says "User name"
+// in the language the app shows.
+func AccountSettingsNavidromeUser() string { return In(i18n.Locale()).AccountSettingsNavidromeUser() }
+
+// AccountSettingsNavidromeUser says "User name"
+// in the language of msgs.
+func (msgs Messages) AccountSettingsNavidromeUser() string {
+	return Catalog.Format(msgs.locale, "accountSettingsNavidromeUser", nil)
+}
+
+// AccountSettingsNavidromeWaiting says "connecting…"
+// in the language the app shows.
+func AccountSettingsNavidromeWaiting() string {
+	return In(i18n.Locale()).AccountSettingsNavidromeWaiting()
+}
+
+// AccountSettingsNavidromeWaiting says "connecting…"
+// in the language of msgs.
+func (msgs Messages) AccountSettingsNavidromeWaiting() string {
+	return Catalog.Format(msgs.locale, "accountSettingsNavidromeWaiting", nil)
+}
+
 // AccountSettingsNetEaseHint says "A window opens NetEase Cloud Music's sign-in page: scan its QR code with the NetEase Cloud Music app."
 // in the language the app shows.
 func AccountSettingsNetEaseHint() string { return In(i18n.Locale()).AccountSettingsNetEaseHint() }
@@ -2204,6 +2306,116 @@ func AudioOutputGroup() string { return In(i18n.Locale()).AudioOutputGroup() }
 // surround.
 func (msgs Messages) AudioOutputGroup() string {
 	return Catalog.Format(msgs.locale, "audioOutputGroup", nil)
+}
+
+// BackupExportAbout says "Saves your settings, library, history, queue, add-ons and playlist covers in one file. Sign-ins, caches and downloads…"
+// in the language the app shows.
+func BackupExportAbout() string { return In(i18n.Locale()).BackupExportAbout() }
+
+// BackupExportAbout says "Saves your settings, library, history, queue, add-ons and playlist covers in one file. Sign-ins, caches and downloads…"
+// in the language of msgs.
+func (msgs Messages) BackupExportAbout() string {
+	return Catalog.Format(msgs.locale, "backupExportAbout", nil)
+}
+
+// BackupExportButton says "export"
+// in the language the app shows.
+func BackupExportButton() string { return In(i18n.Locale()).BackupExportButton() }
+
+// BackupExportButton says "export"
+// in the language of msgs.
+func (msgs Messages) BackupExportButton() string {
+	return Catalog.Format(msgs.locale, "backupExportButton", nil)
+}
+
+// BackupExportTitle says "Export backup"
+// in the language the app shows.
+func BackupExportTitle() string { return In(i18n.Locale()).BackupExportTitle() }
+
+// BackupExportTitle says "Export backup"
+// in the language of msgs.
+func (msgs Messages) BackupExportTitle() string {
+	return Catalog.Format(msgs.locale, "backupExportTitle", nil)
+}
+
+// BackupFilter says "Mixyun backup"
+// in the language the app shows.
+func BackupFilter() string { return In(i18n.Locale()).BackupFilter() }
+
+// BackupFilter says "Mixyun backup"
+// in the language of msgs.
+func (msgs Messages) BackupFilter() string {
+	return Catalog.Format(msgs.locale, "backupFilter", nil)
+}
+
+// BackupGroup says "Backup"
+// in the language the app shows.
+func BackupGroup() string { return In(i18n.Locale()).BackupGroup() }
+
+// BackupGroup says "Backup"
+// in the language of msgs.
+func (msgs Messages) BackupGroup() string {
+	return Catalog.Format(msgs.locale, "backupGroup", nil)
+}
+
+// BackupImportAbout says "Replaces them with those of a backup, as Mixyun starts again. What it replaces is kept in the data folder, in before-…"
+// in the language the app shows.
+func BackupImportAbout() string { return In(i18n.Locale()).BackupImportAbout() }
+
+// BackupImportAbout says "Replaces them with those of a backup, as Mixyun starts again. What it replaces is kept in the data folder, in before-…"
+// in the language of msgs.
+func (msgs Messages) BackupImportAbout() string {
+	return Catalog.Format(msgs.locale, "backupImportAbout", nil)
+}
+
+// BackupImportButton says "import"
+// in the language the app shows.
+func BackupImportButton() string { return In(i18n.Locale()).BackupImportButton() }
+
+// BackupImportButton says "import"
+// in the language of msgs.
+func (msgs Messages) BackupImportButton() string {
+	return Catalog.Format(msgs.locale, "backupImportButton", nil)
+}
+
+// BackupImportConfirm says "Replace your settings, library, history, queue, add-ons and playlist covers with those of this backup? Mixyun starts …"
+// in the language the app shows.
+func BackupImportConfirm() string { return In(i18n.Locale()).BackupImportConfirm() }
+
+// BackupImportConfirm says "Replace your settings, library, history, queue, add-ons and playlist covers with those of this backup? Mixyun starts …"
+// in the language of msgs.
+func (msgs Messages) BackupImportConfirm() string {
+	return Catalog.Format(msgs.locale, "backupImportConfirm", nil)
+}
+
+// BackupImportConfirmButton says "import and restart"
+// in the language the app shows.
+func BackupImportConfirmButton() string { return In(i18n.Locale()).BackupImportConfirmButton() }
+
+// BackupImportConfirmButton says "import and restart"
+// in the language of msgs.
+func (msgs Messages) BackupImportConfirmButton() string {
+	return Catalog.Format(msgs.locale, "backupImportConfirmButton", nil)
+}
+
+// BackupImportTitle says "Import backup"
+// in the language the app shows.
+func BackupImportTitle() string { return In(i18n.Locale()).BackupImportTitle() }
+
+// BackupImportTitle says "Import backup"
+// in the language of msgs.
+func (msgs Messages) BackupImportTitle() string {
+	return Catalog.Format(msgs.locale, "backupImportTitle", nil)
+}
+
+// BackupSaved says "Saved the backup as {file}"
+// in the language the app shows.
+func BackupSaved(file string) string { return In(i18n.Locale()).BackupSaved(file) }
+
+// BackupSaved says "Saved the backup as {file}"
+// in the language of msgs.
+func (msgs Messages) BackupSaved(file string) string {
+	return Catalog.Format(msgs.locale, "backupSaved", map[string]any{"file": file})
 }
 
 // CacheSettingsClear says "clear"
@@ -8350,6 +8562,240 @@ func HandoverOnComputer() string { return In(i18n.Locale()).HandoverOnComputer()
 // in the language of msgs.
 func (msgs Messages) HandoverOnComputer() string {
 	return Catalog.Format(msgs.locale, "handoverOnComputer", nil)
+}
+
+// HeadphoneEQ says "Headphone profile"
+// in the language the app shows.
+func HeadphoneEQ() string { return In(i18n.Locale()).HeadphoneEQ() }
+
+// HeadphoneEQ says "Headphone profile"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQ() string {
+	return Catalog.Format(msgs.locale, "headphoneEQ", nil)
+}
+
+// HeadphoneEQAlone says "The ten bands are off: only the profile shapes the sound."
+// in the language the app shows.
+func HeadphoneEQAlone() string { return In(i18n.Locale()).HeadphoneEQAlone() }
+
+// HeadphoneEQAlone says "The ten bands are off: only the profile shapes the sound."
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQAlone() string {
+	return Catalog.Format(msgs.locale, "headphoneEQAlone", nil)
+}
+
+// HeadphoneEQAttenuate says "Turn down by {gain}"
+// in the language the app shows.
+func HeadphoneEQAttenuate(gain string) string { return In(i18n.Locale()).HeadphoneEQAttenuate(gain) }
+
+// HeadphoneEQAttenuate says "Turn down by {gain}"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQAttenuate(gain string) string {
+	return Catalog.Format(msgs.locale, "headphoneEQAttenuate", map[string]any{"gain": gain})
+}
+
+// HeadphoneEQAttenuation says "Turned down by {gain} more than its preamp."
+// in the language the app shows.
+func HeadphoneEQAttenuation(gain string) string {
+	return In(i18n.Locale()).HeadphoneEQAttenuation(gain)
+}
+
+// HeadphoneEQAttenuation says "Turned down by {gain} more than its preamp."
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQAttenuation(gain string) string {
+	return Catalog.Format(msgs.locale, "headphoneEQAttenuation", map[string]any{"gain": gain})
+}
+
+// HeadphoneEQClips says "Together they boost by up to {gain} near {hz}, which can clip a track at full scale. This is an estimate of the curve…"
+// in the language the app shows.
+func HeadphoneEQClips(gain string, hz string) string {
+	return In(i18n.Locale()).HeadphoneEQClips(gain, hz)
+}
+
+// HeadphoneEQClips says "Together they boost by up to {gain} near {hz}, which can clip a track at full scale. This is an estimate of the curve…"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQClips(gain string, hz string) string {
+	return Catalog.Format(msgs.locale, "headphoneEQClips", map[string]any{"gain": gain, "hz": hz})
+}
+
+// HeadphoneEQCurve says "The response of the ten bands and the profile, from 20 Hz to 20 kHz"
+// in the language the app shows.
+func HeadphoneEQCurve() string { return In(i18n.Locale()).HeadphoneEQCurve() }
+
+// HeadphoneEQCurve says "The response of the ten bands and the profile, from 20 Hz to 20 kHz"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQCurve() string {
+	return Catalog.Format(msgs.locale, "headphoneEQCurve", nil)
+}
+
+// HeadphoneEQDesc says "A correction for your headphones from a ParametricEQ.txt file, as AutoEq and Equalizer APO write it. It plays after t…"
+// in the language the app shows.
+func HeadphoneEQDesc() string { return In(i18n.Locale()).HeadphoneEQDesc() }
+
+// HeadphoneEQDesc says "A correction for your headphones from a ParametricEQ.txt file, as AutoEq and Equalizer APO write it. It plays after t…"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQDesc() string {
+	return Catalog.Format(msgs.locale, "headphoneEQDesc", nil)
+}
+
+// HeadphoneEQErrEmpty says "The file has no preamp nor filter."
+// in the language the app shows.
+func HeadphoneEQErrEmpty() string { return In(i18n.Locale()).HeadphoneEQErrEmpty() }
+
+// HeadphoneEQErrEmpty says "The file has no preamp nor filter."
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQErrEmpty() string {
+	return Catalog.Format(msgs.locale, "headphoneEQErrEmpty", nil)
+}
+
+// HeadphoneEQErrMany says "Line {line} is one filter more than the 64 a profile may have."
+// in the language the app shows.
+func HeadphoneEQErrMany(line string) string { return In(i18n.Locale()).HeadphoneEQErrMany(line) }
+
+// HeadphoneEQErrMany says "Line {line} is one filter more than the 64 a profile may have."
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQErrMany(line string) string {
+	return Catalog.Format(msgs.locale, "headphoneEQErrMany", map[string]any{"line": line})
+}
+
+// HeadphoneEQErrNumber says "Line {line} has a number missing, unreadable or out of range, or no Q: {text}"
+// in the language the app shows.
+func HeadphoneEQErrNumber(line string, text string) string {
+	return In(i18n.Locale()).HeadphoneEQErrNumber(line, text)
+}
+
+// HeadphoneEQErrNumber says "Line {line} has a number missing, unreadable or out of range, or no Q: {text}"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQErrNumber(line string, text string) string {
+	return Catalog.Format(msgs.locale, "headphoneEQErrNumber", map[string]any{"line": line, "text": text})
+}
+
+// HeadphoneEQErrRead says "The file can't be read: {error}"
+// in the language the app shows.
+func HeadphoneEQErrRead(error string) string { return In(i18n.Locale()).HeadphoneEQErrRead(error) }
+
+// HeadphoneEQErrRead says "The file can't be read: {error}"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQErrRead(error string) string {
+	return Catalog.Format(msgs.locale, "headphoneEQErrRead", map[string]any{"error": error})
+}
+
+// HeadphoneEQErrType says "Line {line} has a filter other than PK, LSC or HSC: {text}"
+// in the language the app shows.
+func HeadphoneEQErrType(line string, text string) string {
+	return In(i18n.Locale()).HeadphoneEQErrType(line, text)
+}
+
+// HeadphoneEQErrType says "Line {line} has a filter other than PK, LSC or HSC: {text}"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQErrType(line string, text string) string {
+	return Catalog.Format(msgs.locale, "headphoneEQErrType", map[string]any{"line": line, "text": text})
+}
+
+// HeadphoneEQErrUnsupported says "Line {line} is something this player doesn't run: {text}"
+// in the language the app shows.
+func HeadphoneEQErrUnsupported(line string, text string) string {
+	return In(i18n.Locale()).HeadphoneEQErrUnsupported(line, text)
+}
+
+// HeadphoneEQErrUnsupported says "Line {line} is something this player doesn't run: {text}"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQErrUnsupported(line string, text string) string {
+	return Catalog.Format(msgs.locale, "headphoneEQErrUnsupported", map[string]any{"line": line, "text": text})
+}
+
+// HeadphoneEQHeadroom says "Together they peak at {gain} near {hz}: no boost above full scale, by an estimate of the curve."
+// in the language the app shows.
+func HeadphoneEQHeadroom(gain string, hz string) string {
+	return In(i18n.Locale()).HeadphoneEQHeadroom(gain, hz)
+}
+
+// HeadphoneEQHeadroom says "Together they peak at {gain} near {hz}: no boost above full scale, by an estimate of the curve."
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQHeadroom(gain string, hz string) string {
+	return Catalog.Format(msgs.locale, "headphoneEQHeadroom", map[string]any{"gain": gain, "hz": hz})
+}
+
+// HeadphoneEQImport says "Import…"
+// in the language the app shows.
+func HeadphoneEQImport() string { return In(i18n.Locale()).HeadphoneEQImport() }
+
+// HeadphoneEQImport says "Import…"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQImport() string {
+	return Catalog.Format(msgs.locale, "headphoneEQImport", nil)
+}
+
+// HeadphoneEQImportTitle says "Choose a ParametricEQ.txt file"
+// in the language the app shows.
+func HeadphoneEQImportTitle() string { return In(i18n.Locale()).HeadphoneEQImportTitle() }
+
+// HeadphoneEQImportTitle says "Choose a ParametricEQ.txt file"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQImportTitle() string {
+	return Catalog.Format(msgs.locale, "headphoneEQImportTitle", nil)
+}
+
+// HeadphoneEQKept says "The profile that plays is unchanged."
+// in the language the app shows.
+func HeadphoneEQKept() string { return In(i18n.Locale()).HeadphoneEQKept() }
+
+// HeadphoneEQKept says "The profile that plays is unchanged."
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQKept() string {
+	return Catalog.Format(msgs.locale, "headphoneEQKept", nil)
+}
+
+// HeadphoneEQNone says "None imported."
+// in the language the app shows.
+func HeadphoneEQNone() string { return In(i18n.Locale()).HeadphoneEQNone() }
+
+// HeadphoneEQNone says "None imported."
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQNone() string {
+	return Catalog.Format(msgs.locale, "headphoneEQNone", nil)
+}
+
+// HeadphoneEQRemoveAttenuation says "Remove"
+// in the language the app shows.
+func HeadphoneEQRemoveAttenuation() string { return In(i18n.Locale()).HeadphoneEQRemoveAttenuation() }
+
+// HeadphoneEQRemoveAttenuation says "Remove"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQRemoveAttenuation() string {
+	return Catalog.Format(msgs.locale, "headphoneEQRemoveAttenuation", nil)
+}
+
+// HeadphoneEQSummary says "{name}: preamp {preamp}, {count} filters."
+// in the language the app shows.
+func HeadphoneEQSummary(name string, preamp string, count string) string {
+	return In(i18n.Locale()).HeadphoneEQSummary(name, preamp, count)
+}
+
+// HeadphoneEQSummary says "{name}: preamp {preamp}, {count} filters."
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQSummary(name string, preamp string, count string) string {
+	return Catalog.Format(msgs.locale, "headphoneEQSummary", map[string]any{"name": name, "preamp": preamp, "count": count})
+}
+
+// HeadphoneEQTextFiles says "Text files"
+// in the language the app shows.
+func HeadphoneEQTextFiles() string { return In(i18n.Locale()).HeadphoneEQTextFiles() }
+
+// HeadphoneEQTextFiles says "Text files"
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQTextFiles() string {
+	return Catalog.Format(msgs.locale, "headphoneEQTextFiles", nil)
+}
+
+// HeadphoneEQWithBands says "The ten bands are on too, before it."
+// in the language the app shows.
+func HeadphoneEQWithBands() string { return In(i18n.Locale()).HeadphoneEQWithBands() }
+
+// HeadphoneEQWithBands says "The ten bands are on too, before it."
+// in the language of msgs.
+func (msgs Messages) HeadphoneEQWithBands() string {
+	return Catalog.Format(msgs.locale, "headphoneEQWithBands", nil)
 }
 
 // HiddenOpenOn says "open on {source}"
@@ -16478,6 +16924,56 @@ func (msgs Messages) RemoteTitle() string {
 	return Catalog.Format(msgs.locale, "remoteTitle", nil)
 }
 
+// ReplayGain says "ReplayGain"
+// in the language the app shows.
+func ReplayGain() string { return In(i18n.Locale()).ReplayGain() }
+
+// ReplayGain says "ReplayGain"
+// in the language of msgs.
+func (msgs Messages) ReplayGain() string {
+	return Catalog.Format(msgs.locale, "replayGain", nil)
+}
+
+// ReplayGainAlbum says "album"
+// in the language the app shows.
+func ReplayGainAlbum() string { return In(i18n.Locale()).ReplayGainAlbum() }
+
+// ReplayGainAlbum says "album"
+// in the language of msgs.
+func (msgs Messages) ReplayGainAlbum() string {
+	return Catalog.Format(msgs.locale, "replayGainAlbum", nil)
+}
+
+// ReplayGainDesc says "Plays the music on this computer at the level its files' ReplayGain tags tell: each track's own, or its album's, whic…"
+// in the language the app shows.
+func ReplayGainDesc() string { return In(i18n.Locale()).ReplayGainDesc() }
+
+// ReplayGainDesc says "Plays the music on this computer at the level its files' ReplayGain tags tell: each track's own, or its album's, whic…"
+// in the language of msgs.
+func (msgs Messages) ReplayGainDesc() string {
+	return Catalog.Format(msgs.locale, "replayGainDesc", nil)
+}
+
+// ReplayGainOff says "off"
+// in the language the app shows.
+func ReplayGainOff() string { return In(i18n.Locale()).ReplayGainOff() }
+
+// ReplayGainOff says "off"
+// in the language of msgs.
+func (msgs Messages) ReplayGainOff() string {
+	return Catalog.Format(msgs.locale, "replayGainOff", nil)
+}
+
+// ReplayGainTrack says "track"
+// in the language the app shows.
+func ReplayGainTrack() string { return In(i18n.Locale()).ReplayGainTrack() }
+
+// ReplayGainTrack says "track"
+// in the language of msgs.
+func (msgs Messages) ReplayGainTrack() string {
+	return Catalog.Format(msgs.locale, "replayGainTrack", nil)
+}
+
 // RoamByEra says "By era"
 // in the language the app shows.
 func RoamByEra() string { return In(i18n.Locale()).RoamByEra() }
@@ -21398,6 +21894,86 @@ func TrackInfoRecording(title string, artists string) string {
 // in the language of msgs.
 func (msgs Messages) TrackInfoRecording(title string, artists string) string {
 	return Catalog.Format(msgs.locale, "trackInfoRecording", map[string]any{"title": title, "artists": artists})
+}
+
+// TrackInfoReplayGainAlbum says "album gain"
+// in the language the app shows.
+func TrackInfoReplayGainAlbum() string { return In(i18n.Locale()).TrackInfoReplayGainAlbum() }
+
+// TrackInfoReplayGainAlbum says "album gain"
+// in the language of msgs.
+func (msgs Messages) TrackInfoReplayGainAlbum() string {
+	return Catalog.Format(msgs.locale, "trackInfoReplayGainAlbum", nil)
+}
+
+// TrackInfoReplayGainApplied says "Plays at {gain}, by its ReplayGain {kind}."
+// in the language the app shows.
+func TrackInfoReplayGainApplied(gain string, kind string) string {
+	return In(i18n.Locale()).TrackInfoReplayGainApplied(gain, kind)
+}
+
+// TrackInfoReplayGainApplied says "Plays at {gain}, by its ReplayGain {kind}."
+// in the language of msgs.
+func (msgs Messages) TrackInfoReplayGainApplied(gain string, kind string) string {
+	return Catalog.Format(msgs.locale, "trackInfoReplayGainApplied", map[string]any{"gain": gain, "kind": kind})
+}
+
+// TrackInfoReplayGainInvalid says "Plays at its own level: its ReplayGain {kind} tag can't be read."
+// in the language the app shows.
+func TrackInfoReplayGainInvalid(kind string) string {
+	return In(i18n.Locale()).TrackInfoReplayGainInvalid(kind)
+}
+
+// TrackInfoReplayGainInvalid says "Plays at its own level: its ReplayGain {kind} tag can't be read."
+// in the language of msgs.
+func (msgs Messages) TrackInfoReplayGainInvalid(kind string) string {
+	return Catalog.Format(msgs.locale, "trackInfoReplayGainInvalid", map[string]any{"kind": kind})
+}
+
+// TrackInfoReplayGainLimited says "Plays at {gain}: its ReplayGain {kind} of {tagged} is held back so that its peak stays under full scale."
+// in the language the app shows.
+func TrackInfoReplayGainLimited(gain string, tagged string, kind string) string {
+	return In(i18n.Locale()).TrackInfoReplayGainLimited(gain, tagged, kind)
+}
+
+// TrackInfoReplayGainLimited says "Plays at {gain}: its ReplayGain {kind} of {tagged} is held back so that its peak stays under full scale."
+// in the language of msgs.
+func (msgs Messages) TrackInfoReplayGainLimited(gain string, tagged string, kind string) string {
+	return Catalog.Format(msgs.locale, "trackInfoReplayGainLimited", map[string]any{"gain": gain, "tagged": tagged, "kind": kind})
+}
+
+// TrackInfoReplayGainMissing says "Plays at its own level: the file has no ReplayGain {kind} tag."
+// in the language the app shows.
+func TrackInfoReplayGainMissing(kind string) string {
+	return In(i18n.Locale()).TrackInfoReplayGainMissing(kind)
+}
+
+// TrackInfoReplayGainMissing says "Plays at its own level: the file has no ReplayGain {kind} tag."
+// in the language of msgs.
+func (msgs Messages) TrackInfoReplayGainMissing(kind string) string {
+	return Catalog.Format(msgs.locale, "trackInfoReplayGainMissing", map[string]any{"kind": kind})
+}
+
+// TrackInfoReplayGainNoPeak says "Plays at its own level: its ReplayGain {kind} of {tagged} would turn it up, and no peak tag tells how far it may go."
+// in the language the app shows.
+func TrackInfoReplayGainNoPeak(tagged string, kind string) string {
+	return In(i18n.Locale()).TrackInfoReplayGainNoPeak(tagged, kind)
+}
+
+// TrackInfoReplayGainNoPeak says "Plays at its own level: its ReplayGain {kind} of {tagged} would turn it up, and no peak tag tells how far it may go."
+// in the language of msgs.
+func (msgs Messages) TrackInfoReplayGainNoPeak(tagged string, kind string) string {
+	return Catalog.Format(msgs.locale, "trackInfoReplayGainNoPeak", map[string]any{"tagged": tagged, "kind": kind})
+}
+
+// TrackInfoReplayGainTrack says "track gain"
+// in the language the app shows.
+func TrackInfoReplayGainTrack() string { return In(i18n.Locale()).TrackInfoReplayGainTrack() }
+
+// TrackInfoReplayGainTrack says "track gain"
+// in the language of msgs.
+func (msgs Messages) TrackInfoReplayGainTrack() string {
+	return Catalog.Format(msgs.locale, "trackInfoReplayGainTrack", nil)
 }
 
 // TrackInfoRouteAccount says "With yt-dlp's full run, with the session of your YouTube Music account"
