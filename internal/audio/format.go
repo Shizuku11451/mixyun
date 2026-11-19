@@ -173,6 +173,9 @@ type Loaded struct {
 	// or less for a track louder than its target. It is 0 while Even
 	// loudness is off, or the track's loudness is unknown.
 	Trim float64
+	// ReplayGain is what the track's ReplayGain tags make of it, while the
+	// settings play files by them and its source is Gained.
+	ReplayGain *Gain
 }
 
 // Loaded returns what the active deck plays, and false while no deck
@@ -181,6 +184,7 @@ func (e *Engine) Loaded() (Loaded, bool) {
 	e.mu.Lock()
 	d := e.decks[e.active]
 	l := Loaded{EvenLoudness: e.loudness, Levelling: e.normalize}
+	mode := e.replayGain
 	e.mu.Unlock()
 	if d == nil {
 		return Loaded{}, false
@@ -191,6 +195,11 @@ func (e *Engine) Loaded() (Loaded, bool) {
 		l.LKFS, l.Measured = lkfs, true
 		if l.EvenLoudness {
 			l.Trim = loudnessTrim(lkfs)
+		}
+	}
+	if rg := d.rg.Load(); rg != nil {
+		if g, ok := rg.Applied(mode); ok {
+			l.ReplayGain = &g
 		}
 	}
 	return l, true

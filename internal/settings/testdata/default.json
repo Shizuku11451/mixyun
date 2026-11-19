@@ -38,6 +38,7 @@
   "crossfade": 0,
   "normalize": false,
   "loudness": true,
+  "replayGain": "off",
   "surround": false,
   "outputDevice": {
     "id": "",
@@ -78,6 +79,12 @@
       0
     ],
     "preamp": 0
+  },
+  "headphoneEQ": {
+    "enabled": false,
+    "name": "",
+    "profile": "",
+    "attenuation": 0
   },
   "volumeCurve": "natural",
   "volume": 0.8,

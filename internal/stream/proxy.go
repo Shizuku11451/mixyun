@@ -378,6 +378,14 @@ func (p *Proxy) fail(w http.ResponseWriter, videoID string, err error) {
 		return
 	}
 	log.Printf("mixmusic: the audio of %s: %v", videoID, loggable(err))
+	if _, nd := NavidromeSong(videoID); nd {
+		// Asked again at the next play, which tells what the server says.
+		p.Resolver.Forget(videoID)
+		var ue *url.Error
+		if errors.As(err, &ue) {
+			err = errors.New("Navidrome doesn't answer: check that the server is on and reachable")
+		}
+	}
 	p.setFailure(videoID, plainFailure(err))
 }
 
