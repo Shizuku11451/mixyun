@@ -87,9 +87,9 @@ type Engine struct {
 	outChannels int
 	eq          *equalizer
 	// peq is the headphone profile after the equalizer, nil when off.
-	peq *peqStage
-	comp        *compressor
-	master      smoother
+	peq    *peqStage
+	comp   *compressor
+	master smoother
 	// vol is the volume's position, from 0 to 1, and curve the curve it
 	// plays on, whose gain at vol is what master glides to.
 	vol   float64
