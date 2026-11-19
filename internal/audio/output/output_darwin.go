@@ -12,8 +12,10 @@ package output
 // output takes over, and gives way to one on the device once it's back.
 
 import (
+	"cmp"
 	"errors"
 	"fmt"
+	"math"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -70,9 +72,9 @@ const (
 	// errors of a system without an output device.
 	errCannotStart   = -66681
 	errInvalidDevice = -66683
-	// aqBuffers is how many buffers a queue holds, of periodFrames each:
-	// bufferDuration in all.
-	aqBuffers = int(int64(Rate)*int64(bufferDuration)/int64(time.Second)) / periodFrames
+	// aqBuffers is how many buffers a queue holds, of 10 ms each, at any
+	// rate: bufferDuration in all.
+	aqBuffers = int(bufferDuration / (10 * time.Millisecond))
 
 	kAudioQueuePropertyChannelLayout = 0x6171636C // 'aqcl'
 	kAudioObjectSystemObject         = 1
@@ -98,6 +100,7 @@ var (
 
 	audioObjectGetPropertyDataSize func(object uint32, addr *audioObjectPropertyAddress, qualifierSize uint32, qualifier unsafe.Pointer, size *uint32) int32
 	audioObjectGetPropertyData     func(object uint32, addr *audioObjectPropertyAddress, qualifierSize uint32, qualifier unsafe.Pointer, size *uint32, data unsafe.Pointer) int32
+	audioObjectSetPropertyData     func(object uint32, addr *audioObjectPropertyAddress, qualifierSize uint32, qualifier unsafe.Pointer, size uint32, data unsafe.Pointer) int32
 	// coreAudio tells whether Core Audio's functions loaded, which tell
 	// the channels of the device.
 	coreAudio bool
@@ -125,6 +128,7 @@ func loadAudioToolbox() error {
 		if ca, err := purego.Dlopen("/System/Library/Frameworks/CoreAudio.framework/CoreAudio", purego.RTLD_LAZY|purego.RTLD_GLOBAL); err == nil {
 			purego.RegisterLibFunc(&audioObjectGetPropertyDataSize, ca, "AudioObjectGetPropertyDataSize")
 			purego.RegisterLibFunc(&audioObjectGetPropertyData, ca, "AudioObjectGetPropertyData")
+			purego.RegisterLibFunc(&audioObjectSetPropertyData, ca, "AudioObjectSetPropertyData")
 			coreAudio = true
 		}
 		aqCallback = purego.NewCallback(func(user, q uintptr, b *audioQueueBuffer) {
@@ -174,6 +178,14 @@ type Stream struct {
 	want  string
 	avoid avoid
 	mover *mover
+	// rate is the stream's sample rate, and native is set when its Options
+	// ask for one, which the device it asks for is set to. tuned is the
+	// UID of the first device the stream changed the rate of, and before
+	// the rate it had then, which the stream sets back as it ends.
+	rate   int
+	native bool
+	tuned  string
+	before int
 	// q is the queue that plays, which the stream's goroutine changes as
 	// the device does.
 	q    atomic.Pointer[queue]
@@ -187,6 +199,8 @@ type queue struct {
 	q uintptr
 	// channels is the queue's: 2, or Surround.
 	channels int
+	// period is the frames of each of its buffers: 10 ms.
+	period int
 	// device is the UID of the device it plays on, "" for the default
 	// device, which it follows; fallback is set while it plays there in
 	// place of the device the stream asks for.
@@ -200,15 +214,23 @@ type queue struct {
 // which it plays where the device has six output channels or more, else
 // stereo, on o.Device or the default device. A queue of 5.1 on the default
 // device stays one when the default device changes, which Core Audio then
-// mixes down. Open returns once the queue plays.
+// mixes down. A stream of o.Rate sets o.Device to that rate, and the
+// device it falls back to converts it: Open returns ErrRate when o.Device
+// can't run at it, or o.Device is "" and o.Rate isn't Rate, as the default
+// device's rate is left as it is. Open returns once the queue plays.
 func Open(o Options) (*Stream, error) {
 	if err := loadAudioToolbox(); err != nil {
 		return nil, err
 	}
 	s := &Stream{render: o.Render, asked: o.Channels, want: o.Device, mover: newMover(o),
+		rate: cmp.Or(o.Rate, Rate), native: o.Rate != 0,
 		stop: make(chan struct{}), done: make(chan struct{})}
+	if s.rate != Rate && o.Device == "" {
+		return nil, fmt.Errorf("%w: %d Hz on the default device", ErrRate, s.rate)
+	}
 	q, err := s.open()
 	if err != nil {
+		s.restore()
 		return nil, err
 	}
 	s.q.Store(q)
@@ -216,6 +238,7 @@ func Open(o Options) (*Stream, error) {
 	go func() {
 		err := s.run()
 		s.q.Load().dispose()
+		s.restore()
 		close(s.done)
 		if err != nil && o.Failed != nil {
 			o.Failed(err)
@@ -238,9 +261,20 @@ func (s *Stream) target() (uid string, channels int, fallback bool) {
 
 // open starts a queue on the device the stream plays on, as target tells.
 // When the device asked for is there but fails to start, the default
-// device plays, and avoid keeps the stream from trying it for a while.
+// device plays, and avoid keeps the stream from trying it for a while; so
+// too when it can't run at the stream's rate, but not as Open starts,
+// which then returns why.
 func (s *Stream) open() (*queue, error) {
 	uid, ch, fallback := s.target()
+	if uid != "" {
+		if err := s.tune(uid); err != nil {
+			if s.q.Load() == nil {
+				return nil, err
+			}
+			s.avoid.failed(time.Now())
+			return s.open()
+		}
+	}
 	channels := 2
 	if s.asked == Surround {
 		channels = coreAudioChannels(Surround, ch)
@@ -261,11 +295,53 @@ func (s *Stream) open() (*queue, error) {
 	return q, nil
 }
 
+// tune sets the nominal rate of the device of the UID uid to the stream's
+// rate, where the stream asks for one, and waits until the device runs at
+// it. Other apps keep playing on the device, which Core Audio converts.
+func (s *Stream) tune(uid string) error {
+	if !s.native {
+		return nil
+	}
+	before := int(math.Round(DeviceRate(uid)))
+	if before == s.rate {
+		return nil
+	}
+	dev, _, ok := outputDevice(uid)
+	if !ok {
+		return ErrNoDevice
+	}
+	if !rateIn(rateRanges(dev), s.rate) || !setDeviceRate(dev, s.rate) {
+		return fmt.Errorf("%w: %d Hz on %s", ErrRate, s.rate, uid)
+	}
+	if s.tuned == "" {
+		s.tuned, s.before = uid, before
+	}
+	// shortcut: polls the device's rate rather than listening for its
+	// change, a listener when the 10 ms between polls matter.
+	for deadline := time.Now().Add(time.Second); int(math.Round(DeviceRate(uid))) != s.rate; time.Sleep(10 * time.Millisecond) {
+		if time.Now().After(deadline) {
+			return fmt.Errorf("%w: %s doesn't run at %d Hz", ErrRate, uid, s.rate)
+		}
+	}
+	return nil
+}
+
+// restore sets the device the stream changed the rate of back to the rate
+// it had, unless something else changed it since.
+func (s *Stream) restore() {
+	if s.tuned == "" || s.before == 0 || int(math.Round(DeviceRate(s.tuned))) != s.rate {
+		return
+	}
+	if dev, _, ok := outputDevice(s.tuned); ok {
+		setDeviceRate(dev, s.before)
+	}
+}
+
 // start starts a queue of channels on the device of the UID uid, or on the
 // default device when it's "".
 func (s *Stream) start(channels int, uid string) (*queue, error) {
 	desc := audioStreamBasicDescription{
-		sampleRate:       Rate,
+		sampleRate:       float64(s.rate),
 		formatID:         kAudioFormatLinearPCM,
 		formatFlags:      kAudioFormatFlagsNativeFloatPacked,
 		bytesPerPacket:   uint32(channels * 4),
@@ -274,7 +350,7 @@ func (s *Stream) start(channels int, uid string) (*queue, error) {
 		channelsPerFrame: uint32(channels),
 		bitsPerChannel:   32,
 	}
-	q := &queue{channels: channels, device: uid, free: make(chan *audioQueueBuffer, aqBuffers)}
+	q := &queue{channels: channels, period: s.rate / 100, device: uid, free: make(chan *audioQueueBuffer, aqBuffers)}
 	if st := audioQueueNewOutput(&desc, aqCallback, 0, 0, 0, 0, &q.q); st != 0 {
 		return nil, osStatus("AudioQueueNewOutput", st)
 	}
@@ -301,7 +377,7 @@ func (s *Stream) start(channels int, uid string) (*queue, error) {
 	// with an underrun.
 	for range aqBuffers {
 		var b *audioQueueBuffer
-		if st := audioQueueAllocateBuffer(q.q, uint32(periodFrames*channels*4), &b); st != 0 {
+		if st := audioQueueAllocateBuffer(q.q, uint32(q.period*channels*4), &b); st != 0 {
 			return fail(osStatus("AudioQueueAllocateBuffer", st))
 		}
 		if err := s.fill(q, b); err != nil {
@@ -337,7 +413,7 @@ func (s *Stream) Delay() time.Duration {
 	if q == nil {
 		return 0
 	}
-	return time.Duration(q.queued.Load()*periodFrames) * time.Second / Rate
+	return time.Duration(q.queued.Load()*int64(q.period)) * time.Second / time.Duration(s.rate)
 }
 
 func (s *Stream) run() error {
@@ -401,7 +477,7 @@ func (s *Stream) move() error {
 // fill renders a period into b and queues it on q, turning a panic of
 // render into an error.
 func (s *Stream) fill(q *queue, b *audioQueueBuffer) (err error) {
-	out := unsafe.Slice((*float32)(b.audioData), periodFrames*q.channels)
+	out := unsafe.Slice((*float32)(b.audioData), q.period*q.channels)
 	defer func() {
 		if v := recover(); v != nil {
 			clear(out)

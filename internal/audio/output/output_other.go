@@ -10,8 +10,13 @@ type Stream struct{}
 // Available returns ErrUnsupported.
 func Available() error { return ErrUnsupported }
 
-// Open returns ErrUnsupported.
-func Open(o Options) (*Stream, error) { return nil, ErrUnsupported }
+// Open returns ErrRate for a rate other than Rate, else ErrUnsupported.
+func Open(o Options) (*Stream, error) {
+	if o.Rate != 0 && o.Rate != Rate {
+		return nil, ErrRate
+	}
+	return nil, ErrUnsupported
+}
 
 // Devices returns ErrUnsupported.
 func Devices() ([]Device, error) { return nil, ErrUnsupported }

@@ -50,6 +50,32 @@ type Options struct {
 	// starts, and each time that changes. It is never told while Device is
 	// "". It is called from the stream's goroutines, and must not block.
 	Moved func(fallback bool)
+	// Rate is the sample rate the stream plays at, in Hz; 0 means Rate.
+	// Only macOS plays at another, on a Device it opens at that rate, and
+	// Open returns ErrRate where it can't.
+	Rate int
+}
+
+// standardRates are the sample rates DeviceRates tells of a device whose
+// rates come in ranges.
+var standardRates = []int{44100, 48000, 88200, 96000, 176400, 192000, 352800, 384000}
+
+// rateIn reports whether rate falls in one of ranges, each of a lowest and
+// a highest rate, as Core Audio tells a device's.
+func rateIn(ranges [][2]float64, rate int) bool {
+	r := float64(rate)
+	return slices.ContainsFunc(ranges, func(v [2]float64) bool { return r >= v[0]-0.5 && r <= v[1]+0.5 })
+}
+
+// rangeRates returns the standard rates that fall in ranges, sorted.
+func rangeRates(ranges [][2]float64) []int {
+	var out []int
+	for _, r := range standardRates {
+		if rateIn(ranges, r) {
+			out = append(out, r)
+		}
+	}
+	return out
 }
 
 // Start starts a stream of channels on the system's default device, as
