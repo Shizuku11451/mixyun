@@ -566,6 +566,108 @@ func (msgs Messages) AccountSettingsLastfmWaiting(count int) string {
 	return Catalog.Format(msgs.locale, "accountSettingsLastfmWaiting", map[string]any{"count": count})
 }
 
+// AccountSettingsNavidromeConnect says "Connect to Navidrome"
+// in the language the app shows.
+func AccountSettingsNavidromeConnect() string {
+	return In(i18n.Locale()).AccountSettingsNavidromeConnect()
+}
+
+// AccountSettingsNavidromeConnect says "Connect to Navidrome"
+// in the language of msgs.
+func (msgs Messages) AccountSettingsNavidromeConnect() string {
+	return Catalog.Format(msgs.locale, "accountSettingsNavidromeConnect", nil)
+}
+
+// AccountSettingsNavidromeConnectButton says "connect to navidrome"
+// in the language the app shows.
+func AccountSettingsNavidromeConnectButton() string {
+	return In(i18n.Locale()).AccountSettingsNavidromeConnectButton()
+}
+
+// AccountSettingsNavidromeConnectButton says "connect to navidrome"
+// in the language of msgs.
+func (msgs Messages) AccountSettingsNavidromeConnectButton() string {
+	return Catalog.Format(msgs.locale, "accountSettingsNavidromeConnectButton", nil)
+}
+
+// AccountSettingsNavidromeConnected says "Connected to Navidrome"
+// in the language the app shows.
+func AccountSettingsNavidromeConnected() string {
+	return In(i18n.Locale()).AccountSettingsNavidromeConnected()
+}
+
+// AccountSettingsNavidromeConnected says "Connected to Navidrome"
+// in the language of msgs.
+func (msgs Messages) AccountSettingsNavidromeConnected() string {
+	return Catalog.Format(msgs.locale, "accountSettingsNavidromeConnected", nil)
+}
+
+// AccountSettingsNavidromeForm says "The address of your Navidrome server, your user name and password there. Subsonic, OpenSubsonic, NAS, home server, pe…"
+// in the language the app shows.
+func AccountSettingsNavidromeForm() string { return In(i18n.Locale()).AccountSettingsNavidromeForm() }
+
+// AccountSettingsNavidromeForm says "The address of your Navidrome server, your user name and password there. Subsonic, OpenSubsonic, NAS, home server, pe…"
+// in the language of msgs.
+func (msgs Messages) AccountSettingsNavidromeForm() string {
+	return Catalog.Format(msgs.locale, "accountSettingsNavidromeForm", nil)
+}
+
+// AccountSettingsNavidromeHint says "Mixyun browses your Navidrome library and plays its original files through its Subsonic API. It keeps the password in…"
+// in the language the app shows.
+func AccountSettingsNavidromeHint() string { return In(i18n.Locale()).AccountSettingsNavidromeHint() }
+
+// AccountSettingsNavidromeHint says "Mixyun browses your Navidrome library and plays its original files through its Subsonic API. It keeps the password in…"
+// in the language of msgs.
+func (msgs Messages) AccountSettingsNavidromeHint() string {
+	return Catalog.Format(msgs.locale, "accountSettingsNavidromeHint", nil)
+}
+
+// AccountSettingsNavidromePassword says "Password"
+// in the language the app shows.
+func AccountSettingsNavidromePassword() string {
+	return In(i18n.Locale()).AccountSettingsNavidromePassword()
+}
+
+// AccountSettingsNavidromePassword says "Password"
+// in the language of msgs.
+func (msgs Messages) AccountSettingsNavidromePassword() string {
+	return Catalog.Format(msgs.locale, "accountSettingsNavidromePassword", nil)
+}
+
+// AccountSettingsNavidromeServer says "Server address"
+// in the language the app shows.
+func AccountSettingsNavidromeServer() string {
+	return In(i18n.Locale()).AccountSettingsNavidromeServer()
+}
+
+// AccountSettingsNavidromeServer says "Server address"
+// in the language of msgs.
+func (msgs Messages) AccountSettingsNavidromeServer() string {
+	return Catalog.Format(msgs.locale, "accountSettingsNavidromeServer", nil)
+}
+
+// AccountSettingsNavidromeUser says "User name"
+// in the language the app shows.
+func AccountSettingsNavidromeUser() string { return In(i18n.Locale()).AccountSettingsNavidromeUser() }
+
+// AccountSettingsNavidromeUser says "User name"
+// in the language of msgs.
+func (msgs Messages) AccountSettingsNavidromeUser() string {
+	return Catalog.Format(msgs.locale, "accountSettingsNavidromeUser", nil)
+}
+
+// AccountSettingsNavidromeWaiting says "connecting…"
+// in the language the app shows.
+func AccountSettingsNavidromeWaiting() string {
+	return In(i18n.Locale()).AccountSettingsNavidromeWaiting()
+}
+
+// AccountSettingsNavidromeWaiting says "connecting…"
+// in the language of msgs.
+func (msgs Messages) AccountSettingsNavidromeWaiting() string {
+	return Catalog.Format(msgs.locale, "accountSettingsNavidromeWaiting", nil)
+}
+
 // AccountSettingsNetEaseHint says "A window opens NetEase Cloud Music's sign-in page: scan its QR code with the NetEase Cloud Music app."
 // in the language the app shows.
 func AccountSettingsNetEaseHint() string { return In(i18n.Locale()).AccountSettingsNetEaseHint() }

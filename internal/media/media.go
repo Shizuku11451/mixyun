@@ -21,6 +21,9 @@ const (
 	SourceSpotify Source = "spotify"
 	// SourceNetEase is NetEase Cloud Music (网易云音乐).
 	SourceNetEase Source = "netease"
+	// SourceNavidrome is the user's own Navidrome server, through its
+	// Subsonic API.
+	SourceNavidrome Source = "navidrome"
 	// SourceLocal is MixMusic itself: playlists made in the app.
 	SourceLocal Source = "local"
 	// SourceFile is the music kept on the user's computer, which MixMusic
@@ -30,11 +33,12 @@ const (
 
 // prefixes maps sources to the prefix of their IDs.
 var prefixes = map[Source]string{
-	SourceYouTube: "yt",
-	SourceSpotify: "sp",
-	SourceNetEase: "ne",
-	SourceLocal:   "mx",
-	SourceFile:    "file",
+	SourceYouTube:   "yt",
+	SourceSpotify:   "sp",
+	SourceNetEase:   "ne",
+	SourceNavidrome: "nd",
+	SourceLocal:     "mx",
+	SourceFile:      "file",
 }
 
 // ErrBadID is returned for IDs that name no source.

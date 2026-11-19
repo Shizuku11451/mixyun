@@ -121,8 +121,9 @@ func (b *loudnessBook) keep(videoID string, lkfs float64) {
 // returns is closed once the book knows, or won't.
 func (b *loudnessBook) learn(videoID string) <-chan struct{} {
 	done := make(chan struct{})
-	// YouTube measures its videos alone, not NetEase's songs.
-	if _, netEase := stream.NetEaseSong(videoID); b == nil || netEase {
+	// YouTube measures its videos alone, not NetEase's or Navidrome's songs.
+	_, netEase := stream.NetEaseSong(videoID)
+	if _, navidrome := stream.NavidromeSong(videoID); b == nil || netEase || navidrome {
 		close(done)
 		return done
 	}

@@ -47,6 +47,8 @@ type AccountsStatus struct {
 	// ListenBrainz is the connection to ListenBrainz, or to the user's own
 	// server of its API.
 	ListenBrainz ListenBrainzAccount `json:"listenbrainz"`
+	// Navidrome is the connection to the user's own Navidrome server.
+	Navidrome NavidromeAccount `json:"navidrome"`
 }
 
 // Accounts signs the user in and out of their music services.
@@ -97,6 +99,7 @@ func (a *App) knownAccountsStatus() AccountsStatus {
 	}
 	status.Spotify.Profile = spotifyMe
 	status.ListenBrainz = a.listenbrainzAccount()
+	status.Navidrome = a.navidromeAccount()
 	read := false
 	if status.Spotify.SignedIn && spotifyMe == nil {
 		status.Spotify.Error = errs.spotify
@@ -156,7 +159,7 @@ func (a *App) accountsStatus(ctx context.Context) AccountsStatus {
 			sp.Profile = &me
 		}
 	}
-	return AccountsStatus{Spotify: sp, YouTube: a.youtubeAccount(ctx), NetEase: a.neteaseAccount(ctx), Lastfm: a.lastfmAccount(), ListenBrainz: a.listenbrainzAccount()}
+	return AccountsStatus{Spotify: sp, YouTube: a.youtubeAccount(ctx), NetEase: a.neteaseAccount(ctx), Lastfm: a.lastfmAccount(), ListenBrainz: a.listenbrainzAccount(), Navidrome: a.navidromeAccount()}
 }
 
 // spotifyProfile returns the signed-in Spotify user, asking Spotify once.
