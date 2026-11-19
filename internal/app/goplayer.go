@@ -66,6 +66,7 @@ func (a *App) applyEngine(s settings.Settings) {
 	e.SetEqualizer(s.Equalizer.Enabled, gains, s.Equalizer.Preamp)
 	e.SetNormalize(s.Normalize)
 	e.SetLoudness(s.Loudness)
+	e.SetReplayGain(audio.ReplayGainMode(s.ReplayGain))
 	e.SetSurround(s.Surround)
 	a.applyOutputDevice(e, s.OutputDevice)
 }

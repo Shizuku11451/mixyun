@@ -31,6 +31,16 @@ const (
 	QualitySaver Quality = "saver"
 )
 
+// ReplayGain chooses which ReplayGain tags the music on this computer
+// plays by (#23).
+type ReplayGain string
+
+const (
+	ReplayGainOff   ReplayGain = "off"
+	ReplayGainTrack ReplayGain = "track"
+	ReplayGainAlbum ReplayGain = "album"
+)
+
 // Playback is how MixMusic plays: the Spotify tracks, the sound, the speed,
 // the music videos and the equalizer of Settings › Playback, and the
 // volume.
@@ -60,6 +70,10 @@ type Playback struct {
 	// Loudness turns tracks louder than -14 LKFS down to it, from YouTube's
 	// measure of each: Even loudness.
 	Loudness bool `json:"loudness"`
+	// ReplayGain plays the files of the music on this computer by their
+	// track's or their album's ReplayGain tags. It is off at first, as they
+	// played before.
+	ReplayGain ReplayGain `json:"replayGain"`
 	// Surround plays a track's 5.1 surround audio, when YouTube has one,
 	// in place of its stereo audio: on six speakers where the output device
 	// has them, else mixed down to stereo as the track's stream asks.
@@ -117,6 +131,7 @@ func defaultPlayback() Playback {
 	var p Playback
 	p.SpotifyPlayback = defaultSpotifyPlayback(runtime.GOOS)
 	p.Quality = QualityBest
+	p.ReplayGain = ReplayGainOff
 	p.Loudness = true
 	p.Autoplay = true
 	p.SongSpeed = 1
@@ -150,6 +165,9 @@ func (p Playback) clean(d Playback) Playback {
 	}
 	if p.Quality != QualitySaver {
 		p.Quality = QualityBest
+	}
+	if p.ReplayGain != ReplayGainTrack && p.ReplayGain != ReplayGainAlbum {
+		p.ReplayGain = ReplayGainOff
 	}
 	p.Crossfade = min(max(p.Crossfade, 0), 12)
 	p.OutputDevice = p.OutputDevice.clean()
