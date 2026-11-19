@@ -32,19 +32,19 @@ func TestWelcomeFirstRun(t *testing.T) {
 	}
 	tt := testerOf(t, s, 1280, 900)
 	show(s, tt, "/")
-	if !tt.HasText("Welcome to Mixyun") || !tt.HasText("Step 1 of 5") {
+	if !tt.HasText("Welcome to Mixyun") || !tt.HasText("Step 1 of 6") {
 		t.Fatalf("the guide shows %q", tt.Texts())
 	}
 	// Next has the focus, for Enter; Shift+Tab reaches Back before it.
 	tt.Key(0, ui.KeyEnter)
 	tt.Advance(time.Second)
-	if !tt.HasText("Step 2 of 5") || !tt.HasText("Follow the computer") {
+	if !tt.HasText("Step 2 of 6") || !tt.HasText("Follow the computer") {
 		t.Fatalf("Next shows %q", tt.Texts())
 	}
 	tt.Key(ui.Shift, ui.KeyTab)
 	tt.Key(0, ui.KeyEnter)
 	tt.Advance(time.Second)
-	if !tt.HasText("Step 1 of 5") {
+	if !tt.HasText("Step 1 of 6") {
 		t.Fatalf("Back shows %q", tt.Texts())
 	}
 	tt.Key(0, ui.KeyEscape)
@@ -61,7 +61,7 @@ func TestWelcomeFirstRun(t *testing.T) {
 	show(s, tt, "/settings/general")
 	click(t, s, tt, "show the guide")
 	tt.Advance(time.Second)
-	if !s.welcome.open || !tt.HasText("Step 1 of 5") {
+	if !s.welcome.open || !tt.HasText("Step 1 of 6") {
 		t.Errorf("Settings › General doesn't open the guide: %q", tt.Texts())
 	}
 }

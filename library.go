@@ -8,6 +8,7 @@ import (
 
 	"github.com/fzn0x/mixmusic/internal/app"
 	"github.com/fzn0x/mixmusic/internal/media"
+	"github.com/fzn0x/mixmusic/internal/settings"
 	"github.com/fzn0x/mixmusic/locales"
 )
 
@@ -52,7 +53,7 @@ func (s *shell) libraryPage(c *ui.Context, tab string) {
 	var ids, labels []string
 	for _, sec := range librarySections {
 		if (sec == "spotify" && !accounts.Spotify.SignedIn) || (sec == "youtube" && !accounts.YouTube.SignedIn) || (sec == "netease" && !accounts.NetEase.SignedIn) ||
-			(sec == "disliked" && len(disliked) == 0) {
+			(sec == "disliked" && len(disliked) == 0) || !s.librarySectionOn(sec) {
 			continue
 		}
 		ids = append(ids, sec)
@@ -117,6 +118,26 @@ func (s *shell) libraryPage(c *ui.Context, tab string) {
 		}
 	})
 }
+
+// librarySectionOn tells whether the music source of the library's pivot
+// sec is on: the pivots of no source always are.
+func (s *shell) librarySectionOn(sec string) bool {
+	switch sec {
+	case "spotify":
+		return s.sourceOn(media.SourceSpotify)
+	case "netease":
+		return s.sourceOn(media.SourceNetEase)
+	case "youtube":
+		return s.sourceOn(media.SourceYouTube)
+	case "computer":
+		return s.sourceOn(media.SourceFile)
+	case "podcasts":
+		return s.set.SourceOn(settings.SourcePodcasts)
+	}
+	return true
+}
+
+// shortcut: the library's pivots show by source but keep their order; a reorder once users ask for one.
 
 // accounts returns the accounts' state, kept until they change.
 func (s *shell) accounts() app.AccountsStatus {

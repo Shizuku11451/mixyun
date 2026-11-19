@@ -25,6 +25,7 @@ var welcomeSteps = []func(*shell, *ui.Context){
 		s.themeSettings(c)
 		s.layoutSettings(c)
 	},
+	(*shell).sourceSettings,
 	(*shell).accountSettings,
 	func(s *shell, c *ui.Context) {
 		s.group(c, locales.LyricsSettingsGroup(), func() { s.translateToRow(c) })

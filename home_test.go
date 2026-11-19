@@ -61,7 +61,7 @@ func TestHomeYoursAlone(t *testing.T) {
 	}
 	tt := tester(t, s)
 	s.loads["home:netease"] = &loaded[[]media.Shelf]{}
-	s.homeFilter = 1
+	s.set.HomePivot = string(media.SourceLocal)
 	show(s, tt, "/")
 	if !shelfShows(tt, "Recently played") {
 		t.Errorf("yours doesn't show what played: %q", tt.Texts())

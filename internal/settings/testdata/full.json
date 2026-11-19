@@ -64,6 +64,14 @@
       "hidden": true
     }
   ],
+  "sourcesOff": [
+    "youtube",
+    "podcasts"
+  ],
+  "homePivot": "netease",
+  "sidebarHidden": [
+    "stats"
+  ],
   "spotifyPlayback": "match",
   "spotifyDevice": "device-1",
   "quality": "saver",

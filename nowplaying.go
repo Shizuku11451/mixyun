@@ -11,6 +11,7 @@ import (
 // nowPlayingPage gives the track playing the whole pane: its sleeve under
 // a visualizer, or the picture of a music video, with its credits under
 // it, and its lyrics.
+// shortcut: the visualizer, the quality line and plugins' widgets always show; switches for them once users ask (#6).
 func (s *shell) nowPlayingPage(c *ui.Context) {
 	k := &s.lk
 	cur, ok := s.st.Current()

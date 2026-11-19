@@ -16,6 +16,7 @@ import (
 	"github.com/fzn0x/mixmusic/internal/match"
 	"github.com/fzn0x/mixmusic/internal/media"
 	"github.com/fzn0x/mixmusic/internal/player"
+	"github.com/fzn0x/mixmusic/internal/settings"
 	"github.com/fzn0x/mixmusic/internal/spotify"
 	"github.com/fzn0x/mixmusic/internal/youtube"
 	"github.com/fzn0x/mixmusic/lyrics"
@@ -65,9 +66,17 @@ func (c *Catalog) search(ctx context.Context, query string) (SearchResponse, err
 		wg                  sync.WaitGroup
 		neErr, ytErr, spErr error
 	)
-	wg.Go(func() { res.NetEase, neErr = c.a.netease.Search(ctx, query) })
-	wg.Go(func() { res.YouTube, ytErr = c.a.youtube.SearchAll(ctx, query) })
-	if res.SpotifySignedIn {
+	// The services the user turned off aren't asked.
+	set := c.a.settings.Get()
+	ne, yt := set.SourceOn(settings.SourceNetEase), set.SourceOn(settings.SourceYouTubeMusic)
+	sp := res.SpotifySignedIn && set.SourceOn(settings.SourceSpotify)
+	if ne {
+		wg.Go(func() { res.NetEase, neErr = c.a.netease.Search(ctx, query) })
+	}
+	if yt {
+		wg.Go(func() { res.YouTube, ytErr = c.a.youtube.SearchAll(ctx, query) })
+	}
+	if sp {
 		wg.Go(func() { res.Spotify, spErr = c.a.spotify.Search(ctx, query, c.a.spotifyUserID(ctx)) })
 	}
 	wg.Wait()
@@ -83,8 +92,8 @@ func (c *Catalog) search(ctx context.Context, query string) (SearchResponse, err
 		res.Spotify = emptyResults()
 		res.Errors = append(res.Errors, spErr.Error())
 	}
-	if neErr != nil && ytErr != nil && (spErr != nil || !res.SpotifySignedIn) {
-		return res, neErr
+	if err := cmp.Or(neErr, ytErr, spErr); err != nil && (neErr != nil || !ne) && (ytErr != nil || !yt) && (spErr != nil || !sp) {
+		return res, err
 	}
 	return res, nil
 }
@@ -105,6 +114,7 @@ func (c *Catalog) SearchYouTube(ctx context.Context, query string) (media.Search
 // searches, songs, albums, artists and playlists of NetEase Cloud Music and
 // YouTube Music in turn, NetEase's first, or the recent searches while
 // nothing is typed. It fails only when both did.
+// shortcut: it asks both services, those turned off too; skip them as search does once users see it.
 func (c *Catalog) Suggestions(ctx context.Context, input string) (media.Suggestions, error) {
 	if strings.TrimSpace(input) == "" {
 		return media.Suggestions{Searches: c.a.library.Searches()}, nil

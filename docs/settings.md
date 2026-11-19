@@ -34,8 +34,8 @@ folded too.
 | Advanced › Settings file | **open** opens `settings.json`, **show in folder** shows it in its folder; **Reset settings** puts back the settings of a new install, after asking. Your accounts, library and add-ons stay. |
 
 A new install, which has no `settings.json` yet, opens on the **welcome
-guide**: five steps, with **Back**, **Next** and **Skip**, for the language,
-the theme and the layout, your accounts, the language lyrics translate to,
+guide**: six steps, with **Back**, **Next** and **Skip**, for the language,
+the theme and the layout, the music sources, your accounts, the language lyrics translate to,
 and how MixMusic starts and closes. Each step starts at the default, so
 **Next** straight through is a working setup, and **Skip** or
 <kbd>Esc</kbd> keeps what you chose so far. Once finished or skipped, it
@@ -45,6 +45,22 @@ Without Install updates without asking, a new version asks in a pop-up:
 **install** it, **later**, which asks again at the next start, or **skip
 this version**. The `.deb`, the `.rpm`, the AppImage and the Flatpak can't
 replace their own files, so they offer the new version's download instead.
+
+### Sources
+
+| Group | What's there |
+|---|---|
+| Music sources | A switch for each of NetEase Cloud Music, Spotify, YouTube Music, YouTube videos, local files and podcasts, all on at first; one stays on. **Reset to default** turns them all on. |
+
+A source turned off leaves Home, whose shelves of it aren't even fetched,
+Search's All and its services, the library's tabs, the pivots and the
+sign-ins of Accounts; Explore, YouTube Music's alone, leaves the sidebar
+with it. Its account stays signed in, and what you liked, added or
+downloaded of it comes back once it's on again. With one service left, the
+pivots of Home and Search hide. Spotify's songs play matched on NetEase
+Cloud Music and YouTube Music, which matching still searches while they're
+off. They're kept in `sourcesOff`. Home's pivot, chosen last, is kept in
+`homePivot` for the next launch.
 
 ### Appearance
 
@@ -56,6 +72,7 @@ How MixMusic looks; [Look and feel](look-and-feel.md) tells all of it.
 | [Theme](look-and-feel.md#themes) | **Follow the computer**, with **In light mode** and **In dark mode**; a card for each theme; **get more themes**, which opens the marketplace, and **open themes folder**. Themes that didn't load are listed with the reason. |
 | [*Theme* options](look-and-feel.md#theme-options) | The options of a built-in theme that has some, as Aurora's drifting lights and glass blur. |
 | Colour and type | **[Colours from a file](look-and-feel.md#colours-from-a-file)** (pywal, matugen or a file of your own) and its **Colour file**, **[Follow the artwork](look-and-feel.md#the-accent-and-the-artwork)**, **Accent colour**, **[Zoom](look-and-feel.md#density-text-size-and-zoom)**, **Text size**, **Density**, **Icons only in the sidebar** and **Wavy progress bar**. |
+| Sidebar | A switch for each of Explore, Roam, Stats and Marketplace, kept in `sidebarHidden`; Home, Search, Library and Settings always show. **Reset to default** shows them all. |
 
 ### Playback
 

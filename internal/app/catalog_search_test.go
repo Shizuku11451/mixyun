@@ -5,11 +5,14 @@ import (
 	"errors"
 	"net/http"
 	"net/http/httptest"
+	"path/filepath"
 	"testing"
 	"time"
 
 	"github.com/fzn0x/mixmusic/internal/netease"
+	"github.com/fzn0x/mixmusic/internal/settings"
 	"github.com/fzn0x/mixmusic/internal/spotify"
+	"github.com/fzn0x/mixmusic/internal/store"
 	"github.com/fzn0x/mixmusic/internal/youtube"
 )
 
@@ -41,6 +44,12 @@ func TestSearchListsSpotifyPlaylistsItOpens(t *testing.T) {
 	a.youtube.BaseURL = yt.URL
 	a.netease = netease.New()
 	a.netease.BaseURL = yt.URL
+	set := settings.Default()
+	st, err := store.Open(filepath.Join(t.TempDir(), "settings.json"), set)
+	if err != nil {
+		t.Fatal(err)
+	}
+	a.settings = st
 
 	res, err := (&Catalog{a: a}).search(context.Background(), "thailand")
 	if err != nil {
@@ -48,6 +57,15 @@ func TestSearchListsSpotifyPlaylistsItOpens(t *testing.T) {
 	}
 	if got := res.Spotify.Playlists; len(got) != 1 || got[0].Title != "My Thai mix" {
 		t.Errorf("Spotify's playlists = %+v, want only the user's own", got)
+	}
+
+	// Spotify turned off isn't asked: the others failing, the search does.
+	set.SourcesOff = []string{settings.SourceSpotify}
+	if err := st.Set(set); err != nil {
+		t.Fatal(err)
+	}
+	if res, err := (&Catalog{a: a}).search(context.Background(), "thailand"); err == nil || len(res.Spotify.Playlists) > 0 {
+		t.Errorf("a search with Spotify off asks it: %+v, %v", res.Spotify, err)
 	}
 }
 

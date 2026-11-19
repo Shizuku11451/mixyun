@@ -1253,6 +1253,8 @@
     }
   },
   "crossfadeTitle": "Crossfade",
+  "customizeReset": "Reset to default",
+  "customizeResetButton": "reset",
   "desktopSettingsDiscordAbout": "While Discord runs, your profile says what you listen to: you choose its lines, cover, time and button.",
   "desktopSettingsDiscordAfter": " and paste its application ID.",
   "desktopSettingsDiscordAppID": "Discord application ID",
@@ -5479,6 +5481,7 @@
   "settingsTabPlayback": "playback",
   "settingsTabPlugins": "plugins",
   "settingsTabShortcuts": "shortcuts",
+  "settingsTabSources": "sources",
   "settingsTabStorage": "storage",
   "settingsTitle": "Settings",
   "shareCopied": "Copied the link",
@@ -5634,6 +5637,9 @@
     }
   },
   "shortcutsSet": "set",
+  "sidebarAbout": "Home, Search, Library and Settings always show. Explore shows YouTube Music's alone, and leaves while it's off.",
+  "sidebarGroup": "Sidebar",
+  "sidebarResetAbout": "Shows every page in the sidebar.",
   "skipAIDesc": "Skips the tracks YouTube labels as made with AI. YouTube labels only some of them, so others still play.",
   "skipAITitle": "Skip songs made with AI",
   "skipPartsAbout": "Passes over the parts of music videos, uploads and episodes that SponsorBlock's community marks, and shows them on the seek bar. While it's on, Mixyun asks SponsorBlock of each video it plays from YouTube Music, sending the first 4 characters of a hash of its ID, never the ID.",
@@ -5684,6 +5690,12 @@
   },
   "skipPartsSwitchLabel": "Skip the parts SponsorBlock marks",
   "skipPartsTitle": "Skip the parts SponsorBlock marks",
+  "sourcesAbout": "A source turned off leaves Home, Search, the library and Accounts. Its account stays signed in, and what you liked, added or downloaded of it comes back once it's on again. One stays on.",
+  "sourcesFiles": "Local files",
+  "sourcesGroup": "Music sources",
+  "sourcesMatchNote": "Spotify's songs play by finding them here: matching still looks here while it's off, but if it can't, some Spotify songs may not play.",
+  "sourcesResetAbout": "Turns every music source on.",
+  "sourcesYouTube": "YouTube videos",
   "speedAt": "{speed}, at their own pitch.",
   "@speedAt": {
     "placeholders": {
@@ -6596,7 +6608,7 @@
   "welcomeBack": "Back",
   "welcomeDone": "Done",
   "welcomeGuide": "Welcome guide",
-  "welcomeGuideAbout": "Choose the language, the look, your accounts, the lyrics and how Mixyun starts, step by step.",
+  "welcomeGuideAbout": "Choose the language, the look, the music sources, your accounts, the lyrics and how Mixyun starts, step by step.",
   "welcomeGuideOpen": "show the guide",
   "welcomeNext": "Next",
   "welcomeSkip": "Skip",

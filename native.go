@@ -214,7 +214,6 @@ type shell struct {
 	home homeArrange
 	// The pages' own state. local are the home page's own shelves, of the
 	// library at localVersion once localBuilt.
-	homeFilter   int
 	local        []media.Shelf
 	localVersion uint64
 	localBuilt   bool

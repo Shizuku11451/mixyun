@@ -11,6 +11,7 @@ import (
 	"github.com/egoist/mygo/ui"
 
 	"github.com/fzn0x/mixmusic/internal/app"
+	"github.com/fzn0x/mixmusic/internal/media"
 	"github.com/fzn0x/mixmusic/internal/youtube"
 	"github.com/fzn0x/mixmusic/locales"
 )
@@ -22,9 +23,16 @@ func init() { addSettings("accounts", 10, (*shell).accountSettings) }
 // launch.
 func (s *shell) accountSettings(c *ui.Context) {
 	st := s.accounts()
-	s.spotifyAccount(c, st.Spotify)
-	s.neteaseAccount(c, st.NetEase)
-	s.youtubeAccount(c, st.YouTube)
+	// A source turned off keeps its account signed in, out of sight.
+	if s.sourceOn(media.SourceSpotify) {
+		s.spotifyAccount(c, st.Spotify)
+	}
+	if s.sourceOn(media.SourceNetEase) {
+		s.neteaseAccount(c, st.NetEase)
+	}
+	if s.sourceOn(media.SourceYouTube) {
+		s.youtubeAccount(c, st.YouTube)
+	}
 	s.lastfmAccount(c, st.Lastfm)
 }
 

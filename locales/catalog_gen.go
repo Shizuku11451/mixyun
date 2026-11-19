@@ -4930,6 +4930,26 @@ func (msgs Messages) CrossfadeTitle() string {
 	return Catalog.Format(msgs.locale, "crossfadeTitle", nil)
 }
 
+// CustomizeReset says "Reset to default"
+// in the language the app shows.
+func CustomizeReset() string { return In(i18n.Locale()).CustomizeReset() }
+
+// CustomizeReset says "Reset to default"
+// in the language of msgs.
+func (msgs Messages) CustomizeReset() string {
+	return Catalog.Format(msgs.locale, "customizeReset", nil)
+}
+
+// CustomizeResetButton says "reset"
+// in the language the app shows.
+func CustomizeResetButton() string { return In(i18n.Locale()).CustomizeResetButton() }
+
+// CustomizeResetButton says "reset"
+// in the language of msgs.
+func (msgs Messages) CustomizeResetButton() string {
+	return Catalog.Format(msgs.locale, "customizeResetButton", nil)
+}
+
 // DesktopSettingsDiscordAbout says "While Discord runs, your profile says what you listen to: you choose its lines, cover, time and button."
 // in the language the app shows.
 func DesktopSettingsDiscordAbout() string { return In(i18n.Locale()).DesktopSettingsDiscordAbout() }
@@ -18586,6 +18606,16 @@ func (msgs Messages) SettingsTabShortcuts() string {
 	return Catalog.Format(msgs.locale, "settingsTabShortcuts", nil)
 }
 
+// SettingsTabSources says "sources"
+// in the language the app shows.
+func SettingsTabSources() string { return In(i18n.Locale()).SettingsTabSources() }
+
+// SettingsTabSources says "sources"
+// in the language of msgs.
+func (msgs Messages) SettingsTabSources() string {
+	return Catalog.Format(msgs.locale, "settingsTabSources", nil)
+}
+
 // SettingsTabStorage says "storage"
 // in the language the app shows.
 func SettingsTabStorage() string { return In(i18n.Locale()).SettingsTabStorage() }
@@ -19064,6 +19094,36 @@ func (msgs Messages) ShortcutsSet() string {
 	return Catalog.Format(msgs.locale, "shortcutsSet", nil)
 }
 
+// SidebarAbout says "Home, Search, Library and Settings always show. Explore shows YouTube Music's alone, and leaves while it's off."
+// in the language the app shows.
+func SidebarAbout() string { return In(i18n.Locale()).SidebarAbout() }
+
+// SidebarAbout says "Home, Search, Library and Settings always show. Explore shows YouTube Music's alone, and leaves while it's off."
+// in the language of msgs.
+func (msgs Messages) SidebarAbout() string {
+	return Catalog.Format(msgs.locale, "sidebarAbout", nil)
+}
+
+// SidebarGroup says "Sidebar"
+// in the language the app shows.
+func SidebarGroup() string { return In(i18n.Locale()).SidebarGroup() }
+
+// SidebarGroup says "Sidebar"
+// in the language of msgs.
+func (msgs Messages) SidebarGroup() string {
+	return Catalog.Format(msgs.locale, "sidebarGroup", nil)
+}
+
+// SidebarResetAbout says "Shows every page in the sidebar."
+// in the language the app shows.
+func SidebarResetAbout() string { return In(i18n.Locale()).SidebarResetAbout() }
+
+// SidebarResetAbout says "Shows every page in the sidebar."
+// in the language of msgs.
+func (msgs Messages) SidebarResetAbout() string {
+	return Catalog.Format(msgs.locale, "sidebarResetAbout", nil)
+}
+
 // SkipAIDesc says "Skips the tracks YouTube labels as made with AI. YouTube labels only some of them, so others still play."
 // in the language the app shows.
 func SkipAIDesc() string { return In(i18n.Locale()).SkipAIDesc() }
@@ -19422,6 +19482,66 @@ func SkipPartsTitle() string { return In(i18n.Locale()).SkipPartsTitle() }
 // in the language of msgs.
 func (msgs Messages) SkipPartsTitle() string {
 	return Catalog.Format(msgs.locale, "skipPartsTitle", nil)
+}
+
+// SourcesAbout says "A source turned off leaves Home, Search, the library and Accounts. Its account stays signed in, and what you liked, a…"
+// in the language the app shows.
+func SourcesAbout() string { return In(i18n.Locale()).SourcesAbout() }
+
+// SourcesAbout says "A source turned off leaves Home, Search, the library and Accounts. Its account stays signed in, and what you liked, a…"
+// in the language of msgs.
+func (msgs Messages) SourcesAbout() string {
+	return Catalog.Format(msgs.locale, "sourcesAbout", nil)
+}
+
+// SourcesFiles says "Local files"
+// in the language the app shows.
+func SourcesFiles() string { return In(i18n.Locale()).SourcesFiles() }
+
+// SourcesFiles says "Local files"
+// in the language of msgs.
+func (msgs Messages) SourcesFiles() string {
+	return Catalog.Format(msgs.locale, "sourcesFiles", nil)
+}
+
+// SourcesGroup says "Music sources"
+// in the language the app shows.
+func SourcesGroup() string { return In(i18n.Locale()).SourcesGroup() }
+
+// SourcesGroup says "Music sources"
+// in the language of msgs.
+func (msgs Messages) SourcesGroup() string {
+	return Catalog.Format(msgs.locale, "sourcesGroup", nil)
+}
+
+// SourcesMatchNote says "Spotify's songs play by finding them here: matching still looks here while it's off, but if it can't, some Spotify so…"
+// in the language the app shows.
+func SourcesMatchNote() string { return In(i18n.Locale()).SourcesMatchNote() }
+
+// SourcesMatchNote says "Spotify's songs play by finding them here: matching still looks here while it's off, but if it can't, some Spotify so…"
+// in the language of msgs.
+func (msgs Messages) SourcesMatchNote() string {
+	return Catalog.Format(msgs.locale, "sourcesMatchNote", nil)
+}
+
+// SourcesResetAbout says "Turns every music source on."
+// in the language the app shows.
+func SourcesResetAbout() string { return In(i18n.Locale()).SourcesResetAbout() }
+
+// SourcesResetAbout says "Turns every music source on."
+// in the language of msgs.
+func (msgs Messages) SourcesResetAbout() string {
+	return Catalog.Format(msgs.locale, "sourcesResetAbout", nil)
+}
+
+// SourcesYouTube says "YouTube videos"
+// in the language the app shows.
+func SourcesYouTube() string { return In(i18n.Locale()).SourcesYouTube() }
+
+// SourcesYouTube says "YouTube videos"
+// in the language of msgs.
+func (msgs Messages) SourcesYouTube() string {
+	return Catalog.Format(msgs.locale, "sourcesYouTube", nil)
 }
 
 // SpeedAt says "{speed}, at their own pitch."
@@ -22650,11 +22770,11 @@ func (msgs Messages) WelcomeGuide() string {
 	return Catalog.Format(msgs.locale, "welcomeGuide", nil)
 }
 
-// WelcomeGuideAbout says "Choose the language, the look, your accounts, the lyrics and how Mixyun starts, step by step."
+// WelcomeGuideAbout says "Choose the language, the look, the music sources, your accounts, the lyrics and how Mixyun starts, step by step."
 // in the language the app shows.
 func WelcomeGuideAbout() string { return In(i18n.Locale()).WelcomeGuideAbout() }
 
-// WelcomeGuideAbout says "Choose the language, the look, your accounts, the lyrics and how Mixyun starts, step by step."
+// WelcomeGuideAbout says "Choose the language, the look, the music sources, your accounts, the lyrics and how Mixyun starts, step by step."
 // in the language of msgs.
 func (msgs Messages) WelcomeGuideAbout() string {
 	return Catalog.Format(msgs.locale, "welcomeGuideAbout", nil)

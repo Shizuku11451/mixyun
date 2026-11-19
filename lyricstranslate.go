@@ -316,6 +316,7 @@ const lyricsRailWidth = 40
 // buttons at the right of the lyrics of t, lit while on, which leaves the
 // lyrics the room above them. Showing in Latin letters under each line or
 // in its place is its button's menu.
+// shortcut: every button the track allows shows; a choice of synced, translate, romanize and share once users ask to trim it (#6).
 func (s *shell) lyricsRail(c *ui.Context, t media.Track, ly lyrics.Lyrics, lang string, canTranslate, canRomanize bool, x *lyricsExtra) {
 	ui.Column(c.Key("lyrics-rail")).Absolute().Top(0).Bottom(0).Right(0).Width(lyricsRailWidth).Gap(8).Justify(ui.Center).AlignItems(ui.Center).Children(func() {
 		if ly.Synced {

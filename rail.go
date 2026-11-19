@@ -103,7 +103,8 @@ func (s *shell) rail(c *ui.Context) {
 		pad = 17
 	}
 	items := s.plugins.SidebarItems()
-	entries := float32(len(nav) + len(items))
+	pages := s.railPages()
+	entries := float32(len(pages) + len(items))
 	navLeast := entries*s.leastEntry() + (entries-1)*4
 	railGround := k.bg
 	if s.onBackdrop() {
@@ -114,7 +115,7 @@ func (s *shell) rail(c *ui.Context) {
 		// Where the rail is short, and only there, as the mixes grow from
 		// nothing into the rest, the entries give some of their height.
 		ui.Column(c).Gap(4).MinHeight(navLeast).Children(func() {
-			for _, n := range nav {
+			for _, n := range pages {
 				s.navEntry(c, "nav-"+n.id, k.words(n.label()), icon(n.icon), n.path, n.id == current)
 			}
 			for _, it := range items {
