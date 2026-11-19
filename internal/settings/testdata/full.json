@@ -143,6 +143,7 @@
   "floatLocked": true,
   "mediaKeys": false,
   "advancedSettings": true,
+  "firstRunDone": true,
   "assistantControl": true,
   "roomName": "Ana",
   "roomSongs": "add",

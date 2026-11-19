@@ -109,6 +109,7 @@ func (s *shell) commands() []command {
 			s.notes = append(s.notes, notice(locales.CmdAddonsReloaded()))
 		}},
 		{"settings.openFile", locales.CmdSettingsOpenFile(), "", locales.CmdGroupSettings(), s.openSettingsFile},
+		{"settings.welcome", locales.CmdSettingsWelcome(), "", locales.CmdGroupSettings(), s.openWelcome},
 	}
 	cmds = append(cmds, s.themeCommands...)
 	cmds = append(cmds, s.lyricStyleCommands()...)

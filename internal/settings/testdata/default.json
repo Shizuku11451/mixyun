@@ -106,6 +106,7 @@
   "floatLocked": false,
   "mediaKeys": true,
   "advancedSettings": false,
+  "firstRunDone": false,
   "assistantControl": false,
   "roomName": "",
   "roomSongs": "ask",

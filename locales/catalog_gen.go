@@ -2814,6 +2814,16 @@ func (msgs Messages) CmdSettingsOpenFile() string {
 	return Catalog.Format(msgs.locale, "cmdSettingsOpenFile", nil)
 }
 
+// CmdSettingsWelcome says "Show the welcome guide"
+// in the language the app shows.
+func CmdSettingsWelcome() string { return In(i18n.Locale()).CmdSettingsWelcome() }
+
+// CmdSettingsWelcome says "Show the welcome guide"
+// in the language of msgs.
+func (msgs Messages) CmdSettingsWelcome() string {
+	return Catalog.Format(msgs.locale, "cmdSettingsWelcome", nil)
+}
+
 // CmdSpeedAt says "{kind, select, podcasts {Podcasts} other {Songs}} play at {speed}"
 // in the language the app shows.
 func CmdSpeedAt(kind string, speed string) string { return In(i18n.Locale()).CmdSpeedAt(kind, speed) }
@@ -22608,6 +22618,96 @@ func WavyProgressTitle() string { return In(i18n.Locale()).WavyProgressTitle() }
 // in the language of msgs.
 func (msgs Messages) WavyProgressTitle() string {
 	return Catalog.Format(msgs.locale, "wavyProgressTitle", nil)
+}
+
+// WelcomeBack says "Back"
+// in the language the app shows.
+func WelcomeBack() string { return In(i18n.Locale()).WelcomeBack() }
+
+// WelcomeBack says "Back"
+// in the language of msgs.
+func (msgs Messages) WelcomeBack() string {
+	return Catalog.Format(msgs.locale, "welcomeBack", nil)
+}
+
+// WelcomeDone says "Done"
+// in the language the app shows.
+func WelcomeDone() string { return In(i18n.Locale()).WelcomeDone() }
+
+// WelcomeDone says "Done"
+// in the language of msgs.
+func (msgs Messages) WelcomeDone() string {
+	return Catalog.Format(msgs.locale, "welcomeDone", nil)
+}
+
+// WelcomeGuide says "Welcome guide"
+// in the language the app shows.
+func WelcomeGuide() string { return In(i18n.Locale()).WelcomeGuide() }
+
+// WelcomeGuide says "Welcome guide"
+// in the language of msgs.
+func (msgs Messages) WelcomeGuide() string {
+	return Catalog.Format(msgs.locale, "welcomeGuide", nil)
+}
+
+// WelcomeGuideAbout says "Choose the language, the look, your accounts, the lyrics and how Mixyun starts, step by step."
+// in the language the app shows.
+func WelcomeGuideAbout() string { return In(i18n.Locale()).WelcomeGuideAbout() }
+
+// WelcomeGuideAbout says "Choose the language, the look, your accounts, the lyrics and how Mixyun starts, step by step."
+// in the language of msgs.
+func (msgs Messages) WelcomeGuideAbout() string {
+	return Catalog.Format(msgs.locale, "welcomeGuideAbout", nil)
+}
+
+// WelcomeGuideOpen says "show the guide"
+// in the language the app shows.
+func WelcomeGuideOpen() string { return In(i18n.Locale()).WelcomeGuideOpen() }
+
+// WelcomeGuideOpen says "show the guide"
+// in the language of msgs.
+func (msgs Messages) WelcomeGuideOpen() string {
+	return Catalog.Format(msgs.locale, "welcomeGuideOpen", nil)
+}
+
+// WelcomeNext says "Next"
+// in the language the app shows.
+func WelcomeNext() string { return In(i18n.Locale()).WelcomeNext() }
+
+// WelcomeNext says "Next"
+// in the language of msgs.
+func (msgs Messages) WelcomeNext() string {
+	return Catalog.Format(msgs.locale, "welcomeNext", nil)
+}
+
+// WelcomeSkip says "Skip"
+// in the language the app shows.
+func WelcomeSkip() string { return In(i18n.Locale()).WelcomeSkip() }
+
+// WelcomeSkip says "Skip"
+// in the language of msgs.
+func (msgs Messages) WelcomeSkip() string {
+	return Catalog.Format(msgs.locale, "welcomeSkip", nil)
+}
+
+// WelcomeStep says "Step {step} of {steps}"
+// in the language the app shows.
+func WelcomeStep(step int, steps int) string { return In(i18n.Locale()).WelcomeStep(step, steps) }
+
+// WelcomeStep says "Step {step} of {steps}"
+// in the language of msgs.
+func (msgs Messages) WelcomeStep(step int, steps int) string {
+	return Catalog.Format(msgs.locale, "welcomeStep", map[string]any{"step": step, "steps": steps})
+}
+
+// WelcomeTitle says "Welcome to Mixyun"
+// in the language the app shows.
+func WelcomeTitle() string { return In(i18n.Locale()).WelcomeTitle() }
+
+// WelcomeTitle says "Welcome to Mixyun"
+// in the language of msgs.
+func (msgs Messages) WelcomeTitle() string {
+	return Catalog.Format(msgs.locale, "welcomeTitle", nil)
 }
 
 // WidgetsLoading says "Loading"

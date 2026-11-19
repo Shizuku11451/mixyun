@@ -471,22 +471,7 @@ func init() { addSettings("lyrics", 10, (*shell).lyricsSettings) }
 // other rows of the lyrics.
 func (s *shell) lyricsSettings(c *ui.Context) {
 	s.group(c, locales.LyricsSettingsGroup(), func() {
-		s.row(c, locales.LyricsSettingsTranslate(), locales.LyricsSettingsDesc(), func() {
-			options := s.translateOptions()
-			chosen := options[0]
-			for i, l := range translateLanguages {
-				if l.code == s.set.LyricsTranslateTo {
-					chosen = options[i+1]
-				}
-			}
-			if s.selectOf(c.Key("translate-to"), &chosen, options).Width(220).Label(locales.LyricsSettingsTranslate()).Changed() {
-				s.set.LyricsTranslateTo = ""
-				if i := slices.Index(options, chosen); i > 0 {
-					s.set.LyricsTranslateTo = translateLanguages[i-1].code
-				}
-				s.save()
-			}
-		})
+		s.translateToRow(c)
 		s.row(c, locales.LyricsSettingsTranslateWith(), locales.LyricsSettingsLLMDesc(), func() {
 			custom := locales.LyricsSettingsLLMCustom()
 			options := []string{"Unison"}
@@ -556,5 +541,26 @@ func (s *shell) lyricsSettings(c *ui.Context) {
 			}
 		})
 		s.settingsOf(c, lyricsRows)
+	})
+}
+
+// translateToRow chooses the language lyrics translate to, or none: in
+// Settings › Lyrics, and in the guide of the first launch.
+func (s *shell) translateToRow(c *ui.Context) {
+	s.row(c, locales.LyricsSettingsTranslate(), locales.LyricsSettingsDesc(), func() {
+		options := s.translateOptions()
+		chosen := options[0]
+		for i, l := range translateLanguages {
+			if l.code == s.set.LyricsTranslateTo {
+				chosen = options[i+1]
+			}
+		}
+		if s.selectOf(c.Key("translate-to"), &chosen, options).Width(220).Label(locales.LyricsSettingsTranslate()).Changed() {
+			s.set.LyricsTranslateTo = ""
+			if i := slices.Index(options, chosen); i > 0 {
+				s.set.LyricsTranslateTo = translateLanguages[i-1].code
+			}
+			s.save()
+		}
 	})
 }

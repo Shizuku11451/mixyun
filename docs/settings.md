@@ -30,7 +30,16 @@ folded too.
 | Language | **System**, the default, takes the first of the computer's preferred languages MixMusic has, or else English; each of its languages follows, named in itself. A choice applies at once. |
 | Start and close | **[Close to the tray](desktop.md#close-to-the-tray)**: closing the window keeps the music playing; quit from the tray icon. Off at first. **[Start at login](desktop.md#start-at-login)**: starts MixMusic, hidden, when you sign in to your computer. |
 | [Updates](how-it-works.md#mixmusic-itself) | **Check for updates**, at start and every few hours, and **Install updates without asking**, which downloads them in the background for the next launch. |
+| Welcome guide | **open** opens again the guide of the first launch. |
 | Advanced › Settings file | **open** opens `settings.json`, **show in folder** shows it in its folder; **Reset settings** puts back the settings of a new install, after asking. Your accounts, library and add-ons stay. |
+
+A new install, which has no `settings.json` yet, opens on the **welcome
+guide**: five steps, with **Back**, **Next** and **Skip**, for the language,
+the theme and the layout, your accounts, the language lyrics translate to,
+and how MixMusic starts and closes. Each step starts at the default, so
+**Next** straight through is a working setup, and **Skip** or
+<kbd>Esc</kbd> keeps what you chose so far. Once finished or skipped, it
+doesn't open again by itself.
 
 Without Install updates without asking, a new version asks in a pop-up:
 **install** it, **later**, which asks again at the next start, or **skip
@@ -378,6 +387,7 @@ while you're not typing in a text field. The ID is the command's name in
 |---|---|---|---|
 | Reload add-ons | none | none | `addons.reload` |
 | Open the settings file | none | none | `settings.openFile` |
+| Show the welcome guide | none | none | `settings.welcome` |
 | Theme: *name*, one for each theme | none | none | `theme.<theme id>` |
 | Lyrics style: *name*, one for each [style of the full-screen lyrics](lyrics.md#full-screen-lyrics) | none | none | `lyrics.style.<style id>` |
 

@@ -17,11 +17,14 @@ import (
 
 func init() { addSettings("accounts", 10, (*shell).accountSettings) }
 
-// accountSettings sign in and out of Spotify, NetEase Cloud Music and Last.fm.
+// accountSettings sign in and out of Spotify, NetEase Cloud Music, YouTube
+// Music and Last.fm: in Settings › Accounts, and in the guide of the first
+// launch.
 func (s *shell) accountSettings(c *ui.Context) {
 	st := s.accounts()
 	s.spotifyAccount(c, st.Spotify)
 	s.neteaseAccount(c, st.NetEase)
+	s.youtubeAccount(c, st.YouTube)
 	s.lastfmAccount(c, st.Lastfm)
 }
 

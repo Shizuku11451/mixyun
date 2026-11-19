@@ -510,6 +510,7 @@
     }
   },
   "cmdSettingsOpenFile": "Open the settings file",
+  "cmdSettingsWelcome": "Show the welcome guide",
   "cmdSpeedAt": "{kind, select, podcasts {Podcasts} other {Songs}} play at {speed}",
   "@cmdSpeedAt": {
     "placeholders": {
@@ -6592,6 +6593,25 @@
   "volumeUnmute": "Unmute",
   "wavyProgressDescription": "The played part of the seek bar is a gentle wave that moves while music plays and lies flat while it's paused. It holds still while your system asks for less motion.",
   "wavyProgressTitle": "Wavy progress bar",
+  "welcomeBack": "Back",
+  "welcomeDone": "Done",
+  "welcomeGuide": "Welcome guide",
+  "welcomeGuideAbout": "Choose the language, the look, your accounts, the lyrics and how Mixyun starts, step by step.",
+  "welcomeGuideOpen": "show the guide",
+  "welcomeNext": "Next",
+  "welcomeSkip": "Skip",
+  "welcomeStep": "Step {step} of {steps}",
+  "@welcomeStep": {
+    "placeholders": {
+      "step": {
+        "type": "int"
+      },
+      "steps": {
+        "type": "int"
+      }
+    }
+  },
+  "welcomeTitle": "Welcome to Mixyun",
   "widgetsLoading": "Loading",
   "widgetsTryAgain": "try again",
   "youtubeBrowserAbout": "Mixyun opens the browser with a new, empty profile of its own, at YouTube Music's sign-in. Sign in there as in any browser: Mixyun then takes the session, closes the browser and deletes the profile. Your own profiles stay as they are.",
