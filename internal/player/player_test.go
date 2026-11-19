@@ -206,6 +206,8 @@ func (s *fakeStream) Load(url string, cue audio.Cue) error {
 
 func (s *fakeStream) Preload(url string) { s.record("preload %s", url) }
 
+func (s *fakeStream) Follow(url string) { s.record("follow %s", url) }
+
 func (s *fakeStream) Crossfade(url string, d time.Duration, cue audio.Cue) error {
 	s.record("crossfade %s %v%s", url, d, atSpeed(cue.Speed))
 	return nil

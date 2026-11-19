@@ -77,6 +77,12 @@ type Engine struct {
 	paused    bool
 	normalize bool
 	loudness  bool
+	// follow is the URL of the track preloaded on the idle deck that the
+	// active one runs into without a gap as it ends, as Follow told: ""
+	// for none. chained is set once it did, until the event loop told the
+	// player the track before ended.
+	follow  string
+	chained bool
 	// replayGain is which ReplayGain tags files play by.
 	replayGain ReplayGainMode
 	// skips are the parts of the tracks the decks pass over, by URL, as
@@ -163,7 +169,27 @@ func (e *Engine) Load(url string, cue Cue) error {
 	e.mu.Lock()
 	var stale []*deck
 	e.fading = false
+	e.follow = ""
 	other := 1 - e.active
+	if d := e.decks[e.active]; d != nil && d.chained && d.url == url && cue.Start == 0 {
+		// The track it ran into without a gap plays on, as it is.
+		d.chained = false
+		d.speed = clampSpeed(cue.Speed)
+		stale := e.decks[other]
+		e.decks[other] = nil
+		if !cue.Autoplay {
+			e.levels[e.active].to(0, pauseFade)
+		}
+		e.reported.ended, e.reported.failed = nil, nil
+		e.paused = true
+		e.mu.Unlock()
+		closeDecks([]*deck{stale})
+		e.wake()
+		if cue.Autoplay {
+			return e.Play()
+		}
+		return nil
+	}
 	if d := e.decks[other]; d != nil && d.url == url && cue.Start == 0 && d.fresh() {
 		// The preloaded track: the decks swap.
 		stale = append(stale, e.decks[e.active])
@@ -174,6 +200,7 @@ func (e *Engine) Load(url string, cue Cue) error {
 		e.decks[other] = nil
 		e.decks[e.active] = newDeckSkipping(url, cue.Start, e.skips[url], e.open, e.wake)
 	}
+	e.chained = false
 	d := e.decks[e.active]
 	d.gain = ramp{value: 1, target: 1}
 	d.speed = clampSpeed(cue.Speed)
@@ -205,12 +232,54 @@ func (e *Engine) Preload(url string) {
 	closeDecks([]*deck{stale})
 }
 
+// Follow has the active deck run into url as it ends, without a gap, once
+// Preload loaded url on the idle deck and its first frames are there: the
+// two tracks join frame by frame, without silence or a fade between them.
+// The engine tells Ended of the track before, and Load(url) takes the one
+// that plays on. "" follows nothing, as a track that isn't preloaded.
+// Load, Crossfade and Stop forget it.
+func (e *Engine) Follow(url string) {
+	e.mu.Lock()
+	e.follow = url
+	e.mu.Unlock()
+}
+
+// follower returns the deck the active deck d runs into, and its ring, as
+// d read n frames of a quantum from r, its last: one Follow named, fresh,
+// of r's channels, with the rest of the quantum, or its whole track,
+// there. Else nil: d ends as it would, and a track that isn't ready
+// loads as it would. On the audio thread.
+func (e *Engine) follower(d *deck, r *ring, n int) (*deck, *ring) {
+	nd := e.decks[1-e.active]
+	if e.fading || e.follow == "" || n >= quantum || nd == nil || nd.url != e.follow || !nd.fresh() || nd.holdsStill() ||
+		!r.done.Load() || r.readable() > 0 || d.pending(r) || d.cut.Load() || d.failure() != nil {
+		return nil, nil
+	}
+	nr := nd.ring.Load()
+	if nr.channels != r.channels || nr.readable() < int64(quantum-n) && !nr.done.Load() {
+		return nil, nil
+	}
+	return nd, nr
+}
+
+// chain makes nd, which the active deck ran into, the active one, at the
+// level the active one plays at.
+func (e *Engine) chain(nd *deck) {
+	from := e.active
+	e.active = 1 - from
+	nd.gain = ramp{value: 1, target: 1}
+	nd.chained = true
+	e.levels[e.active], e.levels[from] = e.levels[from], ramp{}
+	e.follow, e.chained = "", true
+}
+
 // Crossfade plays url on the idle deck from its start, at cue's Speed,
 // while the active one fades out at its own, over d: the idle deck becomes
 // the active one. The fade starts as url's audio comes (followFade), and
 // ends as the track fading out faded out or ended.
 func (e *Engine) Crossfade(url string, d time.Duration, cue Cue) error {
 	e.mu.Lock()
+	e.follow, e.chained = "", false
 	from, to := e.active, 1-e.active
 	var stale []*deck
 	if dk := e.decks[to]; dk == nil || dk.url != url {
@@ -349,6 +418,7 @@ func (e *Engine) Stop() {
 	e.decks = [2]*deck{}
 	e.levels = [2]ramp{}
 	e.fading = false
+	e.follow, e.chained = "", false
 	wasPaused := e.paused
 	e.paused = true
 	e.mu.Unlock()
@@ -664,6 +734,7 @@ func (e *Engine) renderQuantum() {
 	// their sum.
 	var rings [2]*ring
 	var read [2]int
+	var next *deck
 	for _, i := range [2]int{e.active, 1 - e.active} {
 		d, level := e.decks[i], e.levels[i]
 		if d == nil || (level.value == 0 && level.target == 0) {
@@ -681,6 +752,16 @@ func (e *Engine) renderQuantum() {
 		rings[i], read[i] = r, d.read(r, e.deckBuf[i][:r.channels*quantum])
 		if i == e.active && e.fading {
 			e.followFade(d, r, read[i])
+		}
+		// The track it runs into follows its last frame in the same
+		// quantum, mixed as its own: the trim of the track before holds
+		// for those few frames.
+		if i == e.active {
+			if nd, nr := e.follower(d, r, read[i]); nd != nil {
+				nd.speed = d.speed
+				read[i] += nd.read(nr, e.deckBuf[i][r.channels*read[i]:r.channels*quantum])
+				next = nd
+			}
 		}
 	}
 	for i, d := range e.decks {
@@ -728,6 +809,10 @@ func (e *Engine) renderQuantum() {
 				e.wake() // the end, or a failure
 			}
 		}
+	}
+	if next != nil {
+		e.chain(next)
+		e.wake()
 	}
 	if sounding {
 		e.silentFor = 0
@@ -801,6 +886,14 @@ func (e *Engine) report() {
 		e.levels[other] = ramp{}
 		e.endHold()
 	}
+	// The track the active deck ran into plays on: the one before ended.
+	chainedEnd := e.chained
+	if chainedEnd {
+		e.chained = false
+		other := 1 - e.active
+		stale, e.decks[other] = e.decks[other], nil
+		e.reported.ended = nil
+	}
 	d := e.decks[e.active]
 	var (
 		position, total time.Duration
@@ -865,6 +958,8 @@ func (e *Engine) report() {
 		e.events.Error(failure.Error())
 	case ended:
 		e.events.Playing(false)
+		e.events.Ended()
+	case chainedEnd:
 		e.events.Ended()
 	}
 	if idle {

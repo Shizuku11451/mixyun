@@ -121,6 +121,9 @@ type deck struct {
 	// thread's.
 	trim    smoother
 	trimmed bool
+	// chained is set on the deck the one before ran into without a gap,
+	// until Load takes it: Engine.mu guards it.
+	chained bool
 	// speed is the speed the deck plays at, from MinSpeed to MaxSpeed, at
 	// its track's own pitch, and stretch what plays it so: the audio
 	// thread's.

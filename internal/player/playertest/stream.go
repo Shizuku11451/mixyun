@@ -17,6 +17,7 @@ var _ player.Stream = Stream{}
 func (Stream) Load(string, audio.Cue) error { return nil }
 
 func (Stream) Preload(string) {}
+func (Stream) Follow(string)  {}
 
 func (Stream) Crossfade(string, time.Duration, audio.Cue) error { return nil }
 
