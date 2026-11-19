@@ -35,12 +35,14 @@ func (s *shell) playerBar(c *ui.Context) {
 		bar.Background(k.surface).BorderWidth(1, 0, 0, 0).BorderColor(k.border)
 	}
 	bar.Children(func() {
-		ui.Row(c).Grow(1).Basis(0).MinWidth(220).Gap(12).Children(func() { s.nowPlayingInfo(c) })
+		// What plays gives up room before the volume does: its title trims.
+		ui.Row(c).Grow(1).Basis(0).MinWidth(140).Gap(12).Children(func() { s.nowPlayingInfo(c) })
 		ui.Column(c).Grow(1.6).Basis(0).MinWidth(320).Gap(6).AlignItems(ui.Center).Children(func() {
 			s.transport(c)
 			s.progress(c)
 		})
-		ui.Row(c).Grow(1).Basis(0).MinWidth(220).Gap(4).Justify(ui.End).Children(func() { s.playerSide(c) })
+		// No minimum of its own: its controls' widths are, the volume's whole.
+		ui.Row(c).Grow(1).Basis(0).Gap(4).Justify(ui.End).Children(func() { s.playerSide(c) })
 	})
 }
 
@@ -427,14 +429,14 @@ func (s *shell) showPanel(p string) {
 }
 
 // volumeControl mutes, and sets the volume, as the wheel over it does. Its
-// slider gives up room to the buttons beside it, as the speed's, where the
-// player bar lacks it.
+// slider keeps its width whatever the window's, so that a turn of the
+// volume takes the same stroke.
 func (s *shell) volumeControl(c *ui.Context) {
 	v := s.st.Volume
 	if s.st.Muted {
 		v = 0
 	}
-	s.wheelVolume(ui.Row(c).Gap(4).Width(140).MinWidth(80)).Children(func() {
+	s.wheelVolume(ui.Row(c).Gap(4).Width(140).Shrink(0)).Children(func() {
 		name, label := muteOf(s.st)
 		if s.iconButton(c, "mute", name, label, false, 18).Clicked() {
 			s.p.ToggleMute()
