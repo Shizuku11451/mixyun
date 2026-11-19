@@ -94,6 +94,10 @@ func (s *shell) homeGroups(layout []settings.HomeShelf) []*homeGroup {
 		if !s.sourceOn(sv.source) {
 			continue // turned off: not even fetched
 		}
+		// NetEase's daily recommendations come again by themselves.
+		if sv.source == media.SourceNetEase {
+			s.keepFresh(sv.key, homeFresh)
+		}
 		l := fetch(s, sv.key, sv.get)
 		g := &homeGroup{key: sv.key, source: sv.source, done: l.done, err: l.err}
 		for i, key := range shelfKeys(l.value) {

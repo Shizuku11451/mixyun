@@ -274,6 +274,8 @@ type shell struct {
 	refreshTold              bool
 	refreshOff, refreshBusy  bool
 	refreshTip, refreshTipOf string
+	// freshTimer wakes the window when what keepFresh keeps is due again.
+	freshTimer *time.Timer
 	// pull is a pull of the page shown down past its top, which refreshes
 	// it once let go (pullrefresh.go).
 	pull pullState
@@ -812,6 +814,11 @@ type loaded[T any] struct {
 	answers int
 	// refreshing is set from the user's refresh until its answer comes.
 	refreshing bool
+	// quiet is set from freshen until its answer comes, which keeps what
+	// fetch got if it fails, without a word. at is when fetch took its last
+	// answer, and askedAt when it last asked, by the wall's clock.
+	quiet       bool
+	at, askedAt time.Time
 }
 
 // fetch returns what get gives for key, which it asks for once, beside the
@@ -834,7 +841,8 @@ func fetch[T any](s *shell, key string, get func(ctx context.Context) (T, error)
 	}
 	l.again = false
 	l.asks++
-	ask, refreshing := l.asks, l.refreshing
+	l.askedAt = time.Now().Round(0)
+	ask, refreshing, quiet := l.asks, l.refreshing, l.quiet
 	go func() {
 		ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 		defer cancel()
@@ -844,15 +852,16 @@ func fetch[T any](s *shell, key string, get func(ctx context.Context) (T, error)
 			if l.asks != ask {
 				return
 			}
-			l.refreshing = false
-			if refreshing && err != nil && l.done && l.err == nil {
+			l.refreshing, l.quiet = false, false
+			if (refreshing || quiet) && err != nil && l.done && l.err == nil {
 				// Unless the page forgot it meanwhile, as after signing in.
-				if cur, _ := s.loads[key].(*loaded[T]); cur == l {
+				if cur, _ := s.loads[key].(*loaded[T]); cur == l && refreshing {
 					s.refreshFailed(err)
 				}
 				return
 			}
 			l.value, l.err, l.done = v, err, true
+			l.at = time.Now().Round(0)
 			l.answers++
 		})
 	}()
