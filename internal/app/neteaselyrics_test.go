@@ -54,3 +54,29 @@ func TestNetEaseTranslation(t *testing.T) {
 		t.Error("a song without a translation has one")
 	}
 }
+
+// TestNetEasePureMusic reads a song NetEase marks instrumental as such, and
+// a song with no lyrics and no such mark as no lyrics.
+func TestNetEasePureMusic(t *testing.T) {
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, `{"code":200,"pureMusic":true,"lrc":{"lyric":"[99:00.00]纯音乐，请欣赏\n"}}`)
+	}))
+	defer srv.Close()
+	a := &App{netease: netease.New(), matcher: &match.Matcher{}}
+	a.netease.BaseURL = srv.URL
+	c := &Catalog{a: a}
+	l, ok := c.neteaseLyrics(context.Background(), media.Track{ID: "ne:1992712131", Source: media.SourceNetEase})
+	if !ok || !l.Instrumental || len(l.Lines) != 0 {
+		t.Fatalf("instrumental: %+v, %v", l, ok)
+	}
+
+	plain := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, `{"code":200,"lrc":{"lyric":""}}`)
+	}))
+	defer plain.Close()
+	a.netease = netease.New()
+	a.netease.BaseURL = plain.URL
+	if l, ok := c.neteaseLyrics(context.Background(), media.Track{ID: "ne:2", Source: media.SourceNetEase}); ok {
+		t.Errorf("no lyrics read as %+v", l)
+	}
+}

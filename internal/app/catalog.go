@@ -690,6 +690,10 @@ func (c *Catalog) neteaseLyrics(ctx context.Context, track media.Track) (lyrics.
 		log.Printf("mixmusic: the lyrics of %s, on NetEase Cloud Music: %v", track.ID, err)
 		return lyrics.Lyrics{}, false
 	}
+	// Its placeholder LRC of an instrumental is no lyrics to show.
+	if found.PureMusic {
+		return lyrics.Lyrics{Instrumental: true, Lines: []lyrics.Line{}, Source: neteaseLyricsSource}, true
+	}
 	// Word by word when NetEase has them so, which light as they're sung.
 	lines := lyrics.ParseYRC(found.YRC)
 	if len(lines) < 2 {
